@@ -1,0 +1,11 @@
+@layer tailwind-base, global, antd;
+
+@layer global {
+  @import 'global';
+}
+
+@layer tailwind-base {
+  @tailwind base;
+}
+@tailwind components;
+@tailwind utilities;

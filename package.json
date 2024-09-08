@@ -1,0 +1,46 @@
+{
+  "name": "elan-app",
+  "scripts": {
+    "build:packages": "pnpm nx run-many -t build -p @elan/* --parallel=10",
+    "lint:check": "pnpm nx run-many -t type:check cspell:check eslint:check prettier:check --all --parallel=10",
+    "type:check": "pnpm nx run-many -t type:check --all",
+    "cspell:check": "pnpm nx run-many -t cspell:check --all",
+    "eslint:check": "pnpm nx run-many -t eslint:check --all",
+    "eslint:fix": "pnpm nx run-many -t eslint:fix --all",
+    "prettier:check": "pnpm nx run-many -t prettier:check --all",
+    "prettier:fix": "pnpm nx run-many -t prettier:fix --all",
+    "cz": "git-cz",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@bit-ocean/commitlint-config": "^0.0.48",
+    "@bit-ocean/cspell": "^0.0.48",
+    "@bit-ocean/eslint-config": "^0.0.48",
+    "@bit-ocean/prettier-config": "^0.0.48",
+    "@bit-ocean/tailwind": "^0.0.48",
+    "@bit-ocean/tsconfig": "^0.0.48",
+    "@commitlint/cli": "^19.4.1",
+    "@commitlint/config-conventional": "^19.4.1",
+    "@nx/workspace": "19.6.5",
+    "@elan/cspell": "workspace:^",
+    "commitizen": "^4.3.0",
+    "cspell": "^8.14.2",
+    "cz-git": "^1.9.4",
+    "eslint": "^8.57.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.10",
+    "nx": "19.6.5",
+    "prettier": "^3.3.3",
+    "tslib": "^2.7.0",
+    "tsup": "^8.2.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true
+}

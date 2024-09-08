@@ -1,0 +1,26 @@
+{
+  "id": "elan",
+  "name": "elan",
+  "readonly": true,
+  "allowCompoundWords": true,
+  "enableFiletypes": ["astro"],
+  "dictionaryDefinitions": [
+    {
+      "name": "elan",
+      "path": "./dicts/elan.txt",
+      "description": "elan CSpell dictionary."
+    }
+  ],
+  "dictionaries": [],
+  "languageSettings": [
+    {
+      "languageId": "*",
+      "locale": "*",
+      "includeRegExpList": [],
+      "ignoreRegExpList": [],
+      "patterns": [],
+      "dictionaries": ["elan"],
+      "dictionaryDefinitions": []
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@elan/cspell",
+  "exports": {
+    ".": "./cspell-ext.json",
+    "./cspell": "./cspell-ext.json",
+    "./cspell-ext.json": "./cspell-ext.json"
+  },
+  "scripts": {
+    "cspell:check": "cspell --no-progress --show-suggestions --show-context --cache **",
+    "prettier:check": "prettier --check --cache --ignore-unknown --ignore-path=../../.prettierignore .",
+    "prettier:fix": "prettier --write --cache --ignore-unknown --ignore-path=../../.prettierignore ."
+  },
+  "peerDependencies": {
+    "cspell": "^8.0.0"
+  },
+  "private": true,
+  "license": "MIT"
+}

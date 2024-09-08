@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": ["default"],
+    "sharedGlobals": [],
+    "noMarkdown": ["!{projectRoot}/**/*.md"],
+    "noPackageJson": ["!{projectRoot}/package.json"]
+  },
+  "plugins": [],
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "build:staging",
+          "build:prod",
+          "type:check",
+          "cspell:check",
+          "eslint:check",
+          "eslint:fix",
+          "prettier:check",
+          "prettier:fix"
+        ]
+      }
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["noMarkdown", "^noMarkdown"],
+      "cache": true
+    },
+    "build:staging": {
+      "dependsOn": ["^build"],
+      "inputs": ["noMarkdown", "^noMarkdown"],
+      "cache": true
+    },
+    "build:prod": {
+      "dependsOn": ["^build"],
+      "inputs": ["noMarkdown", "^noMarkdown"],
+      "cache": true
+    },
+    "type:check": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "noMarkdown",
+        "noPackageJson"
+      ],
+      "cache": true
+    },
+    "cspell:check": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "noMarkdown",
+        "noPackageJson"
+      ],
+      "cache": true
+    },
+    "eslint:check": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "noMarkdown",
+        "noPackageJson"
+      ],
+      "cache": true
+    },
+    "prettier:check": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "noMarkdown",
+        "noPackageJson"
+      ],
+      "cache": true
+    },
+    "@nx/eslint:lint": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json",
+        "{workspaceRoot}/.eslintignore",
+        "noMarkdown"
+      ],
+      "cache": true
+    }
+  }
+}

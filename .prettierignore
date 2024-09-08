@@ -1,0 +1,15 @@
+dist
+coverage
+.nx/cache
+.nx/workspace-data
+node_modules
+pnpm-lock.yaml
+.husky
+.expo
+expo-env.d.ts
+.next
+.vercel
+stats.html
+
+apps/admin/@types/auto-imports.d.ts
+apps/admin/src/shared/router/routeTree.gen.ts
