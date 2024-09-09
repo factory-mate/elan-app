@@ -81,11 +81,64 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  SplatRouteRoute,
-  PublicRouteRoute: PublicRouteRoute.addChildren({ PublicLoginRouteRoute }),
-  Base404RouteRoute,
-})
+interface PublicRouteRouteChildren {
+  PublicLoginRouteRoute: typeof PublicLoginRouteRoute
+}
+
+const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicLoginRouteRoute: PublicLoginRouteRoute,
+}
+
+const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
+  PublicRouteRouteChildren,
+)
+
+export interface FileRoutesByFullPath {
+  '/$': typeof SplatRouteRoute
+  '': typeof PublicRouteRouteWithChildren
+  '/404': typeof Base404RouteRoute
+  '/login': typeof PublicLoginRouteRoute
+}
+
+export interface FileRoutesByTo {
+  '/$': typeof SplatRouteRoute
+  '': typeof PublicRouteRouteWithChildren
+  '/404': typeof Base404RouteRoute
+  '/login': typeof PublicLoginRouteRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/$': typeof SplatRouteRoute
+  '/_public': typeof PublicRouteRouteWithChildren
+  '/_base/404': typeof Base404RouteRoute
+  '/_public/login': typeof PublicLoginRouteRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/$' | '' | '/404' | '/login'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/$' | '' | '/404' | '/login'
+  id: '__root__' | '/$' | '/_public' | '/_base/404' | '/_public/login'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  SplatRouteRoute: typeof SplatRouteRoute
+  PublicRouteRoute: typeof PublicRouteRouteWithChildren
+  Base404RouteRoute: typeof Base404RouteRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  SplatRouteRoute: SplatRouteRoute,
+  PublicRouteRoute: PublicRouteRouteWithChildren,
+  Base404RouteRoute: Base404RouteRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
