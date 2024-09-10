@@ -1,5 +1,4 @@
 import '@/assets/styles/main.scss'
-// import '@/shared/echarts'
 import '@/shared/ag-grid'
 
 import { enableMapSet } from 'immer'

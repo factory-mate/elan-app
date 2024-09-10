@@ -23,7 +23,7 @@ export default function LoginPage() {
     <Flex className="m-4 h-[500px] w-[900px] select-none overflow-hidden rounded-lg bg-white shadow-sm">
       <Banner />
       <Flex
-        className="w-1/2"
+        className="w-full sm:w-1/2"
         vertical
         align="center"
         justify="center"
