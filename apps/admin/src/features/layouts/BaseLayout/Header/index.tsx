@@ -1,5 +1,6 @@
 import FullscreenButton from './FullscreenButton'
 import MenuVisibilityToggle from './MenuVisibilityToggle'
+import UserAvatar from './UserAvatar'
 
 export default function Header() {
   return (
@@ -31,7 +32,7 @@ export default function Header() {
 
         <Divider type="vertical" />
 
-        {/* <UserAvatar /> */}
+        <UserAvatar />
       </Flex>
     </Layout.Header>
   )

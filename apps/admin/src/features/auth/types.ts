@@ -1,20 +1,23 @@
-import type { Dayjs } from 'dayjs'
-
 export interface LoginDto {
-  username: string
-  password: string
-}
-
-export interface SignupDto extends LoginDto {
-  nickName: string
-  birthDate: string
-  email: string
+  cLoginName: string
+  cPassWord: string
+  cSourceAppType: string
 }
 
 export interface LoginFormValues extends LoginDto {
   remember: boolean
 }
 
-export interface SignupFormValues extends Omit<SignupDto, 'birthDate'> {
-  birthDate: Dayjs
+export interface LoginVo {
+  expires_in: number
+  success: boolean
+  token: string
+  token_type: string
+  token_user: UserInfoVo
+}
+
+export interface UserInfoVo {
+  UserCode: string
+  UserId: string
+  UserName: string
 }

@@ -12,9 +12,14 @@
 
 import { Route as rootRoute } from './../../routes/__root'
 import { Route as PublicRouteImport } from './../../routes/_public/route'
+import { Route as BaseRouteImport } from './../../routes/_base/route'
 import { Route as SplatRouteImport } from './../../routes/$/route'
 import { Route as PublicLoginRouteImport } from './../../routes/_public/login/route'
+import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/change-password/route'
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
+import { Route as Base403RouteImport } from './../../routes/_base/403/route'
+import { Route as BaseIndexRouteImport } from './../../routes/_base/index/route'
+import { Route as BaseDigitalModelingProductsUnitRouteImport } from './../../routes/_base/digital-modeling/products/unit/route'
 
 // Create/Update Routes
 
@@ -23,6 +28,13 @@ const PublicRouteRoute = PublicRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./../../routes/_public/route.lazy').then((d) => d.Route),
+)
+
+const BaseRouteRoute = BaseRouteImport.update({
+  id: '/_base',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./../../routes/_base/route.lazy').then((d) => d.Route),
 )
 
 const SplatRouteRoute = SplatRouteImport.update({
@@ -37,12 +49,45 @@ const PublicLoginRouteRoute = PublicLoginRouteImport.update({
   import('./../../routes/_public/login/route.lazy').then((d) => d.Route),
 )
 
+const BaseChangePasswordRouteRoute = BaseChangePasswordRouteImport.update({
+  path: '/change-password',
+  getParentRoute: () => BaseRouteRoute,
+} as any).lazy(() =>
+  import('./../../routes/_base/change-password/route.lazy').then(
+    (d) => d.Route,
+  ),
+)
+
 const Base404RouteRoute = Base404RouteImport.update({
   path: '/404',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => BaseRouteRoute,
 } as any).lazy(() =>
   import('./../../routes/_base/404/route.lazy').then((d) => d.Route),
 )
+
+const Base403RouteRoute = Base403RouteImport.update({
+  path: '/403',
+  getParentRoute: () => BaseRouteRoute,
+} as any).lazy(() =>
+  import('./../../routes/_base/403/route.lazy').then((d) => d.Route),
+)
+
+const BaseIndexRouteRoute = BaseIndexRouteImport.update({
+  path: '/',
+  getParentRoute: () => BaseRouteRoute,
+} as any).lazy(() =>
+  import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
+)
+
+const BaseDigitalModelingProductsUnitRouteRoute =
+  BaseDigitalModelingProductsUnitRouteImport.update({
+    path: '/digital-modeling/products/unit',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/unit/route.lazy'
+    ).then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -55,6 +100,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRoute
     }
+    '/_base': {
+      id: '/_base'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof BaseRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/_public': {
       id: '/_public'
       path: ''
@@ -62,12 +114,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRoute
     }
+    '/_base/': {
+      id: '/_base/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof BaseIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/403': {
+      id: '/_base/403'
+      path: '/403'
+      fullPath: '/403'
+      preLoaderRoute: typeof Base403RouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/404': {
       id: '/_base/404'
       path: '/404'
       fullPath: '/404'
       preLoaderRoute: typeof Base404RouteImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/change-password': {
+      id: '/_base/change-password'
+      path: '/change-password'
+      fullPath: '/change-password'
+      preLoaderRoute: typeof BaseChangePasswordRouteImport
+      parentRoute: typeof BaseRouteImport
     }
     '/_public/login': {
       id: '/_public/login'
@@ -76,10 +149,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLoginRouteImport
       parentRoute: typeof PublicRouteImport
     }
+    '/_base/digital-modeling/products/unit': {
+      id: '/_base/digital-modeling/products/unit'
+      path: '/digital-modeling/products/unit'
+      fullPath: '/digital-modeling/products/unit'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface BaseRouteRouteChildren {
+  BaseIndexRouteRoute: typeof BaseIndexRouteRoute
+  Base403RouteRoute: typeof Base403RouteRoute
+  Base404RouteRoute: typeof Base404RouteRoute
+  BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
+  BaseDigitalModelingProductsUnitRouteRoute: typeof BaseDigitalModelingProductsUnitRouteRoute
+}
+
+const BaseRouteRouteChildren: BaseRouteRouteChildren = {
+  BaseIndexRouteRoute: BaseIndexRouteRoute,
+  Base403RouteRoute: Base403RouteRoute,
+  Base404RouteRoute: Base404RouteRoute,
+  BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
+  BaseDigitalModelingProductsUnitRouteRoute:
+    BaseDigitalModelingProductsUnitRouteRoute,
+}
+
+const BaseRouteRouteWithChildren = BaseRouteRoute._addFileChildren(
+  BaseRouteRouteChildren,
+)
 
 interface PublicRouteRouteChildren {
   PublicLoginRouteRoute: typeof PublicLoginRouteRoute
@@ -96,44 +197,83 @@ const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/$': typeof SplatRouteRoute
   '': typeof PublicRouteRouteWithChildren
+  '/': typeof BaseIndexRouteRoute
+  '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
+  '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
+  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
 }
 
 export interface FileRoutesByTo {
   '/$': typeof SplatRouteRoute
   '': typeof PublicRouteRouteWithChildren
+  '/': typeof BaseIndexRouteRoute
+  '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
+  '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
+  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/$': typeof SplatRouteRoute
+  '/_base': typeof BaseRouteRouteWithChildren
   '/_public': typeof PublicRouteRouteWithChildren
+  '/_base/': typeof BaseIndexRouteRoute
+  '/_base/403': typeof Base403RouteRoute
   '/_base/404': typeof Base404RouteRoute
+  '/_base/change-password': typeof BaseChangePasswordRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
+  '/_base/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/$' | '' | '/404' | '/login'
+  fullPaths:
+    | '/$'
+    | ''
+    | '/'
+    | '/403'
+    | '/404'
+    | '/change-password'
+    | '/login'
+    | '/digital-modeling/products/unit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/$' | '' | '/404' | '/login'
-  id: '__root__' | '/$' | '/_public' | '/_base/404' | '/_public/login'
+  to:
+    | '/$'
+    | ''
+    | '/'
+    | '/403'
+    | '/404'
+    | '/change-password'
+    | '/login'
+    | '/digital-modeling/products/unit'
+  id:
+    | '__root__'
+    | '/$'
+    | '/_base'
+    | '/_public'
+    | '/_base/'
+    | '/_base/403'
+    | '/_base/404'
+    | '/_base/change-password'
+    | '/_public/login'
+    | '/_base/digital-modeling/products/unit'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   SplatRouteRoute: typeof SplatRouteRoute
+  BaseRouteRoute: typeof BaseRouteRouteWithChildren
   PublicRouteRoute: typeof PublicRouteRouteWithChildren
-  Base404RouteRoute: typeof Base404RouteRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   SplatRouteRoute: SplatRouteRoute,
+  BaseRouteRoute: BaseRouteRouteWithChildren,
   PublicRouteRoute: PublicRouteRouteWithChildren,
-  Base404RouteRoute: Base404RouteRoute,
 }
 
 export const routeTree = rootRoute
@@ -149,12 +289,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/$",
-        "/_public",
-        "/_base/404"
+        "/_base",
+        "/_public"
       ]
     },
     "/$": {
       "filePath": "$/route.tsx"
+    },
+    "/_base": {
+      "filePath": "_base/route.tsx",
+      "children": [
+        "/_base/",
+        "/_base/403",
+        "/_base/404",
+        "/_base/change-password",
+        "/_base/digital-modeling/products/unit"
+      ]
     },
     "/_public": {
       "filePath": "_public/route.tsx",
@@ -162,12 +312,29 @@ export const routeTree = rootRoute
         "/_public/login"
       ]
     },
+    "/_base/": {
+      "filePath": "_base/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/403": {
+      "filePath": "_base/403/route.tsx",
+      "parent": "/_base"
+    },
     "/_base/404": {
-      "filePath": "_base/404/route.tsx"
+      "filePath": "_base/404/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/change-password": {
+      "filePath": "_base/change-password/route.tsx",
+      "parent": "/_base"
     },
     "/_public/login": {
       "filePath": "_public/login/route.tsx",
       "parent": "/_public"
+    },
+    "/_base/digital-modeling/products/unit": {
+      "filePath": "_base/digital-modeling/products/unit/route.tsx",
+      "parent": "/_base"
     }
   }
 }

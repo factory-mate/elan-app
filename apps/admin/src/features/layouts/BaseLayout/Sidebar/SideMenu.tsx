@@ -11,19 +11,20 @@ export default function SideMenu() {
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
   useEffect(() => {
-    setSelectedKeys([location.pathname])
-    setOpenKeys((value) =>
-      location.pathname
-        .split('/')
-        .filter((i) => i)
-        .reduce<string[]>((acc, cur) => [...acc, `${acc}/${cur}`], [])
-        .concat(value)
-    )
+    const keys =
+      location.pathname === '/'
+        ? ['/']
+        : location.pathname
+            .split('/')
+            .filter((i) => i)
+            .map((i) => `/${i}`)
+    setSelectedKeys(keys)
+    setOpenKeys((value) => keys.concat(value))
   }, [location.pathname])
 
   const handleClickMenuItem: MenuProps['onClick'] = (menuItem) => {
     if (menuItem?.key && typeof menuItem.key === 'string') {
-      navigate({ to: menuItem.key })
+      navigate({ to: menuItem.keyPath.toReversed().join('') })
     }
   }
 
@@ -33,12 +34,12 @@ export default function SideMenu() {
       style={{
         backgroundColor: siderBg,
         border: 'none',
-        height: 'calc(100vh - 96px)',
+        height: 'calc(100vh - 98px)',
         width: '100%',
         overflowY: 'auto'
       }}
       items={staticMenus}
-      mode="inline"
+      mode="vertical"
       selectedKeys={selectedKeys}
       openKeys={openKeys}
       onOpenChange={setOpenKeys}

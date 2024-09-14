@@ -16,19 +16,19 @@ import { defineConfig, loadEnv, type ProxyOptions } from 'vite'
 import Compression from 'vite-plugin-compression'
 import WebfontDownload from 'vite-plugin-webfont-dl'
 
-const DEFAULT_APP_PORT = 4070
+const DEFAULT_APP_PORT = 5070
 
 export default defineConfig(({ mode }) => {
   const envPath = path.resolve(process.cwd())
   const environment = loadEnv(mode, envPath) as ImportMetaEnv
-  const { VITE_PORT, VITE_BASE_API_PREFIX, VITE_BASE_API_URL } = environment
+  const { VITE_PORT, VITE_MANAGER_CENTER_API_PREFIX, VITE_MANAGER_CENTER_API_URL } = environment
 
   const port = Number.parseInt(VITE_PORT, 10) || DEFAULT_APP_PORT
   const proxy: Record<string, string | ProxyOptions> = {
-    [VITE_BASE_API_PREFIX]: {
-      target: VITE_BASE_API_URL,
+    [VITE_MANAGER_CENTER_API_PREFIX]: {
+      target: VITE_MANAGER_CENTER_API_URL,
       changeOrigin: true,
-      rewrite: (p: string) => p.replace(VITE_BASE_API_PREFIX, '')
+      rewrite: (p: string) => p.replace(VITE_MANAGER_CENTER_API_PREFIX, '')
     }
   }
 

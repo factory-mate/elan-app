@@ -18,10 +18,10 @@ export default function AxiosProvider(props: PropsWithChildren) {
       return
     }
 
-    // httpClient.initInterceptors({
-    //   router,
-    //   message
-    // })
+    httpClient.initInterceptors({
+      router,
+      message
+    })
 
     setInitialized(true)
     // eslint-disable-next-line react-hooks/exhaustive-deps

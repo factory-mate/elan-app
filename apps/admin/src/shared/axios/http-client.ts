@@ -63,20 +63,22 @@ export class HttpClient {
    * Initialize the response interceptor.
    */
   #initResponseInterceptor(options: InterceptorInitOptions) {
-    const { message } = options
     this.#instance.interceptors.response.use(
-      (res: AxiosResponse<R>) => {
+      async (res: AxiosResponse<R>) => {
         if (res.config.responseType === 'blob' || res.data instanceof ArrayBuffer) {
           return res
         }
-        const { data, msg, errmsg, status, success } = res.data
+        const { data, success } = res.data
 
-        this.#handleMessage(msg, message)
+        if (!success) {
+          await this.#handleStatusCode(res, options)
+          throw res.data
+        }
 
         return data as any
       },
       async (err: AxiosError<R>) => {
-        const { response, config } = err
+        const { response } = err
 
         // If the request is canceled, throw the error.
         if (axios.isCancel(err)) {
@@ -84,10 +86,7 @@ export class HttpClient {
         }
 
         // Handle by status code.
-        const newResponse = await this.#handleStatusCode(response, options)
-        if (newResponse) {
-          return newResponse
-        }
+        await this.#handleStatusCode(response, options)
 
         throw response?.data
       }
@@ -133,35 +132,31 @@ export class HttpClient {
    * - If the status code is not in the above, do nothing.
    */
   async #handleStatusCode(res?: AxiosResponse<R>, options?: InterceptorInitOptions) {
-    const { status = 0, data, config } = res ?? {}
+    const { status, data } = res ?? {}
     const { message, router } = options ?? {}
+    const { msg, errmsg } = data ?? {}
 
-    /**
-     * 1. Use the `msg` from the response data.
-     * 2. Check the `errorMessageMap` by status code.
-     * 3. Use the default message `Unknown error!`.
-     */
-    const errorMsg = data?.msg ?? 'Unknown error!'
+    let errorMsg: string | string[] = ''
+    if (msg) {
+      errorMsg = msg
+    } else if (Array.isArray(errmsg) && errmsg.length > 0) {
+      errorMsg = errmsg.map((m) => m.Value)
+    } else {
+      errorMsg = '服务器未知错误'
+    }
+
+    this.#handleMessage(errorMsg, message, 'error')
 
     switch (status) {
       case HttpStatusCode.Unauthorized: {
-        this.#handleMessage(errorMsg, message, 'error')
         this.#handleUnauthorized(router)
         break
       }
       case HttpStatusCode.Forbidden: {
-        router?.navigate({ to: '/login', replace: true })
-        this.#handleMessage(errorMsg, message, 'error')
-        break
-      }
-      case HttpStatusCode.InternalServerError:
-      case HttpStatusCode.BadGateway:
-      case HttpStatusCode.GatewayTimeout: {
-        this.#handleMessage(errorMsg, message, 'error')
+        router?.navigate({ to: '/403', replace: true })
         break
       }
       default: {
-        this.#handleMessage(errorMsg, message, 'error')
         break
       }
     }
@@ -176,7 +171,6 @@ export class HttpClient {
    */
   #handleUnauthorized(router: InterceptorInitOptions['router']) {
     AuthUtils.clearAccessToken()
-    AuthUtils.clearRefreshToken()
 
     const currentPath = router?.state.location.pathname
 

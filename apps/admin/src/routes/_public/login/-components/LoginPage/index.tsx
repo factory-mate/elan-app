@@ -6,7 +6,7 @@ import Logo from './Logo'
 export default function LoginPage() {
   const [form] = Form.useForm<LoginFormValues>()
 
-  const { mutate, isPending } = useLoginMutation()
+  const loginMutation = useLoginMutation()
 
   useEffect(() => {
     try {
@@ -45,10 +45,10 @@ export default function LoginPage() {
             className="w-[350px]"
             layout="vertical"
             form={form}
-            onFinish={mutate}
+            onFinish={loginMutation.mutate}
           >
             <Form.Item
-              name="username"
+              name="cLoginName"
               label="用户名"
               rules={[{ required: true, message: '请输入用户名' }]}
             >
@@ -59,7 +59,7 @@ export default function LoginPage() {
             </Form.Item>
 
             <Form.Item
-              name="password"
+              name="cPassWord"
               label="密码"
               rules={[{ required: true, message: '请输入密码' }]}
             >
@@ -89,8 +89,8 @@ export default function LoginPage() {
                 className="w-full"
                 type="primary"
                 htmlType="submit"
-                loading={isPending}
-                disabled={isPending}
+                loading={loginMutation.isPending}
+                disabled={loginMutation.isPending}
               >
                 登录
               </Button>
