@@ -45,7 +45,7 @@ export const useLogoutMutation = () => {
     mutationFn: () => AuthAPI.logout(),
     onSuccess: async () => {
       AuthUtils.clearAccessToken()
-      AuthUtils.clearRememberedAccount()
+      // AuthUtils.clearRememberedAccount()
       message.success('登出成功')
       await navigate({ to: '/login', replace: true })
       userStore.setUserInfo(null)
