@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools, persist, subscribeWithSelector } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 
 import type { UserInfoVo } from '@/features/auth'
 
@@ -17,12 +17,10 @@ const initialState: State = {
 
 export const useUserStore = create<State & Actions>()(
   persist(
-    subscribeWithSelector(
-      devtools((set, _get) => ({
-        ...initialState,
-        setUserInfo: (userInfo) => set(() => ({ userInfo }))
-      }))
-    ),
+    devtools((set) => ({
+      ...initialState,
+      setUserInfo: (userInfo) => set(() => ({ userInfo }))
+    })),
     {
       name: 'user'
     }

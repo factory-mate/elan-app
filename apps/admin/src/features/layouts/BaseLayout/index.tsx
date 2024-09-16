@@ -4,6 +4,7 @@ import Content from './Content'
 import Footer from './Footer'
 import Header from './Header'
 import Sidebar from './Sidebar'
+import Tabbar from './Tabbar'
 
 export default function BaseLayout(props: PropsWithChildren) {
   const { children } = props
@@ -15,6 +16,7 @@ export default function BaseLayout(props: PropsWithChildren) {
       <Sidebar />
       <div className="h-screen grow overflow-y-auto">
         <Header />
+        <Tabbar />
         <Content>{children}</Content>
         <Footer />
       </div>

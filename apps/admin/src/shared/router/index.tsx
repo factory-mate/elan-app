@@ -25,6 +25,18 @@ export const getRouterStaticData = (path: string) =>
 nprogress.configure({ showSpinner: false })
 router.subscribe('onBeforeLoad', ({ pathChanged }) => pathChanged && nprogress.start())
 router.subscribe('onLoad', () => nprogress.done())
+router.subscribe('onBeforeLoad', ({ toLocation }) => {
+  const tabbarStore = useTabbarStore.getState()
+  const { pathname } = toLocation
+  if (pathname === '/404') {
+    tabbarStore.setActiveKey('')
+    return
+  }
+  if (!tabbarStore.hasItem(pathname)) {
+    tabbarStore.addItem({ label: getRouterStaticData(pathname).title, key: pathname })
+  }
+  tabbarStore.setActiveKey(pathname)
+})
 
 declare module '@tanstack/react-router' {
   interface Register {

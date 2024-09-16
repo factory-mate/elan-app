@@ -1,5 +1,5 @@
 export const Route = createFileRoute('/_base/')({
   staticData: {
-    title: ''
+    title: '仪表盘'
   }
 })

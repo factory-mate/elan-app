@@ -3,5 +3,5 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit'
 })
 
 function Page() {
-  return <div>单位档案</div>
+  return <div className="min-h-[2000px]">单位档案</div>
 }

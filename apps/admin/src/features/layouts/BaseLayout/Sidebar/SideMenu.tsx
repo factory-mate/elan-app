@@ -19,7 +19,7 @@ export default function SideMenu() {
             .filter((i) => i)
             .map((i) => `/${i}`)
     setSelectedKeys(keys)
-    setOpenKeys((value) => keys.concat(value))
+    // setOpenKeys((value) => keys.concat(value))
   }, [location.pathname])
 
   const handleClickMenuItem: MenuProps['onClick'] = (menuItem) => {

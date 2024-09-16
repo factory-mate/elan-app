@@ -38,7 +38,7 @@ const initialState: State = {
 
 export const useThemeStore = create<State & Actions>()(
   subscribeWithSelector(
-    devtools((set, _get) => ({
+    devtools((set) => ({
       ...initialState,
       setHappyWorkTheme: (enable: boolean) => set({ enableHappyWorkTheme: enable }),
       toggleHappyWorkTheme: () =>
