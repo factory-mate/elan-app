@@ -1,3 +1,5 @@
+import { flattenMenus, menusQO } from '@/features/menus'
+
 export const Route = createFileRoute('/_base')({
   beforeLoad: async (ctx) => {
     const { location } = ctx
@@ -9,6 +11,16 @@ export const Route = createFileRoute('/_base')({
           redirect: location.pathname === '/' ? undefined : location.pathname
         }
       })
+    }
+    const menus = flattenMenus(await queryClient.ensureQueryData(menusQO()))
+    const authKey = ctx.matches.at(-1)?.staticData.authKey
+    if (authKey) {
+      if (!menus.some((menu) => menu.cMenuCode === authKey)) {
+        throw redirect({
+          to: '/403',
+          replace: true
+        })
+      }
     }
   }
 })

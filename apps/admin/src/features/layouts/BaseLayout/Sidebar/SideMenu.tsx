@@ -1,14 +1,23 @@
 import { type MenuProps, theme } from 'antd'
 
-import { staticMenus } from '@/features/menus'
+import { menuAuthCodeMap, menusQO, staticMenus } from '@/features/menus'
+
+interface MenuItem {
+  label: string
+  key: string
+  children?: MenuItem[]
+}
 
 export default function SideMenu() {
   const { siderBg } = theme.useToken().token.Layout!
   const navigate = useNavigate()
   const location = useLocation()
+  const router = useRouter()
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
+
+  const { data } = useSuspenseQuery(menusQO())
 
   useEffect(() => {
     const keys =
@@ -28,6 +37,27 @@ export default function SideMenu() {
     }
   }
 
+  const checkAuthMenus = useCallback(
+    (menus: MenuItem[] = []): MenuProps['items'] => {
+      const result: MenuProps['items'] = []
+      // eslint-disable-next-line no-restricted-syntax
+      for (const menu of menus) {
+        const authKey = menuAuthCodeMap.get(menu.key)
+        if (authKey && (data.some((i) => i.cMenuCode === authKey) || authKey === '*')) {
+          result.push({
+            key: menu.key,
+            label: menu.label,
+            children: checkAuthMenus(menu.children)
+          })
+        }
+      }
+      return result.length === 0 ? undefined : result
+    },
+    [data]
+  )
+
+  const menuItems = useMemo(() => checkAuthMenus(staticMenus as MenuItem[]), [checkAuthMenus])
+
   return (
     <Menu
       className="select-none"
@@ -38,7 +68,7 @@ export default function SideMenu() {
         width: '100%',
         overflowY: 'auto'
       }}
-      items={staticMenus}
+      items={menuItems}
       mode="vertical"
       selectedKeys={selectedKeys}
       openKeys={openKeys}

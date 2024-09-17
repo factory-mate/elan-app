@@ -1,6 +1,6 @@
 import type { MenuProps } from 'antd'
 
-export const staticMenus: MenuProps['items'] = [
+export const staticMenus: NonNullable<MenuProps['items']> = [
   { label: '仪表盘', key: '/' },
   {
     label: '数字化建模',
@@ -33,3 +33,16 @@ export const staticMenus: MenuProps['items'] = [
     ]
   }
 ]
+
+export const menuAuthCodeMap = new Map<string, string>([
+  ['/', '*'],
+  ['/digital-modeling', '300'],
+  ['/products', '300300'],
+  ['/unit-group', '300300301'],
+  ['/unit', '300300305'],
+  ['/material-category', '300300309'],
+  ['/material', '300300313'],
+  ['/recipe', '300300317'],
+  ['/process', '300300321'],
+  ['/process-route', '300300325']
+])

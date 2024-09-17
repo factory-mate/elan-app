@@ -25,10 +25,13 @@ export const getRouterStaticData = (path: string) =>
 nprogress.configure({ showSpinner: false })
 router.subscribe('onBeforeLoad', ({ pathChanged }) => pathChanged && nprogress.start())
 router.subscribe('onLoad', () => nprogress.done())
-router.subscribe('onBeforeLoad', ({ toLocation }) => {
+router.subscribe('onResolved', ({ toLocation }) => {
   const tabbarStore = useTabbarStore.getState()
   const { pathname } = toLocation
-  if (pathname === '/404') {
+  if (['/login'].includes(pathname)) {
+    return
+  }
+  if (['/403', '/404'].includes(pathname)) {
     tabbarStore.setActiveKey('')
     return
   }
@@ -46,5 +49,6 @@ declare module '@tanstack/react-router' {
   interface StaticDataRouteOption {
     title?: string
     icon?: ReactNode
+    authKey?: string
   }
 }
