@@ -19,6 +19,7 @@ import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/cha
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteImport } from './../../routes/_base/403/route'
 import { Route as BaseIndexRouteImport } from './../../routes/_base/index/route'
+import { Route as BaseDigitalModelingProductsUnitGroupRouteImport } from './../../routes/_base/digital-modeling/products/unit-group/route'
 import { Route as BaseDigitalModelingProductsUnitRouteImport } from './../../routes/_base/digital-modeling/products/unit/route'
 
 // Create/Update Routes
@@ -78,6 +79,16 @@ const BaseIndexRouteRoute = BaseIndexRouteImport.update({
 } as any).lazy(() =>
   import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
 )
+
+const BaseDigitalModelingProductsUnitGroupRouteRoute =
+  BaseDigitalModelingProductsUnitGroupRouteImport.update({
+    path: '/digital-modeling/products/unit-group',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/unit-group/route.lazy'
+    ).then((d) => d.Route),
+  )
 
 const BaseDigitalModelingProductsUnitRouteRoute =
   BaseDigitalModelingProductsUnitRouteImport.update({
@@ -156,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsUnitRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/products/unit-group': {
+      id: '/_base/digital-modeling/products/unit-group'
+      path: '/digital-modeling/products/unit-group'
+      fullPath: '/digital-modeling/products/unit-group'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitGroupRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
   }
 }
 
@@ -167,6 +185,7 @@ interface BaseRouteRouteChildren {
   Base404RouteRoute: typeof Base404RouteRoute
   BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
   BaseDigitalModelingProductsUnitRouteRoute: typeof BaseDigitalModelingProductsUnitRouteRoute
+  BaseDigitalModelingProductsUnitGroupRouteRoute: typeof BaseDigitalModelingProductsUnitGroupRouteRoute
 }
 
 const BaseRouteRouteChildren: BaseRouteRouteChildren = {
@@ -176,6 +195,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
   BaseDigitalModelingProductsUnitRouteRoute:
     BaseDigitalModelingProductsUnitRouteRoute,
+  BaseDigitalModelingProductsUnitGroupRouteRoute:
+    BaseDigitalModelingProductsUnitGroupRouteRoute,
 }
 
 const BaseRouteRouteWithChildren = BaseRouteRoute._addFileChildren(
@@ -203,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
+  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
 }
 
 export interface FileRoutesByTo {
@@ -214,6 +236,7 @@ export interface FileRoutesByTo {
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
+  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
 }
 
 export interface FileRoutesById {
@@ -227,6 +250,7 @@ export interface FileRoutesById {
   '/_base/change-password': typeof BaseChangePasswordRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
   '/_base/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
+  '/_base/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
 }
 
 export interface FileRouteTypes {
@@ -240,6 +264,7 @@ export interface FileRouteTypes {
     | '/change-password'
     | '/login'
     | '/digital-modeling/products/unit'
+    | '/digital-modeling/products/unit-group'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -250,6 +275,7 @@ export interface FileRouteTypes {
     | '/change-password'
     | '/login'
     | '/digital-modeling/products/unit'
+    | '/digital-modeling/products/unit-group'
   id:
     | '__root__'
     | '/$'
@@ -261,6 +287,7 @@ export interface FileRouteTypes {
     | '/_base/change-password'
     | '/_public/login'
     | '/_base/digital-modeling/products/unit'
+    | '/_base/digital-modeling/products/unit-group'
   fileRoutesById: FileRoutesById
 }
 
@@ -303,7 +330,8 @@ export const routeTree = rootRoute
         "/_base/403",
         "/_base/404",
         "/_base/change-password",
-        "/_base/digital-modeling/products/unit"
+        "/_base/digital-modeling/products/unit",
+        "/_base/digital-modeling/products/unit-group"
       ]
     },
     "/_public": {
@@ -334,6 +362,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/products/unit": {
       "filePath": "_base/digital-modeling/products/unit/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/unit-group": {
+      "filePath": "_base/digital-modeling/products/unit-group/route.tsx",
       "parent": "/_base"
     }
   }

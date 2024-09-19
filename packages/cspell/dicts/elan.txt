@@ -3,3 +3,4 @@ OrderByFileds
 Parms
 iMaxLengh
 IsMulitChoose
+Nvarchar
