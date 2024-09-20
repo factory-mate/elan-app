@@ -21,10 +21,10 @@
     "@bit-ocean/tsconfig": "^0.0.48",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
-    "@nx/workspace": "19.7.3",
+    "@nx/workspace": "19.7.4",
     "@elan/cspell": "workspace:^",
     "commitizen": "^4.3.0",
-    "cspell": "^8.14.2",
+    "cspell": "^8.14.4",
     "cz-git": "^1.9.4",
     "eslint": "^8.57.0",
     "husky": "^9.1.6",
@@ -32,7 +32,7 @@
     "nx": "19.7.3",
     "prettier": "^3.3.3",
     "tslib": "^2.7.0",
-    "tsup": "^8.2.4",
+    "tsup": "^8.3.0",
     "typescript": "^5.5.4"
   },
   "config": {

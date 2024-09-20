@@ -25,7 +25,7 @@ export const getRouterStaticData = (path: string) =>
 nprogress.configure({ showSpinner: false })
 router.subscribe('onBeforeLoad', ({ pathChanged }) => pathChanged && nprogress.start())
 router.subscribe('onLoad', () => nprogress.done())
-router.subscribe('onResolved', ({ toLocation }) => {
+router.subscribe('onBeforeNavigate', ({ toLocation }) => {
   const tabbarStore = useTabbarStore.getState()
   const { pathname } = toLocation
   if (['/login'].includes(pathname)) {

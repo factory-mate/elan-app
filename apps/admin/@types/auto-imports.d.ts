@@ -53,6 +53,7 @@ declare global {
   const Result: typeof import('antd')['Result']
   const RouterProvider: typeof import('@tanstack/react-router')['RouterProvider']
   const ScrollRestoration: typeof import('@tanstack/react-router')['ScrollRestoration']
+  const Space: typeof import('antd')['Space']
   const Spin: typeof import('antd')['Spin']
   const Suspense: typeof import('react')['Suspense']
   const Tabs: typeof import('antd')['Tabs']
