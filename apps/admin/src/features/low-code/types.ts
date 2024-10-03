@@ -163,3 +163,23 @@ export interface LowCodeConfigResourceVo {
   cMemo: string
   cServerName: string
 }
+
+export interface LowCodeTransformedConfig {
+  /**
+   * 布局代码
+   */
+  modelCode: string
+  /**
+   * 区域号
+   */
+  formPropertyCode: string
+  /**
+   * 区域类型
+   */
+  propertyClassTypeCode: string
+  params: LowCodeTransformedParam[]
+}
+
+export interface LowCodeTransformedParam {}
+
+export interface LowCodeTransformedResource {}
