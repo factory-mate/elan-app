@@ -12,9 +12,6 @@ export function transformConfig(configVo: LowCodeConfigVo): LowCodeTransformedCo
     modelCode,
     formPropertyCode,
     propertyClassTypeCode,
-    params: params.map((param) => {
-      const {} = param
-      return {}
-    })
+    params: params.map((param) => ({}))
   }
 }

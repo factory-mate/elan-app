@@ -39,9 +39,9 @@ export default function BasicTable() {
       <AgGridReact
         rowData={[{ id: '123' }]}
         columnDefs={colDefs}
-        selection={{
+        rowSelection={{
           mode: 'multiRow',
-          enableMultiSelectWithClick: true
+          enableClickSelection: true
         }}
         selectionColumnDef={{
           sortable: true,
