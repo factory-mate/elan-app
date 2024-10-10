@@ -1,3 +1,5 @@
+import type { LowCodeWidgetType } from './enums'
+
 export interface LowCodeConfigVo {
   cNodeCode: string
   cAppCode: string
@@ -53,7 +55,9 @@ export interface LowCodeConfigParamVo {
   cShowName: string
   /**
    * 控件类型
-   * TODO: 枚举值：
+   * @enum
+   * - `TextBox` 文本
+   * - `TextBoxLink` 搜索弹框选择
    */
   cControlTypeCode: string
   /**
@@ -164,22 +168,70 @@ export interface LowCodeConfigResourceVo {
   cServerName: string
 }
 
-export interface LowCodeTransformedConfig {
+export interface LowCodeTransformedParam {
+  /**
+   * 字段参数名
+   */
+  code?: string
+  /**
+   * 字段显示名
+   */
+  label?: string
+  /**
+   * 控件类型
+   */
+  type?: LowCodeWidgetType
   /**
    * 布局代码
    */
-  modelCode: string
+  modelCode?: string
   /**
-   * 区域号
+   * 必填字段
    */
-  formPropertyCode: string
+  required?: boolean
   /**
-   * 区域类型
+   * 最大输入长度
    */
-  propertyClassTypeCode: string
-  params: LowCodeTransformedParam[]
+  maxLength?: number
+  /**
+   * 是否显示
+   */
+  show?: boolean
+  /**
+   * 显示顺序
+   */
+  sortIndex?: number
+  /**
+   * 是否多选
+   */
+  multiple?: boolean
+  /**
+   * 是否只读
+   */
+  readonly?: boolean
+  /**
+   * 接口请求方式
+   */
+  httpType?: string
+  /**
+   * 接口 IP
+   */
+  ip?: string
+  /**
+   * 接口地址
+   */
+  url?: string
 }
 
-export interface LowCodeTransformedParam {}
+export interface LowCodeTransformedConfig {
+  filter: LowCodeTransformedParam[]
+  action: LowCodeTransformedParam[]
+  table: LowCodeTableConfig
+  detail: LowCodeTransformedParam[]
+}
 
-export interface LowCodeTransformedResource {}
+export interface LowCodeTableConfig {
+  cols: LowCodeTransformedParam[]
+  actionButtons: LowCodeTransformedParam[]
+  api?: LowCodeTransformedParam
+}

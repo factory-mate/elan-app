@@ -23,7 +23,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function Root() {
   useTitle()
 
-  const [showDevtools, setShowDevtools] = useState(false)
+  const [showDevtools, setShowDevtools] = useState(import.meta.env.DEV)
 
   useEffect(() => {
     window.toggleDevtools = () => setShowDevtools((v) => !v)

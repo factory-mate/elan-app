@@ -50,5 +50,6 @@ declare module '@tanstack/react-router' {
     title?: string
     icon?: ReactNode
     authKey?: string
+    modelCode?: string
   }
 }
