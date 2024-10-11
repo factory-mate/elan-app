@@ -212,15 +212,15 @@ export interface LowCodeTransformedParam {
   /**
    * 接口请求方式
    */
-  httpType?: string
+  httpType: string
   /**
    * 接口 IP
    */
-  ip?: string
+  ip: string
   /**
    * 接口地址
    */
-  url?: string
+  url: string
 }
 
 export interface LowCodeTransformedConfig {
@@ -234,4 +234,9 @@ export interface LowCodeTableConfig {
   cols: LowCodeTransformedParam[]
   actionButtons: LowCodeTransformedParam[]
   api?: LowCodeTransformedParam
+}
+
+export interface LowCodePageQueryConfig {
+  url?: string
+  method?: string
 }

@@ -1,6 +1,7 @@
 import type { ColDef } from '@ag-grid-community/core'
 
-import { useTableConfig } from '@/features/low-code'
+import { lowCodePageQueryQO, useTableConfig } from '@/features/low-code'
+import { defaultPageParams } from '@/features/pagination'
 import { buildIndexColDef } from '@/features/ui'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit')({
@@ -8,22 +9,30 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit'
 })
 
 function Page() {
-  const tableConfig = useTableConfig()
+  const { cols, actionButtons, api } = useTableConfig()
+
+  const {
+    data: { data: rowData }
+  } = useSuspenseQuery(
+    lowCodePageQueryQO({ method: api?.httpType, url: api?.url }, defaultPageParams)
+  )
 
   const columnDefs = useMemo<ColDef[]>(
     () => [
-      buildIndexColDef(), // 序号列
-      ...tableConfig.cols.map<ColDef>((i) => ({
+      buildIndexColDef(),
+      ...cols.map((i) => ({
         field: i.code,
         headerName: i.label
-      })), // 配置列
-      // 操作列
+      })),
       {
         headerName: '操作',
         width: 200,
+        sortable: false,
+        pinned: 'right',
+        lockPinned: true,
         cellRenderer: () => (
           <Space>
-            {tableConfig.actionButtons.map((actionButton) => (
+            {actionButtons.map((actionButton) => (
               <Button
                 key={actionButton.code}
                 size="small"
@@ -33,17 +42,18 @@ function Page() {
               </Button>
             ))}
           </Space>
-        ),
-        pinned: 'right',
-        lockPosition: 'right'
+        )
       }
     ],
-    [tableConfig]
+    [cols, actionButtons]
   )
 
   return (
     <PageContainer>
-      <BasicTable columnDefs={columnDefs} />
+      <BasicTable
+        columnDefs={columnDefs}
+        rowData={rowData}
+      />
     </PageContainer>
   )
 }

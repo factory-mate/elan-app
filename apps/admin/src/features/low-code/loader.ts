@@ -1,11 +1,19 @@
 import type { LoaderFnContext } from '@tanstack/react-router'
 
-import { lowCodeConfigQO } from './queries'
+import { defaultPageParams } from '../pagination'
+import { lowCodeConfigQO, lowCodePageQueryQO } from './queries'
 
 export async function loadRouteConfig(ctx: LoaderFnContext) {
   const modelCode = ctx.route.options.staticData?.modelCode
   if (!modelCode) {
-    throw new Error('缺少配置')
+    throw new Error('缺少布局配置')
   }
-  await queryClient.ensureQueryData(lowCodeConfigQO(modelCode))
+  const { api } = (await queryClient.ensureQueryData(lowCodeConfigQO(modelCode)))?.table ?? {}
+  const { httpType: method, url } = api ?? {}
+  if (method && url) {
+    await queryClient.prefetchQuery(lowCodePageQueryQO({ method, url }, defaultPageParams))
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn('缺少接口配置')
+  }
 }
