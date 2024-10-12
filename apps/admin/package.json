@@ -17,6 +17,7 @@
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^32.2.2",
     "@ag-grid-community/core": "^32.2.2",
+    "@ag-grid-community/locale": "^32.2.2",
     "@ag-grid-community/react": "^32.2.2",
     "@ag-grid-community/styles": "^32.2.2",
     "@ant-design/cssinjs": "^1.21.1",

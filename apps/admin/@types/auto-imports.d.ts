@@ -46,6 +46,7 @@ declare global {
   const NotFoundRoute: typeof import('@tanstack/react-router')['NotFoundRoute']
   const Outlet: typeof import('@tanstack/react-router')['Outlet']
   const PageContainer: typeof import('../src/shared/components/PageContainer/index')['default']
+  const Pagination: typeof import('antd')['Pagination']
   const QueryClient: typeof import('@tanstack/react-query')['QueryClient']
   const QueryClientProvider: typeof import('@tanstack/react-query')['QueryClientProvider']
   const QueryProvider: typeof import('../src/shared/providers/QueryProvider/index')['default']

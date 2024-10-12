@@ -8,10 +8,20 @@ export async function loadRouteConfig(ctx: LoaderFnContext) {
   if (!modelCode) {
     throw new Error('缺少布局配置')
   }
+
   const { api } = (await queryClient.ensureQueryData(lowCodeConfigQO(modelCode)))?.table ?? {}
   const { httpType: method, url } = api ?? {}
+
   if (method && url) {
-    await queryClient.prefetchQuery(lowCodePageQueryQO({ method, url }, defaultPageParams))
+    await queryClient.prefetchQuery(
+      lowCodePageQueryQO(
+        {
+          method,
+          url
+        },
+        defaultPageParams
+      )
+    )
   } else {
     // eslint-disable-next-line no-console
     console.warn('缺少接口配置')

@@ -83,6 +83,9 @@ importers:
       '@ag-grid-community/core':
         specifier: ^32.2.2
         version: 32.2.2
+      '@ag-grid-community/locale':
+        specifier: ^32.2.2
+        version: 32.2.2
       '@ag-grid-community/react':
         specifier: ^32.2.2
         version: 32.2.2(@ag-grid-community/core@32.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -265,6 +268,9 @@ packages:
 
   '@ag-grid-community/core@32.2.2':
     resolution: {integrity: sha512-8w++Q5DKbFKhee7ZZ3HCx6KkMTHVwtV+xNwN/RJZneQ3WkXJYvsnkgVWmiwtglEo1iuMArxTz6pqOz/p23TBxA==}
+
+  '@ag-grid-community/locale@32.2.2':
+    resolution: {integrity: sha512-I/ZIIm9xX0TyjcnkTtpBlKrYH2akN4mP1T2fPARewzMjpJAyCzIPkxIjejTalvArNGEW6jn6PkJxt670zBOs+A==}
 
   '@ag-grid-community/react@32.2.2':
     resolution: {integrity: sha512-stiWKeNO9sFjTzyssE+ZqPyiHB7wYY8qHgO4ykgEEzVQMU+8sNcagfR2eX4+zelpWUOpT3ku3KtCNy7GQWyXaA==}
@@ -5371,6 +5377,8 @@ snapshots:
     dependencies:
       ag-charts-types: 10.2.0
       tslib: 2.7.0
+
+  '@ag-grid-community/locale@32.2.2': {}
 
   '@ag-grid-community/react@32.2.2(@ag-grid-community/core@32.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:

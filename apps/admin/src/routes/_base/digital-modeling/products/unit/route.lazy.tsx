@@ -1,8 +1,9 @@
 import type { ColDef } from '@ag-grid-community/core'
+import { AgGridReact } from '@ag-grid-community/react'
 
 import { lowCodePageQueryQO, useTableConfig } from '@/features/low-code'
-import { defaultPageParams } from '@/features/pagination'
-import { buildIndexColDef } from '@/features/ui'
+import { defaultPageParams, defaultPageSizeOptions } from '@/features/pagination'
+import { buildIndexColDef } from '@/shared/ag-grid'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit')({
   component: Page
@@ -11,10 +12,10 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit'
 function Page() {
   const { cols, actionButtons, api } = useTableConfig()
 
-  const {
-    data: { data: rowData }
-  } = useSuspenseQuery(
-    lowCodePageQueryQO({ method: api?.httpType, url: api?.url }, defaultPageParams)
+  const [pageParams, setPageParams] = useState(defaultPageParams)
+
+  const { data, isFetching, isPlaceholderData } = useQuery(
+    lowCodePageQueryQO({ method: api?.httpType, url: api?.url }, pageParams)
   )
 
   const columnDefs = useMemo<ColDef[]>(
@@ -50,10 +51,40 @@ function Page() {
 
   return (
     <PageContainer>
-      <BasicTable
-        columnDefs={columnDefs}
-        rowData={rowData}
-      />
+      <div className="ag-theme-quartz h-[calc(100vh-248px)] space-y-1.5">
+        <AgGridReact
+          getRowId={(params) => params.data.UID}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow',
+            enableClickSelection: true
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            maxWidth: 70,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          loading={isFetching}
+          noRowsOverlayComponent={() => '暂无数据'}
+        />
+        <div className="flex items-center justify-end">
+          <Pagination
+            disabled={isPlaceholderData}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total) => `共计 ${total} 条`}
+            total={data?.pageCount}
+            pageSize={pageParams.pageSize}
+            pageSizeOptions={defaultPageSizeOptions}
+            onChange={(pageIndex, pageSize) =>
+              setPageParams({ ...pageParams, pageIndex, pageSize })
+            }
+          />
+        </div>
+      </div>
     </PageContainer>
   )
 }

@@ -2,3 +2,5 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ModuleRegistry } from '@ag-grid-community/core'
 
 ModuleRegistry.registerModules([ClientSideRowModelModule])
+
+export * from './utils'

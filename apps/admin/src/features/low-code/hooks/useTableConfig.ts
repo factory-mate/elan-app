@@ -1,19 +1,18 @@
-import { lowCodeConfigQK } from '../query-keys'
-import type { LowCodeTableConfig, LowCodeTransformedConfig } from '../types'
+import { lowCodeConfigQO } from '../queries'
+import type { LowCodeTableConfig } from '../types'
 
 export const useTableConfig = (): LowCodeTableConfig => {
   const { modelCode } = useRouteStaticData()
 
-  const data = useMemo<LowCodeTableConfig>(() => {
-    const defaultData = { cols: [], actionButtons: [] }
-    if (!modelCode) {
-      return defaultData
+  const {
+    data: {
+      table: { cols, actionButtons, api }
     }
-    return (
-      queryClient.getQueryData<LowCodeTransformedConfig>(lowCodeConfigQK(modelCode))?.table ??
-      defaultData
-    )
-  }, [modelCode])
+  } = useSuspenseQuery(lowCodeConfigQO(modelCode!))
 
-  return data
+  return {
+    cols,
+    actionButtons,
+    api
+  }
 }

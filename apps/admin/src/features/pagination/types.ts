@@ -5,7 +5,7 @@ export interface PageParams {
   orderByFileds?: string
 }
 
-export interface PageResponse<T = unknown> {
+export interface PageResponse<T = any> {
   data: T[]
   dataCount: number
   pageCount: number

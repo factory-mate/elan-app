@@ -1,3 +1,5 @@
+import { keepPreviousData } from '@tanstack/react-query'
+
 import { STALE } from '@/shared/query-client'
 
 import type { PageParams, PageResponse } from '../pagination'
@@ -12,11 +14,9 @@ export const lowCodeConfigQO = (modelCode: string) =>
     staleTime: STALE.INFINITY
   })
 
-export const lowCodePageQueryQO = <T = unknown>(
-  config: LowCodePageQueryConfig,
-  params: PageParams
-) =>
+export const lowCodePageQueryQO = <T = any>(config: LowCodePageQueryConfig, params: PageParams) =>
   queryOptions<PageResponse<T>>({
     queryKey: lowCodePageQueryQK(config, params),
-    queryFn: ({ signal }) => LowCodeAPI.getList<T>(config, params, signal)
+    queryFn: ({ signal }) => LowCodeAPI.getList<T>(config, params, signal),
+    placeholderData: keepPreviousData
   })
