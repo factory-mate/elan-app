@@ -21,9 +21,11 @@ function Page() {
   const columnDefs = useMemo<ColDef[]>(
     () => [
       buildIndexColDef(),
-      ...cols.map((i) => ({
+      ...cols.map<ColDef>((i) => ({
         field: i.code,
-        headerName: i.label
+        headerName: i.label,
+        tooltipField: i.code,
+        headerTooltip: i.label
       })),
       {
         headerName: '操作',
@@ -51,8 +53,9 @@ function Page() {
 
   return (
     <PageContainer>
-      <div className="ag-theme-quartz h-[calc(100vh-248px)] space-y-1.5">
+      <div className="h-[calc(100vh-248px)] space-y-1.5">
         <AgGridReact
+          className="ag-theme-quartz"
           getRowId={(params) => params.data.UID}
           columnDefs={columnDefs}
           rowData={data?.data}
@@ -67,6 +70,8 @@ function Page() {
             pinned: 'left',
             lockPinned: true
           }}
+          tooltipShowDelay={1000}
+          tooltipHideDelay={0}
           loading={isFetching}
           noRowsOverlayComponent={() => '暂无数据'}
         />
