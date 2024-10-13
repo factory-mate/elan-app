@@ -25,18 +25,3 @@ export interface R<T = unknown> {
   success: boolean
   data: T
 }
-
-export interface Page<T = unknown> {
-  pageIndex: number
-  pageSize: number
-  pageCount: number
-  dataCount: number
-  data: T[]
-}
-
-export interface PageDto {
-  pageIndex: number
-  pageSize: number
-  Conditions?: string
-  OrderByFileds?: string
-}

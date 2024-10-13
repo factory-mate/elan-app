@@ -70,7 +70,7 @@ export function transformConfig(configVoList: LowCodeConfigVo[]) {
         result.filter.push(...transformedParams)
         break
       case 'ToolBut':
-        result.filter.push(...transformedParams)
+        result.action.push(...transformedParams)
         break
       case 'Grid':
         result.table.cols.push(

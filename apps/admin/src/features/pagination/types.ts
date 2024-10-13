@@ -1,14 +1,14 @@
-export interface PageParams {
+export interface Page<T = any> {
+  data: T[]
+  pageIndex: number
+  pageSize: number
+  pageCount: number
+  dataCount: number
+}
+
+export interface PageDto {
   pageIndex: number
   pageSize: number
   conditions?: string
   orderByFileds?: string
-}
-
-export interface PageResponse<T = any> {
-  data: T[]
-  dataCount: number
-  pageCount: number
-  pageIndex: number
-  pageSize: number
 }

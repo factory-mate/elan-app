@@ -1,4 +1,4 @@
-export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit-group')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit-group/')({
   component: Page
 })
 

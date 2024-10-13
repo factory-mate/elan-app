@@ -19,8 +19,11 @@ import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/cha
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteImport } from './../../routes/_base/403/route'
 import { Route as BaseIndexRouteImport } from './../../routes/_base/index/route'
-import { Route as BaseDigitalModelingProductsUnitGroupRouteImport } from './../../routes/_base/digital-modeling/products/unit-group/route'
-import { Route as BaseDigitalModelingProductsUnitRouteImport } from './../../routes/_base/digital-modeling/products/unit/route'
+import { Route as BaseDigitalModelingProductsUnitAddRouteImport } from './../../routes/_base/digital-modeling/products/unit/add/route'
+import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
+import { Route as BaseDigitalModelingProductsUnitGroupIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-group/index/route'
+import { Route as BaseDigitalModelingProductsUnitIdEditRouteImport } from './../../routes/_base/digital-modeling/products/unit/$id/edit/route'
+import { Route as BaseDigitalModelingProductsUnitIdDetailRouteImport } from './../../routes/_base/digital-modeling/products/unit/$id/detail/route'
 
 // Create/Update Routes
 
@@ -80,23 +83,53 @@ const BaseIndexRouteRoute = BaseIndexRouteImport.update({
   import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
 )
 
-const BaseDigitalModelingProductsUnitGroupRouteRoute =
-  BaseDigitalModelingProductsUnitGroupRouteImport.update({
-    path: '/digital-modeling/products/unit-group',
+const BaseDigitalModelingProductsUnitAddRouteRoute =
+  BaseDigitalModelingProductsUnitAddRouteImport.update({
+    path: '/digital-modeling/products/unit/add',
     getParentRoute: () => BaseRouteRoute,
   } as any).lazy(() =>
     import(
-      './../../routes/_base/digital-modeling/products/unit-group/route.lazy'
+      './../../routes/_base/digital-modeling/products/unit/add/route.lazy'
     ).then((d) => d.Route),
   )
 
-const BaseDigitalModelingProductsUnitRouteRoute =
-  BaseDigitalModelingProductsUnitRouteImport.update({
-    path: '/digital-modeling/products/unit',
+const BaseDigitalModelingProductsUnitIndexRouteRoute =
+  BaseDigitalModelingProductsUnitIndexRouteImport.update({
+    path: '/digital-modeling/products/unit/',
     getParentRoute: () => BaseRouteRoute,
   } as any).lazy(() =>
     import(
-      './../../routes/_base/digital-modeling/products/unit/route.lazy'
+      './../../routes/_base/digital-modeling/products/unit/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingProductsUnitGroupIndexRouteRoute =
+  BaseDigitalModelingProductsUnitGroupIndexRouteImport.update({
+    path: '/digital-modeling/products/unit-group/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/unit-group/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingProductsUnitIdEditRouteRoute =
+  BaseDigitalModelingProductsUnitIdEditRouteImport.update({
+    path: '/digital-modeling/products/unit/$id/edit',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/unit/$id/edit/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingProductsUnitIdDetailRouteRoute =
+  BaseDigitalModelingProductsUnitIdDetailRouteImport.update({
+    path: '/digital-modeling/products/unit/$id/detail',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/unit/$id/detail/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -160,18 +193,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLoginRouteImport
       parentRoute: typeof PublicRouteImport
     }
-    '/_base/digital-modeling/products/unit': {
-      id: '/_base/digital-modeling/products/unit'
-      path: '/digital-modeling/products/unit'
-      fullPath: '/digital-modeling/products/unit'
-      preLoaderRoute: typeof BaseDigitalModelingProductsUnitRouteImport
-      parentRoute: typeof BaseRouteImport
-    }
-    '/_base/digital-modeling/products/unit-group': {
-      id: '/_base/digital-modeling/products/unit-group'
+    '/_base/digital-modeling/products/unit-group/': {
+      id: '/_base/digital-modeling/products/unit-group/'
       path: '/digital-modeling/products/unit-group'
       fullPath: '/digital-modeling/products/unit-group'
-      preLoaderRoute: typeof BaseDigitalModelingProductsUnitGroupRouteImport
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitGroupIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/products/unit/': {
+      id: '/_base/digital-modeling/products/unit/'
+      path: '/digital-modeling/products/unit'
+      fullPath: '/digital-modeling/products/unit'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/products/unit/add': {
+      id: '/_base/digital-modeling/products/unit/add'
+      path: '/digital-modeling/products/unit/add'
+      fullPath: '/digital-modeling/products/unit/add'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitAddRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/products/unit/$id/detail': {
+      id: '/_base/digital-modeling/products/unit/$id/detail'
+      path: '/digital-modeling/products/unit/$id/detail'
+      fullPath: '/digital-modeling/products/unit/$id/detail'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitIdDetailRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/products/unit/$id/edit': {
+      id: '/_base/digital-modeling/products/unit/$id/edit'
+      path: '/digital-modeling/products/unit/$id/edit'
+      fullPath: '/digital-modeling/products/unit/$id/edit'
+      preLoaderRoute: typeof BaseDigitalModelingProductsUnitIdEditRouteImport
       parentRoute: typeof BaseRouteImport
     }
   }
@@ -184,8 +238,11 @@ interface BaseRouteRouteChildren {
   Base403RouteRoute: typeof Base403RouteRoute
   Base404RouteRoute: typeof Base404RouteRoute
   BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
-  BaseDigitalModelingProductsUnitRouteRoute: typeof BaseDigitalModelingProductsUnitRouteRoute
-  BaseDigitalModelingProductsUnitGroupRouteRoute: typeof BaseDigitalModelingProductsUnitGroupRouteRoute
+  BaseDigitalModelingProductsUnitGroupIndexRouteRoute: typeof BaseDigitalModelingProductsUnitGroupIndexRouteRoute
+  BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  BaseDigitalModelingProductsUnitAddRouteRoute: typeof BaseDigitalModelingProductsUnitAddRouteRoute
+  BaseDigitalModelingProductsUnitIdDetailRouteRoute: typeof BaseDigitalModelingProductsUnitIdDetailRouteRoute
+  BaseDigitalModelingProductsUnitIdEditRouteRoute: typeof BaseDigitalModelingProductsUnitIdEditRouteRoute
 }
 
 const BaseRouteRouteChildren: BaseRouteRouteChildren = {
@@ -193,10 +250,16 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   Base403RouteRoute: Base403RouteRoute,
   Base404RouteRoute: Base404RouteRoute,
   BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
-  BaseDigitalModelingProductsUnitRouteRoute:
-    BaseDigitalModelingProductsUnitRouteRoute,
-  BaseDigitalModelingProductsUnitGroupRouteRoute:
-    BaseDigitalModelingProductsUnitGroupRouteRoute,
+  BaseDigitalModelingProductsUnitGroupIndexRouteRoute:
+    BaseDigitalModelingProductsUnitGroupIndexRouteRoute,
+  BaseDigitalModelingProductsUnitIndexRouteRoute:
+    BaseDigitalModelingProductsUnitIndexRouteRoute,
+  BaseDigitalModelingProductsUnitAddRouteRoute:
+    BaseDigitalModelingProductsUnitAddRouteRoute,
+  BaseDigitalModelingProductsUnitIdDetailRouteRoute:
+    BaseDigitalModelingProductsUnitIdDetailRouteRoute,
+  BaseDigitalModelingProductsUnitIdEditRouteRoute:
+    BaseDigitalModelingProductsUnitIdEditRouteRoute,
 }
 
 const BaseRouteRouteWithChildren = BaseRouteRoute._addFileChildren(
@@ -223,8 +286,11 @@ export interface FileRoutesByFullPath {
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
-  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
-  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
+  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupIndexRouteRoute
+  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/digital-modeling/products/unit/add': typeof BaseDigitalModelingProductsUnitAddRouteRoute
+  '/digital-modeling/products/unit/$id/detail': typeof BaseDigitalModelingProductsUnitIdDetailRouteRoute
+  '/digital-modeling/products/unit/$id/edit': typeof BaseDigitalModelingProductsUnitIdEditRouteRoute
 }
 
 export interface FileRoutesByTo {
@@ -235,8 +301,11 @@ export interface FileRoutesByTo {
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
-  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
-  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
+  '/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupIndexRouteRoute
+  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/digital-modeling/products/unit/add': typeof BaseDigitalModelingProductsUnitAddRouteRoute
+  '/digital-modeling/products/unit/$id/detail': typeof BaseDigitalModelingProductsUnitIdDetailRouteRoute
+  '/digital-modeling/products/unit/$id/edit': typeof BaseDigitalModelingProductsUnitIdEditRouteRoute
 }
 
 export interface FileRoutesById {
@@ -249,8 +318,11 @@ export interface FileRoutesById {
   '/_base/404': typeof Base404RouteRoute
   '/_base/change-password': typeof BaseChangePasswordRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
-  '/_base/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitRouteRoute
-  '/_base/digital-modeling/products/unit-group': typeof BaseDigitalModelingProductsUnitGroupRouteRoute
+  '/_base/digital-modeling/products/unit-group/': typeof BaseDigitalModelingProductsUnitGroupIndexRouteRoute
+  '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/_base/digital-modeling/products/unit/add': typeof BaseDigitalModelingProductsUnitAddRouteRoute
+  '/_base/digital-modeling/products/unit/$id/detail': typeof BaseDigitalModelingProductsUnitIdDetailRouteRoute
+  '/_base/digital-modeling/products/unit/$id/edit': typeof BaseDigitalModelingProductsUnitIdEditRouteRoute
 }
 
 export interface FileRouteTypes {
@@ -263,8 +335,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/change-password'
     | '/login'
-    | '/digital-modeling/products/unit'
     | '/digital-modeling/products/unit-group'
+    | '/digital-modeling/products/unit'
+    | '/digital-modeling/products/unit/add'
+    | '/digital-modeling/products/unit/$id/detail'
+    | '/digital-modeling/products/unit/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -274,8 +349,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/change-password'
     | '/login'
-    | '/digital-modeling/products/unit'
     | '/digital-modeling/products/unit-group'
+    | '/digital-modeling/products/unit'
+    | '/digital-modeling/products/unit/add'
+    | '/digital-modeling/products/unit/$id/detail'
+    | '/digital-modeling/products/unit/$id/edit'
   id:
     | '__root__'
     | '/$'
@@ -286,8 +364,11 @@ export interface FileRouteTypes {
     | '/_base/404'
     | '/_base/change-password'
     | '/_public/login'
-    | '/_base/digital-modeling/products/unit'
-    | '/_base/digital-modeling/products/unit-group'
+    | '/_base/digital-modeling/products/unit-group/'
+    | '/_base/digital-modeling/products/unit/'
+    | '/_base/digital-modeling/products/unit/add'
+    | '/_base/digital-modeling/products/unit/$id/detail'
+    | '/_base/digital-modeling/products/unit/$id/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -330,8 +411,11 @@ export const routeTree = rootRoute
         "/_base/403",
         "/_base/404",
         "/_base/change-password",
-        "/_base/digital-modeling/products/unit",
-        "/_base/digital-modeling/products/unit-group"
+        "/_base/digital-modeling/products/unit-group/",
+        "/_base/digital-modeling/products/unit/",
+        "/_base/digital-modeling/products/unit/add",
+        "/_base/digital-modeling/products/unit/$id/detail",
+        "/_base/digital-modeling/products/unit/$id/edit"
       ]
     },
     "/_public": {
@@ -360,12 +444,24 @@ export const routeTree = rootRoute
       "filePath": "_public/login/route.tsx",
       "parent": "/_public"
     },
-    "/_base/digital-modeling/products/unit": {
-      "filePath": "_base/digital-modeling/products/unit/route.tsx",
+    "/_base/digital-modeling/products/unit-group/": {
+      "filePath": "_base/digital-modeling/products/unit-group/index/route.tsx",
       "parent": "/_base"
     },
-    "/_base/digital-modeling/products/unit-group": {
-      "filePath": "_base/digital-modeling/products/unit-group/route.tsx",
+    "/_base/digital-modeling/products/unit/": {
+      "filePath": "_base/digital-modeling/products/unit/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/unit/add": {
+      "filePath": "_base/digital-modeling/products/unit/add/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/unit/$id/detail": {
+      "filePath": "_base/digital-modeling/products/unit/$id/detail/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/unit/$id/edit": {
+      "filePath": "_base/digital-modeling/products/unit/$id/edit/route.tsx",
       "parent": "/_base"
     }
   }

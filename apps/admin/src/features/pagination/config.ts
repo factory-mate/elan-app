@@ -1,11 +1,11 @@
-import type { PageParams } from './types'
+import type { PageDto } from './types'
 
 const DEFAULT_PAGE_INDEX = 1
 const DEFAULT_PAGE_SIZE = 1
 
-export const defaultPageParams: PageParams = {
+export const defaultPageDto: PageDto = {
   pageIndex: DEFAULT_PAGE_INDEX,
   pageSize: DEFAULT_PAGE_SIZE
 }
 
-export const defaultPageSizeOptions = [1, 10, 20, 50, 100]
+export const defaultPageSizeOptions = [1, 20, 50, 100]

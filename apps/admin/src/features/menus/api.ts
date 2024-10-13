@@ -2,7 +2,7 @@ import type { MenuVo } from './types'
 import { flattenMenus } from './utils'
 
 export class MenusAPI {
-  private static apiPrefix = '/manager-center/AuthHelper'
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/AuthHelper`
 
   static async getMenuAuth(signal?: AbortSignal) {
     try {

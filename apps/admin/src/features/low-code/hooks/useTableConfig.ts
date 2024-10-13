@@ -10,9 +10,5 @@ export const useTableConfig = (): LowCodeTableConfig => {
     }
   } = useSuspenseQuery(lowCodeConfigQO(modelCode!))
 
-  return {
-    cols,
-    actionButtons,
-    api
-  }
+  return { cols, actionButtons, api }
 }

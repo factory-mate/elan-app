@@ -236,7 +236,7 @@ export interface LowCodeTableConfig {
   api?: LowCodeTransformedParam
 }
 
-export interface LowCodePageQueryConfig {
+export interface LowCodeAPIConfig {
+  httpType?: string
   url?: string
-  method?: string
 }
