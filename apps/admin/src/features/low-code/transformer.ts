@@ -34,7 +34,8 @@ export function transformConfig(configVoList: LowCodeConfigVo[]) {
           DefinedParm4,
           cHttpTypeCode: httpType,
           cServerIP: ip,
-          cUrl: url
+          cUrl: url,
+          cConditions: condition
         } = param
         return {
           code: cAttributeCode,
@@ -49,7 +50,8 @@ export function transformConfig(configVoList: LowCodeConfigVo[]) {
           readonly: DefinedParm4 === '1',
           httpType,
           ip,
-          url
+          url,
+          condition
         }
       })
       .toSorted(({ sortIndex: a }, { sortIndex: b }) => {

@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react'
 
 import Content from './Content'
+import Footer from './Footer'
 import Header from './Header'
 import Sidebar from './Sidebar'
 import Tabbar from './Tabbar'
@@ -17,7 +18,7 @@ export default function BaseLayout(props: PropsWithChildren) {
         <Header />
         <Tabbar />
         <Content>{children}</Content>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </Layout>
   )

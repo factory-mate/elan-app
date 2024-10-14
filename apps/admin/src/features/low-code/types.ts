@@ -221,6 +221,10 @@ export interface LowCodeTransformedParam {
    * 接口地址
    */
   url: string
+  /**
+   * 查询条件
+   */
+  condition: string
 }
 
 export interface LowCodeTransformedConfig {

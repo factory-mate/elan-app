@@ -1,8 +1,6 @@
 import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
-import { Image } from 'antd'
 
-import logo from '@/assets/images/logo/factory_mate.jpg'
 import {
   listQO,
   useDeleteMutation,
@@ -23,8 +21,6 @@ function Page() {
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [showExpand, setShowExpand] = useState(true)
-  const [expand, setExpand] = useState(false)
 
   const { data, isFetching, isPlaceholderData } = useQuery(listQO(pageParams))
 
@@ -77,83 +73,7 @@ function Page() {
   return (
     <PageContainer>
       <Space direction="vertical">
-        <Card size="small">
-          <Form
-            className="h-8"
-            layout="horizontal"
-            initialValues={{}}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-          >
-            <Row>
-              <Col span={5}>
-                <Form.Item
-                  label="单位编号"
-                  className="mb-0"
-                >
-                  <Input placeholder="请输入关键字" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item
-                  label="单位名称"
-                  className="mb-0"
-                >
-                  <Input placeholder="请输入关键字" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item
-                  label="单位名称"
-                  className="mb-0"
-                >
-                  <Input placeholder="请输入关键字" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item
-                  label="单位名称"
-                  className="mb-0"
-                >
-                  <Input placeholder="请输入关键字" />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Flex
-                  justify="end"
-                  align="center"
-                  gap={8}
-                >
-                  <Tooltip title="搜索">
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                    >
-                      <LucideSearch />
-                      {/* 搜索 */}
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title="重置">
-                    <Button>
-                      <LucideRefreshCcw />
-                      {/* 重置 */}
-                    </Button>
-                  </Tooltip>
-                  {showExpand && (
-                    <Tooltip title={expand ? '折叠' : '展开'}>
-                      <Button onClick={() => setExpand(!expand)}>
-                        <LucideChevronsDown
-                          className={clsx('transition-all', expand ? 'rotate-180' : 'rotate-0')}
-                        />
-                        {/* {expand ? '折叠' : '展开'} */}
-                      </Button>
-                    </Tooltip>
-                  )}
-                </Flex>
-              </Col>
-            </Row>
-          </Form>
-        </Card>
+        <BasicFilter />
 
         <Flex
           className="h-8"
@@ -196,7 +116,7 @@ function Page() {
           </Space>
         </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-250px-64px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-354px)]">
           <AgGridReact
             ref={gridRef}
             getRowId={(params) => params.data.UID}
@@ -225,26 +145,9 @@ function Page() {
         </div>
 
         <Flex
-          justify="space-between"
+          justify="end"
           align="center"
         >
-          <Flex
-            align="center"
-            justify="center"
-            className="hidden space-x-2 whitespace-nowrap text-sm lg:flex"
-          >
-            <Image
-              className="-mb-2 cursor-pointer pb-2 transition-all hover:-translate-y-1 hover:scale-110 active:-translate-y-0 active:scale-105 active:opacity-75"
-              src={logo}
-              alt="Logo"
-              loading="lazy"
-              width={20}
-              preview={false}
-              draggable={false}
-            />
-            <span className="hidden sm:block">{appConfig.CONTACT_US}</span>
-            <span>{appConfig.COPYRIGHT}</span>
-          </Flex>
           <Pagination
             disabled={isPlaceholderData}
             showSizeChanger
