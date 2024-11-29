@@ -55,7 +55,8 @@ export default function SideMenu() {
     [data]
   )
 
-  const menuItems = useMemo(() => checkAuthMenus(staticMenus as MenuItem[]), [checkAuthMenus])
+  // const menuItems = useMemo(() => checkAuthMenus(staticMenus as MenuItem[]), [checkAuthMenus])
+  const menuItems = staticMenus
 
   return (
     <Menu

@@ -1,4 +1,4 @@
-import { flattenMenus, menusQO } from '@/features/menus'
+// import { flattenMenus, menusQO } from '@/features/menus'
 
 export const Route = createFileRoute('/_base')({
   beforeLoad: async (ctx) => {
@@ -12,15 +12,16 @@ export const Route = createFileRoute('/_base')({
         }
       })
     }
-    const menus = flattenMenus(await queryClient.ensureQueryData(menusQO()))
-    const authKey = ctx.matches.at(-1)?.staticData.authKey
-    if (authKey) {
-      if (!menus.some((menu) => menu.cMenuCode === authKey)) {
-        throw redirect({
-          to: '/403',
-          replace: true
-        })
-      }
-    }
+    // TODO: 页面跳转鉴权
+    // const menus = flattenMenus(await queryClient.ensureQueryData(menusQO()))
+    // const authKey = ctx.matches.at(-1)?.staticData.authKey
+    // if (authKey) {
+    //   if (!menus.some((menu) => menu.cMenuCode === authKey)) {
+    //     throw redirect({
+    //       to: '/403',
+    //       replace: true
+    //     })
+    //   }
+    // }
   }
 })

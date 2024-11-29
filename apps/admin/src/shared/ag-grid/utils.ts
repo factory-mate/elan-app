@@ -11,3 +11,14 @@ export function buildIndexColDef(colDef?: ColDef): ColDef {
     ...colDef
   }
 }
+
+export function booleanLabelValueGetter(data: any) {
+  switch (data) {
+    case '1':
+    case true:
+    case 'true':
+      return '是'
+    default:
+      return '否'
+  }
+}

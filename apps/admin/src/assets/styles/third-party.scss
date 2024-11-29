@@ -11,3 +11,8 @@
 .ag-theme-quartz-dark {
   --ag-font-family: inherit;
 }
+
+// Tree 组件的文字不换行
+.ant-tree .ant-tree-title {
+  white-space: nowrap;
+}

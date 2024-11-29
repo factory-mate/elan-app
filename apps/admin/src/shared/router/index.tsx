@@ -1,5 +1,4 @@
 import nprogress from 'nprogress'
-import type { ReactNode } from 'react'
 
 import { queryClient } from '../query-client'
 import { routeTree } from './routeTree.gen'
@@ -25,7 +24,7 @@ export const getRouterStaticData = (path: string) =>
 nprogress.configure({ showSpinner: false })
 router.subscribe('onBeforeLoad', ({ pathChanged }) => pathChanged && nprogress.start())
 router.subscribe('onLoad', () => nprogress.done())
-router.subscribe('onBeforeNavigate', ({ toLocation }) => {
+router.subscribe('onBeforeRouteMount', ({ toLocation }) => {
   const tabbarStore = useTabbarStore.getState()
   const { pathname } = toLocation
   if (['/login'].includes(pathname)) {
@@ -48,8 +47,5 @@ declare module '@tanstack/react-router' {
 
   interface StaticDataRouteOption {
     title?: string
-    icon?: ReactNode
-    authKey?: string
-    modelCode?: string
   }
 }
