@@ -33,6 +33,7 @@ declare global {
   const I18nUtils: typeof import('@bit-ocean/utils')['I18nUtils']
   const Image: typeof import('antd')['Image']
   const Input: typeof import('antd')['Input']
+  const InputNumber: typeof import('antd')['InputNumber']
   const IsUtils: typeof import('@bit-ocean/utils')['IsUtils']
   const LangUtils: typeof import('@bit-ocean/utils')['LangUtils']
   const Layout: typeof import('antd')['Layout']

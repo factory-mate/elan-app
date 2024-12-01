@@ -1,0 +1,5 @@
+export const Route = createFileRoute('/_base/digital-modeling/orgs/employee/add')({
+  staticData: {
+    title: '新增职员'
+  }
+})

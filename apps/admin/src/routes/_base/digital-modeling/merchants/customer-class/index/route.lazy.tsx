@@ -1,20 +1,19 @@
 import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
-import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
+import { AgGridReact } from '@ag-grid-community/react'
 import type { Key } from 'react'
 
-import { type DepartmentVo, listQO } from '@/features/digital-modeling/orgs/department'
 import {
   useDeleteMutation,
   useStartMutation,
   useStopMutation
-} from '@/features/digital-modeling/orgs/department'
+} from '@/features/digital-modeling/merchants/customer-class'
+import { type CustomerClassVo, listQO } from '@/features/digital-modeling/merchants/customer-class'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { booleanLabelValueGetter } from '@/shared/ag-grid'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/department/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/customer-class/')({
   component: RouteComponent
 })
 
@@ -41,34 +40,11 @@ function RouteComponent() {
   const stopMutation = useStopMutation()
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<DepartmentVo>[]>(
+  const columnDefs = useMemo<ColDef<CustomerClassVo>[]>(
     () => [
-      { field: 'cDepCode', headerName: '部门编码' },
-      { field: 'cDepName', headerName: '部门名称' },
-      { field: 'cCreateUserName', headerName: '负责人员' },
-      {
-        field: 'bProduct',
-        headerName: '是否生产部门',
-        valueGetter: (params) => booleanLabelValueGetter(params.data?.bProduct)
-      },
-      {
-        field: 'iStatus',
-        headerName: '启用',
-        valueGetter: (params) => params.data?.iStatus === 1,
-        cellRenderer: (params: CustomCellRendererProps) => (
-          <Switch
-            value={params.value}
-            onClick={(checked) => {
-              if (checked) {
-                startMutation.mutate([params.data.UID])
-              } else {
-                stopMutation.mutate([params.data.UID])
-              }
-            }}
-          />
-        )
-      },
-      { field: 'dModifyTime', headerName: '更新时间' },
+      { field: 'cCustomerClassCode', headerName: '客户分类编码' },
+      { field: 'cCustomerClassName', headerName: '客户分类名称' },
+      { field: 'iGrade', headerName: '级次' },
       {
         headerName: '操作',
         sortable: false,
@@ -100,7 +76,7 @@ function RouteComponent() {
         )
       }
     ],
-    [startMutation, stopMutation, deleteMutation, editModal]
+    [deleteMutation, editModal]
   )
 
   return (
@@ -150,7 +126,7 @@ function RouteComponent() {
             </Flex>
 
             <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-              <AgGridReact<DepartmentVo>
+              <AgGridReact<CustomerClassVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
                 columnDefs={columnDefs}
