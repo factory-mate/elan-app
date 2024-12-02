@@ -1,27 +1,21 @@
-export interface SupplierVo {
+export interface VendorVo {
   UID: string
-  cSupplierClassCode: string
-  cSupplierCode: string
-  cSupplierName: string
-  cSupplierShortName: string
+  cVendorClassCode: string
+  cVendorCode: string
+  cVendorName: string
+  cVendorShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
   cAddress: string
 }
 
-export interface SupplierTreeItemVo extends SupplierVo {
-  title: string
-  key: string
-  Child: SupplierTreeItemVo[]
-}
-
-export interface SupplierAddDto {
+export interface VendorAddDto {
   cParentCode: string
-  cSupplierClassCode: string
-  cSupplierCode: string
-  cSupplierName: string
-  cSupplierShortName: string
+  cVendorClassCode: string
+  cVendorCode: string
+  cVendorName: string
+  cVendorShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
@@ -40,7 +34,7 @@ export interface SupplierAddDto {
   cMemo: string
 }
 
-export interface SupplierEditDto extends SupplierAddDto {
+export interface VendorEditDto extends VendorAddDto {
   UID: string
   utfs: string
 }

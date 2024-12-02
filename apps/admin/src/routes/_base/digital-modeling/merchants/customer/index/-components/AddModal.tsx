@@ -1,11 +1,8 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type CustomerAddDto,
-  treeQO,
-  useAddMutation
-} from '@/features/digital-modeling/merchants/customer'
+import { type CustomerAddDto, useAddMutation } from '@/features/digital-modeling/merchants/customer'
+import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
 
 interface AddModalProps {
   open?: boolean

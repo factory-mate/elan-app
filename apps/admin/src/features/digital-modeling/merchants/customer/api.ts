@@ -1,13 +1,9 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { CustomerAddDto, CustomerEditDto, CustomerTreeItemVo, CustomerVo } from './types'
+import type { CustomerAddDto, CustomerEditDto, CustomerVo } from './types'
 
 export class CustomerAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/customer`
-
-  static async tree(signal?: AbortSignal) {
-    return httpClient.get<CustomerTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
-  }
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<CustomerVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

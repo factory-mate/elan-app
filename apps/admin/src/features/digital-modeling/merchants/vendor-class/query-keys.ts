@@ -1,10 +1,10 @@
 import type { PageDto } from '@/features/pagination'
 
-export const TREE_QK = 'supplier-class:tree'
+export const TREE_QK = 'vendor-class:tree'
 
-export const LIST_QK = 'supplier-class:list'
+export const LIST_QK = 'vendor-class:list'
 
-export const DETAIL_QK = 'supplier-class:detail'
+export const DETAIL_QK = 'vendor-class:detail'
 
 export const treeQK = () => [TREE_QK] as const
 

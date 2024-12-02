@@ -4,9 +4,9 @@ import type { Dispatch, SetStateAction } from 'react'
 import {
   type CustomerEditDto,
   detailQO,
-  treeQO,
   useEditMutation
 } from '@/features/digital-modeling/merchants/customer'
+import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
 
 import type { EditModalMeta } from '../-types'
 

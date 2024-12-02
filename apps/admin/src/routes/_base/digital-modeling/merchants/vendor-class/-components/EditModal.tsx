@@ -3,10 +3,10 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   detailQO,
-  type SupplierClassEditDto,
   treeQO,
-  useEditMutation
-} from '@/features/digital-modeling/merchants/supplier-class'
+  useEditMutation,
+  type VendorClassEditDto
+} from '@/features/digital-modeling/merchants/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -19,7 +19,7 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<SupplierClassEditDto>()
+  const [form] = Form.useForm<VendorClassEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
   const { data: treeData } = useSuspenseQuery(treeQO())
@@ -34,7 +34,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<SupplierClassEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<VendorClassEditDto>['onFinish'] = (values) => {
     editMutation.mutate(
       {
         ...detailData,
@@ -78,22 +78,22 @@ export default function EditModal(props: EditModalProps) {
             <TreeSelect
               treeData={treeData}
               fieldNames={{
-                label: 'cSupplierClassName',
-                value: 'cSupplierClassCode',
+                label: 'cVendorClassName',
+                value: 'cVendorClassCode',
                 children: 'Child'
               }}
               allowClear
             />
           </Form.Item>
-          <Form.Item<SupplierClassEditDto>
-            name="cSupplierClassName"
+          <Form.Item<VendorClassEditDto>
+            name="cVendorClassName"
             label="供应商分类名称"
             rules={[{ required: true, message: '请输入供应商分类名称' }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item<SupplierClassEditDto>
-            name="cSupplierClassCode"
+          <Form.Item<VendorClassEditDto>
+            name="cVendorClassCode"
             label="供应商分类编码"
             rules={[{ required: true, message: '请输入供应商分类编码' }]}
           >

@@ -4,15 +4,15 @@ import type { Key } from 'react'
 
 import {
   listQO,
-  type SupplierVo,
-  useDeleteMutation
-} from '@/features/digital-modeling/merchants/supplier'
+  useDeleteMutation,
+  type VendorVo
+} from '@/features/digital-modeling/merchants/vendor'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/supplier')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/vendor')({
   component: RouteComponent
 })
 
@@ -31,19 +31,19 @@ function RouteComponent() {
       ...pageParams,
       conditions:
         selectedTreeKeys.length > 0
-          ? `cDepCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
+          ? `cVendorClassCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
           : undefined
     })
   )
 
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<SupplierVo>[]>(
+  const columnDefs = useMemo<ColDef<VendorVo>[]>(
     () => [
-      { field: 'cSupplierCode', headerName: '供应商编码' },
-      { field: 'cSupplierName', headerName: '供应商名称' },
-      { field: 'cSupplierShortName', headerName: '供应商简称' },
-      { field: 'cSupplierClassCode', headerName: '所属分类' },
+      { field: 'cVendorCode', headerName: '供应商编码' },
+      { field: 'cVendorName', headerName: '供应商名称' },
+      { field: 'cVendorShortName', headerName: '供应商简称' },
+      { field: 'cVendorClassCode', headerName: '所属分类' },
       { field: 'cPerson', headerName: '业务员' },
       { field: 'cPerson', headerName: '联系人' },
       { field: 'cPhone', headerName: '手机号' },
@@ -129,7 +129,7 @@ function RouteComponent() {
             </Flex>
 
             <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-              <AgGridReact<SupplierVo>
+              <AgGridReact<VendorVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
                 columnDefs={columnDefs}

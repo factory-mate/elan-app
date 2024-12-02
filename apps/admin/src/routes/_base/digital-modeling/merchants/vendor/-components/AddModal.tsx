@@ -1,11 +1,8 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type SupplierAddDto,
-  treeQO,
-  useAddMutation
-} from '@/features/digital-modeling/merchants/supplier'
+import { useAddMutation, type VendorAddDto } from '@/features/digital-modeling/merchants/vendor'
+import { treeQO } from '@/features/digital-modeling/merchants/vendor-class'
 
 interface AddModalProps {
   open?: boolean
@@ -15,13 +12,13 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
-  const [form] = Form.useForm<SupplierAddDto>()
+  const [form] = Form.useForm<VendorAddDto>()
 
   const { data } = useSuspenseQuery(treeQO())
 
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<SupplierAddDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<VendorAddDto>['onFinish'] = (values) => {
     addMutation.mutate(
       {
         ...values
@@ -57,15 +54,15 @@ export default function AddModal(props: AddModalProps) {
         }}
         onFinish={onFinish}
       >
-        <Form.Item<SupplierAddDto>
-          name="cSupplierName"
+        <Form.Item<VendorAddDto>
+          name="cVendorName"
           label="供应商名称"
           rules={[{ required: true, message: '请输入供应商名称' }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item<SupplierAddDto>
-          name="cSupplierCode"
+        <Form.Item<VendorAddDto>
+          name="cVendorCode"
           label="供应商编码"
           rules={[{ required: true, message: '请输入供应商编码' }]}
         >

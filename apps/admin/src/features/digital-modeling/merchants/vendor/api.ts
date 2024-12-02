@@ -1,27 +1,23 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { SupplierAddDto, SupplierEditDto, SupplierTreeItemVo, SupplierVo } from './types'
+import type { VendorAddDto, VendorEditDto, VendorVo } from './types'
 
-export class SupplierAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/supplier`
-
-  static async tree(signal?: AbortSignal) {
-    return httpClient.get<SupplierTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
-  }
+export class VendorAPI {
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/vendor`
 
   static async list(params: PageDto, signal?: AbortSignal) {
-    return httpClient.post<Page<SupplierVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
+    return httpClient.post<Page<VendorVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {
-    return httpClient.get<SupplierVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
+    return httpClient.get<VendorVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
   }
 
-  static async add(data: SupplierAddDto) {
+  static async add(data: VendorAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
-  static async edit(data: SupplierEditDto) {
+  static async edit(data: VendorEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 

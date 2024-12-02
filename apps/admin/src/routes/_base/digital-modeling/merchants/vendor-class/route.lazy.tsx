@@ -4,15 +4,15 @@ import type { Key } from 'react'
 
 import {
   listQO,
-  type SupplierClassVo,
-  useDeleteMutation
-} from '@/features/digital-modeling/merchants/supplier-class'
+  useDeleteMutation,
+  type VendorClassVo
+} from '@/features/digital-modeling/merchants/vendor-class'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/supplier-class')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/vendor-class')({
   component: RouteComponent
 })
 
@@ -31,16 +31,16 @@ function RouteComponent() {
       ...pageParams,
       conditions:
         selectedTreeKeys.length > 0
-          ? `cDepCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
+          ? `cVendorClassCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
           : undefined
     })
   )
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<SupplierClassVo>[]>(
+  const columnDefs = useMemo<ColDef<VendorClassVo>[]>(
     () => [
-      { field: 'cSupplierClassCode', headerName: '供应商分类编码' },
-      { field: 'cSupplierClassName', headerName: '供应商分类名称' },
+      { field: 'cVendorClassCode', headerName: '供应商分类编码' },
+      { field: 'cVendorClassName', headerName: '供应商分类名称' },
       { field: 'iGrade', headerName: '级次' },
       {
         headerName: '操作',
@@ -123,7 +123,7 @@ function RouteComponent() {
             </Flex>
 
             <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-              <AgGridReact<SupplierClassVo>
+              <AgGridReact<VendorClassVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
                 columnDefs={columnDefs}

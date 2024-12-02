@@ -1,4 +1,4 @@
-import { treeQO } from '@/features/digital-modeling/merchants/customer'
+import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
 
 export const Route = createFileRoute('/_base/digital-modeling/merchants/customer/')({
   staticData: {

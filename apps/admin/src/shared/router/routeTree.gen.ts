@@ -19,8 +19,8 @@ import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/cha
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteImport } from './../../routes/_base/403/route'
 import { Route as BaseIndexRouteImport } from './../../routes/_base/index/route'
-import { Route as BaseDigitalModelingMerchantsSupplierClassRouteImport } from './../../routes/_base/digital-modeling/merchants/supplier-class/route'
-import { Route as BaseDigitalModelingMerchantsSupplierRouteImport } from './../../routes/_base/digital-modeling/merchants/supplier/route'
+import { Route as BaseDigitalModelingMerchantsVendorClassRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor-class/route'
+import { Route as BaseDigitalModelingMerchantsVendorRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor/route'
 import { Route as BaseDigitalModelingProductsUnitAddRouteImport } from './../../routes/_base/digital-modeling/products/unit/add/route'
 import { Route as BaseDigitalModelingOrgsEmployeeSettingsRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/settings/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
@@ -97,25 +97,25 @@ const BaseIndexRouteRoute = BaseIndexRouteImport.update({
   import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
 )
 
-const BaseDigitalModelingMerchantsSupplierClassRouteRoute =
-  BaseDigitalModelingMerchantsSupplierClassRouteImport.update({
-    id: '/digital-modeling/merchants/supplier-class',
-    path: '/digital-modeling/merchants/supplier-class',
+const BaseDigitalModelingMerchantsVendorClassRouteRoute =
+  BaseDigitalModelingMerchantsVendorClassRouteImport.update({
+    id: '/digital-modeling/merchants/vendor-class',
+    path: '/digital-modeling/merchants/vendor-class',
     getParentRoute: () => BaseRouteRoute,
   } as any).lazy(() =>
     import(
-      './../../routes/_base/digital-modeling/merchants/supplier-class/route.lazy'
+      './../../routes/_base/digital-modeling/merchants/vendor-class/route.lazy'
     ).then((d) => d.Route),
   )
 
-const BaseDigitalModelingMerchantsSupplierRouteRoute =
-  BaseDigitalModelingMerchantsSupplierRouteImport.update({
-    id: '/digital-modeling/merchants/supplier',
-    path: '/digital-modeling/merchants/supplier',
+const BaseDigitalModelingMerchantsVendorRouteRoute =
+  BaseDigitalModelingMerchantsVendorRouteImport.update({
+    id: '/digital-modeling/merchants/vendor',
+    path: '/digital-modeling/merchants/vendor',
     getParentRoute: () => BaseRouteRoute,
   } as any).lazy(() =>
     import(
-      './../../routes/_base/digital-modeling/merchants/supplier/route.lazy'
+      './../../routes/_base/digital-modeling/merchants/vendor/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -292,18 +292,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLoginRouteImport
       parentRoute: typeof PublicRouteImport
     }
-    '/_base/digital-modeling/merchants/supplier': {
-      id: '/_base/digital-modeling/merchants/supplier'
-      path: '/digital-modeling/merchants/supplier'
-      fullPath: '/digital-modeling/merchants/supplier'
-      preLoaderRoute: typeof BaseDigitalModelingMerchantsSupplierRouteImport
+    '/_base/digital-modeling/merchants/vendor': {
+      id: '/_base/digital-modeling/merchants/vendor'
+      path: '/digital-modeling/merchants/vendor'
+      fullPath: '/digital-modeling/merchants/vendor'
+      preLoaderRoute: typeof BaseDigitalModelingMerchantsVendorRouteImport
       parentRoute: typeof BaseRouteImport
     }
-    '/_base/digital-modeling/merchants/supplier-class': {
-      id: '/_base/digital-modeling/merchants/supplier-class'
-      path: '/digital-modeling/merchants/supplier-class'
-      fullPath: '/digital-modeling/merchants/supplier-class'
-      preLoaderRoute: typeof BaseDigitalModelingMerchantsSupplierClassRouteImport
+    '/_base/digital-modeling/merchants/vendor-class': {
+      id: '/_base/digital-modeling/merchants/vendor-class'
+      path: '/digital-modeling/merchants/vendor-class'
+      fullPath: '/digital-modeling/merchants/vendor-class'
+      preLoaderRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteImport
       parentRoute: typeof BaseRouteImport
     }
     '/_base/digital-modeling/merchants/customer-class/': {
@@ -393,8 +393,8 @@ interface BaseRouteRouteChildren {
   Base403RouteRoute: typeof Base403RouteRoute
   Base404RouteRoute: typeof Base404RouteRoute
   BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
-  BaseDigitalModelingMerchantsSupplierRouteRoute: typeof BaseDigitalModelingMerchantsSupplierRouteRoute
-  BaseDigitalModelingMerchantsSupplierClassRouteRoute: typeof BaseDigitalModelingMerchantsSupplierClassRouteRoute
+  BaseDigitalModelingMerchantsVendorRouteRoute: typeof BaseDigitalModelingMerchantsVendorRouteRoute
+  BaseDigitalModelingMerchantsVendorClassRouteRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   BaseDigitalModelingOrgsDepartmentIndexRouteRoute: typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -413,10 +413,10 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   Base403RouteRoute: Base403RouteRoute,
   Base404RouteRoute: Base404RouteRoute,
   BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
-  BaseDigitalModelingMerchantsSupplierRouteRoute:
-    BaseDigitalModelingMerchantsSupplierRouteRoute,
-  BaseDigitalModelingMerchantsSupplierClassRouteRoute:
-    BaseDigitalModelingMerchantsSupplierClassRouteRoute,
+  BaseDigitalModelingMerchantsVendorRouteRoute:
+    BaseDigitalModelingMerchantsVendorRouteRoute,
+  BaseDigitalModelingMerchantsVendorClassRouteRoute:
+    BaseDigitalModelingMerchantsVendorClassRouteRoute,
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute:
     BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute,
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute:
@@ -465,8 +465,8 @@ export interface FileRoutesByFullPath {
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
-  '/digital-modeling/merchants/supplier': typeof BaseDigitalModelingMerchantsSupplierRouteRoute
-  '/digital-modeling/merchants/supplier-class': typeof BaseDigitalModelingMerchantsSupplierClassRouteRoute
+  '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
+  '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -488,8 +488,8 @@ export interface FileRoutesByTo {
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/login': typeof PublicLoginRouteRoute
-  '/digital-modeling/merchants/supplier': typeof BaseDigitalModelingMerchantsSupplierRouteRoute
-  '/digital-modeling/merchants/supplier-class': typeof BaseDigitalModelingMerchantsSupplierClassRouteRoute
+  '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
+  '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -513,8 +513,8 @@ export interface FileRoutesById {
   '/_base/404': typeof Base404RouteRoute
   '/_base/change-password': typeof BaseChangePasswordRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
-  '/_base/digital-modeling/merchants/supplier': typeof BaseDigitalModelingMerchantsSupplierRouteRoute
-  '/_base/digital-modeling/merchants/supplier-class': typeof BaseDigitalModelingMerchantsSupplierClassRouteRoute
+  '/_base/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
+  '/_base/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/_base/digital-modeling/merchants/customer-class/': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/_base/digital-modeling/merchants/customer/': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/_base/digital-modeling/orgs/department/': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -538,8 +538,8 @@ export interface FileRouteTypes {
     | '/404'
     | '/change-password'
     | '/login'
-    | '/digital-modeling/merchants/supplier'
-    | '/digital-modeling/merchants/supplier-class'
+    | '/digital-modeling/merchants/vendor'
+    | '/digital-modeling/merchants/vendor-class'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
@@ -560,8 +560,8 @@ export interface FileRouteTypes {
     | '/404'
     | '/change-password'
     | '/login'
-    | '/digital-modeling/merchants/supplier'
-    | '/digital-modeling/merchants/supplier-class'
+    | '/digital-modeling/merchants/vendor'
+    | '/digital-modeling/merchants/vendor-class'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
@@ -583,8 +583,8 @@ export interface FileRouteTypes {
     | '/_base/404'
     | '/_base/change-password'
     | '/_public/login'
-    | '/_base/digital-modeling/merchants/supplier'
-    | '/_base/digital-modeling/merchants/supplier-class'
+    | '/_base/digital-modeling/merchants/vendor'
+    | '/_base/digital-modeling/merchants/vendor-class'
     | '/_base/digital-modeling/merchants/customer-class/'
     | '/_base/digital-modeling/merchants/customer/'
     | '/_base/digital-modeling/orgs/department/'
@@ -636,8 +636,8 @@ export const routeTree = rootRoute
         "/_base/403",
         "/_base/404",
         "/_base/change-password",
-        "/_base/digital-modeling/merchants/supplier",
-        "/_base/digital-modeling/merchants/supplier-class",
+        "/_base/digital-modeling/merchants/vendor",
+        "/_base/digital-modeling/merchants/vendor-class",
         "/_base/digital-modeling/merchants/customer-class/",
         "/_base/digital-modeling/merchants/customer/",
         "/_base/digital-modeling/orgs/department/",
@@ -677,12 +677,12 @@ export const routeTree = rootRoute
       "filePath": "_public/login/route.tsx",
       "parent": "/_public"
     },
-    "/_base/digital-modeling/merchants/supplier": {
-      "filePath": "_base/digital-modeling/merchants/supplier/route.tsx",
+    "/_base/digital-modeling/merchants/vendor": {
+      "filePath": "_base/digital-modeling/merchants/vendor/route.tsx",
       "parent": "/_base"
     },
-    "/_base/digital-modeling/merchants/supplier-class": {
-      "filePath": "_base/digital-modeling/merchants/supplier-class/route.tsx",
+    "/_base/digital-modeling/merchants/vendor-class": {
+      "filePath": "_base/digital-modeling/merchants/vendor-class/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/merchants/customer-class/": {

@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { treeQO } from '@/features/digital-modeling/merchants/customer'
+import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]

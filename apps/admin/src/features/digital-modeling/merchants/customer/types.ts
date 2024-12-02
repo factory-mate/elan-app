@@ -10,12 +10,6 @@ export interface CustomerVo {
   cAddress: string
 }
 
-export interface CustomerTreeItemVo extends CustomerVo {
-  title: string
-  key: string
-  Child: CustomerTreeItemVo[]
-}
-
 export interface CustomerAddDto {
   cParentCode: string
   cCustomerClassCode: string

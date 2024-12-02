@@ -3,10 +3,10 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   detailQO,
-  type SupplierEditDto,
-  treeQO,
-  useEditMutation
-} from '@/features/digital-modeling/merchants/supplier'
+  useEditMutation,
+  type VendorEditDto
+} from '@/features/digital-modeling/merchants/vendor'
+import { treeQO } from '@/features/digital-modeling/merchants/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -19,7 +19,7 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<SupplierEditDto>()
+  const [form] = Form.useForm<VendorEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
   const { data: treeData } = useSuspenseQuery(treeQO())
@@ -34,7 +34,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<SupplierEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<VendorEditDto>['onFinish'] = (values) => {
     editMutation.mutate(
       {
         ...detailData,
@@ -71,15 +71,15 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item<SupplierEditDto>
-            name="cSupplierName"
+          <Form.Item<VendorEditDto>
+            name="cVendorName"
             label="供应商名称"
             rules={[{ required: true, message: '请输入供应商名称' }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item<SupplierEditDto>
-            name="cSupplierCode"
+          <Form.Item<VendorEditDto>
+            name="cVendorCode"
             label="供应商编码"
             rules={[{ required: true, message: '请输入供应商编码' }]}
           >
@@ -92,8 +92,8 @@ export default function EditModal(props: EditModalProps) {
             <TreeSelect
               treeData={treeData}
               fieldNames={{
-                label: 'cSupplierName',
-                value: 'cSupplierCode',
+                label: 'cVendorName',
+                value: 'cVendorCode',
                 children: 'Child'
               }}
               allowClear

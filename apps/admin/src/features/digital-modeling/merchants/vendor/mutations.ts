@@ -1,10 +1,10 @@
-import { SupplierAPI } from './api'
-import type { SupplierAddDto, SupplierEditDto } from './types'
+import { VendorAPI } from './api'
+import type { VendorAddDto, VendorEditDto } from './types'
 
 export const useStartMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => SupplierAPI.start(ids),
+    mutationFn: (ids: string[]) => VendorAPI.start(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -12,7 +12,7 @@ export const useStartMutation = () => {
 export const useStopMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => SupplierAPI.stop(ids),
+    mutationFn: (ids: string[]) => VendorAPI.stop(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -20,7 +20,7 @@ export const useStopMutation = () => {
 export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => SupplierAPI.delete(ids),
+    mutationFn: (ids: string[]) => VendorAPI.delete(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -28,7 +28,7 @@ export const useDeleteMutation = () => {
 export const useAddMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: SupplierAddDto) => SupplierAPI.add(data),
+    mutationFn: (data: VendorAddDto) => VendorAPI.add(data),
     onSuccess: () => showMessage('success')
   })
 }
@@ -36,7 +36,7 @@ export const useAddMutation = () => {
 export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: SupplierEditDto) => SupplierAPI.edit(data),
+    mutationFn: (data: VendorEditDto) => VendorAPI.edit(data),
     onSuccess: () => showMessage('success')
   })
 }

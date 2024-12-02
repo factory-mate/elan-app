@@ -18,28 +18,28 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
         ]
       },
       {
+        label: '产品建模',
+        key: '/products',
+        children: [
+          { label: '计量单位组档案', key: '/unit-group' },
+          { label: '计量单位档案', key: '/unit' },
+          { label: '料品分类', key: '/material-category' },
+          { label: '料品档案', key: '/material' },
+          { label: '物料清单/配方', key: '/material-recipe' }
+          // { label: '工序档案', key: '/process' },
+          // { label: '工艺路线档案', key: '/process-route' }
+        ]
+      },
+      {
         label: '客商信息',
         key: '/merchants',
         children: [
           { label: '客户分类', key: '/customer-class' },
           { label: '客户档案', key: '/customer' },
-          { label: '供应商分类', key: '/supplier-class' },
-          { label: '供应商档案', key: '/supplier' }
+          { label: '供应商分类', key: '/vendor-class' },
+          { label: '供应商档案', key: '/vendor' }
         ]
       }
-      // {
-      //   label: '产品建模',
-      //   key: '/products',
-      //   children: [
-      //     { label: '单位组档案', key: '/unit-group' },
-      //     { label: '单位档案', key: '/unit' },
-      //     { label: '物料分类', key: '/material-category' },
-      //     { label: '物料档案', key: '/material' },
-      //     { label: '配方档案', key: '/recipe' },
-      //     { label: '工序档案', key: '/process' },
-      //     { label: '工艺路线档案', key: '/process-route' }
-      //   ]
-      // }
     ]
   }
 ]
