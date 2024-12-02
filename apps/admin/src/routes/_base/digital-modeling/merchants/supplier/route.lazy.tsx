@@ -3,16 +3,16 @@ import { AgGridReact } from '@ag-grid-community/react'
 import type { Key } from 'react'
 
 import {
-  type CustomerClassVo,
   listQO,
+  type SupplierVo,
   useDeleteMutation
-} from '@/features/digital-modeling/merchants/customer-class'
+} from '@/features/digital-modeling/merchants/supplier'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/customer-class/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/supplier')({
   component: RouteComponent
 })
 
@@ -35,13 +35,19 @@ function RouteComponent() {
           : undefined
     })
   )
+
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<CustomerClassVo>[]>(
+  const columnDefs = useMemo<ColDef<SupplierVo>[]>(
     () => [
-      { field: 'cCustomerClassCode', headerName: '客户分类编码' },
-      { field: 'cCustomerClassName', headerName: '客户分类名称' },
-      { field: 'iGrade', headerName: '级次' },
+      { field: 'cSupplierCode', headerName: '供应商编码' },
+      { field: 'cSupplierName', headerName: '供应商名称' },
+      { field: 'cSupplierShortName', headerName: '供应商简称' },
+      { field: 'cSupplierClassCode', headerName: '所属分类' },
+      { field: 'cPerson', headerName: '业务员' },
+      { field: 'cPerson', headerName: '联系人' },
+      { field: 'cPhone', headerName: '手机号' },
+      { field: 'cAddress', headerName: '地址' },
       {
         headerName: '操作',
         sortable: false,
@@ -123,7 +129,7 @@ function RouteComponent() {
             </Flex>
 
             <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-              <AgGridReact<CustomerClassVo>
+              <AgGridReact<SupplierVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
                 columnDefs={columnDefs}

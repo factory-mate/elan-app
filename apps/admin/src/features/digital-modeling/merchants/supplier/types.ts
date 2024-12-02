@@ -1,27 +1,27 @@
-export interface CustomerVo {
+export interface SupplierVo {
   UID: string
-  cCustomerClassCode: string
-  cCustomerCode: string
-  cCustomerName: string
-  cCustomerShortName: string
+  cSupplierClassCode: string
+  cSupplierCode: string
+  cSupplierName: string
+  cSupplierShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
   cAddress: string
 }
 
-export interface CustomerTreeItemVo extends CustomerVo {
+export interface SupplierTreeItemVo extends SupplierVo {
   title: string
   key: string
-  Child: CustomerTreeItemVo[]
+  Child: SupplierTreeItemVo[]
 }
 
-export interface CustomerAddDto {
+export interface SupplierAddDto {
   cParentCode: string
-  cCustomerClassCode: string
-  cCustomerCode: string
-  cCustomerName: string
-  cCustomerShortName: string
+  cSupplierClassCode: string
+  cSupplierCode: string
+  cSupplierName: string
+  cSupplierShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
@@ -40,7 +40,7 @@ export interface CustomerAddDto {
   cMemo: string
 }
 
-export interface CustomerEditDto extends CustomerAddDto {
+export interface SupplierEditDto extends SupplierAddDto {
   UID: string
   utfs: string
 }

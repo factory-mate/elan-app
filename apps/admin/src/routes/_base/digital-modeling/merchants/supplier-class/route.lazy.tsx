@@ -3,16 +3,16 @@ import { AgGridReact } from '@ag-grid-community/react'
 import type { Key } from 'react'
 
 import {
-  type CustomerClassVo,
   listQO,
+  type SupplierClassVo,
   useDeleteMutation
-} from '@/features/digital-modeling/merchants/customer-class'
+} from '@/features/digital-modeling/merchants/supplier-class'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/customer-class/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/merchants/supplier-class')({
   component: RouteComponent
 })
 
@@ -37,10 +37,10 @@ function RouteComponent() {
   )
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<CustomerClassVo>[]>(
+  const columnDefs = useMemo<ColDef<SupplierClassVo>[]>(
     () => [
-      { field: 'cCustomerClassCode', headerName: '客户分类编码' },
-      { field: 'cCustomerClassName', headerName: '客户分类名称' },
+      { field: 'cSupplierClassCode', headerName: '供应商分类编码' },
+      { field: 'cSupplierClassName', headerName: '供应商分类名称' },
       { field: 'iGrade', headerName: '级次' },
       {
         headerName: '操作',
@@ -123,7 +123,7 @@ function RouteComponent() {
             </Flex>
 
             <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-              <AgGridReact<CustomerClassVo>
+              <AgGridReact<SupplierClassVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
                 columnDefs={columnDefs}

@@ -22,7 +22,9 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
         key: '/merchants',
         children: [
           { label: '客户分类', key: '/customer-class' },
-          { label: '客户档案', key: '/customer' }
+          { label: '客户档案', key: '/customer' },
+          { label: '供应商分类', key: '/supplier-class' },
+          { label: '供应商档案', key: '/supplier' }
         ]
       }
       // {
