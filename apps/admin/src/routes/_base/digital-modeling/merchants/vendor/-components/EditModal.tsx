@@ -6,7 +6,10 @@ import {
   useEditMutation,
   type VendorEditDto
 } from '@/features/digital-modeling/merchants/vendor'
-import { treeQO } from '@/features/digital-modeling/merchants/vendor-class'
+import {
+  treeQO,
+  vendorClassTreeSelectFieldNames
+} from '@/features/digital-modeling/merchants/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -91,11 +94,7 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={treeData}
-              fieldNames={{
-                label: 'cVendorName',
-                value: 'cVendorCode',
-                children: 'Child'
-              }}
+              fieldNames={vendorClassTreeSelectFieldNames}
               allowClear
             />
           </Form.Item>

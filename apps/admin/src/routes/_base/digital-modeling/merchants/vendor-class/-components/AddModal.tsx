@@ -4,7 +4,8 @@ import type { Dispatch, SetStateAction } from 'react'
 import {
   treeQO,
   useAddMutation,
-  type VendorClassAddDto
+  type VendorClassAddDto,
+  vendorClassTreeSelectFieldNames
 } from '@/features/digital-modeling/merchants/vendor-class'
 
 interface AddModalProps {
@@ -63,11 +64,7 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={{
-              label: 'cDepName',
-              value: 'cDepCode',
-              children: 'Child'
-            }}
+            fieldNames={vendorClassTreeSelectFieldNames}
             allowClear
           />
         </Form.Item>
