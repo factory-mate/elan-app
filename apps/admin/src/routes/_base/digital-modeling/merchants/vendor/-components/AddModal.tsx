@@ -48,7 +48,7 @@ export default function AddModal(props: AddModalProps) {
         className="pt-3"
         name="add-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}

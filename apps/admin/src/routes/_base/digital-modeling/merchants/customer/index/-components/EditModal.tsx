@@ -6,7 +6,10 @@ import {
   detailQO,
   useEditMutation
 } from '@/features/digital-modeling/merchants/customer'
-import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
+import {
+  customerClassTreeSelectFieldNames,
+  treeQO
+} from '@/features/digital-modeling/merchants/customer-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -64,7 +67,7 @@ export default function EditModal(props: EditModalProps) {
         className="pt-3"
         name="edit-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}
@@ -91,11 +94,7 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={treeData}
-              fieldNames={{
-                label: 'cCustomerName',
-                value: 'cCustomerCode',
-                children: 'Child'
-              }}
+              fieldNames={customerClassTreeSelectFieldNames}
               allowClear
             />
           </Form.Item>

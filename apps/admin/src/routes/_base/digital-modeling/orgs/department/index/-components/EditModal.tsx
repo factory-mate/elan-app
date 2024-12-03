@@ -64,7 +64,7 @@ export default function EditModal(props: EditModalProps) {
         className="pt-3"
         name="edit-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}

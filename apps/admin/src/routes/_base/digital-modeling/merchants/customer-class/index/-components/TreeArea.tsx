@@ -1,6 +1,9 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
+import {
+  customerClassTreeFieldNames,
+  treeQO
+} from '@/features/digital-modeling/merchants/customer-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]
@@ -19,11 +22,7 @@ export default function TreeArea(props: TreeAreaProps) {
       checkable
       checkedKeys={selectedTreeKeys}
       onCheck={(checked) => setSelectedTreeKeys([...(checked as Key[])])}
-      fieldNames={{
-        key: 'cCustomerClassCode',
-        title: 'cCustomerClassName',
-        children: 'Child'
-      }}
+      fieldNames={customerClassTreeFieldNames}
     />
   )
 }

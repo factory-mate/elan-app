@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   type CustomerClassEditDto,
+  customerClassTreeSelectFieldNames,
   detailQO,
   treeQO,
   useEditMutation
@@ -64,7 +65,7 @@ export default function EditModal(props: EditModalProps) {
         className="pt-3"
         name="edit-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}
@@ -77,11 +78,7 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={treeData}
-              fieldNames={{
-                label: 'cCustomerClassName',
-                value: 'cCustomerClassCode',
-                children: 'Child'
-              }}
+              fieldNames={customerClassTreeSelectFieldNames}
               allowClear
             />
           </Form.Item>

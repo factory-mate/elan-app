@@ -113,7 +113,7 @@ function RouteComponent() {
           />
         </Splitter.Panel>
         <Splitter.Panel
-          defaultSize="85%"
+          defaultSize="80%"
           min="70%"
         >
           <Space

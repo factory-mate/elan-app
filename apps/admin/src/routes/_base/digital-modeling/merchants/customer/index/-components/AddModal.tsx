@@ -2,7 +2,10 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { type CustomerAddDto, useAddMutation } from '@/features/digital-modeling/merchants/customer'
-import { treeQO } from '@/features/digital-modeling/merchants/customer-class'
+import {
+  customerClassTreeSelectFieldNames,
+  treeQO
+} from '@/features/digital-modeling/merchants/customer-class'
 
 interface AddModalProps {
   open?: boolean
@@ -48,7 +51,7 @@ export default function AddModal(props: AddModalProps) {
         className="pt-3"
         name="add-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}
@@ -74,11 +77,7 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={{
-              label: 'cCustomerName',
-              value: 'cCustomerCode',
-              children: 'Child'
-            }}
+            fieldNames={customerClassTreeSelectFieldNames}
             allowClear
           />
         </Form.Item>

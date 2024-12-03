@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   type CustomerClassAddDto,
+  customerClassTreeSelectFieldNames,
   treeQO,
   useAddMutation
 } from '@/features/digital-modeling/merchants/customer-class'
@@ -51,7 +52,7 @@ export default function AddModal(props: AddModalProps) {
         className="pt-3"
         name="add-form"
         form={form}
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 6 }}
         initialValues={{
           bProduct: false
         }}
@@ -63,11 +64,7 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={{
-              label: 'cDepName',
-              value: 'cDepCode',
-              children: 'Child'
-            }}
+            fieldNames={customerClassTreeSelectFieldNames}
             allowClear
           />
         </Form.Item>

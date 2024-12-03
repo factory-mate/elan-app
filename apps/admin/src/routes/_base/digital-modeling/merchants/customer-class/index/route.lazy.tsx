@@ -31,7 +31,7 @@ function RouteComponent() {
       ...pageParams,
       conditions:
         selectedTreeKeys.length > 0
-          ? `cCustomerCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
+          ? `cCustomerClassCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
           : undefined
     })
   )
@@ -86,7 +86,7 @@ function RouteComponent() {
           />
         </Splitter.Panel>
         <Splitter.Panel
-          defaultSize="85%"
+          defaultSize="80%"
           min="70%"
         >
           <Space
