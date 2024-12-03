@@ -71,14 +71,14 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<CustomerClassAddDto>
           name="cCustomerClassName"
           label="客户分类名称"
-          rules={[{ required: true, message: '请输入客户分类名称' }]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item<CustomerClassAddDto>
           name="cCustomerClassCode"
           label="客户分类编码"
-          rules={[{ required: true, message: '请输入客户分类编码' }]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
