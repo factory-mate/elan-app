@@ -13,7 +13,6 @@ export interface UnitClassTreeItemVo extends UnitClassVo {
 }
 
 export interface UnitClassAddDto {
-  cParentCode: string
   cUnitClassCode: string
   cUnitClassName: string
   cUnitClassType: string

@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   type DepartmentAddDto,
+  departmentTreeSelectFieldNames,
   treeQO,
   useAddMutation
 } from '@/features/digital-modeling/orgs/department'
@@ -63,11 +64,7 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={{
-              label: 'cDepName',
-              value: 'cDepCode',
-              children: 'Child'
-            }}
+            fieldNames={departmentTreeSelectFieldNames}
             allowClear
           />
         </Form.Item>
@@ -88,7 +85,6 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item label="负责人员">
           <Select
             mode="multiple"
-            options={[]}
             allowClear
           />
         </Form.Item>

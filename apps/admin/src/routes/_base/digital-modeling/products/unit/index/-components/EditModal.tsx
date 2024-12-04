@@ -2,12 +2,14 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import {
-  type DepartmentEditDto,
-  departmentTreeSelectFieldNames,
   detailQO,
-  treeQO,
+  type UnitEditDto,
   useEditMutation
-} from '@/features/digital-modeling/orgs/department'
+} from '@/features/digital-modeling/products/unit'
+import {
+  fullListQO,
+  unitClassSelectFieldNames
+} from '@/features/digital-modeling/products/unit-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -20,10 +22,10 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<DepartmentEditDto>()
+  const [form] = Form.useForm<UnitEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: treeData } = useSuspenseQuery(treeQO())
+  const { data: options } = useSuspenseQuery(fullListQO())
 
   const editMutation = useEditMutation()
 
@@ -35,12 +37,11 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<DepartmentEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<UnitEditDto>['onFinish'] = (values) => {
     editMutation.mutate(
       {
         ...detailData,
-        ...values,
-        bodys: []
+        ...values
       },
       {
         onSuccess: () => {
@@ -52,7 +53,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑部门"
+      title="编辑计量单位档案"
       open={open}
       onOk={() => {
         setOpen?.(true)
@@ -60,56 +61,53 @@ export default function EditModal(props: EditModalProps) {
       }}
       onCancel={() => setOpen?.(false)}
       forceRender
+      width="60%"
     >
       <Form
         className="pt-3"
         name="edit-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          bProduct: false
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item
-            name="cParentCode"
-            label="上级部门"
+          <Form.Item<UnitEditDto>
+            name="cUnitClassCode"
+            label="所属计量单位组"
+            rules={[{ required: true }]}
           >
-            <TreeSelect
-              treeData={treeData}
-              fieldNames={departmentTreeSelectFieldNames}
-              allowClear
-            />
-          </Form.Item>
-          <Form.Item<DepartmentEditDto>
-            name="cDepName"
-            label="部门名称"
-            rules={[{ required: true, message: '请输入部门名称' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item<DepartmentEditDto>
-            name="cDepCode"
-            label="部门编码"
-            rules={[{ required: true, message: '请输入部门编码' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item label="负责人员">
             <Select
-              mode="multiple"
-              allowClear
+              options={options}
+              fieldNames={unitClassSelectFieldNames}
             />
           </Form.Item>
-          <Form.Item<DepartmentEditDto>
-            name="bProduct"
-            label="生产部门"
+          <Form.Item<UnitEditDto>
+            name="cUnitName"
+            label="计量单位名称"
+            rules={[{ required: true }]}
           >
-            <Switch
-              checkedChildren="开"
-              unCheckedChildren="关"
-            />
+            <Input />
+          </Form.Item>
+          <Form.Item<UnitEditDto>
+            name="cUnitCode"
+            label="计量单位编码"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item<UnitEditDto>
+            name="iRate"
+            label="换算率"
+          >
+            <InputNumber />
+          </Form.Item>
+          <Form.Item<UnitEditDto>
+            name="bMainUnit"
+            label="是否主计量"
+            valuePropName="checked"
+          >
+            <Checkbox />
           </Form.Item>
         </Skeleton>
       </Form>

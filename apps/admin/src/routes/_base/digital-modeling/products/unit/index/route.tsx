@@ -1,4 +1,5 @@
 import { listQO } from '@/features/digital-modeling/products/unit'
+import { fullListQO } from '@/features/digital-modeling/products/unit-class'
 import { defaultPageDto } from '@/features/pagination'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
@@ -6,6 +7,9 @@ export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
     title: '计量单位档案'
   },
   loader: async () => {
-    await queryClient.ensureQueryData(listQO(defaultPageDto))
+    await Promise.allSettled([
+      queryClient.ensureQueryData(listQO(defaultPageDto)),
+      queryClient.ensureQueryData(fullListQO())
+    ])
   }
 })

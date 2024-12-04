@@ -1,6 +1,6 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { UnitClassAddDto, UnitClassEditDto, UnitClassVo } from './types'
+import type { UnitClassAddDto, UnitClassEditDto, UnitClassTreeItemVo, UnitClassVo } from './types'
 
 export class UnitClassAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unitclass`
@@ -12,7 +12,7 @@ export class UnitClassAPI {
   }
 
   static async fullList(signal?: AbortSignal) {
-    return httpClient.get<UnitClassVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })
+    return httpClient.get<UnitClassTreeItemVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {

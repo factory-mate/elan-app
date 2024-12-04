@@ -1,13 +1,11 @@
-import type { TreeProps, TreeSelectProps } from 'antd'
+import type { SelectProps, TreeProps } from 'antd'
 
 export const unitClassTreeFieldNames: TreeProps['fieldNames'] = {
-  key: 'cUnitClassCode',
   title: 'cUnitClassName',
-  children: 'Child'
+  key: 'cUnitClassCode'
 }
 
-export const unitClassTreeSelectFieldNames: TreeSelectProps['fieldNames'] = {
+export const unitClassSelectFieldNames: SelectProps['fieldNames'] = {
   value: 'cUnitClassCode',
-  label: 'cUnitClassName',
-  children: 'Child'
+  label: 'cUnitClassName'
 }
