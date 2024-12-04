@@ -1,23 +1,29 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { UnitAddDto, UnitEditDto, UnitVo } from './types'
+import type { UnitClassAddDto, UnitClassEditDto, UnitClassVo } from './types'
 
-export class UnitAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unit`
+export class UnitClassAPI {
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unitclass`
 
   static async list(params: PageDto, signal?: AbortSignal) {
-    return httpClient.post<Page<UnitVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
+    return httpClient.post<Page<UnitClassVo>>(`${this.apiPrefix}/GetForPage`, params, {
+      signal
+    })
+  }
+
+  static async fullList(signal?: AbortSignal) {
+    return httpClient.get<UnitClassVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {
-    return httpClient.get<UnitVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
+    return httpClient.get<UnitClassVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
   }
 
-  static async add(data: UnitAddDto) {
+  static async add(data: UnitClassAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
-  static async edit(data: UnitEditDto) {
+  static async edit(data: UnitClassEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 

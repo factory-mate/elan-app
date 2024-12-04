@@ -53,9 +53,7 @@ export default function AddModal(props: AddModalProps) {
         name="add-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          bProduct: false
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
         <Form.Item
@@ -82,7 +80,7 @@ export default function AddModal(props: AddModalProps) {
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        <Form.Item<VendorClassAddDto>
           name="iGrade"
           label="分类级次"
         >

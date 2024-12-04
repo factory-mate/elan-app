@@ -68,9 +68,7 @@ export default function EditModal(props: EditModalProps) {
         name="edit-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          bProduct: false
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>

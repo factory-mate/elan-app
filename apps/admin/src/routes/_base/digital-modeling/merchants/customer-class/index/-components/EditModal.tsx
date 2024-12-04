@@ -66,9 +66,7 @@ export default function EditModal(props: EditModalProps) {
         name="edit-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          bProduct: false
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
@@ -96,7 +94,7 @@ export default function EditModal(props: EditModalProps) {
           >
             <Input />
           </Form.Item>
-          <Form.Item
+          <Form.Item<CustomerClassEditDto>
             name="iGrade"
             label="分类级次"
           >

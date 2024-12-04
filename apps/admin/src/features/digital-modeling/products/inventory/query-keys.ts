@@ -1,8 +1,8 @@
 import type { PageDto } from '@/features/pagination'
 
-export const LIST_QK = 'unit:list'
+export const LIST_QK = 'inventory:list'
 
-export const DETAIL_QK = 'unit:detail'
+export const DETAIL_QK = 'inventory:detail'
 
 export const listQK = (params: PageDto) => [LIST_QK, params] as const
 

@@ -2,11 +2,9 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import {
-  type CustomerClassAddDto,
-  customerClassTreeSelectFieldNames,
-  treeQO,
+  type UnitClassAddDto,
   useAddMutation
-} from '@/features/digital-modeling/merchants/customer-class'
+} from '@/features/digital-modeling/products/unit-class'
 
 interface AddModalProps {
   open?: boolean
@@ -16,13 +14,11 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
-  const [form] = Form.useForm<CustomerClassAddDto>()
-
-  const { data } = useSuspenseQuery(treeQO())
+  const [form] = Form.useForm<UnitClassAddDto>()
 
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<CustomerClassAddDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<UnitClassAddDto>['onFinish'] = (values) => {
     addMutation.mutate(
       {
         ...values
@@ -38,7 +34,7 @@ export default function AddModal(props: AddModalProps) {
 
   return (
     <Modal
-      title="新增客户分类"
+      title="新增计量单位组档案"
       open={open}
       onOk={() => {
         setOpen?.(true)
@@ -56,35 +52,32 @@ export default function AddModal(props: AddModalProps) {
         initialValues={{}}
         onFinish={onFinish}
       >
-        <Form.Item
-          name="cParentCode"
-          label="上级分类"
-        >
-          <TreeSelect
-            treeData={data}
-            fieldNames={customerClassTreeSelectFieldNames}
-            allowClear
-          />
-        </Form.Item>
-        <Form.Item<CustomerClassAddDto>
-          name="cCustomerClassName"
-          label="客户分类名称"
+        <Form.Item<UnitClassAddDto>
+          name="cUnitClassName"
+          label="计量单位组名称"
           rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item<CustomerClassAddDto>
-          name="cCustomerClassCode"
-          label="客户分类编码"
+        <Form.Item<UnitClassAddDto>
+          name="cUnitClassCode"
+          label="计量单位组编码"
           rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item<CustomerClassAddDto>
-          name="iGrade"
-          label="分类级次"
+        <Form.Item<UnitClassAddDto>
+          name="cUnitClassType"
+          label="计量单位组类别"
         >
-          <InputNumber />
+          <Select />
+        </Form.Item>
+        <Form.Item<UnitClassAddDto>
+          name="bDefault"
+          label="是否默认"
+          valuePropName="checked"
+        >
+          <Checkbox />
         </Form.Item>
       </Form>
     </Modal>

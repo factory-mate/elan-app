@@ -3,7 +3,7 @@ import { defaultPageDto } from '@/features/pagination'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
   staticData: {
-    title: '单位档案'
+    title: '计量单位档案'
   },
   loader: async () => {
     await queryClient.ensureQueryData(listQO(defaultPageDto))

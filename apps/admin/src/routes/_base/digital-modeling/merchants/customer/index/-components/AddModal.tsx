@@ -52,9 +52,7 @@ export default function AddModal(props: AddModalProps) {
         name="add-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          bProduct: false
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
         <Tabs

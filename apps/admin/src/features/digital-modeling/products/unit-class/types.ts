@@ -1,0 +1,26 @@
+export interface UnitClassVo {
+  UID: string
+  cUnitClassCode: string
+  cUnitClassName: string
+  cUnitClassType: string
+  bDefault: boolean
+}
+
+export interface UnitClassTreeItemVo extends UnitClassVo {
+  title: string
+  key: string
+  Child: UnitClassTreeItemVo[]
+}
+
+export interface UnitClassAddDto {
+  cParentCode: string
+  cUnitClassCode: string
+  cUnitClassName: string
+  cUnitClassType: string
+  bDefault: boolean
+}
+
+export interface UnitClassEditDto extends UnitClassAddDto {
+  UID: string
+  utfs: string
+}

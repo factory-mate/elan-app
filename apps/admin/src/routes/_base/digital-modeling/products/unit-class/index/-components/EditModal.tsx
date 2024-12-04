@@ -3,11 +3,9 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import {
   detailQO,
-  treeQO,
-  useEditMutation,
-  type VendorClassEditDto,
-  vendorClassTreeSelectFieldNames
-} from '@/features/digital-modeling/merchants/vendor-class'
+  type UnitClassEditDto,
+  useEditMutation
+} from '@/features/digital-modeling/products/unit-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -20,10 +18,9 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<VendorClassEditDto>()
+  const [form] = Form.useForm<UnitClassEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: treeData } = useSuspenseQuery(treeQO())
 
   const editMutation = useEditMutation()
 
@@ -35,7 +32,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<VendorClassEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<UnitClassEditDto>['onFinish'] = (values) => {
     editMutation.mutate(
       {
         ...detailData,
@@ -51,7 +48,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑供应商分类"
+      title="编辑计量单位组档案"
       open={open}
       onOk={() => {
         setOpen?.(true)
@@ -70,35 +67,32 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item
-            name="cParentCode"
-            label="上级分类"
-          >
-            <TreeSelect
-              treeData={treeData}
-              fieldNames={vendorClassTreeSelectFieldNames}
-              allowClear
-            />
-          </Form.Item>
-          <Form.Item<VendorClassEditDto>
-            name="cVendorClassName"
-            label="供应商分类名称"
-            rules={[{ required: true, message: '请输入供应商分类名称' }]}
+          <Form.Item<UnitClassEditDto>
+            name="cUnitClassName"
+            label="计量单位组名称"
+            rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item<VendorClassEditDto>
-            name="cVendorClassCode"
-            label="供应商分类编码"
-            rules={[{ required: true, message: '请输入供应商分类编码' }]}
+          <Form.Item<UnitClassEditDto>
+            name="cUnitClassCode"
+            label="计量单位组编码"
+            rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item<VendorClassEditDto>
-            name="iGrade"
-            label="分类级次"
+          <Form.Item<UnitClassEditDto>
+            name="cUnitClassType"
+            label="计量单位组类别"
           >
-            <InputNumber />
+            <Select />
+          </Form.Item>
+          <Form.Item<UnitClassEditDto>
+            name="bDefault"
+            label="是否默认"
+            valuePropName="checked"
+          >
+            <Checkbox />
           </Form.Item>
         </Skeleton>
       </Form>

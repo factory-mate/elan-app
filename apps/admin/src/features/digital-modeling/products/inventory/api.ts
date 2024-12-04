@@ -1,23 +1,23 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { UnitAddDto, UnitEditDto, UnitVo } from './types'
+import type { InventoryAddDto, InventoryEditDto, InventoryVo } from './types'
 
-export class UnitAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unit`
+export class InventoryAPI {
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/inventory`
 
   static async list(params: PageDto, signal?: AbortSignal) {
-    return httpClient.post<Page<UnitVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
+    return httpClient.post<Page<InventoryVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {
-    return httpClient.get<UnitVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
+    return httpClient.get<InventoryVo>(`${this.apiPrefix}/GetById`, { val }, { signal })
   }
 
-  static async add(data: UnitAddDto) {
+  static async add(data: InventoryAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
-  static async edit(data: UnitEditDto) {
+  static async edit(data: InventoryEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 

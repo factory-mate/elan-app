@@ -1,10 +1,10 @@
-import { UnitAPI } from './api'
-import type { UnitAddDto, UnitEditDto } from './types'
+import { UnitClassAPI } from './api'
+import type { UnitClassAddDto, UnitClassEditDto } from './types'
 
 export const useStartMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => UnitAPI.start(ids),
+    mutationFn: (ids: string[]) => UnitClassAPI.start(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -12,7 +12,7 @@ export const useStartMutation = () => {
 export const useStopMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => UnitAPI.stop(ids),
+    mutationFn: (ids: string[]) => UnitClassAPI.stop(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -20,7 +20,7 @@ export const useStopMutation = () => {
 export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => UnitAPI.delete(ids),
+    mutationFn: (ids: string[]) => UnitClassAPI.delete(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -28,7 +28,7 @@ export const useDeleteMutation = () => {
 export const useAddMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: UnitAddDto) => UnitAPI.add(data),
+    mutationFn: (data: UnitClassAddDto) => UnitClassAPI.add(data),
     onSuccess: () => showMessage('success')
   })
 }
@@ -36,7 +36,7 @@ export const useAddMutation = () => {
 export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: UnitEditDto) => UnitAPI.edit(data),
+    mutationFn: (data: UnitClassEditDto) => UnitClassAPI.edit(data),
     onSuccess: () => showMessage('success')
   })
 }

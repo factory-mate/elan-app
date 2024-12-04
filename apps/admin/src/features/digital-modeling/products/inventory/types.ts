@@ -1,11 +1,11 @@
 import type { Dayjs } from 'dayjs'
 
-export interface UnitVo {
+export interface InventoryVo {
   UID: string
-  cUnitClassCode: string
-  cUnitCode: string
-  cUnitName: string
-  cUnitShortName: string
+  cInventoryClassCode: string
+  cInventoryCode: string
+  cInventoryName: string
+  cInventoryShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
@@ -26,11 +26,11 @@ export interface UnitVo {
   cMemo: string
 }
 
-export interface UnitAddDto {
-  cUnitClassCode: string
-  cUnitCode: string
-  cUnitName: string
-  cUnitShortName: string
+export interface InventoryAddDto {
+  cInventoryClassCode: string
+  cInventoryCode: string
+  cInventoryName: string
+  cInventoryShortName: string
   cPerson: string
   cPhone: string
   cEmail: string
@@ -51,7 +51,7 @@ export interface UnitAddDto {
   cMemo: string
 }
 
-export interface UnitEditDto extends UnitAddDto {
+export interface InventoryEditDto extends InventoryAddDto {
   UID: string
   utfs: string
 }
