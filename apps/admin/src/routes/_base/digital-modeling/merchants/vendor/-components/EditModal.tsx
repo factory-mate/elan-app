@@ -53,7 +53,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑部门"
+      title="编辑供应商档案"
       open={open}
       onOk={() => {
         setOpen?.(true)
@@ -74,30 +74,225 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item<VendorEditDto>
-            name="cVendorName"
-            label="供应商名称"
-            rules={[{ required: true, message: '请输入供应商名称' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item<VendorEditDto>
-            name="cVendorCode"
-            label="供应商编码"
-            rules={[{ required: true, message: '请输入供应商编码' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="cParentCode"
-            label="所属分类"
-          >
-            <TreeSelect
-              treeData={treeData}
-              fieldNames={vendorClassTreeSelectFieldNames}
-              allowClear
-            />
-          </Form.Item>
+          <Tabs
+            items={[
+              {
+                label: '基本',
+                key: 'basic',
+                children: (
+                  <Row>
+                    <Col span={24}>
+                      <Form.Item<VendorEditDto>
+                        name="cVendorName"
+                        label="供应商名称"
+                        rules={[{ required: true }]}
+                        labelCol={{ span: 3 }}
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item<VendorEditDto>
+                        name="cVendorCode"
+                        label="供应商编码"
+                        rules={[{ required: true }]}
+                        labelCol={{ span: 3 }}
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cVendorClassCode"
+                        label="所属分类"
+                        rules={[{ required: true }]}
+                      >
+                        <TreeSelect
+                          treeData={treeData}
+                          fieldNames={vendorClassTreeSelectFieldNames}
+                          allowClear
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cExch_Name"
+                        label="币种"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cTaxID"
+                        label="税号"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cLegalPerson"
+                        label="法人"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cRegisterMoney"
+                        label="注册资金"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="dRegisterDate"
+                        label="成立日期"
+                      >
+                        <DatePicker />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )
+              },
+              {
+                label: '联系',
+                key: 'contact',
+                children: (
+                  <Row>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cDepCode"
+                        label="分管部门"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cManagerCode"
+                        label="专业业务员"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cPerson"
+                        label="联系人"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cPhone"
+                        label="手机"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cEmail"
+                        label="邮箱"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<VendorEditDto>
+                        name="cAddress"
+                        label="地址"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )
+              },
+              {
+                label: '信用',
+                key: 'credit',
+                children: (
+                  <Row>
+                    <Col span={4}>
+                      <Form.Item<VendorEditDto>
+                        name="IsCreditLimit"
+                        label="控制信用额度"
+                        valuePropName="checked"
+                        labelCol={{ span: 20 }}
+                      >
+                        <Checkbox />
+                      </Form.Item>
+                    </Col>
+                    <Col span={20}>
+                      <Form.Item<VendorEditDto>
+                        name="cCreditLimit"
+                        label="信用额度"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={4}>
+                      <Form.Item<VendorEditDto>
+                        name="IsCreditTerm"
+                        label="控制信用期限"
+                        valuePropName="checked"
+                        labelCol={{ span: 20 }}
+                      >
+                        <Checkbox />
+                      </Form.Item>
+                    </Col>
+                    <Col span={20}>
+                      <Form.Item<VendorEditDto>
+                        name="cCreditTerm"
+                        label="信用期限"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )
+              },
+              {
+                label: '其他',
+                key: 'others',
+                children: (
+                  <Row>
+                    <Col span={24}>
+                      <Form.Item<VendorEditDto>
+                        name="dDevelopmentDate"
+                        label="发展日期"
+                      >
+                        <DatePicker />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item<VendorEditDto>
+                        name="dStopDate"
+                        label="停止日期"
+                      >
+                        <DatePicker />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item<VendorEditDto>
+                        name="cMemo"
+                        label="备注"
+                      >
+                        <Input.TextArea />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )
+              },
+              { label: '扩展属性', key: 'extra', children: <div>暂无内容</div> }
+            ]}
+          />
         </Skeleton>
       </Form>
     </Modal>

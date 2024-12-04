@@ -58,7 +58,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑部门"
+      title="编辑客户档案"
       open={open}
       onOk={() => {
         setOpen?.(true)

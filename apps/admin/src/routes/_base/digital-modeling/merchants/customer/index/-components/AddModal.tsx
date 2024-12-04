@@ -37,7 +37,7 @@ export default function AddModal(props: AddModalProps) {
 
   return (
     <Modal
-      title="新增部门"
+      title="新增客户档案"
       open={open}
       onOk={() => {
         setOpen?.(true)

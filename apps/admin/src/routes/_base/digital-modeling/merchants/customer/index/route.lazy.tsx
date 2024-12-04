@@ -31,7 +31,7 @@ function RouteComponent() {
       ...pageParams,
       conditions:
         selectedTreeKeys.length > 0
-          ? `cCustomerCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
+          ? `cCustomerClassCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
           : undefined
     })
   )

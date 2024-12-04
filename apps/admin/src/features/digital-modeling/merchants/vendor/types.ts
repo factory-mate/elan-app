@@ -8,6 +8,20 @@ export interface VendorVo {
   cPhone: string
   cEmail: string
   cAddress: string
+  cExch_Name: string
+  cTaxID: string
+  cLegalPerson: string
+  cRegisterMoney: string
+  dRegisterDate: string
+  cDepCode: string
+  cManagerCode: string
+  IsCreditLimit: boolean
+  cCreditLimit: string
+  IsCreditTerm: boolean
+  cCreditTerm: string
+  dDevelopmentDate: string
+  dStopDate: string
+  cMemo: string
 }
 
 export interface VendorAddDto {
@@ -25,6 +39,8 @@ export interface VendorAddDto {
   cLegalPerson: string
   cRegisterMoney: string
   dRegisterDate: string
+  cDepCode: string
+  cManagerCode: string
   IsCreditLimit: boolean
   cCreditLimit: string
   IsCreditTerm: boolean
