@@ -8,6 +8,15 @@ export interface InventoryVo {
   cVendorName: string
 }
 
+export interface InventoryDetailVo {
+  UID: string
+  info?: InventoryInfoDto & { utfs: string }
+  qc?: InventoryQCDto
+  control?: InventoryControlDto
+  cost?: InventoryCostDto
+  extend?: any
+}
+
 export interface InventoryAddDto {
   info?: InventoryInfoDto
   qc?: InventoryQCDto
@@ -73,4 +82,5 @@ export interface InventoryCostDto {
 export interface InventoryEditDto extends InventoryAddDto {
   UID: string
   utfs: string
+  extend?: any
 }

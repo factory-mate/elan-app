@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 // Import Routes
 
 import { Route as rootRoute } from './../../routes/__root'
@@ -28,16 +26,12 @@ import { Route as BaseDigitalModelingOrgsEmployeeSettingsRouteImport } from './.
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
+import { Route as BaseDigitalModelingProductsInventoryIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory/index/route'
 import { Route as BaseDigitalModelingProductsInventoryClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory-class/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeIndexRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/index/route'
 import { Route as BaseDigitalModelingOrgsDepartmentIndexRouteImport } from './../../routes/_base/digital-modeling/orgs/department/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerClassIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer-class/index/route'
-
-// Create Virtual Routes
-
-const BaseDigitalModelingProductsInventoryIndexRouteLazyImport =
-  createFileRoute('/_base/digital-modeling/products/inventory/')()
 
 // Create/Update Routes
 
@@ -136,17 +130,6 @@ const BaseProductionPlanSalesOrderIndexRouteRoute =
     ).then((d) => d.Route),
   )
 
-const BaseDigitalModelingProductsInventoryIndexRouteLazyRoute =
-  BaseDigitalModelingProductsInventoryIndexRouteLazyImport.update({
-    id: '/digital-modeling/products/inventory/',
-    path: '/digital-modeling/products/inventory/',
-    getParentRoute: () => BaseRouteRoute,
-  } as any).lazy(() =>
-    import(
-      './../../routes/_base/digital-modeling/products/inventory/index/route.lazy'
-    ).then((d) => d.Route),
-  )
-
 const BaseDigitalModelingOrgsEmployeeSettingsRouteRoute =
   BaseDigitalModelingOrgsEmployeeSettingsRouteImport.update({
     id: '/digital-modeling/orgs/employee/settings',
@@ -180,6 +163,17 @@ const BaseDigitalModelingProductsUnitClassIndexRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/digital-modeling/products/unit-class/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingProductsInventoryIndexRouteRoute =
+  BaseDigitalModelingProductsInventoryIndexRouteImport.update({
+    id: '/digital-modeling/products/inventory/',
+    path: '/digital-modeling/products/inventory/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/inventory/index/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -354,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsInventoryClassIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/products/inventory/': {
+      id: '/_base/digital-modeling/products/inventory/'
+      path: '/digital-modeling/products/inventory'
+      fullPath: '/digital-modeling/products/inventory'
+      preLoaderRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/products/unit-class/': {
       id: '/_base/digital-modeling/products/unit-class/'
       path: '/digital-modeling/products/unit-class'
@@ -382,13 +383,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeSettingsRouteImport
       parentRoute: typeof BaseRouteImport
     }
-    '/_base/digital-modeling/products/inventory/': {
-      id: '/_base/digital-modeling/products/inventory/'
-      path: '/digital-modeling/products/inventory'
-      fullPath: '/digital-modeling/products/inventory'
-      preLoaderRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteLazyImport
-      parentRoute: typeof BaseRouteImport
-    }
   }
 }
 
@@ -407,11 +401,11 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingOrgsDepartmentIndexRouteRoute: typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeIndexRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
   BaseDigitalModelingProductsInventoryClassIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
+  BaseDigitalModelingProductsInventoryIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseDigitalModelingOrgsEmployeeSettingsRouteRoute: typeof BaseDigitalModelingOrgsEmployeeSettingsRouteRoute
-  BaseDigitalModelingProductsInventoryIndexRouteLazyRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteLazyRoute
 }
 
 const BaseRouteRouteChildren: BaseRouteRouteChildren = {
@@ -435,6 +429,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingOrgsEmployeeIndexRouteRoute,
   BaseDigitalModelingProductsInventoryClassIndexRouteRoute:
     BaseDigitalModelingProductsInventoryClassIndexRouteRoute,
+  BaseDigitalModelingProductsInventoryIndexRouteRoute:
+    BaseDigitalModelingProductsInventoryIndexRouteRoute,
   BaseDigitalModelingProductsUnitClassIndexRouteRoute:
     BaseDigitalModelingProductsUnitClassIndexRouteRoute,
   BaseDigitalModelingProductsUnitIndexRouteRoute:
@@ -443,8 +439,6 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingOrgsEmployeeAddRouteRoute,
   BaseDigitalModelingOrgsEmployeeSettingsRouteRoute:
     BaseDigitalModelingOrgsEmployeeSettingsRouteRoute,
-  BaseDigitalModelingProductsInventoryIndexRouteLazyRoute:
-    BaseDigitalModelingProductsInventoryIndexRouteLazyRoute,
 }
 
 const BaseRouteRouteWithChildren = BaseRouteRoute._addFileChildren(
@@ -479,11 +473,11 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/digital-modeling/orgs/employee': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
+  '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/digital-modeling/orgs/employee/settings': typeof BaseDigitalModelingOrgsEmployeeSettingsRouteRoute
-  '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -502,11 +496,11 @@ export interface FileRoutesByTo {
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/digital-modeling/orgs/employee': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
+  '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/digital-modeling/orgs/employee/settings': typeof BaseDigitalModelingOrgsEmployeeSettingsRouteRoute
-  '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteLazyRoute
 }
 
 export interface FileRoutesById {
@@ -527,11 +521,11 @@ export interface FileRoutesById {
   '/_base/digital-modeling/orgs/department/': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
   '/_base/digital-modeling/products/inventory-class/': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
+  '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/digital-modeling/orgs/employee/settings': typeof BaseDigitalModelingOrgsEmployeeSettingsRouteRoute
-  '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -552,11 +546,11 @@ export interface FileRouteTypes {
     | '/digital-modeling/orgs/department'
     | '/digital-modeling/orgs/employee'
     | '/digital-modeling/products/inventory-class'
+    | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/digital-modeling/orgs/employee/add'
     | '/digital-modeling/orgs/employee/settings'
-    | '/digital-modeling/products/inventory'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -574,11 +568,11 @@ export interface FileRouteTypes {
     | '/digital-modeling/orgs/department'
     | '/digital-modeling/orgs/employee'
     | '/digital-modeling/products/inventory-class'
+    | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/digital-modeling/orgs/employee/add'
     | '/digital-modeling/orgs/employee/settings'
-    | '/digital-modeling/products/inventory'
   id:
     | '__root__'
     | '/$'
@@ -597,11 +591,11 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/orgs/department/'
     | '/_base/digital-modeling/orgs/employee/'
     | '/_base/digital-modeling/products/inventory-class/'
+    | '/_base/digital-modeling/products/inventory/'
     | '/_base/digital-modeling/products/unit-class/'
     | '/_base/digital-modeling/products/unit/'
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/digital-modeling/orgs/employee/settings'
-    | '/_base/digital-modeling/products/inventory/'
   fileRoutesById: FileRoutesById
 }
 
@@ -650,11 +644,11 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/orgs/department/",
         "/_base/digital-modeling/orgs/employee/",
         "/_base/digital-modeling/products/inventory-class/",
+        "/_base/digital-modeling/products/inventory/",
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
         "/_base/digital-modeling/orgs/employee/add",
-        "/_base/digital-modeling/orgs/employee/settings",
-        "/_base/digital-modeling/products/inventory/"
+        "/_base/digital-modeling/orgs/employee/settings"
       ]
     },
     "/_public": {
@@ -715,6 +709,10 @@ export const routeTree = rootRoute
       "filePath": "_base/digital-modeling/products/inventory-class/index/route.tsx",
       "parent": "/_base"
     },
+    "/_base/digital-modeling/products/inventory/": {
+      "filePath": "_base/digital-modeling/products/inventory/index/route.tsx",
+      "parent": "/_base"
+    },
     "/_base/digital-modeling/products/unit-class/": {
       "filePath": "_base/digital-modeling/products/unit-class/index/route.tsx",
       "parent": "/_base"
@@ -729,10 +727,6 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/orgs/employee/settings": {
       "filePath": "_base/digital-modeling/orgs/employee/settings/route.tsx",
-      "parent": "/_base"
-    },
-    "/_base/digital-modeling/products/inventory/": {
-      "filePath": "_base/digital-modeling/products/inventory/index/route.lazy.tsx",
       "parent": "/_base"
     }
   }
