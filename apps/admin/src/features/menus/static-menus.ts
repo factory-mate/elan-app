@@ -11,8 +11,8 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
         key: '/orgs',
         children: [
           // { label: '公司档案', key: '/company' },
-          { label: '部门档案', key: '/department' },
-          { label: '职员档案', key: '/employee' }
+          { label: '部门档案', key: '/department' }
+          // { label: '职员档案', key: '/employee' }
           // { label: '工厂档案', key: '/factory' },
           // { label: '车间档案', key: '/workshop' }
         ]
@@ -24,8 +24,8 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
           { label: '计量单位组档案', key: '/unit-class' },
           { label: '计量单位档案', key: '/unit' },
           { label: '料品分类', key: '/inventory-class' },
-          { label: '料品档案', key: '/inventory' },
-          { label: '物料清单/配方', key: '/material-recipe' }
+          { label: '料品档案', key: '/inventory' }
+          // { label: '物料清单/配方', key: '/material-recipe' }
           // { label: '工序档案', key: '/process' },
           // { label: '工艺路线档案', key: '/process-route' }
         ]

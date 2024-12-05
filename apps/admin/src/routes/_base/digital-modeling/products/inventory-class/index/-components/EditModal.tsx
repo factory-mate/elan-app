@@ -1,12 +1,13 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   detailQO,
-  type UnitClassEditDto,
+  type InventoryClassEditDto,
+  inventoryClassTreeSelectFieldNames,
+  treeQO,
   useEditMutation
-} from '@/features/digital-modeling/products/unit-class'
+} from '@/features/digital-modeling/products/inventory-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -19,9 +20,9 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<UnitClassEditDto>()
+  const [form] = Form.useForm<InventoryClassEditDto>()
 
-  const { data } = useQuery(fullListQO('UnitClassType'))
+  const { data } = useSuspenseQuery(treeQO())
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
 
   const editMutation = useEditMutation()
@@ -34,7 +35,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<UnitClassEditDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<InventoryClassEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
         ...detailData,
@@ -47,7 +48,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑计量单位组档案"
+      title="编辑料品分类"
       open={open}
       onOk={() => {
         setOpen?.(true)
@@ -66,35 +67,35 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item<UnitClassEditDto>
-            name="cUnitClassName"
-            label="计量单位组名称"
-            rules={[{ required: true }]}
+          <Form.Item
+            name="cParentCode"
+            label="上级分类"
           >
-            <Input />
-          </Form.Item>
-          <Form.Item<UnitClassEditDto>
-            name="cUnitClassCode"
-            label="计量单位组编码"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item<UnitClassEditDto>
-            name="cUnitClassType"
-            label="计量单位组类别"
-          >
-            <Select
-              options={data}
-              fieldNames={dictSelectFieldNames}
+            <TreeSelect
+              treeData={data}
+              fieldNames={inventoryClassTreeSelectFieldNames}
+              allowClear
             />
           </Form.Item>
-          <Form.Item<UnitClassEditDto>
-            name="bDefault"
-            label="是否默认"
-            valuePropName="checked"
+          <Form.Item<InventoryClassEditDto>
+            name="cInvClassName"
+            label="料品分类名称"
+            rules={[{ required: true }]}
           >
-            <Checkbox />
+            <Input />
+          </Form.Item>
+          <Form.Item<InventoryClassEditDto>
+            name="cInvClassCode"
+            label="料品分类编码"
+            rules={[{ required: true }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item<InventoryClassEditDto>
+            name="iGrate"
+            label="分类级次"
+          >
+            <InputNumber />
           </Form.Item>
         </Skeleton>
       </Form>

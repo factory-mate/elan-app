@@ -1,8 +1,8 @@
 export interface InventoryClassVo {
   UID: string
-  cInventoryClassCode: string
-  cInventoryClassName: string
-  iGrade: number
+  cInvClassCode: string
+  cInvClassName: string
+  iGrate: number
 }
 
 export interface InventoryClassTreeItemVo extends InventoryClassVo {
@@ -13,9 +13,9 @@ export interface InventoryClassTreeItemVo extends InventoryClassVo {
 
 export interface InventoryClassAddDto {
   cParentCode: string
-  cInventoryClassCode: string
-  cInventoryClassName: string
-  iGrade: number
+  cInvClassCode: string
+  cInvClassName: string
+  iGrate: number
 }
 
 export interface InventoryClassEditDto extends InventoryClassAddDto {
