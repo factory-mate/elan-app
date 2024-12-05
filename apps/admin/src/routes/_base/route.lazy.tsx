@@ -1,10 +1,10 @@
 import { BaseLayout } from '@/features/layouts'
 
 export const Route = createLazyFileRoute('/_base')({
-  component: Layout
+  component: RouteComponent
 })
 
-function Layout() {
+function RouteComponent() {
   return (
     <BaseLayout>
       <Outlet />

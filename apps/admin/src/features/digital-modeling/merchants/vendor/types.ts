@@ -14,7 +14,9 @@ export interface VendorVo {
   cRegisterMoney: string
   dRegisterDate: string
   cDepCode: string
+  cDepName: string
   cManagerCode: string
+  cEmployeeName: string
   IsCreditLimit: boolean
   cCreditLimit: string
   IsCreditTerm: boolean
@@ -40,7 +42,9 @@ export interface VendorAddDto {
   cRegisterMoney: string
   dRegisterDate: string
   cDepCode: string
+  cDepName: string
   cManagerCode: string
+  cEmployeeName: string
   IsCreditLimit: boolean
   cCreditLimit: string
   IsCreditTerm: boolean

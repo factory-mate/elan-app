@@ -1,10 +1,10 @@
 import { type ChangePasswordFormValues, useChangePasswordMutation } from '@/features/users'
 
 export const Route = createLazyFileRoute('/_base/change-password')({
-  component: Page
+  component: RouteComponent
 })
 
-function Page() {
+function RouteComponent() {
   const [form] = Form.useForm<ChangePasswordFormValues>()
 
   const userStore = useUserStore()

@@ -1,8 +1,8 @@
 export const Route = createLazyFileRoute('/_base/')({
-  component: Page
+  component: RouteComponent
 })
 
-function Page() {
+function RouteComponent() {
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       <div className="mb-20 flex w-full flex-col items-center justify-center space-y-4 bg-[#f0f2f5] py-10">

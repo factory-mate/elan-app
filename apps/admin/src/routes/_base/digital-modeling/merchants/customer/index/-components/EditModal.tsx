@@ -10,6 +10,15 @@ import {
   customerClassTreeSelectFieldNames,
   treeQO
 } from '@/features/digital-modeling/merchants/customer-class'
+import {
+  departmentSelectFieldNames,
+  listQO as departmentListQO
+} from '@/features/digital-modeling/orgs/department'
+import {
+  employeeSelectFieldNames,
+  listQO as employeeListQO
+} from '@/features/digital-modeling/orgs/employee'
+import { defaultPageDto } from '@/features/pagination'
 
 import type { EditModalMeta } from '../-types'
 
@@ -24,8 +33,23 @@ export default function EditModal(props: EditModalProps) {
 
   const [form] = Form.useForm<CustomerEditDto>()
 
+  const cDepName = Form.useWatch('cDepName', form)
+  const cEmployeeName = Form.useWatch('cEmployeeName', form)
+
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
   const { data: treeData } = useSuspenseQuery(treeQO())
+  const { data: departmentData } = useQuery(
+    departmentListQO({
+      ...defaultPageDto,
+      conditions: cDepName ? `cDepName like ${cDepName}` : undefined
+    })
+  )
+  const { data: employeeData } = useQuery(
+    employeeListQO({
+      ...defaultPageDto,
+      conditions: cEmployeeName ? `cEmployeeName like ${cEmployeeName}` : undefined
+    })
+  )
 
   const editMutation = useEditMutation()
 
@@ -42,7 +66,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<CustomerEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<CustomerEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
         ...detailData,
@@ -54,7 +78,6 @@ export default function EditModal(props: EditModalProps) {
         }
       }
     )
-  }
 
   return (
     <Modal
@@ -170,7 +193,13 @@ export default function EditModal(props: EditModalProps) {
                         name="cDepCode"
                         label="分管部门"
                       >
-                        <Input />
+                        <Select
+                          options={departmentData?.data}
+                          fieldNames={departmentSelectFieldNames}
+                          showSearch
+                          allowClear
+                          onSearch={(value) => form.setFieldValue('cDepName', value)}
+                        />
                       </Form.Item>
                     </Col>
                     <Col span={12}>
@@ -178,7 +207,13 @@ export default function EditModal(props: EditModalProps) {
                         name="cManagerCode"
                         label="专业业务员"
                       >
-                        <Input />
+                        <Select
+                          options={employeeData?.data}
+                          fieldNames={employeeSelectFieldNames}
+                          showSearch
+                          allowClear
+                          onSearch={(value) => form.setFieldValue('cEmployeeName', value)}
+                        />
                       </Form.Item>
                     </Col>
                     <Col span={12}>

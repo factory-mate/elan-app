@@ -6,6 +6,15 @@ import {
   treeQO,
   vendorClassTreeSelectFieldNames
 } from '@/features/digital-modeling/merchants/vendor-class'
+import {
+  departmentSelectFieldNames,
+  listQO as departmentListQO
+} from '@/features/digital-modeling/orgs/department'
+import {
+  employeeSelectFieldNames,
+  listQO as employeeListQO
+} from '@/features/digital-modeling/orgs/employee'
+import { defaultPageDto } from '@/features/pagination'
 
 interface AddModalProps {
   open?: boolean
@@ -17,11 +26,25 @@ export default function AddModal(props: AddModalProps) {
 
   const [form] = Form.useForm<VendorAddDto>()
 
-  const { data } = useSuspenseQuery(treeQO())
+  const cDepName = Form.useWatch('cDepName', form)
+  const cEmployeeName = Form.useWatch('cEmployeeName', form)
 
+  const { data } = useSuspenseQuery(treeQO())
+  const { data: departmentData } = useQuery(
+    departmentListQO({
+      ...defaultPageDto,
+      conditions: cDepName ? `cDepName like ${cDepName}` : undefined
+    })
+  )
+  const { data: employeeData } = useQuery(
+    employeeListQO({
+      ...defaultPageDto,
+      conditions: cEmployeeName ? `cEmployeeName like ${cEmployeeName}` : undefined
+    })
+  )
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<VendorAddDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<VendorAddDto>['onFinish'] = (values) =>
     addMutation.mutate(
       {
         ...values
@@ -33,7 +56,6 @@ export default function AddModal(props: AddModalProps) {
         }
       }
     )
-  }
 
   return (
     <Modal
@@ -148,7 +170,13 @@ export default function AddModal(props: AddModalProps) {
                       name="cDepCode"
                       label="分管部门"
                     >
-                      <Input />
+                      <Select
+                        options={departmentData?.data}
+                        fieldNames={departmentSelectFieldNames}
+                        showSearch
+                        allowClear
+                        onSearch={(value) => form.setFieldValue('cDepName', value)}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -156,7 +184,13 @@ export default function AddModal(props: AddModalProps) {
                       name="cManagerCode"
                       label="专业业务员"
                     >
-                      <Input />
+                      <Select
+                        options={employeeData?.data}
+                        fieldNames={employeeSelectFieldNames}
+                        showSearch
+                        allowClear
+                        onSearch={(value) => form.setFieldValue('cEmployeeName', value)}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>

@@ -16,7 +16,9 @@ export interface CustomerVo {
   cRegisterMoney: string
   dRegisterDate: string
   cDepCode: string
+  cDepName: string
   cManagerCode: string
+  cEmployeeName: string
   IsCreditLimit: boolean
   cCreditLimit: string
   IsCreditTerm: boolean
@@ -41,7 +43,9 @@ export interface CustomerAddDto {
   cRegisterMoney: string
   dRegisterDate: string | Dayjs
   cDepCode: string
+  cDepName: string
   cManagerCode: string
+  cEmployeeName: string
   IsCreditLimit: boolean
   cCreditLimit: string
   IsCreditTerm: boolean

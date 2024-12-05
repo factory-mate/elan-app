@@ -18,7 +18,7 @@ export default function AddModal(props: AddModalProps) {
 
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<UnitClassAddDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<UnitClassAddDto>['onFinish'] = (values) =>
     addMutation.mutate(
       {
         ...values
@@ -30,7 +30,6 @@ export default function AddModal(props: AddModalProps) {
         }
       }
     )
-  }
 
   return (
     <Modal

@@ -3,7 +3,7 @@ import type { Page, PageDto } from '@/features/pagination'
 import type { EmployeeAddDto, EmployeeEditDto, EmployeeVo } from './types'
 
 export class EmployeeAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/Employee`
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/employee`
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<EmployeeVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

@@ -37,7 +37,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<UnitEditDto>['onFinish'] = (values) => {
+  const onFinish: FormProps<UnitEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
         ...detailData,
@@ -49,7 +49,6 @@ export default function EditModal(props: EditModalProps) {
         }
       }
     )
-  }
 
   return (
     <Modal
