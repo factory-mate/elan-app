@@ -32,7 +32,7 @@ function RouteComponent() {
     () => [
       { field: 'cUnitClassCode', headerName: '计量单位组编码' },
       { field: 'cUnitClassName', headerName: '计量单位组名称' },
-      { field: 'cUnitClassType', headerName: '计量单位组类别' },
+      { field: 'cUnitClassTypeName', headerName: '计量单位组类别' },
       {
         field: 'bDefault',
         headerName: '是否默认',

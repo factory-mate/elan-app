@@ -1,6 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   type UnitClassAddDto,
   useAddMutation
@@ -15,6 +16,8 @@ export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
   const [form] = Form.useForm<UnitClassAddDto>()
+
+  const { data } = useQuery(fullListQO('UnitClassType'))
 
   const addMutation = useAddMutation()
 
@@ -48,7 +51,7 @@ export default function AddModal(props: AddModalProps) {
         name="add-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{}}
+        initialValues={{ cUnitClassTypeName: '' }}
         onFinish={onFinish}
       >
         <Form.Item<UnitClassAddDto>
@@ -69,7 +72,10 @@ export default function AddModal(props: AddModalProps) {
           name="cUnitClassType"
           label="计量单位组类别"
         >
-          <Select />
+          <Select
+            options={data}
+            fieldNames={dictSelectFieldNames}
+          />
         </Form.Item>
         <Form.Item<UnitClassAddDto>
           name="bDefault"

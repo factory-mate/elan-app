@@ -1,5 +1,6 @@
 Adress
 bodys
+dictonary
 iMaxLengh
 IsMulitChoose
 lucide

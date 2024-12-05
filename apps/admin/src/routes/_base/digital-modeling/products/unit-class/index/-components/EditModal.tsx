@@ -1,6 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   detailQO,
   type UnitClassEditDto,
@@ -20,6 +21,7 @@ export default function EditModal(props: EditModalProps) {
 
   const [form] = Form.useForm<UnitClassEditDto>()
 
+  const { data } = useQuery(fullListQO('UnitClassType'))
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
 
   const editMutation = useEditMutation()
@@ -39,9 +41,7 @@ export default function EditModal(props: EditModalProps) {
         ...values
       },
       {
-        onSuccess: () => {
-          setOpen?.(false)
-        }
+        onSuccess: () => setOpen?.(false)
       }
     )
 
@@ -62,7 +62,7 @@ export default function EditModal(props: EditModalProps) {
         name="edit-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{}}
+        initialValues={{ cUnitClassTypeName: '' }}
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
@@ -84,7 +84,10 @@ export default function EditModal(props: EditModalProps) {
             name="cUnitClassType"
             label="计量单位组类别"
           >
-            <Select />
+            <Select
+              options={data}
+              fieldNames={dictSelectFieldNames}
+            />
           </Form.Item>
           <Form.Item<UnitClassEditDto>
             name="bDefault"

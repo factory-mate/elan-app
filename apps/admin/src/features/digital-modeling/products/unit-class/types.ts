@@ -3,6 +3,7 @@ export interface UnitClassVo {
   cUnitClassCode: string
   cUnitClassName: string
   cUnitClassType: string
+  cUnitClassTypeName: string
   bDefault: boolean
 }
 
@@ -16,6 +17,7 @@ export interface UnitClassAddDto {
   cUnitClassCode: string
   cUnitClassName: string
   cUnitClassType: string
+  cUnitClassTypeName: string
   bDefault: boolean
 }
 
