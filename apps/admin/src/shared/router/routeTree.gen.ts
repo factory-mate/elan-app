@@ -28,6 +28,7 @@ import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../.
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
 import { Route as BaseDigitalModelingProductsInventoryIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory/index/route'
 import { Route as BaseDigitalModelingProductsInventoryClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory-class/index/route'
+import { Route as BaseDigitalModelingProductsBomIndexRouteImport } from './../../routes/_base/digital-modeling/products/bom/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeIndexRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/index/route'
 import { Route as BaseDigitalModelingOrgsDepartmentIndexRouteImport } from './../../routes/_base/digital-modeling/orgs/department/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer/index/route'
@@ -188,6 +189,17 @@ const BaseDigitalModelingProductsInventoryClassIndexRouteRoute =
     ).then((d) => d.Route),
   )
 
+const BaseDigitalModelingProductsBomIndexRouteRoute =
+  BaseDigitalModelingProductsBomIndexRouteImport.update({
+    id: '/digital-modeling/products/bom/',
+    path: '/digital-modeling/products/bom/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/bom/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
 const BaseDigitalModelingOrgsEmployeeIndexRouteRoute =
   BaseDigitalModelingOrgsEmployeeIndexRouteImport.update({
     id: '/digital-modeling/orgs/employee/',
@@ -341,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/products/bom/': {
+      id: '/_base/digital-modeling/products/bom/'
+      path: '/digital-modeling/products/bom'
+      fullPath: '/digital-modeling/products/bom'
+      preLoaderRoute: typeof BaseDigitalModelingProductsBomIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/products/inventory-class/': {
       id: '/_base/digital-modeling/products/inventory-class/'
       path: '/digital-modeling/products/inventory-class'
@@ -400,6 +419,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   BaseDigitalModelingOrgsDepartmentIndexRouteRoute: typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeIndexRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
+  BaseDigitalModelingProductsBomIndexRouteRoute: typeof BaseDigitalModelingProductsBomIndexRouteRoute
   BaseDigitalModelingProductsInventoryClassIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   BaseDigitalModelingProductsInventoryIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
@@ -427,6 +447,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingOrgsDepartmentIndexRouteRoute,
   BaseDigitalModelingOrgsEmployeeIndexRouteRoute:
     BaseDigitalModelingOrgsEmployeeIndexRouteRoute,
+  BaseDigitalModelingProductsBomIndexRouteRoute:
+    BaseDigitalModelingProductsBomIndexRouteRoute,
   BaseDigitalModelingProductsInventoryClassIndexRouteRoute:
     BaseDigitalModelingProductsInventoryClassIndexRouteRoute,
   BaseDigitalModelingProductsInventoryIndexRouteRoute:
@@ -472,6 +494,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/digital-modeling/orgs/employee': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
+  '/digital-modeling/products/bom': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
@@ -495,6 +518,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/digital-modeling/orgs/employee': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
+  '/digital-modeling/products/bom': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
@@ -520,6 +544,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/merchants/customer/': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/_base/digital-modeling/orgs/department/': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
+  '/_base/digital-modeling/products/bom/': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/_base/digital-modeling/products/inventory-class/': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
@@ -545,6 +570,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
     | '/digital-modeling/orgs/employee'
+    | '/digital-modeling/products/bom'
     | '/digital-modeling/products/inventory-class'
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
@@ -567,6 +593,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
     | '/digital-modeling/orgs/employee'
+    | '/digital-modeling/products/bom'
     | '/digital-modeling/products/inventory-class'
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
@@ -590,6 +617,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/merchants/customer/'
     | '/_base/digital-modeling/orgs/department/'
     | '/_base/digital-modeling/orgs/employee/'
+    | '/_base/digital-modeling/products/bom/'
     | '/_base/digital-modeling/products/inventory-class/'
     | '/_base/digital-modeling/products/inventory/'
     | '/_base/digital-modeling/products/unit-class/'
@@ -643,6 +671,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/merchants/customer/",
         "/_base/digital-modeling/orgs/department/",
         "/_base/digital-modeling/orgs/employee/",
+        "/_base/digital-modeling/products/bom/",
         "/_base/digital-modeling/products/inventory-class/",
         "/_base/digital-modeling/products/inventory/",
         "/_base/digital-modeling/products/unit-class/",
@@ -703,6 +732,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/orgs/employee/": {
       "filePath": "_base/digital-modeling/orgs/employee/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/bom/": {
+      "filePath": "_base/digital-modeling/products/bom/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/products/inventory-class/": {
