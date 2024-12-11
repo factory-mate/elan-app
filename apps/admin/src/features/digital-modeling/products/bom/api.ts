@@ -1,6 +1,6 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { BOMChildItemVo, BOMTreeItemVo, BOMVo } from './types'
+import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
 
 export class BOMAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/mes_bom`
@@ -21,11 +21,11 @@ export class BOMAPI {
     return httpClient.get<BOMChildItemVo[]>(`${this.apiPrefix}/GetBodys`, { val }, { signal })
   }
 
-  static async add(data: BOMVo) {
+  static async add(data: BOMAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
-  static async edit(data: BOMVo) {
+  static async edit(data: BOMEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 

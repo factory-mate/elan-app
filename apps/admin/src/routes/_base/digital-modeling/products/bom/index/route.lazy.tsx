@@ -68,7 +68,6 @@ function RouteComponent() {
           新增
         </Button>
         <Button
-          type="primary"
           onClick={() => {
             if (!selectedTreeData) {
               showMessage('select-data')
@@ -85,7 +84,6 @@ function RouteComponent() {
           编辑
         </Button>
         <Button
-          type="primary"
           onClick={() => {
             if (!selectedTreeData) {
               showMessage('select-data')

@@ -35,6 +35,7 @@ function RouteComponent() {
           : undefined
     })
   )
+
   const deleteMutation = useDeleteMutation()
 
   const columnDefs = useMemo<ColDef<CustomerClassVo>[]>(

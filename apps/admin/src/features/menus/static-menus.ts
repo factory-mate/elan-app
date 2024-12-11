@@ -46,10 +46,8 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
     label: '生产计划',
     key: '/production-plan',
     children: [
-      {
-        label: '销售订单',
-        key: '/sales-order'
-      }
+      { label: '销售订单', key: '/sales-order' },
+      { label: '生产订单', key: '/production-order' }
     ]
   }
 ]
