@@ -32,9 +32,9 @@ export interface ProductionOrderVo {
   cInvStd: string
   cAssQuantity: number
   cAssUnitName: string
-  bCheck: true
+  bCheck: boolean
   cUnitName: string
-  bHalf: true
+  bHalf: boolean
   cUnitCode: string
   dEndTime: string
   cBomType: string
@@ -42,8 +42,8 @@ export interface ProductionOrderVo {
   dBeginTime: string
   cBomUID: string
   UID: string
-  IsValid: true
-  IsDelete: true
+  IsValid: boolean
+  IsDelete: boolean
   cCreateUserCode: string
   cCreateUserName: string
   dCreateTime: string
@@ -55,9 +55,84 @@ export interface ProductionOrderVo {
   utfs: string
 }
 
-export interface ProductionOrderAddDto {}
+export interface ProductionOrderAddDto {
+  head: ProductionOrderHead
+  bodys: ProductionOrderBody[]
+}
 
-export interface ProductionOrderEditDto {}
+export interface ProductionOrderHead {
+  UID: string
+  dDate: string
+  cMemo: string
+  cDefindParm01: string
+  cDefindParm02: string
+  cDefindParm03: string
+  cDefindParm04: string
+  cDefindParm05: string
+  cDefindParm06: string
+  cDefindParm07: string
+  cDefindParm08: string
+  cDefindParm09: string
+  cDefindParm10: string
+  cVouchType: string
+  cStandardType: string
+}
+
+export interface ProductionOrderBody {
+  cSourceCode?: string
+  cSourceRowUID?: string
+  cInvCode?: string
+  cInvName?: string
+  nQuantity?: number
+  cMemo?: string
+  cDefindParm01?: string
+  cDefindParm02?: string
+  cDefindParm03?: string
+  cDefindParm04?: string
+  cDefindParm05?: string
+  cDefindParm06?: string
+  cDefindParm07?: string
+  cDefindParm08?: string
+  cDefindParm09?: string
+  cDefindParm10?: string
+  cInvStd?: string
+  cAssQuantity?: number
+  cAssUnitName?: string
+  bCheck?: boolean
+  cUnitName?: string
+  bHalf?: boolean
+  cUnitCode?: string
+  dEndTime?: string
+  cBomType?: string
+  cBomVersion?: string
+  dBeginTime?: string
+  cBomUID?: string
+  bodyss?: ProductionOrderBodyss[]
+}
+
+export interface ProductionOrderBodyss {
+  cInvCode?: string
+  cInvName?: string
+  cInvStd?: string
+  cSourceCode?: string
+  cSourceRowUID?: string
+  nQuantity?: number
+  cMemo?: string
+  cDefindParm01?: string
+  cDefindParm02?: string
+  cDefindParm03?: string
+  cDefindParm04?: string
+  cDefindParm05?: string
+  cDefindParm06?: string
+  cDefindParm07?: string
+  cDefindParm08?: string
+  cDefindParm09?: string
+  cDefindParm10?: string
+}
+
+export interface ProductionOrderEditDto extends ProductionOrderHead {
+  bodys: ProductionOrderBody[]
+}
 
 export enum TaskStatus {
   AUDIT = 0,

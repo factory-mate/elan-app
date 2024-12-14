@@ -167,10 +167,7 @@ export default function EditModal(props: EditModalProps) {
     <Modal
       title="新增物料清单/配方"
       open={open}
-      onOk={() => {
-        setOpen?.(true)
-        form.submit()
-      }}
+      onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
       width="80%"

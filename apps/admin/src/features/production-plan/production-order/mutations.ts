@@ -1,5 +1,5 @@
 import { ProductionOrderAPI } from './api'
-import { TaskStatus } from './types'
+import { type ProductionOrderAddDto, type ProductionOrderEditDto, TaskStatus } from './types'
 
 export const useAuditMutation = () => {
   const { showMessage } = useMessage()
@@ -37,6 +37,22 @@ export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
     mutationFn: (ids: string[]) => ProductionOrderAPI.delete(ids),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useAddMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: ProductionOrderAddDto) => ProductionOrderAPI.add(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useEditMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: ProductionOrderEditDto) => ProductionOrderAPI.edit(data),
     onSuccess: () => showMessage('success')
   })
 }

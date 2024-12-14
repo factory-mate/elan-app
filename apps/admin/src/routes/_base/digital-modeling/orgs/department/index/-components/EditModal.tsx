@@ -53,10 +53,7 @@ export default function EditModal(props: EditModalProps) {
     <Modal
       title="编辑部门"
       open={open}
-      onOk={() => {
-        setOpen?.(true)
-        form.submit()
-      }}
+      onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
     >

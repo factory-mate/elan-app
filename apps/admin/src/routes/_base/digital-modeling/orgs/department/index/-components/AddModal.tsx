@@ -40,10 +40,7 @@ export default function AddModal(props: AddModalProps) {
     <Modal
       title="新增部门"
       open={open}
-      onOk={() => {
-        setOpen?.(true)
-        form.submit()
-      }}
+      onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
     >

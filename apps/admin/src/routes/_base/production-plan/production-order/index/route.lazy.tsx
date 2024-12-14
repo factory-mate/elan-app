@@ -11,6 +11,10 @@ import {
   useDeleteMutation,
   useOpenMutation
 } from '@/features/production-plan/production-order'
+import { queryBuilder } from '@/features/query-builder'
+
+import { FilterArea } from './-components'
+import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/production-plan/production-order/')({
   component: RouteComponent
@@ -21,11 +25,19 @@ function RouteComponent() {
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-
-  const createModal = useModal()
+  const [filterData, setFilterData] = useState<FilterForm>({})
 
   const { data, isFetching, isPlaceholderData } = useQuery(
-    listQO({ ...pageParams, conditions: undefined })
+    listQO({
+      ...pageParams,
+      conditions: queryBuilder<FilterForm>([
+        { key: 'cVouchTypeName', type: 'eq', val: filterData.cVouchTypeName },
+        { key: 'iStatus', type: 'eq', val: filterData.iStatus },
+        { key: 'cCode', type: 'like', val: filterData.cCode },
+        { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
+        { key: 'cInvCode', type: 'like', val: filterData.cInvCode }
+      ])
+    })
   )
 
   const auditMutation = useAuditMutation()
@@ -69,6 +81,7 @@ function RouteComponent() {
         direction="vertical"
         className="w-full"
       >
+        <FilterArea setFilterData={setFilterData} />
         <Flex
           className="h-8"
           justify="space-between"
@@ -132,12 +145,9 @@ function RouteComponent() {
             </Button>
           </Space>
           <Space>
-            <Button
-              type="primary"
-              onClick={() => createModal.toggle()}
-            >
-              新增
-            </Button>
+            <Link to="/production-plan/production-order/add">
+              <Button type="primary">新增</Button>
+            </Link>
           </Space>
         </Flex>
 

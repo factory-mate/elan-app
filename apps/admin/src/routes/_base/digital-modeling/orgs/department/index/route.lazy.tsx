@@ -25,7 +25,7 @@ function RouteComponent() {
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
 
-  const createModal = useModal()
+  const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
 
   const { data, isFetching, isPlaceholderData } = useQuery(
@@ -141,7 +141,7 @@ function RouteComponent() {
               <Space>
                 <Button
                   type="primary"
-                  onClick={() => createModal.toggle()}
+                  onClick={() => addModal.toggle()}
                 >
                   新增
                 </Button>
@@ -200,8 +200,8 @@ function RouteComponent() {
       </Splitter>
 
       <AddModal
-        open={createModal.open}
-        setOpen={createModal.setOpen}
+        open={addModal.open}
+        setOpen={addModal.setOpen}
       />
       <EditModal
         meta={editModal.meta}

@@ -1,6 +1,6 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { ProductionOrderVo } from './types'
+import type { ProductionOrderAddDto, ProductionOrderEditDto, ProductionOrderVo } from './types'
 
 export class ProductionOrderAPI {
   private static apiPrefix = `${MES_SERVICE_API_PREFIX}/product_vouch`
@@ -11,11 +11,11 @@ export class ProductionOrderAPI {
     })
   }
 
-  static async add(data: ProductionOrderVo) {
+  static async add(data: ProductionOrderAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
-  static async edit(data: ProductionOrderVo) {
+  static async edit(data: ProductionOrderEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 

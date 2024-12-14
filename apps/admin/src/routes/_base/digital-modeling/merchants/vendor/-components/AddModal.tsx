@@ -61,10 +61,7 @@ export default function AddModal(props: AddModalProps) {
     <Modal
       title="新增供应商档案"
       open={open}
-      onOk={() => {
-        setOpen?.(true)
-        form.submit()
-      }}
+      onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
       width="60%"

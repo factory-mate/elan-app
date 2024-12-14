@@ -49,10 +49,7 @@ export default function EditModal(props: EditModalProps) {
     <Modal
       title="编辑计量单位组档案"
       open={open}
-      onOk={() => {
-        setOpen?.(true)
-        form.submit()
-      }}
+      onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
       width="60%"
