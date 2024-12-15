@@ -1,6 +1,12 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { ProductionOrderAddDto, ProductionOrderEditDto, ProductionOrderVo } from './types'
+import type {
+  ProductionOrderAddDto,
+  ProductionOrderBody,
+  ProductionOrderBodyss,
+  ProductionOrderEditDto,
+  ProductionOrderVo
+} from './types'
 
 export class ProductionOrderAPI {
   private static apiPrefix = `${MES_SERVICE_API_PREFIX}/product_vouch`
@@ -9,6 +15,26 @@ export class ProductionOrderAPI {
     return httpClient.post<Page<ProductionOrderVo>>(`${this.apiPrefix}/GetForPage`, params, {
       signal
     })
+  }
+
+  static async detail(val: string, signal?: AbortSignal) {
+    return httpClient.get<ProductionOrderVo>(`${this.apiPrefix}/GetBodyByUID`, { val }, { signal })
+  }
+
+  static async detailBodys(val: string, signal?: AbortSignal) {
+    return httpClient.get<ProductionOrderBody[]>(
+      `${this.apiPrefix}/GetListBodysByMID`,
+      { val },
+      { signal }
+    )
+  }
+
+  static async detailBodyss(val: string, signal?: AbortSignal) {
+    return httpClient.get<ProductionOrderBodyss[]>(
+      `${this.apiPrefix}/GetListBodyssByMID`,
+      { val },
+      { signal }
+    )
   }
 
   static async add(data: ProductionOrderAddDto) {

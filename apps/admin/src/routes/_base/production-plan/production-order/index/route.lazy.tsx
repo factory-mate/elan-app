@@ -1,4 +1,4 @@
-import type { ColDef } from '@ag-grid-community/core'
+import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
 
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
@@ -70,7 +70,26 @@ function RouteComponent() {
       { field: 'cBomVersion', headerName: 'BOM版本' },
       { field: 'cBomVersion', headerName: 'BOM版本说明' },
       { field: 'dVerifyTime', headerName: '审核时间' },
-      { field: 'dEndTime', headerName: '关闭时间' }
+      { field: 'dEndTime', headerName: '关闭时间' },
+      {
+        headerName: '操作',
+        sortable: false,
+        pinned: 'right',
+        lockPinned: true,
+        cellRenderer: (params: ICellRendererParams<ProductionOrderVo>) => (
+          <Space>
+            <Link to={`/production-plan/production-order/${params.data!.UID}/edit`}>
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+              >
+                编辑
+              </Button>
+            </Link>
+          </Space>
+        )
+      }
     ],
     []
   )

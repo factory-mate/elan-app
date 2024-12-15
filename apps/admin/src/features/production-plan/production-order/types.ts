@@ -108,6 +108,8 @@ export interface ProductionOrderBody {
   dBeginTime?: string
   cBomUID?: string
   bodyss?: ProductionOrderBodyss[]
+  MID?: string
+  UID?: string
 }
 
 export interface ProductionOrderBodyss {
