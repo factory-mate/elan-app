@@ -4,6 +4,7 @@ import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   type BOMChildItemVo,
   type BOMEditDto,
@@ -29,6 +30,7 @@ export default function EditModal(props: EditModalProps) {
 
   const [form] = Form.useForm<BOMEditDto>()
 
+  const { data: bomCandidates } = useSuspenseQuery(fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
 
   const editMutation = useEditMutation()
@@ -192,7 +194,10 @@ export default function EditModal(props: EditModalProps) {
                   name="cBOMTypeName"
                   label="BOM 类别"
                 >
-                  <Input />
+                  <Select
+                    options={bomCandidates}
+                    fieldNames={dictSelectFieldNames}
+                  />
                 </Form.Item>
               </Col>
               <Col span={8}>

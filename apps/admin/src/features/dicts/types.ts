@@ -5,4 +5,6 @@ export interface DictVo {
   cDictonaryTypeCode: string
 }
 
-export type DictTypes = 'UnitClassType'
+export type DictTypes =
+  | 'UnitClassType' // 计量单位组别
+  | 'BOMType' // BOM类型

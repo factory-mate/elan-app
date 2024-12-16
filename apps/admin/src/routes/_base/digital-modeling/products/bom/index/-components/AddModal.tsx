@@ -3,6 +3,7 @@ import { AgGridReact } from '@ag-grid-community/react'
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   type BOMAddDto,
   type BOMChildItemVo,
@@ -23,6 +24,7 @@ export default function AddModal(props: AddModalProps) {
 
   const [form] = Form.useForm<BOMAddDto>()
 
+  const { data: bomCandidates } = useSuspenseQuery(fullListQO('BOMType'))
   const addMutation = useAddMutation()
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(
@@ -174,7 +176,10 @@ export default function AddModal(props: AddModalProps) {
                 name="cBOMTypeName"
                 label="BOM 类别"
               >
-                <Input />
+                <Select
+                  options={bomCandidates}
+                  fieldNames={dictSelectFieldNames}
+                />
               </Form.Item>
             </Col>
             <Col span={8}>
