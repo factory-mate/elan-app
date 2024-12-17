@@ -7,6 +7,11 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
     key: '/digital-modeling',
     children: [
       {
+        label: '基本设置',
+        key: '/basic-settings',
+        children: [{ label: '编码方案', key: '/coding-scheme' }]
+      },
+      {
         label: '组织架构',
         key: '/orgs',
         children: [

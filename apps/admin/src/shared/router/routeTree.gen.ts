@@ -36,6 +36,7 @@ import { Route as BaseDigitalModelingOrgsEmployeeIndexRouteImport } from './../.
 import { Route as BaseDigitalModelingOrgsDepartmentIndexRouteImport } from './../../routes/_base/digital-modeling/orgs/department/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerClassIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer-class/index/route'
+import { Route as BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteImport } from './../../routes/_base/digital-modeling/basic-settings/coding-scheme/index/route'
 
 // Create/Update Routes
 
@@ -280,6 +281,17 @@ const BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute =
     ).then((d) => d.Route),
   )
 
+const BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute =
+  BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteImport.update({
+    id: '/digital-modeling/basic-settings/coding-scheme/',
+    path: '/digital-modeling/basic-settings/coding-scheme/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/basic-settings/coding-scheme/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -373,6 +385,13 @@ declare module '@tanstack/react-router' {
       path: '/production-plan/production-order/add'
       fullPath: '/production-plan/production-order/add'
       preLoaderRoute: typeof BaseProductionPlanProductionOrderAddRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/basic-settings/coding-scheme/': {
+      id: '/_base/digital-modeling/basic-settings/coding-scheme/'
+      path: '/digital-modeling/basic-settings/coding-scheme'
+      fullPath: '/digital-modeling/basic-settings/coding-scheme'
+      preLoaderRoute: typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
     '/_base/digital-modeling/merchants/customer-class/': {
@@ -474,6 +493,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingMerchantsVendorRouteRoute: typeof BaseDigitalModelingMerchantsVendorRouteRoute
   BaseDigitalModelingMerchantsVendorClassRouteRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   BaseProductionPlanProductionOrderAddRouteRoute: typeof BaseProductionPlanProductionOrderAddRouteRoute
+  BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute: typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   BaseDigitalModelingOrgsDepartmentIndexRouteRoute: typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -503,6 +523,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingMerchantsVendorClassRouteRoute,
   BaseProductionPlanProductionOrderAddRouteRoute:
     BaseProductionPlanProductionOrderAddRouteRoute,
+  BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute:
+    BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute,
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute:
     BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute,
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute:
@@ -558,6 +580,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/digital-modeling/basic-settings/coding-scheme': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -585,6 +608,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/digital-modeling/basic-settings/coding-scheme': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -614,6 +638,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/_base/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/_base/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/_base/digital-modeling/basic-settings/coding-scheme/': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/_base/digital-modeling/merchants/customer-class/': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/_base/digital-modeling/merchants/customer/': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
   '/_base/digital-modeling/orgs/department/': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
@@ -643,6 +668,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
     | '/production-plan/production-order/add'
+    | '/digital-modeling/basic-settings/coding-scheme'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
@@ -669,6 +695,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
     | '/production-plan/production-order/add'
+    | '/digital-modeling/basic-settings/coding-scheme'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
     | '/digital-modeling/orgs/department'
@@ -696,6 +723,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/merchants/vendor'
     | '/_base/digital-modeling/merchants/vendor-class'
     | '/_base/production-plan/production-order/add'
+    | '/_base/digital-modeling/basic-settings/coding-scheme/'
     | '/_base/digital-modeling/merchants/customer-class/'
     | '/_base/digital-modeling/merchants/customer/'
     | '/_base/digital-modeling/orgs/department/'
@@ -753,6 +781,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/merchants/vendor",
         "/_base/digital-modeling/merchants/vendor-class",
         "/_base/production-plan/production-order/add",
+        "/_base/digital-modeling/basic-settings/coding-scheme/",
         "/_base/digital-modeling/merchants/customer-class/",
         "/_base/digital-modeling/merchants/customer/",
         "/_base/digital-modeling/orgs/department/",
@@ -811,6 +840,10 @@ export const routeTree = rootRoute
     },
     "/_base/production-plan/production-order/add": {
       "filePath": "_base/production-plan/production-order/add/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/basic-settings/coding-scheme/": {
+      "filePath": "_base/digital-modeling/basic-settings/coding-scheme/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/merchants/customer-class/": {
