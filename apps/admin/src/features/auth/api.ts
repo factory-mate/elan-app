@@ -1,7 +1,7 @@
 import type { LoginDto, LoginVo } from './types'
 
 export class AuthAPI {
-  private static apiPrefix = '/manager-center/Login'
+  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/Login`
 
   static async login(loginDto: LoginDto) {
     return httpClient.post<LoginVo>(`${this.apiPrefix}/LoginIn`, loginDto)
