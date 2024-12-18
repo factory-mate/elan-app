@@ -10,9 +10,7 @@ export class UnitClassAPI {
   }
 
   static async list(params: PageDto, signal?: AbortSignal) {
-    return httpClient.post<Page<UnitClassVo>>(`${this.apiPrefix}/GetForPage`, params, {
-      signal
-    })
+    return httpClient.post<Page<UnitClassVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {
