@@ -181,7 +181,7 @@ export default function AddModal(props: AddModalProps) {
                   </Col>
                   <Col span={6}>
                     <Form.Item<InventoryAddDto>
-                      name={['control', 'cPeriodUnitType']}
+                      name={['control', 'iPeriodValue']}
                       label="保质期周期"
                       labelCol={{ span: 12 }}
                     >
@@ -201,7 +201,7 @@ export default function AddModal(props: AddModalProps) {
                   </Col>
                   <Col span={6}>
                     <Form.Item<InventoryAddDto>
-                      name={['control', 'IsBuy']}
+                      name={['control', 'IsProduct']}
                       label="自制"
                       valuePropName="checked"
                       labelCol={{ span: 12 }}
@@ -221,7 +221,7 @@ export default function AddModal(props: AddModalProps) {
                   </Col>
                   <Col span={6}>
                     <Form.Item<InventoryAddDto>
-                      name={['control', 'IsProduct']}
+                      name={['control', 'IsMaterial']}
                       label="生产耗用"
                       valuePropName="checked"
                       labelCol={{ span: 12 }}
