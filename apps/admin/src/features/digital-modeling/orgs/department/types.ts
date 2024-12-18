@@ -3,7 +3,7 @@ export interface DepartmentVo {
   cDepCode: string
   cDepName: string
   bProduct: boolean
-  iStatus: number
+  IsValid: boolean
   cCreateUserName: string
   dModifyTime: string
 }

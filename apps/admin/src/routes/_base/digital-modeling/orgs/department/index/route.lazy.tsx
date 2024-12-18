@@ -52,9 +52,8 @@ function RouteComponent() {
         valueGetter: (params) => booleanLabelValueGetter(params.data?.bProduct)
       },
       {
-        field: 'iStatus',
+        field: 'IsValid',
         headerName: '启用',
-        valueGetter: (params) => params.data?.iStatus === 1,
         cellRenderer: (params: CustomCellRendererProps) => (
           <Switch
             value={params.value}

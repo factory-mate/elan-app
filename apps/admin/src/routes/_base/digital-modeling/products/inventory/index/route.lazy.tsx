@@ -92,7 +92,10 @@ function RouteComponent() {
           defaultSize="80%"
           min="70%"
         >
-          <Space direction="vertical">
+          <Space
+            direction="vertical"
+            className="w-full"
+          >
             <Flex
               className="h-8"
               justify="space-between"
