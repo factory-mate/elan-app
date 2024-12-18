@@ -1,3 +1,4 @@
+import { fullListQO } from '@/features/dicts'
 import { treeQO } from '@/features/digital-modeling/products/inventory-class'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/inventory/')({
@@ -5,6 +6,9 @@ export const Route = createFileRoute('/_base/digital-modeling/products/inventory
     title: '料品档案'
   },
   beforeLoad: async () => {
-    await queryClient.ensureQueryData(treeQO())
+    await Promise.all([
+      queryClient.ensureQueryData(treeQO()),
+      queryClient.ensureQueryData(fullListQO('PeriodUnitType'))
+    ])
   }
 })

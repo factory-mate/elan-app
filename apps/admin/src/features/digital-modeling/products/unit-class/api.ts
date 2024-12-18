@@ -1,18 +1,18 @@
-import type { Page, PageDto } from '@/features/pagination'
+import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type { UnitClassAddDto, UnitClassEditDto, UnitClassTreeItemVo, UnitClassVo } from './types'
 
 export class UnitClassAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unitclass`
 
+  static async fullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.get<UnitClassTreeItemVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })
+  }
+
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<UnitClassVo>>(`${this.apiPrefix}/GetForPage`, params, {
       signal
     })
-  }
-
-  static async fullList(signal?: AbortSignal) {
-    return httpClient.get<UnitClassTreeItemVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })
   }
 
   static async detail(val: string, signal?: AbortSignal) {

@@ -6,9 +6,12 @@ export interface Page<T = any> {
   dataCount: number
 }
 
-export interface PageDto {
+export interface PageDto extends FullPageDto {
   pageIndex: number
   pageSize: number
+}
+
+export interface FullPageDto {
   conditions?: string
   orderByFileds?: string
 }

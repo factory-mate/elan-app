@@ -1,10 +1,14 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
 import {
   type InventoryAddDto,
   useAddMutation
 } from '@/features/digital-modeling/products/inventory'
+import * as InventoryClass from '@/features/digital-modeling/products/inventory-class'
+import * as Unit from '@/features/digital-modeling/products/unit'
+import * as UnitClass from '@/features/digital-modeling/products/unit-class'
 
 interface AddModalProps {
   open?: boolean
@@ -15,6 +19,17 @@ export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
   const [form] = Form.useForm<InventoryAddDto>()
+
+  const cUnitClassCode = Form.useWatch(['info', 'cUnitClassCode'], form)
+
+  const { data: periodUnitCandidates } = useSuspenseQuery(fullListQO('PeriodUnitType'))
+  const { data: inventoryClassCandidates } = useQuery(InventoryClass.fullListQO({}))
+  const { data: unitClassCandidates } = useQuery(UnitClass.fullListQO({}))
+  const { data: unitCandidates } = useQuery(
+    Unit.fullListQO({
+      conditions: cUnitClassCode ? `cUnitClassCode = ${cUnitClassCode}` : undefined
+    })
+  )
 
   const addMutation = useAddMutation()
 
@@ -92,7 +107,10 @@ export default function AddModal(props: AddModalProps) {
                       label="所属分类"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={inventoryClassCandidates}
+                        fieldNames={InventoryClass.inventoryClassSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -101,7 +119,33 @@ export default function AddModal(props: AddModalProps) {
                       label="计量单位组"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={unitClassCandidates}
+                        fieldNames={UnitClass.unitClassSelectFieldNames}
+                        onSelect={async (value) => {
+                          const mainUnit = await queryClient.ensureQueryData(
+                            Unit.fullListQO({
+                              conditions: `cUnitClassCode = ${value} && bMainUnit = true`
+                            })
+                          )
+                          if (mainUnit.length > 0) {
+                            const unitCode = mainUnit[0].cUnitCode
+                            form.setFields([
+                              { name: ['info', 'cBuyUnitCode'], value: unitCode },
+                              { name: ['info', 'cSaleUnitCode'], value: unitCode },
+                              { name: ['info', 'cStoreUnitCode'], value: unitCode },
+                              { name: ['info', 'cProductUnitCode'], value: unitCode }
+                            ])
+                          } else {
+                            form.setFields([
+                              { name: ['info', 'cBuyUnitCode'], value: undefined },
+                              { name: ['info', 'cSaleUnitCode'], value: undefined },
+                              { name: ['info', 'cStoreUnitCode'], value: undefined },
+                              { name: ['info', 'cProductUnitCode'], value: undefined }
+                            ])
+                          }
+                        }}
+                      />
                     </Form.Item>
                   </Col>
 
@@ -111,7 +155,10 @@ export default function AddModal(props: AddModalProps) {
                       label="采购计量单位"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={unitCandidates}
+                        fieldNames={Unit.unitSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -120,7 +167,10 @@ export default function AddModal(props: AddModalProps) {
                       label="销售计量单位"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={unitCandidates}
+                        fieldNames={Unit.unitSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
 
@@ -130,7 +180,10 @@ export default function AddModal(props: AddModalProps) {
                       label="库存计量单位"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={unitCandidates}
+                        fieldNames={Unit.unitSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -139,7 +192,10 @@ export default function AddModal(props: AddModalProps) {
                       label="生产计量单位"
                       rules={[{ required: true }]}
                     >
-                      <Input />
+                      <Select
+                        options={unitCandidates}
+                        fieldNames={Unit.unitSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -176,7 +232,10 @@ export default function AddModal(props: AddModalProps) {
                       label="保质期单位"
                       labelCol={{ span: 12 }}
                     >
-                      <Select options={[]} />
+                      <Select
+                        options={periodUnitCandidates}
+                        fieldNames={dictSelectFieldNames}
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={6}>

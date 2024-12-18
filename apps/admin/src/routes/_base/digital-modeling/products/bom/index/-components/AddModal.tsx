@@ -25,6 +25,7 @@ export default function AddModal(props: AddModalProps) {
   const [form] = Form.useForm<BOMAddDto>()
 
   const { data: bomCandidates } = useSuspenseQuery(fullListQO('BOMType'))
+
   const addMutation = useAddMutation()
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(

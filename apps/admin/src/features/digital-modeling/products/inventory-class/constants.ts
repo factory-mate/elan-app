@@ -1,4 +1,4 @@
-import type { TreeProps, TreeSelectProps } from 'antd'
+import type { SelectProps, TreeProps, TreeSelectProps } from 'antd'
 
 export const inventoryClassTreeFieldNames: TreeProps['fieldNames'] = {
   key: 'cInvClassCode',
@@ -10,4 +10,9 @@ export const inventoryClassTreeSelectFieldNames: TreeSelectProps['fieldNames'] =
   label: 'cInvClassName',
   value: 'cInvClassCode',
   children: 'Child'
+}
+
+export const inventoryClassSelectFieldNames: SelectProps['fieldNames'] = {
+  label: 'cInvClassName',
+  value: 'cInvClassCode'
 }

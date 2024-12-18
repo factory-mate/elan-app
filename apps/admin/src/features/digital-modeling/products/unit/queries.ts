@@ -1,7 +1,13 @@
-import type { PageDto } from '@/features/pagination'
+import type { FullPageDto, PageDto } from '@/features/pagination'
 
 import { UnitAPI } from './api'
-import { detailQK, listQK } from './query-keys'
+import { detailQK, fullListQK, listQK } from './query-keys'
+
+export const fullListQO = (params: FullPageDto) =>
+  queryOptions({
+    queryKey: fullListQK(params),
+    queryFn: ({ signal }) => UnitAPI.fullList(params, signal)
+  })
 
 export const listQO = (params: PageDto) =>
   queryOptions({

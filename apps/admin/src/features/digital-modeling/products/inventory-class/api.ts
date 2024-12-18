@@ -1,4 +1,4 @@
-import type { Page, PageDto } from '@/features/pagination'
+import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type {
   InventoryClassAddDto,
@@ -12,6 +12,10 @@ export class InventoryClassAPI {
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<InventoryClassTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
+  }
+
+  static async fullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.get<InventoryClassVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })
   }
 
   static async list(params: PageDto, signal?: AbortSignal) {

@@ -13,7 +13,7 @@ interface TreeAreaProps {
 export default function TreeArea(props: TreeAreaProps) {
   const { selectedTreeKeys, setSelectedTreeKeys } = props
 
-  const { data } = useSuspenseQuery(fullListQO())
+  const { data } = useSuspenseQuery(fullListQO({}))
 
   return (
     <Tree

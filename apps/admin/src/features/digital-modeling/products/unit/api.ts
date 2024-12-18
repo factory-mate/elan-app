@@ -1,9 +1,13 @@
-import type { Page, PageDto } from '@/features/pagination'
+import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type { UnitAddDto, UnitEditDto, UnitVo } from './types'
 
 export class UnitAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unit`
+
+  static async fullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.get<UnitVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })
+  }
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<UnitVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

@@ -9,7 +9,7 @@ export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
   beforeLoad: async () => {
     await Promise.allSettled([
       queryClient.ensureQueryData(listQO(defaultPageDto)),
-      queryClient.ensureQueryData(fullListQO())
+      queryClient.ensureQueryData(fullListQO({}))
     ])
   }
 })
