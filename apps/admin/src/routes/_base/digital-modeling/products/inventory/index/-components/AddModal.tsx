@@ -9,6 +9,7 @@ import {
 import * as InventoryClass from '@/features/digital-modeling/products/inventory-class'
 import * as Unit from '@/features/digital-modeling/products/unit'
 import * as UnitClass from '@/features/digital-modeling/products/unit-class'
+import { onlyCanSelectTreeLeafNode } from '@/shared/antd'
 
 interface AddModalProps {
   open?: boolean
@@ -23,7 +24,7 @@ export default function AddModal(props: AddModalProps) {
   const cUnitClassCode = Form.useWatch(['info', 'cUnitClassCode'], form)
 
   const { data: periodUnitCandidates } = useSuspenseQuery(fullListQO('PeriodUnitType'))
-  const { data: inventoryClassCandidates } = useQuery(InventoryClass.fullListQO({}))
+  const { data: inventoryClassCandidates } = useQuery(InventoryClass.treeQO())
   const { data: unitClassCandidates } = useQuery(UnitClass.fullListQO({}))
   const { data: unitCandidates } = useQuery(
     Unit.fullListQO({
@@ -107,9 +108,9 @@ export default function AddModal(props: AddModalProps) {
                       label="所属分类"
                       rules={[{ required: true }]}
                     >
-                      <Select
-                        options={inventoryClassCandidates}
-                        fieldNames={InventoryClass.inventoryClassSelectFieldNames}
+                      <TreeSelect
+                        treeData={onlyCanSelectTreeLeafNode(inventoryClassCandidates ?? [])}
+                        fieldNames={InventoryClass.inventoryClassTreeSelectFieldNames}
                       />
                     </Form.Item>
                   </Col>

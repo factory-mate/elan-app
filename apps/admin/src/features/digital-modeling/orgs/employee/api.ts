@@ -21,6 +21,10 @@ export class EmployeeAPI {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 
+  static async setFreezeStatus(ids: string[], isFreeze: boolean) {
+    return httpClient.post(`${this.apiPrefix}/SetFreezeStatus`, { ids, bFreeze: isFreeze })
+  }
+
   static async start(ids: string[]) {
     return httpClient.post(`${this.apiPrefix}/Start`, ids)
   }
