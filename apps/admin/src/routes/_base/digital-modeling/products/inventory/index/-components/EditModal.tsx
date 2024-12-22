@@ -243,7 +243,7 @@ export default function EditModal(props: EditModalProps) {
                     </Col>
                     <Col span={6}>
                       <Form.Item<InventoryEditDto>
-                        name={['control', 'iPeriodValue']}
+                        name={['control', 'cPeriodUnitType']}
                         label="保质期单位"
                         labelCol={{ span: 12 }}
                       >
@@ -255,7 +255,7 @@ export default function EditModal(props: EditModalProps) {
                     </Col>
                     <Col span={6}>
                       <Form.Item<InventoryEditDto>
-                        name={['control', 'cPeriodUnitType']}
+                        name={['control', 'iPeriodValue']}
                         label="保质期周期"
                         labelCol={{ span: 12 }}
                       >

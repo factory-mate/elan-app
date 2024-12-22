@@ -18,6 +18,8 @@ export interface EmployeeVo {
   cPhoneExtensionNumber: string
   cAdress: string
   iStatus: number
+  cEmployeeStatuCode: string
+  dEndLoginTime: string
 }
 
 export interface EmployeeAddDto {
@@ -41,4 +43,14 @@ export interface EmployeeAddDto {
 export interface EmployeeEditDto extends EmployeeAddDto {
   UID: string
   utfs: string
+}
+
+export interface EmployeeUpdateDeptDto {
+  UID: string[]
+  cDepCode: string
+}
+
+export interface EmployeeSetFreezeStatusDto {
+  UID: string[]
+  bFreeze: boolean
 }

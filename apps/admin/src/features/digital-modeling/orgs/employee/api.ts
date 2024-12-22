@@ -1,6 +1,12 @@
 import type { Page, PageDto } from '@/features/pagination'
 
-import type { EmployeeAddDto, EmployeeEditDto, EmployeeVo } from './types'
+import type {
+  EmployeeAddDto,
+  EmployeeEditDto,
+  EmployeeSetFreezeStatusDto,
+  EmployeeUpdateDeptDto,
+  EmployeeVo
+} from './types'
 
 export class EmployeeAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/employee`
@@ -21,8 +27,12 @@ export class EmployeeAPI {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
   }
 
-  static async setFreezeStatus(ids: string[], isFreeze: boolean) {
-    return httpClient.post(`${this.apiPrefix}/SetFreezeStatus`, { ids, bFreeze: isFreeze })
+  static async changeParent(data: EmployeeUpdateDeptDto) {
+    return httpClient.post(`${this.apiPrefix}/ChangeParent`, data)
+  }
+
+  static async setFreezeStatus(data: EmployeeSetFreezeStatusDto) {
+    return httpClient.post(`${this.apiPrefix}/SetFreezeStatus`, data)
   }
 
   static async start(ids: string[]) {

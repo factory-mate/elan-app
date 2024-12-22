@@ -42,8 +42,8 @@ function RouteComponent() {
       { field: 'cDepName', headerName: '部门' },
       { field: 'cProfessionalTypeName', headerName: '职务' },
       { field: 'cMobile', headerName: '手机' },
-      { field: 'iStatus', headerName: '账号状态' },
-      { headerName: '最后登录' },
+      { field: 'cEmployeeStatuCode', headerName: '账号状态' },
+      { field: 'dEndLoginTime', headerName: '最后登录' },
       {
         headerName: '操作',
         width: 250,
@@ -75,6 +75,13 @@ function RouteComponent() {
               variant="text"
             >
               冻结
+            </Button>
+            <Button
+              size="small"
+              color="primary"
+              variant="text"
+            >
+              解冻
             </Button>
             <Button
               size="small"
