@@ -3,8 +3,8 @@ import { AgGridReact } from '@ag-grid-community/react'
 import { useAsyncEffect } from 'ahooks'
 import type { FormProps } from 'antd'
 
-import { bomTypeOptions } from '@/features/digital-modeling/products/bom'
 import {
+  bomTypeOptions,
   detailBodysQO,
   detailBodyssQO,
   detailQO,

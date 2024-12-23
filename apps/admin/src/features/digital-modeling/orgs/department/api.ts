@@ -1,4 +1,4 @@
-import type { Page, PageDto } from '@/features/pagination'
+import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type {
   DepartmentAddDto,
@@ -12,6 +12,10 @@ export class DepartmentAPI {
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<DepartmentTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
+  }
+
+  static async fullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.post<DepartmentVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })
   }
 
   static async list(params: PageDto, signal?: AbortSignal) {
