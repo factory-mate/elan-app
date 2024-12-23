@@ -2,6 +2,7 @@ import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
 import type { FormProps } from 'antd'
 
+import { bomTypeOptions } from '@/features/digital-modeling/products/bom'
 import {
   type ProductionOrderBody,
   type ProductionOrderHead,
@@ -57,7 +58,17 @@ function RouteComponent() {
       { field: 'cUnitName', headerName: '计量单位', editable: true },
       { field: 'dBeginTime', headerName: '开工时间', editable: true, cellDataType: 'dateString' },
       { field: 'dEndTime', headerName: '完工时间', editable: true, cellDataType: 'dateString' },
-      { field: 'cBomType', headerName: 'BOM类型', editable: true },
+      {
+        field: 'cBomType',
+        headerName: 'BOM类型',
+        // cellRenderer: (params: CustomCellRendererProps<ProductionOrderBody>) =>
+        //   params.data?.cBomType,
+        editable: true,
+        cellEditor: 'agSelectCellEditor',
+        cellEditorParams: {
+          values: bomTypeOptions
+        }
+      },
       { field: 'cBomVersion', headerName: 'BOM版本', editable: true },
       {
         headerName: '操作',

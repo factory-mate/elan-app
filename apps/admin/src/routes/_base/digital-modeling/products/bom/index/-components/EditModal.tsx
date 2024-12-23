@@ -127,8 +127,8 @@ export default function EditModal(props: EditModalProps) {
       {
         field: 'cSupplyTypeName',
         headerName: '供应类型',
-        cellRenderer: (params: CustomCellRendererProps) =>
-          supplyTypeLabelMap.get(params.data.cSupplyType),
+        cellRenderer: (params: CustomCellRendererProps<BOMChildItemVo>) =>
+          supplyTypeLabelMap.get(params.data?.cSupplyType ?? ''),
         editable: true,
         cellEditor: 'agSelectCellEditor',
         cellEditorParams: {
