@@ -49,7 +49,11 @@ function RouteComponent() {
   const columnDefs = useMemo<ColDef<ProductionOrderVo>[]>(
     () => [
       { field: 'cCode', headerName: '生产订单号' },
-      { field: 'cSourceRowUID', headerName: '行号' },
+      {
+        field: 'cSourceRowUID',
+        headerName: '行号',
+        valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
+      },
       { field: 'cVouchTypeName', headerName: '类型' },
       { field: 'cInvName', headerName: '车间' },
       { field: 'iStatus', headerName: '状态' },

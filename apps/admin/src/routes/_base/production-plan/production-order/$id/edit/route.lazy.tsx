@@ -39,7 +39,11 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<ProductionOrderBody>[]>(
     () => [
-      { field: 'cSourceCode', headerName: '行号', editable: true },
+      {
+        field: 'cSourceCode',
+        headerName: '行号',
+        valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
+      },
       // { field: 'cVouchTypeName', headerName: '类型' },
       { field: 'cInvName', headerName: '车间', editable: true },
       // { field: 'iStatus', headerName: '状态' },

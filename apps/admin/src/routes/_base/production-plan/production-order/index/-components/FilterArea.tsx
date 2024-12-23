@@ -13,7 +13,7 @@ export default function FilterArea(props: FilterAreaProps) {
 
   const [form] = Form.useForm()
 
-  const [expand, setExpand] = useState(false)
+  // const [expand, setExpand] = useState(false)
 
   return (
     <Card size="small">
@@ -53,34 +53,30 @@ export default function FilterArea(props: FilterAreaProps) {
               />
             </Form.Item>
           </Col>
-          {expand && (
-            <>
-              <Col span={8}>
-                <Form.Item<FilterForm>
-                  name="cCode"
-                  label="生产订单编号"
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item<FilterForm>
-                  name="dBeginTime"
-                  label="订单日期"
-                >
-                  <DatePicker.RangePicker />
-                </Form.Item>
-              </Col>
-              <Col span={8}>
-                <Form.Item<FilterForm>
-                  name="cInvCode"
-                  label="料品编码"
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-            </>
-          )}
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cCode"
+              label="生产订单编号"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="dBeginTime"
+              label="订单日期"
+            >
+              <DatePicker.RangePicker />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cInvCode"
+              label="料品编码"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
           <Col span={8}>
             <Flex
               justify="end"
@@ -101,13 +97,13 @@ export default function FilterArea(props: FilterAreaProps) {
                 </Button>
               </Tooltip>
 
-              <Tooltip title={expand ? '折叠' : '展开'}>
+              {/* <Tooltip title={expand ? '折叠' : '展开'}>
                 <Button onClick={() => setExpand(!expand)}>
                   <LucideChevronsDown
                     className={clsx('transition-all', expand ? 'rotate-180' : 'rotate-0')}
                   />
                 </Button>
-              </Tooltip>
+              </Tooltip> */}
             </Flex>
           </Col>
         </Row>
