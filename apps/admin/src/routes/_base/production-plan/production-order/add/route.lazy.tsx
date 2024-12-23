@@ -3,7 +3,7 @@ import { AgGridReact } from '@ag-grid-community/react'
 import type { FormProps } from 'antd'
 
 import * as Department from '@/features/digital-modeling/orgs/department'
-import { defaultPageDto } from '@/features/pagination'
+import * as BOM from '@/features/digital-modeling/products/bom'
 import {
   bomTypeOptions,
   type ProductionOrderBody,
@@ -32,11 +32,9 @@ function RouteComponent() {
   const childListModal = useModal()
 
   const { data: departmentCandidates } = useQuery(
-    Department.fullListQO({
-      ...defaultPageDto,
-      conditions: 'bProduct = true'
-    })
+    Department.fullListQO({ conditions: 'bProduct = true' })
   )
+  const { data: bomCandidates } = useQuery(BOM.fullListQO({}))
 
   const addMutation = useAddMutation()
 
@@ -54,9 +52,9 @@ function RouteComponent() {
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
           <Select
-            className="!size-full"
+            className="size-full"
             value={params.data?.cDefindParm04}
-            options={departmentCandidates}
+            options={[]}
             fieldNames={Department.departmentSelectFieldNames}
             onSelect={(value) => {
               setTableData((draft) => {
@@ -70,8 +68,43 @@ function RouteComponent() {
         )
       },
       // { field: 'iStatus', headerName: '状态' },
-      { field: 'cInvCode', headerName: '料品编码', editable: true },
-      { field: 'cInvName', headerName: '料品名称', editable: true },
+      {
+        field: 'cInvCode',
+        headerName: '料品编码',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cInvCode}
+            options={bomCandidates}
+            fieldNames={BOM.bomCodeSelectFieldNames}
+            optionFilterProp="cInvCode"
+            showSearch
+            onSelect={(value, option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cInvCode: value,
+                  cInvName: option.cInvName,
+                  cInvStd: option.cInvstd,
+                  cUnitCode: option.cUnitCode,
+                  cUnitName: option.cUnitName
+                }
+              })
+            }}
+            optionRender={(option) => (
+              <Flex justify="space-between">
+                <span>{option.data.cInvCode}</span>
+                <span> {option.data.cInvName}</span>
+              </Flex>
+            )}
+          />
+        )
+      },
+      {
+        field: 'cInvName',
+        headerName: '料品名称'
+      },
       { field: 'cInvStd', headerName: '规格型号', editable: true },
       {
         field: 'nQuantity',

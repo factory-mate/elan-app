@@ -1,4 +1,4 @@
-import type { Page, PageDto } from '@/features/pagination'
+import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
 
@@ -7,6 +7,10 @@ export class BOMAPI {
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<BOMTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
+  }
+
+  static async fullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.get<BOMVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })
   }
 
   static async list(params: PageDto, signal?: AbortSignal) {
