@@ -1,5 +1,5 @@
-import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
+import type { ColDef, ICellRendererParams, ValueFormatterParams } from '@ag-grid-community/core'
+import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
 import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
@@ -10,9 +10,14 @@ import {
   type BOMEditDto,
   type BOMVo,
   childListQO,
+  DEFAULT_EXPIRATION_DATE,
+  DEFAULT_PROCESS_NUMBER,
   detailQO,
+  supplyTypeLabelMap,
+  supplyTypeOptions,
   useEditMutation
 } from '@/features/digital-modeling/products/bom'
+import { BooleanValue } from '@/features/general'
 
 import type { EditModalMeta } from '../-types'
 
@@ -37,7 +42,11 @@ export default function EditModal(props: EditModalProps) {
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(
     () => [
-      { field: 'iRowNumber', headerName: '子件行号', editable: true },
+      {
+        field: 'iRowNumber',
+        headerName: '子件行号',
+        valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10
+      },
       { field: 'iProcessNumber', headerName: '工序行号', editable: true },
       { field: 'cInvCode', headerName: '子件编码', editable: true },
       { field: 'cInvName', headerName: '子件名称', editable: true },
@@ -79,19 +88,60 @@ export default function EditModal(props: EditModalProps) {
       {
         field: 'iUseQty',
         headerName: '使用数量',
+        valueGetter: (params) => {
+          if (params.data?.iBaseQty && params.data?.iBasicQty) {
+            return params.data.iBaseQty / params.data.iBasicQty
+          }
+          return undefined
+        }
+        // editable: true,
+        // cellDataType: 'number',
+        // cellEditorParams: {
+        //   precision: 0,
+        //   step: 1,
+        //   showStepperButtons: true
+        // }
+      },
+      {
+        field: 'iFixedQty',
+        headerName: '固定用量',
+        cellRenderer: (params: CustomCellRendererProps) => (
+          <Switch
+            value={params.value === BooleanValue.TRUE}
+            onClick={(value) => {
+              const itemsToUpdate: BOMChildItemVo[] = []
+              gridRef.current!.api.forEachNodeAfterFilterAndSort((rowNode, index) => {
+                if (index === params.node.rowIndex) {
+                  const { data = {} } = rowNode
+                  data.iFixedQty = value ? BooleanValue.TRUE : BooleanValue.FALSE
+                  itemsToUpdate.push(data)
+                }
+              })
+              gridRef.current!.api.applyTransaction({
+                update: itemsToUpdate
+              })
+            }}
+          />
+        )
+      },
+      {
+        field: 'cSupplyTypeName',
+        headerName: '供应类型',
+        cellRenderer: (params: CustomCellRendererProps) =>
+          supplyTypeLabelMap.get(params.data.cSupplyType),
         editable: true,
-        cellDataType: 'number',
+        cellEditor: 'agSelectCellEditor',
         cellEditorParams: {
-          precision: 0,
-          step: 1,
-          showStepperButtons: true
+          values: supplyTypeOptions
         }
       },
-      { field: 'iFixedQty', headerName: '固定用量', editable: true },
-      { field: 'cSupplyTypeName', headerName: '供应类型', editable: true },
       { field: 'cWareHouseCode', headerName: '仓库编码', editable: true },
       { field: 'cDepName', headerName: '领料部门', editable: true },
-      { field: 'cMaterialType', headerName: '物料属性', editable: true },
+      {
+        field: 'cMaterialType',
+        headerName: '物料属性',
+        valueFormatter: (params: ValueFormatterParams) => (params.data.IsProduct ? '自制' : '采购')
+      },
       {
         field: 'dEffectiveDate',
         headerName: '生效日期',
@@ -167,7 +217,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="新增物料清单/配方"
+      title="编辑物料清单/配方"
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
@@ -302,7 +352,17 @@ export default function EditModal(props: EditModalProps) {
             type="primary"
             onClick={() =>
               setTableData((draft) => {
-                draft.push({})
+                draft.push({
+                  iProcessNumber: DEFAULT_PROCESS_NUMBER,
+                  iBasicQty: 1,
+                  iBaseQty: 1,
+                  iUseQty: 1,
+                  iLossRate: 0,
+                  iFixedQty: 0,
+                  cSupplyType: '1',
+                  dEffectiveDate: DateUtils.formatTime(new Date(), 'YYYY-MM-DD'),
+                  dExpirationDate: DEFAULT_EXPIRATION_DATE
+                })
               })
             }
           >

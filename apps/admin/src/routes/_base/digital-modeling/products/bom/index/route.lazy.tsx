@@ -1,5 +1,5 @@
-import type { ColDef } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
+import type { ColDef, ValueFormatterParams } from '@ag-grid-community/core'
+import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
 
 import {
   type BOMChildItemVo,
@@ -7,8 +7,10 @@ import {
   childListQO,
   detailQO,
   NOT_FOUND_UID,
+  supplyTypeLabelMap,
   useDeleteMutation
 } from '@/features/digital-modeling/products/bom'
+import { booleanLabelValueGetter } from '@/shared/ag-grid'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
@@ -37,7 +39,11 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(
     () => [
-      { field: 'iRowNumber', headerName: '子件行号' },
+      {
+        field: 'iRowNumber',
+        headerName: '子件行号',
+        valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10
+      },
       { field: 'iProcessNumber', headerName: '工序行号' },
       { field: 'cInvCode', headerName: '子件编码' },
       { field: 'cInvName', headerName: '子件名称' },
@@ -46,14 +52,45 @@ function RouteComponent() {
       { field: 'iBasicQty', headerName: '基本用量' },
       { field: 'iBaseQty', headerName: '基础用量' },
       { field: 'iLossRate', headerName: '损耗率' },
-      { field: 'iUseQty', headerName: '使用数量' },
-      { field: 'iFixedQty', headerName: '固定用量' },
-      { field: 'cSupplyTypeName', headerName: '供应类型' },
+      {
+        field: 'iUseQty',
+        headerName: '使用数量',
+        valueGetter: (params) => {
+          if (params.data?.iBaseQty && params.data?.iBasicQty) {
+            return params.data.iBaseQty / params.data.iBasicQty
+          }
+          return undefined
+        }
+      },
+      {
+        field: 'iFixedQty',
+        headerName: '固定用量',
+        cellRenderer: (p: CustomCellRendererProps) => booleanLabelValueGetter(p.value)
+      },
+      {
+        field: 'cSupplyType',
+        headerName: '供应类型',
+        cellRenderer: (p: CustomCellRendererProps) => supplyTypeLabelMap.get(p.value)
+      },
       { field: 'cWareHouseCode', headerName: '仓库编码' },
       { field: 'cDepName', headerName: '领料部门' },
-      { field: 'cMaterialType', headerName: '物料属性' },
-      { field: 'dEffectiveDate', headerName: '生效日期' },
-      { field: 'dExpirationDate', headerName: '失效日期' }
+      {
+        field: 'cMaterialType',
+        headerName: '物料属性',
+        valueFormatter: (params: ValueFormatterParams) => (params.data.IsProduct ? '自制' : '采购')
+      },
+      {
+        field: 'dEffectiveDate',
+        headerName: '生效日期',
+        valueFormatter: (params: ValueFormatterParams) =>
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+      },
+      {
+        field: 'dExpirationDate',
+        headerName: '失效日期',
+        valueFormatter: (params: ValueFormatterParams) =>
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+      }
     ],
     []
   )
