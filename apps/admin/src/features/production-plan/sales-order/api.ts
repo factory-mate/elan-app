@@ -8,4 +8,12 @@ export class SalesOrderAPI {
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<SalesOrderVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
   }
+
+  static async delete(ids: string[], signal?: AbortSignal) {
+    return httpClient.delete(`${this.apiPrefix}/Del`, { signal, data: ids })
+  }
+
+  static async sync(signal?: AbortSignal) {
+    return httpClient.get(`${this.apiPrefix}/AddOnERP`, {}, { signal })
+  }
 }

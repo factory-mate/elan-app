@@ -2,18 +2,29 @@ import type { ColDef } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
 
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { listQO, type SalesOrderVo } from '@/features/production-plan/sales-order'
+import {
+  listQO,
+  type SalesOrderVo,
+  useDeleteMutation,
+  useSyncMutation
+} from '@/features/production-plan/sales-order'
 
 export const Route = createLazyFileRoute('/_base/production-plan/sales-order/')({
   component: RouteComponent
 })
 
 function RouteComponent() {
+  const { showMessage } = useMessage()
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
+  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({ ...pageParams, conditions: undefined })
   )
+
+  const deleteMutation = useDeleteMutation()
+  const syncMutation = useSyncMutation()
 
   const columnDefs = useMemo<ColDef<SalesOrderVo>[]>(
     () => [
@@ -23,7 +34,17 @@ function RouteComponent() {
       { field: 'cCusName', headerName: '客户名称' },
       { field: 'cMemo', headerName: '备注' },
       { field: 'dCreateTime', headerName: '创建时间' },
-      { field: 'cCreateUserName', headerName: '创建人名称' }
+      { field: 'cCreateUserName', headerName: '创建人名称' },
+      { field: 'cInvCode', headerName: '料品编码' },
+      { field: 'cInvName', headerName: '料品名称' },
+      { field: 'cInvStd', headerName: '规格型号' },
+      { field: 'cUnitName', headerName: '计量单位' },
+      { field: 'nQuantity', headerName: '订单数量' },
+      { field: 'cDefindParm01', headerName: '订单金额' },
+      { field: 'nQuantity', headerName: '累计生产入库数量' },
+      { field: 'dDate', headerName: '预计发货日期' },
+      { field: 'cDepName', headerName: '销售部门' },
+      { field: 'cSTName', headerName: '销售类型' }
     ],
     []
   )
@@ -34,20 +55,56 @@ function RouteComponent() {
         direction="vertical"
         className="w-full"
       >
-        <div className="ag-theme-quartz h-[calc(100vh-210px)]">
+        <Flex
+          className="h-8"
+          justify="space-between"
+          align="center"
+        >
+          <Space>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              删除
+            </Button>
+          </Space>
+          <Space>
+            <Button
+              type="primary"
+              onClick={() => syncMutation.mutate()}
+            >
+              同步
+            </Button>
+          </Space>
+        </Flex>
+
+        <div className="ag-theme-quartz h-[calc(100vh-251px)]">
           <AgGridReact<SalesOrderVo>
-            getRowId={(params) => params.data.UID}
+            getRowId={(params) => params.data.UID!}
             columnDefs={columnDefs}
             rowData={data?.data}
+            rowSelection={{
+              mode: 'multiRow'
+            }}
+            selectionColumnDef={{
+              sortable: true,
+              suppressHeaderMenuButton: true,
+              pinned: 'left',
+              lockPinned: true
+            }}
             headerHeight={36}
             rowHeight={36}
             tooltipShowDelay={1000}
             tooltipHideDelay={0}
             loading={isFetching}
             noRowsOverlayComponent={() => '暂无数据'}
+            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
           />
         </div>
-
         <Flex
           justify="end"
           align="center"
