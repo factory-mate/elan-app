@@ -214,6 +214,11 @@ function RouteComponent() {
             onClick={() =>
               setTableData((draft) => {
                 draft.push({
+                  dBeginTime: DateUtils.formatTime(form.getFieldValue('dDate'), 'YYYY-MM-DD'),
+                  dEndTime: DateUtils.formatTime(
+                    DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
+                    'YYYY-MM-DD'
+                  ),
                   bodyss: []
                 })
               })
