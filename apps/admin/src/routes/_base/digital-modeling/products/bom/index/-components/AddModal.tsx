@@ -16,6 +16,7 @@ import {
   useAddMutation
 } from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
+import * as Warehouse from '@/features/digital-modeling/products/warehouse'
 import { BooleanValue } from '@/features/general'
 
 interface AddModalProps {
@@ -32,14 +33,14 @@ export default function AddModal(props: AddModalProps) {
   const [form] = Form.useForm<BOMAddDto>()
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
-  const { data: { data: parentInventoryCandidates = [] } = {} } = useQuery(
+  const { data: { data: parentInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
       pageSize: 9999,
       conditions: 'IsProduct = true'
     })
   )
-  const { data: { data: childInventoryCandidates = [] } = {} } = useQuery(
+  const { data: { data: childInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
       pageSize: 9999,
@@ -48,6 +49,12 @@ export default function AddModal(props: AddModalProps) {
   )
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
+  )
+  const { data: { data: warehouseCandidates } = {} } = useQuery(
+    Warehouse.listQO({
+      pageIndex: 1,
+      pageSize: 9999
+    })
   )
 
   const addMutation = useAddMutation()
@@ -192,17 +199,17 @@ export default function AddModal(props: AddModalProps) {
           <Select
             className="size-full"
             value={params.data?.cWareHouseCode}
-            options={[]}
+            options={warehouseCandidates}
             fieldNames={{
               value: 'cWareHouseCode',
               label: 'cWareHouseCode'
             }}
-            onSelect={(value, _option) => {
+            onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cWareHouseCode: value
-                  // cWareHouseName: option.cWareHouseName
+                  cWareHouseCode: value,
+                  cWareHouseName: option.cWareHouseName
                 }
               })
             }}

@@ -40,7 +40,7 @@ export interface BOMTreeItemVo extends BOMVo {
 
 export interface BOMChildItemVo {
   cDepName?: string
-  cWareHouseName?: string
+  cWareHouseName?: string | null
   cParentCode?: string
   cParentName?: string
   cSupplyTypeName?: string
@@ -58,7 +58,7 @@ export interface BOMChildItemVo {
   iUseQty?: number
   iFixedQty?: number
   cSupplyType?: string
-  cWareHouseCode?: string
+  cWareHouseCode?: string | null
   cDepCode?: string
   cMaterialType?: string
   dEffectiveDate?: string

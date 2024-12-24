@@ -34,7 +34,7 @@ function RouteComponent() {
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
-  const { data: { data: inventoryCandidates = [] } = {} } = useQuery(
+  const { data: { data: inventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
       pageSize: 9999

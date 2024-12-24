@@ -39,14 +39,14 @@ export default function EditModal(props: EditModalProps) {
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
-  const { data: { data: parentInventoryCandidates = [] } = {} } = useQuery(
+  const { data: { data: parentInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
       pageSize: 9999,
       conditions: 'IsProduct = true'
     })
   )
-  const { data: { data: childInventoryCandidates = [] } = {} } = useQuery(
+  const { data: { data: childInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
       pageSize: 9999,
