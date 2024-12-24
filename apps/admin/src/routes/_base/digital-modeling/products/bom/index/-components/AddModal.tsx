@@ -185,7 +185,30 @@ export default function AddModal(props: AddModalProps) {
           values: supplyTypeOptions
         }
       },
-      { field: 'cWareHouseCode', headerName: '仓库编码', editable: true },
+      {
+        field: 'cWareHouseCode',
+        headerName: '仓库编码',
+        cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cWareHouseCode}
+            options={[]}
+            fieldNames={{
+              value: 'cWareHouseCode',
+              label: 'cWareHouseCode'
+            }}
+            onSelect={(value, _option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cWareHouseCode: value
+                  // cWareHouseName: option.cWareHouseName
+                }
+              })
+            }}
+          />
+        )
+      },
       {
         field: 'cDepName',
         headerName: '领料部门',
