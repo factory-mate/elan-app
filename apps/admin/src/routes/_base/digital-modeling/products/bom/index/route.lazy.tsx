@@ -8,6 +8,8 @@ import {
   detailQO,
   NOT_FOUND_UID,
   supplyTypeLabelMap,
+  useAuditMutation,
+  useCancelMutation,
   useDeleteMutation
 } from '@/features/digital-modeling/products/bom'
 import { booleanLabelValueGetter } from '@/shared/ag-grid'
@@ -36,25 +38,29 @@ function RouteComponent() {
     childListQO(selectedTreeData?.UID)
   )
   const deleteMutation = useDeleteMutation()
+  const auditMutation = useAuditMutation()
+  const cancelMutation = useCancelMutation()
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(
     () => [
       {
         field: 'iRowNumber',
         headerName: '子件行号',
-        valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10
+        valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10,
+        width: 90
       },
-      { field: 'iProcessNumber', headerName: '工序行号' },
+      { field: 'iProcessNumber', headerName: '工序行号', width: 90 },
       { field: 'cInvCode', headerName: '子件编码' },
       { field: 'cInvName', headerName: '子件名称' },
       { field: 'cInvstd', headerName: '子件规格' },
-      { field: 'cUnitName', headerName: '计量单位' },
-      { field: 'iBasicQty', headerName: '基本用量' },
-      { field: 'iBaseQty', headerName: '基础用量' },
-      { field: 'iLossRate', headerName: '损耗率' },
+      { field: 'cUnitName', headerName: '计量单位', width: 90 },
+      { field: 'iBasicQty', headerName: '基本用量', width: 90 },
+      { field: 'iBaseQty', headerName: '基础用量', width: 90 },
+      { field: 'iLossRate', headerName: '损耗率', width: 90 },
       {
         field: 'iUseQty',
         headerName: '使用数量',
+        width: 90,
         valueGetter: (params) => {
           if (params.data?.iBaseQty && params.data?.iBasicQty) {
             return params.data.iBaseQty / params.data.iBasicQty
@@ -65,11 +71,13 @@ function RouteComponent() {
       {
         field: 'iFixedQty',
         headerName: '固定用量',
+        width: 90,
         cellRenderer: (p: CustomCellRendererProps) => booleanLabelValueGetter(p.value)
       },
       {
         field: 'cSupplyType',
         headerName: '供应类型',
+        width: 90,
         cellRenderer: (p: CustomCellRendererProps) => supplyTypeLabelMap.get(p.value)
       },
       { field: 'cWareHouseCode', headerName: '仓库编码' },
@@ -77,17 +85,20 @@ function RouteComponent() {
       {
         field: 'cMaterialType',
         headerName: '物料属性',
+        width: 90,
         valueFormatter: (params: ValueFormatterParams) => (params.data.IsProduct ? '自制' : '采购')
       },
       {
         field: 'dEffectiveDate',
         headerName: '生效日期',
+        width: 120,
         valueFormatter: (params: ValueFormatterParams) =>
           DateUtils.formatTime(params.value, 'YYYY-MM-DD')
       },
       {
         field: 'dExpirationDate',
         headerName: '失效日期',
+        width: 120,
         valueFormatter: (params: ValueFormatterParams) =>
           DateUtils.formatTime(params.value, 'YYYY-MM-DD')
       }
@@ -131,6 +142,28 @@ function RouteComponent() {
         >
           删除
         </Button>
+        <Button
+          onClick={() => {
+            if (!selectedTreeData) {
+              showMessage('select-data')
+              return
+            }
+            auditMutation.mutate([selectedTreeData.UID])
+          }}
+        >
+          审核
+        </Button>
+        <Button
+          onClick={() => {
+            if (!selectedTreeData) {
+              showMessage('select-data')
+              return
+            }
+            cancelMutation.mutate([selectedTreeData.UID])
+          }}
+        >
+          弃审
+        </Button>
       </Space>
       <Splitter>
         <Splitter.Panel collapsible>
@@ -170,7 +203,7 @@ function RouteComponent() {
                       <Form.Item<BOMVo> label="计量单位">{detailData?.cUnitName}</Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item<BOMVo> label="版本代号">{detailData?.cUnitName}</Form.Item>
+                      <Form.Item<BOMVo> label="版本代号">{detailData?.cVersion}</Form.Item>
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="版本日期">

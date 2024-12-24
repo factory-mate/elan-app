@@ -31,7 +31,7 @@ function RouteComponent() {
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cVouchTypeName', type: 'eq', val: filterData.cVouchTypeName },
+        { key: 'cVouchType', type: 'eq', val: filterData.cVouchType },
         { key: 'iStatus', type: 'eq', val: filterData.iStatus },
         { key: 'cCode', type: 'like', val: filterData.cCode },
         { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },

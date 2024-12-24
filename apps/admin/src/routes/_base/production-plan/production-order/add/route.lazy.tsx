@@ -8,7 +8,8 @@ import {
   bomTypeOptions,
   type ProductionOrderBody,
   type ProductionOrderHead,
-  useAddMutation
+  useAddMutation,
+  VouchType
 } from '@/features/production-plan/production-order'
 
 import { ChildListModal } from './-components'
@@ -37,7 +38,8 @@ function RouteComponent() {
   const { data: { data: inventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       pageIndex: 1,
-      pageSize: 9999
+      pageSize: 9999,
+      conditions: 'IsProduct = true'
     })
   )
 
@@ -98,8 +100,8 @@ function RouteComponent() {
                   cInvCode: value,
                   cInvName: option.cInvName,
                   cInvStd: option.cInvstd,
-                  cUnitCode: option.cSaleUnitCode,
-                  cUnitName: option.cSaleUnitName
+                  cUnitCode: option.cProductUnitCode,
+                  cUnitName: option.cProductUnitName
                 }
               })
             }}
@@ -248,18 +250,15 @@ function RouteComponent() {
             </Col>
             <Col span={8}>
               <Form.Item<ProductionOrderHead>
-                name="cDefindParm02"
-                label="手工编号"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item<ProductionOrderHead>
                 name="cVouchType"
                 label="生产订单类别"
               >
-                <Input />
+                <Select
+                  options={[
+                    { label: '标准', value: VouchType.STANDARD },
+                    { label: '非标准', value: VouchType.NON_STANDARD }
+                  ]}
+                />
               </Form.Item>
             </Col>
             <Col span={8}>

@@ -1,7 +1,7 @@
 import type { Dayjs } from 'dayjs'
 
 export interface FilterForm {
-  cVouchTypeName?: string
+  cVouchType?: string
   iStatus?: number
   cCode?: string
   dBeginTime?: [Dayjs, Dayjs]

@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-import { TaskStatus } from '@/features/production-plan/production-order'
+import { TaskStatus, VouchType } from '@/features/production-plan/production-order'
 
 import type { FilterForm } from '../-types'
 
@@ -27,13 +27,13 @@ export default function FilterArea(props: FilterAreaProps) {
         <Row>
           <Col span={8}>
             <Form.Item<FilterForm>
-              name="cVouchTypeName"
+              name="cVouchType"
               label="生产订单类型"
             >
               <Select
                 options={[
-                  { label: '标准', value: '标准' },
-                  { label: '非标准', value: '非标准' }
+                  { label: '标准', value: VouchType.STANDARD },
+                  { label: '非标准', value: VouchType.NON_STANDARD }
                 ]}
               />
             </Form.Item>

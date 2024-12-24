@@ -335,7 +335,7 @@ export default function AddModal(props: AddModalProps) {
           <Row>
             <Col span={8}>
               <Form.Item<BOMVo>
-                name="cBOMTypeName"
+                name="cBOMType"
                 label="BOM 类别"
               >
                 <Select

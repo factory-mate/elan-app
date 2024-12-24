@@ -41,6 +41,10 @@ export class BOMAPI {
     return httpClient.post(`${this.apiPrefix}/Stop`, ids)
   }
 
+  static async setStatus(ids: string[], status: number) {
+    return httpClient.post(`${this.apiPrefix}/SetStatus`, { keyVal: ids, iStatus: status })
+  }
+
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
   }

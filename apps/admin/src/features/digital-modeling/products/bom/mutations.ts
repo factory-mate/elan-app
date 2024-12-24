@@ -1,4 +1,5 @@
 import { BOMAPI } from './api'
+import { TaskStatus } from './enums'
 import type { BOMAddDto, BOMEditDto } from './types'
 
 export const useStartMutation = () => {
@@ -37,6 +38,22 @@ export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
     mutationFn: (data: BOMEditDto) => BOMAPI.edit(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useAuditMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (ids: string[]) => BOMAPI.setStatus(ids, TaskStatus.AUDIT),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useCancelMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (ids: string[]) => BOMAPI.setStatus(ids, TaskStatus.CANCEL),
     onSuccess: () => showMessage('success')
   })
 }
