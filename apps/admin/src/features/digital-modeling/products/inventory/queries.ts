@@ -1,7 +1,14 @@
-import type { PageDto } from '@/features/pagination'
+import type { FullPageDto, PageDto } from '@/features/pagination'
 
 import { InventoryAPI } from './api'
-import { detailQK, listQK } from './query-keys'
+import { detailQK, fullListQK, listQK } from './query-keys'
+
+export const fullListQO = (params: FullPageDto) =>
+  queryOptions({
+    queryKey: fullListQK(params),
+    queryFn: ({ signal }) => InventoryAPI.fullList(params, signal),
+    placeholderData: keepPreviousData
+  })
 
 export const listQO = (params: PageDto) =>
   queryOptions({

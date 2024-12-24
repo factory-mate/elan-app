@@ -4,7 +4,8 @@ import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
+import * as Dicts from '@/features/dicts'
+import * as Department from '@/features/digital-modeling/orgs/department'
 import {
   type BOMChildItemVo,
   type BOMEditDto,
@@ -17,6 +18,7 @@ import {
   supplyTypeOptions,
   useEditMutation
 } from '@/features/digital-modeling/products/bom'
+import * as Inventory from '@/features/digital-modeling/products/inventory'
 import { BooleanValue } from '@/features/general'
 
 import type { EditModalMeta } from '../-types'
@@ -35,8 +37,25 @@ export default function EditModal(props: EditModalProps) {
 
   const [form] = Form.useForm<BOMEditDto>()
 
-  const { data: bomCandidates } = useSuspenseQuery(fullListQO('BOMType'))
+  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
+  const { data: { data: parentInventoryCandidates = [] } = {} } = useQuery(
+    Inventory.listQO({
+      pageIndex: 1,
+      pageSize: 9999,
+      conditions: 'IsProduct = true'
+    })
+  )
+  const { data: { data: childInventoryCandidates = [] } = {} } = useQuery(
+    Inventory.listQO({
+      pageIndex: 1,
+      pageSize: 9999,
+      conditions: 'IsMaterial = true'
+    })
+  )
+  const { data: departmentCandidates } = useQuery(
+    Department.fullListQO({ conditions: 'bProduct = true' })
+  )
 
   const editMutation = useEditMutation()
 
@@ -48,8 +67,46 @@ export default function EditModal(props: EditModalProps) {
         valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10
       },
       { field: 'iProcessNumber', headerName: '工序行号', editable: true },
-      { field: 'cInvCode', headerName: '子件编码', editable: true },
-      { field: 'cInvName', headerName: '子件名称', editable: true },
+      {
+        field: 'cInvCode',
+        headerName: '子件编码',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cInvCode}
+            options={childInventoryCandidates}
+            fieldNames={{
+              value: 'cInvCode',
+              label: 'cInvCode'
+            }}
+            showSearch
+            filterOption={(input, option) =>
+              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            onSelect={(value, option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cInvCode: value,
+                  cInvName: option.cInvName,
+                  cInvstd: option.cInvstd,
+                  cUnitCode: option.cSaleUnitCode,
+                  cUnitName: option.cSaleUnitName
+                }
+              })
+            }}
+            optionRender={(option) => (
+              <Flex justify="space-between">
+                <span>{option.data.cInvCode}</span>
+                <span> {option.data.cInvName}</span>
+              </Flex>
+            )}
+          />
+        )
+      },
+      { field: 'cInvName', headerName: '子件名称' },
       { field: 'cInvstd', headerName: '子件规格', editable: true },
       { field: 'cUnitName', headerName: '计量单位', editable: true },
       {
@@ -136,7 +193,28 @@ export default function EditModal(props: EditModalProps) {
         }
       },
       { field: 'cWareHouseCode', headerName: '仓库编码', editable: true },
-      { field: 'cDepName', headerName: '领料部门', editable: true },
+      {
+        field: 'cDepName',
+        headerName: '领料部门',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cDepCode}
+            options={departmentCandidates}
+            fieldNames={Department.departmentSelectFieldNames}
+            onSelect={(value, option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cDepCode: value,
+                  cDepName: option.cDepName
+                }
+              })
+            }}
+          />
+        )
+      },
       {
         field: 'cMaterialType',
         headerName: '物料属性',
@@ -189,7 +267,7 @@ export default function EditModal(props: EditModalProps) {
         )
       }
     ],
-    [setTableData]
+    [childInventoryCandidates, setTableData]
   )
 
   useAsyncEffect(async () => {
@@ -234,7 +312,10 @@ export default function EditModal(props: EditModalProps) {
           name="edit-form"
           form={form}
           labelCol={{ span: 6 }}
-          initialValues={{}}
+          initialValues={{
+            dVersionDate: dayjs(new Date()),
+            dEffectiveDate: dayjs(new Date())
+          }}
           onFinish={onFinish}
         >
           <Skeleton loading={isDetailFetching}>
@@ -246,7 +327,7 @@ export default function EditModal(props: EditModalProps) {
                 >
                   <Select
                     options={bomCandidates}
-                    fieldNames={dictSelectFieldNames}
+                    fieldNames={Dicts.dictSelectFieldNames}
                   />
                 </Form.Item>
               </Col>
@@ -256,7 +337,32 @@ export default function EditModal(props: EditModalProps) {
                   label="母件编码"
                   rules={[{ required: true }]}
                 >
-                  <Input />
+                  <Select
+                    options={parentInventoryCandidates}
+                    fieldNames={{
+                      label: 'cInvCode',
+                      value: 'cInvCode'
+                    }}
+                    showSearch
+                    filterOption={(input, option) =>
+                      (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                      (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+                    }
+                    onSelect={(_value, option) => {
+                      form.setFieldsValue({
+                        cInvName: option.cInvName,
+                        cInvstd: option.cInvstd,
+                        cUnitCode: option.cSaleUnitCode,
+                        cUnitName: option.cSaleUnitName
+                      })
+                    }}
+                    optionRender={(option) => (
+                      <Flex justify="space-between">
+                        <span>{option.data.cInvCode}</span>
+                        <span> {option.data.cInvName}</span>
+                      </Flex>
+                    )}
+                  />
                 </Form.Item>
               </Col>
               <Col span={8}>
@@ -265,7 +371,7 @@ export default function EditModal(props: EditModalProps) {
                   label="母件名称"
                   rules={[{ required: true }]}
                 >
-                  <Input />
+                  <Input readOnly />
                 </Form.Item>
               </Col>
               <Col span={8}>

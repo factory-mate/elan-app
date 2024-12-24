@@ -3,7 +3,7 @@ import { AgGridReact } from '@ag-grid-community/react'
 import type { FormProps } from 'antd'
 
 import * as Department from '@/features/digital-modeling/orgs/department'
-import * as BOM from '@/features/digital-modeling/products/bom'
+import * as Inventory from '@/features/digital-modeling/products/inventory'
 import {
   bomTypeOptions,
   type ProductionOrderBody,
@@ -34,7 +34,12 @@ function RouteComponent() {
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
-  const { data: bomCandidates } = useQuery(BOM.fullListQO({}))
+  const { data: { data: inventoryCandidates = [] } = {} } = useQuery(
+    Inventory.listQO({
+      pageIndex: 1,
+      pageSize: 9999
+    })
+  )
 
   const addMutation = useAddMutation()
 
@@ -54,7 +59,7 @@ function RouteComponent() {
           <Select
             className="size-full"
             value={params.data?.cDefindParm04}
-            options={[]}
+            options={departmentCandidates}
             fieldNames={Department.departmentSelectFieldNames}
             onSelect={(value) => {
               setTableData((draft) => {
@@ -76,10 +81,16 @@ function RouteComponent() {
           <Select
             className="size-full"
             value={params.data?.cInvCode}
-            options={bomCandidates}
-            fieldNames={BOM.bomCodeSelectFieldNames}
-            optionFilterProp="cInvCode"
+            options={inventoryCandidates}
+            fieldNames={{
+              value: 'cInvCode',
+              label: 'cInvCode'
+            }}
             showSearch
+            filterOption={(input, option) =>
+              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -87,8 +98,8 @@ function RouteComponent() {
                   cInvCode: value,
                   cInvName: option.cInvName,
                   cInvStd: option.cInvstd,
-                  cUnitCode: option.cUnitCode,
-                  cUnitName: option.cUnitName
+                  cUnitCode: option.cSaleUnitCode,
+                  cUnitName: option.cSaleUnitName
                 }
               })
             }}
@@ -101,10 +112,7 @@ function RouteComponent() {
           />
         )
       },
-      {
-        field: 'cInvName',
-        headerName: '料品名称'
-      },
+      { field: 'cInvName', headerName: '料品名称' },
       { field: 'cInvStd', headerName: '规格型号', editable: true },
       {
         field: 'nQuantity',
@@ -179,7 +187,7 @@ function RouteComponent() {
         )
       }
     ],
-    [childListModal, departmentCandidates, setTableData]
+    [departmentCandidates, setTableData, inventoryCandidates, childListModal]
   )
 
   const onFinish: FormProps<ProductionOrderHead>['onFinish'] = (values) =>
@@ -232,7 +240,7 @@ function RouteComponent() {
           <Row>
             <Col span={8}>
               <Form.Item<ProductionOrderHead>
-                name="cDefindParm01"
+                name="cCode"
                 label="生产订单号"
               >
                 <Input />

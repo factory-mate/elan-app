@@ -3,6 +3,8 @@ import { AgGridReact } from '@ag-grid-community/react'
 import { useAsyncEffect } from 'ahooks'
 import type { FormProps } from 'antd'
 
+import * as Department from '@/features/digital-modeling/orgs/department'
+import * as Inventory from '@/features/digital-modeling/products/inventory'
 import {
   bomTypeOptions,
   detailBodysQO,
@@ -37,6 +39,15 @@ function RouteComponent() {
   const { data: detailData } = useSuspenseQuery(detailQO(id))
   const { data: detailBodysData } = useSuspenseQuery(detailBodysQO(id))
   const editMutation = useEditMutation()
+  const { data: departmentCandidates } = useQuery(
+    Department.fullListQO({ conditions: 'bProduct = true' })
+  )
+  const { data: { data: inventoryCandidates = [] } = {} } = useQuery(
+    Inventory.listQO({
+      pageIndex: 1,
+      pageSize: 9999
+    })
+  )
 
   const columnDefs = useMemo<ColDef<ProductionOrderBody>[]>(
     () => [
@@ -46,10 +57,68 @@ function RouteComponent() {
         valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
       },
       // { field: 'cVouchTypeName', headerName: '类型' },
-      { field: 'cInvName', headerName: '车间', editable: true },
+      {
+        field: 'cInvName',
+        headerName: '车间',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cDefindParm04}
+            options={departmentCandidates}
+            fieldNames={Department.departmentSelectFieldNames}
+            onSelect={(value) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cDefindParm04: value
+                }
+              })
+            }}
+          />
+        )
+      },
       // { field: 'iStatus', headerName: '状态' },
-      { field: 'cInvCode', headerName: '料品编码', editable: true },
-      { field: 'cInvName', headerName: '料品名称', editable: true },
+      {
+        field: 'cInvCode',
+        headerName: '料品编码',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cInvCode}
+            options={inventoryCandidates}
+            fieldNames={{
+              value: 'cInvCode',
+              label: 'cInvCode'
+            }}
+            showSearch
+            filterOption={(input, option) =>
+              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            onSelect={(value, option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cInvCode: value,
+                  cInvName: option.cInvName,
+                  cInvStd: option.cInvstd,
+                  cUnitCode: option.cSaleUnitCode,
+                  cUnitName: option.cSaleUnitName
+                }
+              })
+            }}
+            optionRender={(option) => (
+              <Flex justify="space-between">
+                <span>{option.data.cInvCode}</span>
+                <span> {option.data.cInvName}</span>
+              </Flex>
+            )}
+          />
+        )
+      },
+      { field: 'cInvName', headerName: '料品名称' },
       { field: 'cInvStd', headerName: '规格型号', editable: true },
       {
         field: 'nQuantity',

@@ -40,7 +40,7 @@ function RouteComponent() {
       { field: 'cInvStd', headerName: '规格型号' },
       { field: 'cUnitName', headerName: '计量单位' },
       { field: 'nQuantity', headerName: '订单数量' },
-      { field: 'cDefindParm01', headerName: '订单金额' },
+      { field: 'cDefindParm02', headerName: '订单金额' },
       { field: 'nQuantity', headerName: '累计生产入库数量' },
       { field: 'dDate', headerName: '预计发货日期' },
       { field: 'cDepName', headerName: '销售部门' },

@@ -6,6 +6,8 @@ export interface InventoryVo {
   cInvClassName: string
   cUnitClassName: string
   cVendorName: string
+  cSaleUnitCode: string
+  cSaleUnitName: string
 }
 
 export interface InventoryDetailVo {

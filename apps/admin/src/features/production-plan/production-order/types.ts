@@ -61,6 +61,7 @@ export interface ProductionOrderAddDto {
 }
 
 export interface ProductionOrderHead {
+  cCode: string
   UID: string
   dDate: string
   cMemo: string
