@@ -19,6 +19,7 @@ import {
   useEditMutation
 } from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
+import * as Warehouse from '@/features/digital-modeling/products/warehouse'
 import { BooleanValue } from '@/features/general'
 
 import type { EditModalMeta } from '../-types'
@@ -55,6 +56,12 @@ export default function EditModal(props: EditModalProps) {
   )
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
+  )
+  const { data: { data: warehouseCandidates } = {} } = useQuery(
+    Warehouse.listQO({
+      pageIndex: 1,
+      pageSize: 9999
+    })
   )
 
   const editMutation = useEditMutation()
@@ -199,17 +206,17 @@ export default function EditModal(props: EditModalProps) {
           <Select
             className="size-full"
             value={params.data?.cWareHouseCode}
-            options={[]}
+            options={warehouseCandidates}
             fieldNames={{
               value: 'cWareHouseCode',
               label: 'cWareHouseCode'
             }}
-            onSelect={(value, _option) => {
+            onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cWareHouseCode: value
-                  // cWareHouseName: option.cWareHouseName
+                  cWareHouseCode: value,
+                  cWareHouseName: option.cWareHouseName
                 }
               })
             }}
