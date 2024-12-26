@@ -5,6 +5,7 @@ import type { FormProps } from 'antd'
 
 import * as Department from '@/features/digital-modeling/orgs/department'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
+import { defaultMaxPageDto } from '@/features/pagination'
 import {
   bomTypeOptions,
   detailBodysQO,
@@ -45,8 +46,7 @@ function RouteComponent() {
   )
   const { data: { data: inventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
-      pageIndex: 1,
-      pageSize: 9999,
+      ...defaultMaxPageDto,
       conditions: 'IsProduct = true'
     })
   )

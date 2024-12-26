@@ -3,7 +3,9 @@ import { AgGridReact } from '@ag-grid-community/react'
 import type { FormProps } from 'antd'
 
 import * as Department from '@/features/digital-modeling/orgs/department'
+import * as BOM from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
+import { defaultMaxPageDto } from '@/features/pagination'
 import {
   bomTypeOptions,
   type ProductionOrderBody,
@@ -37,9 +39,14 @@ function RouteComponent() {
   )
   const { data: { data: inventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
-      pageIndex: 1,
-      pageSize: 9999,
+      ...defaultMaxPageDto,
       conditions: 'IsProduct = true'
+    })
+  )
+  const { data: { data: bomCandidates } = {} } = useQuery(
+    BOM.listQO({
+      ...defaultMaxPageDto,
+      conditions: ''
     })
   )
 

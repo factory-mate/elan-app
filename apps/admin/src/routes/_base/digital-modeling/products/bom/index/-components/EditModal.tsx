@@ -21,6 +21,7 @@ import {
 import * as Inventory from '@/features/digital-modeling/products/inventory'
 import * as Warehouse from '@/features/digital-modeling/products/warehouse'
 import { BooleanValue } from '@/features/general'
+import { defaultMaxPageDto } from '@/features/pagination'
 
 import type { EditModalMeta } from '../-types'
 
@@ -42,27 +43,21 @@ export default function EditModal(props: EditModalProps) {
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
   const { data: { data: parentInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
-      pageIndex: 1,
-      pageSize: 9999,
+      ...defaultMaxPageDto,
       conditions: 'IsProduct = true'
     })
   )
   const { data: { data: childInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
-      pageIndex: 1,
-      pageSize: 9999,
+      ...defaultMaxPageDto,
+
       conditions: 'IsMaterial = true'
     })
   )
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
-  const { data: { data: warehouseCandidates } = {} } = useQuery(
-    Warehouse.listQO({
-      pageIndex: 1,
-      pageSize: 9999
-    })
-  )
+  const { data: { data: warehouseCandidates } = {} } = useQuery(Warehouse.listQO(defaultMaxPageDto))
 
   const editMutation = useEditMutation()
 
