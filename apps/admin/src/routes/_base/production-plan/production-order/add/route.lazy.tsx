@@ -43,12 +43,6 @@ function RouteComponent() {
       conditions: 'IsProduct = true'
     })
   )
-  const { data: { data: bomCandidates } = {} } = useQuery(
-    BOM.listQO({
-      ...defaultMaxPageDto,
-      conditions: ''
-    })
-  )
 
   const addMutation = useAddMutation()
 
@@ -81,7 +75,6 @@ function RouteComponent() {
           />
         )
       },
-      // { field: 'iStatus', headerName: '状态' },
       {
         field: 'cInvCode',
         headerName: '料品编码',
@@ -100,7 +93,13 @@ function RouteComponent() {
               (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
               (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
             }
-            onSelect={(value, option) => {
+            onSelect={async (value, option) => {
+              const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
+                BOM.listQO({
+                  ...defaultMaxPageDto,
+                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate>${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate<2099-01-01`
+                })
+              )
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
@@ -108,7 +107,11 @@ function RouteComponent() {
                   cInvName: option.cInvName,
                   cInvStd: option.cInvstd,
                   cUnitCode: option.cProductUnitCode,
-                  cUnitName: option.cProductUnitName
+                  cUnitName: option.cProductUnitName,
+                  cBomUID: option.UID,
+                  cVerisionMemo: undefined,
+                  cBomVersion: undefined,
+                  versionCandidates
                 }
               })
             }}
@@ -148,7 +151,31 @@ function RouteComponent() {
           values: bomTypeOptions
         }
       },
-      { field: 'cBomVersion', headerName: 'BOM版本', editable: true },
+      {
+        field: 'cBomVersion',
+        headerName: 'BOM版本',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+          <Select
+            className="size-full"
+            value={params.data?.cBomVersion}
+            options={params.data?.versionCandidates}
+            fieldNames={{
+              value: 'cVersion',
+              label: 'cVersion'
+            }}
+            onSelect={(value, option) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cBomVersion: value,
+                  cVerisionMemo: option.cVerisionMemo
+                }
+              })
+            }}
+          />
+        )
+      },
       {
         headerName: '操作',
         sortable: false,

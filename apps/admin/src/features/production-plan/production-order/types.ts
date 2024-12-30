@@ -1,3 +1,5 @@
+import type { BOMVo } from '@/features/digital-modeling/products/bom'
+
 export interface ProductionOrderVo {
   RestQuantity: number
   cCode: string
@@ -111,6 +113,8 @@ export interface ProductionOrderBody {
   bodyss?: ProductionOrderBodyss[]
   MID?: string
   UID?: string
+  cVerisionMemo?: string
+  versionCandidates?: BOMVo[]
 }
 
 export interface ProductionOrderBodyss {
