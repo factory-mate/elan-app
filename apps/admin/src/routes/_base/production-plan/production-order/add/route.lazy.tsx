@@ -97,7 +97,7 @@ function RouteComponent() {
               const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
                 BOM.listQO({
                   ...defaultMaxPageDto,
-                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate>${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate<2099-01-01`
+                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`
                 })
               )
               setTableData((draft) => {
