@@ -88,6 +88,7 @@ declare global {
   const createRootRouteWithContext: typeof import('@tanstack/react-router')['createRootRouteWithContext']
   const createRouter: typeof import('@tanstack/react-router')['createRouter']
   const dayjs: typeof import('dayjs')['default']
+  const downloadExcel: typeof import('../src/shared/utils/browser')['downloadExcel']
   const focusManager: typeof import('@tanstack/react-query')['focusManager']
   const forwardRef: typeof import('react')['forwardRef']
   const getRouteApi: typeof import('@tanstack/react-router')['getRouteApi']

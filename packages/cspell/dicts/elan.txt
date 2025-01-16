@@ -1,6 +1,7 @@
 Adress
 bodys
 Bodyss
+cfile
 dictonary
 Fouth
 Headi
@@ -11,6 +12,7 @@ Meil
 Nvarchar
 OrderByFileds
 Parms
+spreadsheetml
 Statu
 utfs
 Verifyer

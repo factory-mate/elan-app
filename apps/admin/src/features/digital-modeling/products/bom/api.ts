@@ -1,3 +1,5 @@
+import type { AxiosResponse } from 'axios'
+
 import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
 import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
@@ -47,5 +49,19 @@ export class BOMAPI {
 
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
+  }
+
+  static async export() {
+    return httpClient.post<AxiosResponse<BlobPart>>(
+      `${this.apiPrefix}/Export`,
+      { orderByFileds: 'cParentCode' },
+      { responseType: 'blob' }
+    )
+  }
+
+  static async import(data: FormData) {
+    return httpClient.post(`${this.apiPrefix}/Import`, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
   }
 }

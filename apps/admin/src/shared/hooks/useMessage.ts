@@ -1,4 +1,4 @@
-type MessageType = 'success' | 'error' | 'select-data'
+type MessageType = 'success' | 'error' | 'select-data' | 'export-success' | 'export-error'
 
 export const useMessage = () => {
   const { message } = App.useApp()
@@ -13,6 +13,12 @@ export const useMessage = () => {
         break
       case 'select-data':
         message.warning('请选择数据')
+        break
+      case 'export-success':
+        message.success('导出成功')
+        break
+      case 'export-error':
+        message.error('导出失败')
         break
       default:
         break

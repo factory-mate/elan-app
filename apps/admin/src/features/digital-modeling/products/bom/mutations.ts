@@ -57,3 +57,22 @@ export const useCancelMutation = () => {
     onSuccess: () => showMessage('success')
   })
 }
+
+export const useExportMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: () => BOMAPI.export(),
+    onSuccess: (res) => {
+      downloadExcel(res)
+      showMessage('export-success')
+    }
+  })
+}
+
+export const useImportMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: FormData) => BOMAPI.import(data),
+    onSuccess: () => showMessage('success')
+  })
+}

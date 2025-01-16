@@ -65,9 +65,15 @@ export class HttpClient {
   #initResponseInterceptor(options: InterceptorInitOptions) {
     this.#instance.interceptors.response.use(
       async (res: AxiosResponse<R>) => {
-        if (res.config.responseType === 'blob' || res.data instanceof ArrayBuffer) {
+        if (
+          res.config.responseType === 'blob' ||
+          res.config.responseType === 'stream' ||
+          res.config.responseType === 'document' ||
+          res.data instanceof ArrayBuffer
+        ) {
           return res
         }
+
         const { data, success } = res.data
 
         if (!success) {

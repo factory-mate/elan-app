@@ -1,5 +1,6 @@
 import type { ColDef, ValueFormatterParams } from '@ag-grid-community/core'
 import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
+import { Upload } from 'antd'
 
 import {
   type BOMChildItemVo,
@@ -10,7 +11,9 @@ import {
   supplyTypeLabelMap,
   useAuditMutation,
   useCancelMutation,
-  useDeleteMutation
+  useDeleteMutation,
+  useExportMutation,
+  useImportMutation
 } from '@/features/digital-modeling/products/bom'
 import { booleanLabelValueGetter } from '@/shared/ag-grid'
 
@@ -40,6 +43,8 @@ function RouteComponent() {
   const deleteMutation = useDeleteMutation()
   const auditMutation = useAuditMutation()
   const cancelMutation = useCancelMutation()
+  const exportMutation = useExportMutation()
+  const importMutation = useImportMutation()
 
   const columnDefs = useMemo<ColDef<BOMChildItemVo>[]>(
     () => [
@@ -164,6 +169,17 @@ function RouteComponent() {
         >
           弃审
         </Button>
+        <Upload
+          customRequest={({ file }) => {
+            const formData = new FormData()
+            formData.append('cfile', file)
+            importMutation.mutate(formData)
+          }}
+          showUploadList={false}
+        >
+          <Button>导入</Button>
+        </Upload>
+        <Button onClick={() => exportMutation.mutate()}>导出</Button>
       </Space>
       <Splitter>
         <Splitter.Panel collapsible>
