@@ -30,7 +30,8 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
           { label: '计量单位档案', key: '/unit' },
           { label: '料品分类', key: '/inventory-class' },
           { label: '料品档案', key: '/inventory' },
-          { label: '物料清单/配方', key: '/bom' }
+          { label: '物料清单/配方', key: '/bom' },
+          { label: 'BOM Cost 报表', key: '/bom-cost' }
           // { label: '工序档案', key: '/process' },
           // { label: '工艺路线档案', key: '/process-route' }
         ]

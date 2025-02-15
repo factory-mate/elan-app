@@ -1,5 +1,5 @@
-import type { ColDef, ICellRendererParams, ValueFormatterParams } from '@ag-grid-community/core'
-import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
+import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-community'
+import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 

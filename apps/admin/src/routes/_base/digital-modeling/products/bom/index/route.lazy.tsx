@@ -1,5 +1,5 @@
-import type { ColDef, ValueFormatterParams } from '@ag-grid-community/core'
-import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
+import type { ColDef, ValueFormatterParams } from 'ag-grid-community'
+import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import { Upload } from 'antd'
 
 import {

@@ -1,5 +1,5 @@
-import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
+import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import { AgGridReact } from 'ag-grid-react'
 import type { Dispatch, MutableRefObject, SetStateAction } from 'react'
 
 import type {

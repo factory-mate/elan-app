@@ -80,27 +80,12 @@ importers:
 
   apps/admin:
     dependencies:
-      '@ag-grid-community/client-side-row-model':
-        specifier: ^32.3.3
-        version: 32.3.3
-      '@ag-grid-community/core':
-        specifier: ^32.3.3
-        version: 32.3.3
       '@ag-grid-community/locale':
-        specifier: ^32.3.3
-        version: 32.3.3
-      '@ag-grid-community/react':
-        specifier: ^32.3.3
-        version: 32.3.3(@ag-grid-community/core@32.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@ag-grid-community/styles':
-        specifier: ^32.3.3
-        version: 32.3.3
-      '@ag-grid-community/theming':
-        specifier: ^32.3.3
-        version: 32.3.3
+        specifier: ^33.0.4
+        version: 33.0.4
       '@ant-design/cssinjs':
-        specifier: ^1.22.0
-        version: 1.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.22.1
+        version: 1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/happy-work-theme':
         specifier: ^1.0.0
         version: 1.0.0(antd@5.22.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -125,6 +110,15 @@ importers:
       '@tanstack/react-router':
         specifier: ^1.82.8
         version: 1.82.8(@tanstack/router-generator@1.81.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      ag-grid-community:
+        specifier: ^33.0.4
+        version: 33.0.4
+      ag-grid-enterprise:
+        specifier: ^33.0.4
+        version: 33.0.4
+      ag-grid-react:
+        specifier: ^33.0.4
+        version: 33.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       ahooks:
         specifier: ^3.8.1
         version: 3.8.1(react@18.3.1)
@@ -269,27 +263,8 @@ importers:
 
 packages:
 
-  '@ag-grid-community/client-side-row-model@32.3.3':
-    resolution: {integrity: sha512-/6OFltj9qax/xfOcYMOKGFQRFTrPX8hrELfS2jChWwpo/+rpnnFqN2iUlIiAB1tDJZsi2ryl8S4UoFSTcEv/VA==}
-
-  '@ag-grid-community/core@32.3.3':
-    resolution: {integrity: sha512-JMr5ahDjjl+pvQbBM1/VrfVFlioCVnMl1PKWc6MC1ENhpXT1+CPQdfhUEUw2VytOulQeQ4eeP0pFKPuBZ5Jn2g==}
-
-  '@ag-grid-community/locale@32.3.3':
-    resolution: {integrity: sha512-M0dUXoZypyRyzql+N6k8n44+tVuxxJDUSq+qM+m7uxm7O+M3WzAi85Gsxq40n/YPALTsCixYT590QwIwVAFHBA==}
-
-  '@ag-grid-community/react@32.3.3':
-    resolution: {integrity: sha512-YU8nOMZjvJsrbbW41PT1jFZQw67p1RGvTk3W7w1dFmtzXFOoXzpB2pWf2jMxREyLYGvz2P9TwmfeHEM50osSPQ==}
-    peerDependencies:
-      '@ag-grid-community/core': 32.3.3
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
-  '@ag-grid-community/styles@32.3.3':
-    resolution: {integrity: sha512-QAJc1CPbmFsAAq5M/8r0IOm8HL4Fb3eVK6tZXKzV9zibIereBjUwvvJRaSJa8iwtTlgxCtaULAQyE2gJcctphA==}
-
-  '@ag-grid-community/theming@32.3.3':
-    resolution: {integrity: sha512-yIM2Ff0zxveVqUB0Uy4c0pe2q3MrFc6PrZvPcI/aLTYgmlEliWbO1PzWh8zIiRlgc6AxLT3c6ky9nvkRYzGohg==}
+  '@ag-grid-community/locale@33.0.4':
+    resolution: {integrity: sha512-P5QzTJ8yvt3DhZWv4il3tassvml+C6nzu0/zoGHTbgEJpTp91A+8fCuTy1RB3TlUbs25PM6hg/btRpL+1+3fTw==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -308,8 +283,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@ant-design/cssinjs@1.22.0':
-    resolution: {integrity: sha512-W9XSFeRPR0mAN3OuxfuS/xhENCYKf+8s+QyNNER0FSWoK9OpISTag6CCweg6lq0hASQ/2Vcza0Z8/kGivCP0Ng==}
+  '@ant-design/cssinjs@1.22.1':
+    resolution: {integrity: sha512-SLuXM4wiEE1blOx94iXrkOgseMZHzdr4ngdFu3VVDq6AOWh7rlwqTkMAtJho3EsBF6x/eUGOtK53VZXGQG7+sQ==}
     peerDependencies:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
@@ -2481,8 +2456,29 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  ag-charts-types@10.3.3:
-    resolution: {integrity: sha512-8rmyquaTkwfP4Lzei/W/cbkq9wwEl8+grIo3z97mtxrMIXh9sHJK1oJipd/u08MmBZrca5Jjtn5F1+UNPu/4fQ==}
+  ag-charts-community@11.0.4:
+    resolution: {integrity: sha512-TFShWfZaA1yJ/hb3jwtNAqBG2Qy9VvoQ9mWLr29ilT6+2R2e30RSk2oH7FAQ2l5nS1367dRf137Td9tUTTuVLg==}
+
+  ag-charts-enterprise@11.0.4:
+    resolution: {integrity: sha512-3jKKbzei4hzSSbPih0EFyIBJ/VvLDZAi+5QsbzxRHfsjfAuqQFYCNXx55FqOzOGg1KSa8sAwmpmTSGdLPxBfDw==}
+
+  ag-charts-locale@11.0.4:
+    resolution: {integrity: sha512-xCQA8CtcUyqU4qYg7u9oUQ+SghIsWAQvY60Bu0ghJJ/bDeW8+ptEU0ogBapuDqfb9B9kqWKgASxbX6diqb+HVQ==}
+
+  ag-charts-types@11.0.4:
+    resolution: {integrity: sha512-K/Mi7FXvSCoABLSrqQ70k1QrIL5R6RNCt2NAppOxMEir+DVFPqKZtghruobc2MGVUUKkT9MCn6Dun+fL6yZjfA==}
+
+  ag-grid-community@33.0.4:
+    resolution: {integrity: sha512-iBD8g8bNIl95w9CzCQpDid+eTdmOoT39204sPUOhE9eE50vfoDHIaF5U4fRYQHbLsT4bwbXfQYdsqBAOLJL24w==}
+
+  ag-grid-enterprise@33.0.4:
+    resolution: {integrity: sha512-Ig4mBWanf2NAJWF1DDiRJAMwbxaxqhIf4rvr/ub5iFksHyvtk5GNrDHsT5PGGZX7xMjOqZoyFYBNJtK0OfUFWQ==}
+
+  ag-grid-react@33.0.4:
+    resolution: {integrity: sha512-0Y54BmY03athtqfpO5kTR/gjyP6Qw4LP+EQD2duBZ3yj4SWWlwE1Ob7Lc7OuZRHxl2dxLQy2edagJHrqnmopKw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   ahooks@3.8.1:
     resolution: {integrity: sha512-JoP9+/RWO7MnI/uSKdvQ8WB10Y3oo1PjLv+4Sv4Vpm19Z86VUMdXh+RhWvMGxZZs06sq2p0xVtFk8Oh5ZObsoA==}
@@ -5976,31 +5972,7 @@ packages:
 
 snapshots:
 
-  '@ag-grid-community/client-side-row-model@32.3.3':
-    dependencies:
-      '@ag-grid-community/core': 32.3.3
-      tslib: 2.8.1
-
-  '@ag-grid-community/core@32.3.3':
-    dependencies:
-      ag-charts-types: 10.3.3
-      tslib: 2.8.1
-
-  '@ag-grid-community/locale@32.3.3': {}
-
-  '@ag-grid-community/react@32.3.3(@ag-grid-community/core@32.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@ag-grid-community/core': 32.3.3
-      prop-types: 15.8.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
-  '@ag-grid-community/styles@32.3.3': {}
-
-  '@ag-grid-community/theming@32.3.3':
-    dependencies:
-      '@ag-grid-community/core': 32.3.3
-      tslib: 2.8.1
+  '@ag-grid-community/locale@33.0.4': {}
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -6015,15 +5987,15 @@ snapshots:
 
   '@ant-design/cssinjs-utils@1.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@ant-design/cssinjs': 1.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ant-design/cssinjs': 1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@babel/runtime': 7.26.0
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@ant-design/cssinjs@1.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@ant-design/cssinjs@1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.6
+      '@babel/runtime': 7.26.0
       '@emotion/hash': 0.8.0
       '@emotion/unitless': 0.7.5
       classnames: 2.5.1
@@ -6039,7 +6011,7 @@ snapshots:
 
   '@ant-design/happy-work-theme@1.0.0(antd@5.22.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@ant-design/cssinjs': 1.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ant-design/cssinjs': 1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@babel/runtime': 7.25.6
       '@ctrl/tinycolor': 3.6.1
       antd: 5.22.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -8105,7 +8077,39 @@ snapshots:
 
   acorn@8.14.0: {}
 
-  ag-charts-types@10.3.3: {}
+  ag-charts-community@11.0.4:
+    dependencies:
+      ag-charts-locale: 11.0.4
+      ag-charts-types: 11.0.4
+    optional: true
+
+  ag-charts-enterprise@11.0.4:
+    dependencies:
+      ag-charts-community: 11.0.4
+    optional: true
+
+  ag-charts-locale@11.0.4:
+    optional: true
+
+  ag-charts-types@11.0.4: {}
+
+  ag-grid-community@33.0.4:
+    dependencies:
+      ag-charts-types: 11.0.4
+
+  ag-grid-enterprise@33.0.4:
+    dependencies:
+      ag-grid-community: 33.0.4
+    optionalDependencies:
+      ag-charts-community: 11.0.4
+      ag-charts-enterprise: 11.0.4
+
+  ag-grid-react@33.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      ag-grid-community: 33.0.4
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   ahooks@3.8.1(react@18.3.1):
     dependencies:
@@ -8163,7 +8167,7 @@ snapshots:
   antd@5.22.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@ant-design/colors': 7.1.0
-      '@ant-design/cssinjs': 1.22.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ant-design/cssinjs': 1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/cssinjs-utils': 1.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/icons': 5.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/react-slick': 1.1.2(react@18.3.1)

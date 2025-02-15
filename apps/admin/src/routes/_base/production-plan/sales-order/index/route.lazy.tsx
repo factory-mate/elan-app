@@ -1,5 +1,5 @@
-import type { ColDef } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
+import type { ColDef } from 'ag-grid-community'
+import { AgGridReact } from 'ag-grid-react'
 
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 import {

@@ -2,14 +2,7 @@ import type { AxiosResponse } from 'axios'
 
 import type { FullPageDto, Page, PageDto } from '@/features/pagination'
 
-import type {
-  BOMAddDto,
-  BOMChildItemVo,
-  BOMCostDto,
-  BOMEditDto,
-  BOMTreeItemVo,
-  BOMVo
-} from './types'
+import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
 
 export class BOMAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/mes_bom`
@@ -70,9 +63,5 @@ export class BOMAPI {
     return httpClient.post(`${this.apiPrefix}/Import`, data, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-  }
-
-  static async getCost(params: BOMCostDto, signal?: AbortSignal) {
-    return httpClient.get(`${this.apiPrefix}/GetCost`, params, { signal })
   }
 }

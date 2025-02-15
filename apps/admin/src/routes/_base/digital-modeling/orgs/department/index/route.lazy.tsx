@@ -1,5 +1,5 @@
-import type { ColDef, ICellRendererParams } from '@ag-grid-community/core'
-import { AgGridReact, type CustomCellRendererProps } from '@ag-grid-community/react'
+import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import type { Key } from 'react'
 
 import { type DepartmentVo, listQO } from '@/features/digital-modeling/orgs/department'
