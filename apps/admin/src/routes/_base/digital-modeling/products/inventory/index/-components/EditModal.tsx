@@ -107,6 +107,15 @@ export default function EditModal(props: EditModalProps) {
                     </Col>
                     <Col span={24}>
                       <Form.Item<InventoryEditDto>
+                        name={['info', 'cEnglishName']}
+                        label="英文名称"
+                        labelCol={{ span: 3 }}
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={24}>
+                      <Form.Item<InventoryEditDto>
                         name={['info', 'cInvstd']}
                         label="规格型号"
                         rules={[{ required: true }]}

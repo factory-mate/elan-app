@@ -52,46 +52,47 @@ function RouteComponent() {
         field: 'iRowNumber',
         headerName: '子件行号',
         valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10,
-        width: 90
+        width: 120
       },
-      { field: 'iProcessNumber', headerName: '工序行号', width: 90 },
+      { field: 'iProcessNumber', headerName: '工序行号', width: 120 },
       { field: 'cInvCode', headerName: '子件编码' },
       { field: 'cInvName', headerName: '子件名称' },
+      { field: 'cEnglishName', headerName: '英文名称' },
       { field: 'cInvstd', headerName: '子件规格' },
-      { field: 'cUnitName', headerName: '计量单位', width: 90 },
-      { field: 'iBasicQty', headerName: '基本用量', width: 90 },
-      { field: 'iBaseQty', headerName: '基础用量', width: 90 },
-      { field: 'iLossRate', headerName: '损耗率', width: 90 },
+      { field: 'cUnitName', headerName: '计量单位', width: 120 },
+      { field: 'iBasicQty', headerName: '基本用量', width: 120 },
+      { field: 'iBaseQty', headerName: '基础用量', width: 120 },
+      { field: 'iLossRate', headerName: '损耗率', width: 120 },
       {
         field: 'iUseQty',
-        headerName: '使用数量',
-        width: 90,
+        headerName: '单位用量',
         valueGetter: (params) => {
           if (params.data?.iBaseQty && params.data?.iBasicQty) {
             return params.data.iBaseQty / params.data.iBasicQty
           }
           return undefined
-        }
+        },
+        width: 120
       },
       {
         field: 'iFixedQty',
         headerName: '固定用量',
-        width: 90,
-        cellRenderer: (p: CustomCellRendererProps) => booleanLabelValueGetter(p.value)
+        cellRenderer: (p: CustomCellRendererProps) => booleanLabelValueGetter(p.value),
+        width: 120
       },
       {
         field: 'cSupplyType',
         headerName: '供应类型',
-        width: 90,
-        cellRenderer: (p: CustomCellRendererProps) => supplyTypeLabelMap.get(p.value)
+        cellRenderer: (p: CustomCellRendererProps) => supplyTypeLabelMap.get(p.value),
+        width: 120
       },
       { field: 'cWareHouseCode', headerName: '仓库编码' },
       { field: 'cDepName', headerName: '领料部门' },
       {
         field: 'cMaterialType',
         headerName: '物料属性',
-        width: 90,
-        valueFormatter: (params: ValueFormatterParams) => (params.data.IsProduct ? '自制' : '采购')
+        valueFormatter: (params: ValueFormatterParams) => (params.data.IsProduct ? '自制' : '采购'),
+        width: 120
       },
       {
         field: 'dEffectiveDate',
@@ -204,7 +205,7 @@ function RouteComponent() {
                 <Skeleton loading={isDetailFetching}>
                   <Row>
                     <Col span={8}>
-                      <Form.Item<BOMVo> label="BOM 类别">{detailData?.cBOMTypeName}</Form.Item>
+                      <Form.Item<BOMVo> label="BOM 类型">{detailData?.cBOMTypeName}</Form.Item>
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="母件编码">{detailData?.cInvCode}</Form.Item>
@@ -213,7 +214,13 @@ function RouteComponent() {
                       <Form.Item<BOMVo> label="母件名称">{detailData?.cInvName}</Form.Item>
                     </Col>
                     <Col span={8}>
+                      <Form.Item<BOMVo> label="英文名称">{detailData?.cEnglishName}</Form.Item>
+                    </Col>
+                    <Col span={8}>
                       <Form.Item<BOMVo> label="规格型号">{detailData?.cInvstd}</Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Form.Item<BOMVo> label="母件数量">{detailData?.nQuantity}</Form.Item>
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="计量单位">{detailData?.cUnitName}</Form.Item>

@@ -46,7 +46,7 @@ function RouteComponent() {
       { field: 'dEndLoginTime', headerName: '最后登录' },
       {
         headerName: '操作',
-        width: 250,
+        width: 300,
         sortable: false,
         pinned: 'right',
         lockPinned: true,

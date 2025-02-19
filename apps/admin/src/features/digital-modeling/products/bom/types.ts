@@ -30,6 +30,8 @@ export interface BOMVo {
   utfs: string
   Id: string
   IsProduct: boolean
+  cEnglishName: string
+  nQuantity: number
 }
 
 export interface BOMTreeItemVo extends BOMVo {
@@ -75,6 +77,7 @@ export interface BOMChildItemVo {
   cSourceAppType?: string
   iStatus?: number
   utfs?: string
+  cEnglishName?: string
 }
 
 export interface BOMAddDto extends BOMVo {

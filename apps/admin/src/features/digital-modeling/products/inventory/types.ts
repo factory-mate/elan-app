@@ -10,6 +10,9 @@ export interface InventoryVo {
   cSaleUnitName: string
   cProductUnitCode: string
   cProductUnitName: string
+  cEnglishName: string
+  cBuyUnitCode: string
+  cBuyUnitName: string
 }
 
 export interface InventoryDetailVo {
@@ -40,6 +43,7 @@ export interface InventoryInfoDto {
   cBuyUnitCode: string
   cStoreUnitCode: string
   cProductUnitCode: string
+  cEnglishName: string
 }
 
 export interface InventoryQCDto {

@@ -9,7 +9,7 @@ export interface BOMCostDto {
 export interface BOMCostVo {
   Child: BOMCostVo[]
   /**
-   * BOM类别
+   * BOM 类型
    */
   cBOMType?: null | string
   cCreateUserCode?: null | string

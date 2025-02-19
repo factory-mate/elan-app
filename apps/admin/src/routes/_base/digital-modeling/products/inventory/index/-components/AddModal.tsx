@@ -93,6 +93,15 @@ export default function AddModal(props: AddModalProps) {
                   </Col>
                   <Col span={24}>
                     <Form.Item<InventoryAddDto>
+                      name={['info', 'cEnglishName']}
+                      label="英文名称"
+                      labelCol={{ span: 3 }}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={24}>
+                    <Form.Item<InventoryAddDto>
                       name={['info', 'cInvstd']}
                       label="规格型号"
                       rules={[{ required: true }]}

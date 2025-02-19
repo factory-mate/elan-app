@@ -41,9 +41,10 @@ function RouteComponent() {
     () => [
       { field: 'cInvCode', headerName: '料品编码' },
       { field: 'cInvName', headerName: '料品名称' },
+      { field: 'cEnglishName', headerName: '英文名称' },
       { field: 'cInvstd', headerName: '规格型号' },
       { field: 'cInvClassName', headerName: '所属分类' },
-      { field: 'cUnitClassName', headerName: '计量单位' },
+      { field: 'cBuyUnitName', headerName: '计量单位' },
       { field: 'cVendorName', headerName: '默认供应商' },
       {
         headerName: '操作',

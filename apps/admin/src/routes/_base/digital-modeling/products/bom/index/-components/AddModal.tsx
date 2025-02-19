@@ -28,10 +28,13 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
+  const { message } = useMessage()
+
   const gridRef = useRef<AgGridReact<BOMChildItemVo>>(null)
   const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
   const [form] = Form.useForm<BOMAddDto>()
+  const parentQuantity = Form.useWatch('nQuantity', form)
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: { data: parentInventoryCandidates } = {} } = useQuery(
@@ -101,6 +104,7 @@ export default function AddModal(props: AddModalProps) {
         )
       },
       { field: 'cInvName', headerName: '子件名称' },
+      { field: 'cEnglishName', headerName: '英文名称', editable: true },
       { field: 'cInvstd', headerName: '子件规格', editable: true },
       { field: 'cUnitName', headerName: '计量单位', editable: true },
       {
@@ -138,10 +142,10 @@ export default function AddModal(props: AddModalProps) {
       },
       {
         field: 'iUseQty',
-        headerName: '使用数量',
+        headerName: '单位用量',
         valueGetter: (params) => {
-          if (params.data?.iBaseQty && params.data?.iBasicQty) {
-            return params.data.iBaseQty / params.data.iBasicQty
+          if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
+            return params.data.iBaseQty / (params.data.iBasicQty * parentQuantity)
           }
           return undefined
         }
@@ -284,14 +288,27 @@ export default function AddModal(props: AddModalProps) {
         )
       }
     ],
-    [childInventoryCandidates, setTableData]
+    [
+      childInventoryCandidates,
+      departmentCandidates,
+      parentQuantity,
+      setTableData,
+      warehouseCandidates
+    ]
   )
 
-  const onFinish: FormProps<BOMAddDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<BOMAddDto>['onFinish'] = (values) => {
+    if (tableData.some((i) => !i.iBaseQty || !i.iBasicQty)) {
+      message.warning('子件基础用量和基本用量必填且大于0')
+      return
+    }
     addMutation.mutate(
       {
         ...values,
-        Bodys: tableData
+        Bodys: tableData.map((i) => ({
+          ...i,
+          iUseQty: i.iBaseQty! / (i.iBasicQty! * values.nQuantity)
+        }))
       },
       {
         onSuccess: () => {
@@ -300,6 +317,7 @@ export default function AddModal(props: AddModalProps) {
         }
       }
     )
+  }
 
   return (
     <Modal
@@ -330,7 +348,7 @@ export default function AddModal(props: AddModalProps) {
             <Col span={8}>
               <Form.Item<BOMVo>
                 name="cBOMType"
-                label="BOM 类别"
+                label="BOM 类型"
               >
                 <Select
                   options={bomCandidates}
@@ -383,6 +401,14 @@ export default function AddModal(props: AddModalProps) {
             </Col>
             <Col span={8}>
               <Form.Item<BOMVo>
+                name="cEnglishName"
+                label="英文名称"
+              >
+                <Input readOnly />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item<BOMVo>
                 name="cInvstd"
                 label="规格型号"
               >
@@ -393,6 +419,15 @@ export default function AddModal(props: AddModalProps) {
               <Form.Item<BOMVo>
                 name="cUnitName"
                 label="计量单位"
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item<BOMVo>
+                name="nQuantity"
+                label="母件数量"
+                rules={[{ required: true }]}
               >
                 <Input />
               </Form.Item>

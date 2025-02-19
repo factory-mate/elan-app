@@ -16,8 +16,8 @@ export const staticMenus: NonNullable<MenuProps['items']> = [
         key: '/orgs',
         children: [
           // { label: '公司档案', key: '/company' },
-          { label: '部门档案', key: '/department' }
-          // { label: '职员档案', key: '/employee' }
+          { label: '部门档案', key: '/department' },
+          { label: '职员档案', key: '/employee' }
           // { label: '工厂档案', key: '/factory' },
           // { label: '车间档案', key: '/workshop' }
         ]

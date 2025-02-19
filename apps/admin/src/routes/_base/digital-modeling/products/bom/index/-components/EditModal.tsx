@@ -34,10 +34,13 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
+  const { message } = useMessage()
+
   const gridRef = useRef<AgGridReact>(null)
   const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
   const [form] = Form.useForm<BOMEditDto>()
+  const parentQuantity = Form.useWatch('nQuantity', form)
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
@@ -109,6 +112,7 @@ export default function EditModal(props: EditModalProps) {
         )
       },
       { field: 'cInvName', headerName: '子件名称' },
+      { field: 'cEnglishName', headerName: '英文名称', editable: true },
       { field: 'cInvstd', headerName: '子件规格', editable: true },
       { field: 'cUnitName', headerName: '计量单位', editable: true },
       {
@@ -146,10 +150,10 @@ export default function EditModal(props: EditModalProps) {
       },
       {
         field: 'iUseQty',
-        headerName: '使用数量',
+        headerName: '单位用量',
         valueGetter: (params) => {
-          if (params.data?.iBaseQty && params.data?.iBasicQty) {
-            return params.data.iBaseQty / params.data.iBasicQty
+          if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
+            return params.data.iBaseQty / (params.data.iBasicQty * parentQuantity)
           }
           return undefined
         }
@@ -292,7 +296,13 @@ export default function EditModal(props: EditModalProps) {
         )
       }
     ],
-    [childInventoryCandidates, setTableData]
+    [
+      childInventoryCandidates,
+      departmentCandidates,
+      parentQuantity,
+      setTableData,
+      warehouseCandidates
+    ]
   )
 
   useAsyncEffect(async () => {
@@ -306,18 +316,25 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [form, open, setTableData])
 
-  const onFinish: FormProps<BOMEditDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<BOMEditDto>['onFinish'] = (values) => {
+    if (tableData.some((i) => !i.iBaseQty || !i.iBasicQty)) {
+      message.warning('子件基础用量和基本用量必填且大于0')
+      return
+    }
     editMutation.mutate(
       {
         ...detailData,
         ...values,
-        Bodys: tableData
+        Bodys: tableData.map((i) => ({
+          ...i,
+          iUseQty: i.iBaseQty! / (i.iBasicQty! * values.nQuantity)
+        }))
       },
       {
         onSuccess: () => setOpen?.(false)
       }
     )
-
+  }
   return (
     <Modal
       title="编辑物料清单/配方"
@@ -348,7 +365,7 @@ export default function EditModal(props: EditModalProps) {
               <Col span={8}>
                 <Form.Item<BOMVo>
                   name="cBOMType"
-                  label="BOM 类别"
+                  label="BOM 类型"
                 >
                   <Select
                     options={bomCandidates}
@@ -401,6 +418,14 @@ export default function EditModal(props: EditModalProps) {
               </Col>
               <Col span={8}>
                 <Form.Item<BOMVo>
+                  name="cEnglishName"
+                  label="英文名称"
+                >
+                  <Input readOnly />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item<BOMVo>
                   name="cInvstd"
                   label="规格型号"
                 >
@@ -411,6 +436,15 @@ export default function EditModal(props: EditModalProps) {
                 <Form.Item<BOMVo>
                   name="cUnitName"
                   label="计量单位"
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item<BOMVo>
+                  name="nQuantity"
+                  label="母件数量"
+                  rules={[{ required: true }]}
                 >
                   <Input />
                 </Form.Item>
