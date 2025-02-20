@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>
+    <directoryBrowse enabled="false" />
+    <rewrite>
+      <rules>
+        <rule name="ManagerCenterAPIReverseProxy" stopProcessing="true">
+          <match url="^manager-center/(.*)" />
+          <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+          <action type="Rewrite" url="http://localhost:8889/api/{R:1}" logRewrittenUrl="false" />
+        </rule>
+        <rule name="MESServiceAPIReverseProxy" enabled="true" stopProcessing="true">
+          <match url="^mes-service/(.*)" />
+          <conditions logicalGrouping="MatchAll" trackAllCaptures="false" />
+          <action type="Rewrite" url="http://localhost:10100/api/{R:1}" />
+        </rule>
+        <rule name="SPA" enabled="true" stopProcessing="true">
+          <match url=".*" />
+          <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+</configuration>
