@@ -36,7 +36,7 @@ function RouteComponent() {
           name="userName"
           label="用户名"
         >
-          <Input readOnly />
+          <Input disabled />
         </Form.Item>
 
         <Form.Item

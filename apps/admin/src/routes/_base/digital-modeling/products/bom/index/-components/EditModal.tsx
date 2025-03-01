@@ -112,9 +112,9 @@ export default function EditModal(props: EditModalProps) {
         )
       },
       { field: 'cInvName', headerName: '子件名称' },
-      { field: 'cEnglishName', headerName: '英文名称', editable: true },
-      { field: 'cInvstd', headerName: '子件规格', editable: true },
-      { field: 'cUnitName', headerName: '计量单位', editable: true },
+      { field: 'cEnglishName', headerName: '英文名称' },
+      { field: 'cInvstd', headerName: '子件规格' },
+      { field: 'cUnitName', headerName: '计量单位' },
       {
         field: 'iBasicQty',
         headerName: '基本用量',
@@ -253,13 +253,17 @@ export default function EditModal(props: EditModalProps) {
         field: 'dEffectiveDate',
         headerName: '生效日期',
         editable: true,
-        cellDataType: 'dateString'
+        cellDataType: 'dateString',
+        valueFormatter: (params: ValueFormatterParams) =>
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
       },
       {
         field: 'dExpirationDate',
         headerName: '失效日期',
         editable: true,
-        cellDataType: 'dateString'
+        cellDataType: 'dateString',
+        valueFormatter: (params: ValueFormatterParams) =>
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
       },
       {
         headerName: '操作',
@@ -413,7 +417,7 @@ export default function EditModal(props: EditModalProps) {
                   label="母件名称"
                   rules={[{ required: true }]}
                 >
-                  <Input readOnly />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col span={8}>
@@ -421,7 +425,7 @@ export default function EditModal(props: EditModalProps) {
                   name="cEnglishName"
                   label="英文名称"
                 >
-                  <Input readOnly />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col span={8}>
@@ -429,7 +433,7 @@ export default function EditModal(props: EditModalProps) {
                   name="cInvstd"
                   label="规格型号"
                 >
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col span={8}>
@@ -437,7 +441,7 @@ export default function EditModal(props: EditModalProps) {
                   name="cUnitName"
                   label="计量单位"
                 >
-                  <Input />
+                  <Input disabled />
                 </Form.Item>
               </Col>
               <Col span={8}>
