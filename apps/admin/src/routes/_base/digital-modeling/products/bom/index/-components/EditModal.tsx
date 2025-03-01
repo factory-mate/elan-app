@@ -68,8 +68,7 @@ export default function EditModal(props: EditModalProps) {
     () => [
       {
         field: 'iRowNumber',
-        headerName: '子件行号',
-        valueGetter: (params) => ((params.node!.rowIndex ?? 0) + 1) * 10
+        headerName: '子件行号'
       },
       { field: 'iProcessNumber', headerName: '工序行号', editable: true },
       {
@@ -272,18 +271,27 @@ export default function EditModal(props: EditModalProps) {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
           <Space>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                setTableData((draft) => {
-                  draft.splice(params.node.rowIndex! + 1, 0, {})
-                })
-              }}
-            >
-              添加
-            </Button>
+            {params.node.rowIndex! + 1 < tableData.length && (
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                onClick={() => {
+                  const iRowNumber = `${+params.node.data!.iRowNumber! + 1}`
+                  if (tableData.some((i) => i.iRowNumber === iRowNumber)) {
+                    message.warning('当前行号已存在，无法添加')
+                    return
+                  }
+                  setTableData((draft) => {
+                    draft.splice(params.node.rowIndex! + 1, 0, {
+                      iRowNumber
+                    })
+                  })
+                }}
+              >
+                添加
+              </Button>
+            )}
             <Button
               size="small"
               color="primary"
@@ -303,8 +311,10 @@ export default function EditModal(props: EditModalProps) {
     [
       childInventoryCandidates,
       departmentCandidates,
+      message,
       parentQuantity,
       setTableData,
+      tableData,
       warehouseCandidates
     ]
   )
@@ -522,6 +532,7 @@ export default function EditModal(props: EditModalProps) {
             onClick={() =>
               setTableData((draft) => {
                 draft.push({
+                  iRowNumber: `${draft.length === 0 ? 10 : +draft.at(-1)!.iRowNumber! + 10}`,
                   iProcessNumber: DEFAULT_PROCESS_NUMBER,
                   iBasicQty: 1,
                   iBaseQty: 1,
