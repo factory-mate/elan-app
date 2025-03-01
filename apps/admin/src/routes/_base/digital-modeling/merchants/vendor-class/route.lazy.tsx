@@ -136,6 +136,9 @@ function RouteComponent() {
                   pinned: 'left',
                   lockPinned: true
                 }}
+                autoSizeStrategy={{
+                  type: 'fitGridWidth'
+                }}
                 headerHeight={36}
                 rowHeight={36}
                 tooltipShowDelay={1000}

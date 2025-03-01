@@ -47,6 +47,9 @@ function RouteComponent() {
               headerName: '产品编码',
               minWidth: 340
             }}
+            autoSizeStrategy={{
+              type: 'fitGridWidth'
+            }}
             getDataPath={(d) => (d.Child ? [d.cInvCode!] : [])}
             groupDefaultExpanded={-1}
             headerHeight={36}
