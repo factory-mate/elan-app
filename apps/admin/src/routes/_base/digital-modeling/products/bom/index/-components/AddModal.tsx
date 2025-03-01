@@ -276,7 +276,16 @@ export default function AddModal(props: AddModalProps) {
                   }
                   setTableData((draft) => {
                     draft.splice(params.node.rowIndex! + 1, 0, {
-                      iRowNumber
+                      iRowNumber,
+                      iProcessNumber: DEFAULT_PROCESS_NUMBER,
+                      iBasicQty: 1,
+                      iBaseQty: 1,
+                      iUseQty: 1,
+                      iLossRate: 0,
+                      iFixedQty: 0,
+                      cSupplyType: '1',
+                      dEffectiveDate: DateUtils.formatTime(new Date(), 'YYYY-MM-DD'),
+                      dExpirationDate: DEFAULT_EXPIRATION_DATE
                     })
                   })
                 }}
