@@ -114,6 +114,7 @@ export default defineConfig(({ mode }) => {
       drop: mode === 'production' ? ['console', 'debugger'] : []
     },
     build: {
+      outDir: `dist/${mode}`,
       rollupOptions: {
         output: {
           manualChunks: (id) => {
