@@ -40,6 +40,7 @@ export interface ProductionOrderVo {
   cUnitCode: string
   dEndTime: string
   cBomType: string
+  cBomTypeName: string
   cBomVersion: string
   dBeginTime: string
   cBomUID: string

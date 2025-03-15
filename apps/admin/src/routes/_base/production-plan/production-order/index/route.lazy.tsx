@@ -70,7 +70,7 @@ function RouteComponent() {
       { field: 'dEndTime', headerName: '完工时间' },
       { field: 'cAssQuantity', headerName: '已完工数量' },
       { field: 'RestQuantity', headerName: '未完工数量' },
-      { field: 'cBomType', headerName: 'BOM类型' },
+      { field: 'cBomTypeName', headerName: 'BOM类型' },
       { field: 'cBomVersion', headerName: 'BOM版本' },
       { field: 'cBomVersion', headerName: 'BOM版本说明' },
       { field: 'dVerifyTime', headerName: '审核时间' },

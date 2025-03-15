@@ -3,20 +3,19 @@ import { AgGridReact } from 'ag-grid-react'
 import { useAsyncEffect } from 'ahooks'
 import type { FormProps } from 'antd'
 
+import * as Dicts from '@/features/dicts'
 import * as Department from '@/features/digital-modeling/orgs/department'
 import * as BOM from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
 import { defaultMaxPageDto } from '@/features/pagination'
 import {
   BOMType,
-  bomTypeOptions,
   detailBodysQO,
   detailBodyssQO,
   detailQO,
   type ProductionOrderBody,
   type ProductionOrderHead,
-  useEditMutation,
-  vouchTypeOptions
+  useEditMutation
 } from '@/features/production-plan/production-order'
 
 import { ChildListModal } from './-components'
@@ -40,6 +39,8 @@ function RouteComponent() {
 
   const childListModal = useModal()
 
+  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
+  const { data: vouchCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchStandardType'))
   const { data: detailData } = useSuspenseQuery(detailQO(id))
   const { data: detailBodysData } = useSuspenseQuery(detailBodysQO(id))
   const editMutation = useEditMutation()
@@ -105,9 +106,11 @@ function RouteComponent() {
               const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
                 BOM.listQO({
                   ...defaultMaxPageDto,
-                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`
+                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`,
+                  orderByFileds: 'dCreateTime desc'
                 })
               )
+              const matchedBom = versionCandidates.at(0)
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
@@ -117,8 +120,8 @@ function RouteComponent() {
                   cUnitCode: option.cProductUnitCode,
                   cUnitName: option.cProductUnitName,
                   cBomUID: option.UID,
-                  cVerisionMemo: undefined,
-                  cBomVersion: undefined,
+                  cBomVersion: matchedBom?.cVersion ?? undefined,
+                  cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
                   versionCandidates
                 }
               })
@@ -157,7 +160,8 @@ function RouteComponent() {
             className="size-full"
             variant="borderless"
             value={params.data?.cBomType}
-            options={bomTypeOptions}
+            options={bomCandidates}
+            fieldNames={Dicts.dictSelectFieldNames}
             onSelect={(value) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -251,7 +255,7 @@ function RouteComponent() {
         )
       }
     ],
-    [childListModal, departmentCandidates, inventoryCandidates, setTableData]
+    [bomCandidates, childListModal, departmentCandidates, form, inventoryCandidates, setTableData]
   )
 
   const onFinish: FormProps<ProductionOrderHead>['onFinish'] = (values) =>
@@ -322,7 +326,10 @@ function RouteComponent() {
                 name="cVouchType"
                 label="生产订单类别"
               >
-                <Select options={vouchTypeOptions} />
+                <Select
+                  options={vouchCandidates}
+                  fieldNames={Dicts.dictSelectFieldNames}
+                />
               </Form.Item>
             </Col>
             <Col span={8}>

@@ -1,5 +1,4 @@
 export * from './api'
-export * from './constants'
 export * from './enums'
 export * from './mutations'
 export * from './queries'
