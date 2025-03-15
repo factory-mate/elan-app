@@ -7,7 +7,13 @@ LicenseManager.setLicenseKey('')
 ModuleRegistry.registerModules([AllEnterpriseModule])
 
 provideGlobalGridOptions({
-  localeText: AG_GRID_LOCALE_CN
+  localeText: AG_GRID_LOCALE_CN,
+  stopEditingWhenCellsLoseFocus: true,
+  headerHeight: 36,
+  rowHeight: 36,
+  tooltipShowDelay: 1000,
+  tooltipHideDelay: 0,
+  noRowsOverlayComponent: () => '暂无数据'
 })
 
 export * from './utils'

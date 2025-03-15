@@ -1,5 +1,3 @@
-import type { Page, PageDto } from '@/features/pagination'
-
 import type { CodingSchemeAddDto, CodingSchemeEditDto, CodingSchemeVo } from './types'
 
 export class CodingSchemeAPI {

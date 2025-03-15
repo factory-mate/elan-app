@@ -1,5 +1,3 @@
-import type { Page, PageDto } from '@/features/pagination'
-
 import type { SalesOrderVo } from './types'
 
 export class SalesOrderAPI {

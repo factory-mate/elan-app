@@ -96,12 +96,7 @@ function RouteComponent() {
               pinned: 'left',
               lockPinned: true
             }}
-            headerHeight={36}
-            rowHeight={36}
-            tooltipShowDelay={1000}
-            tooltipHideDelay={0}
             loading={isFetching}
-            noRowsOverlayComponent={() => '暂无数据'}
             onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
           />
         </div>

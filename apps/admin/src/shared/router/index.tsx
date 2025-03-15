@@ -23,7 +23,7 @@ export const getRouterStaticData = (path: string) =>
 // NProgress
 nprogress.configure({ showSpinner: false })
 router.subscribe('onBeforeLoad', ({ pathChanged }) => pathChanged && nprogress.start())
-router.subscribe('onLoad', () => nprogress.done())
+router.subscribe('onResolved', () => nprogress.done())
 router.subscribe('onBeforeRouteMount', ({ toLocation }) => {
   const tabbarStore = useTabbarStore.getState()
   const { pathname } = toLocation

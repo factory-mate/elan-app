@@ -1,5 +1,3 @@
-import type { FullPageDto, PageDto } from '@/features/pagination'
-
 import { BOMAPI } from './api'
 import { NOT_FOUND_UID } from './constants'
 import { childListQK, detailQK, fullListQK, listQK, treeQK } from './query-keys'

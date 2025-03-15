@@ -1,5 +1,3 @@
-import type { Page, PageDto } from '@/features/pagination'
-
 import type { WarehouseAddDto, WarehouseEditDto, WarehouseVo } from './types'
 
 export class WarehouseAPI {

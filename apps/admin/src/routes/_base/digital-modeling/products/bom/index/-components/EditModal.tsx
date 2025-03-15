@@ -2,6 +2,7 @@ import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-
 import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'
+import Decimal from 'decimal.js'
 import type { Dispatch, SetStateAction } from 'react'
 
 import * as Dicts from '@/features/dicts'
@@ -78,6 +79,7 @@ export default function EditModal(props: EditModalProps) {
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cInvCode}
             options={childInventoryCandidates}
             fieldNames={{
@@ -120,9 +122,7 @@ export default function EditModal(props: EditModalProps) {
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
-          precision: 0,
-          step: 1,
-          showStepperButtons: true
+          precision: 8
         }
       },
       {
@@ -131,9 +131,7 @@ export default function EditModal(props: EditModalProps) {
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
-          precision: 0,
-          step: 1,
-          showStepperButtons: true
+          precision: 8
         }
       },
       {
@@ -152,17 +150,12 @@ export default function EditModal(props: EditModalProps) {
         headerName: '单位用量',
         valueGetter: (params) => {
           if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
-            return params.data.iBaseQty / (params.data.iBasicQty * parentQuantity)
+            const iBaseQty = new Decimal(params.data?.iBaseQty)
+            const iBasicQty = new Decimal(params.data?.iBasicQty)
+            return iBaseQty.dividedBy(iBasicQty.times(new Decimal(parentQuantity))).toNumber()
           }
           return undefined
         }
-        // editable: true,
-        // cellDataType: 'number',
-        // cellEditorParams: {
-        //   precision: 0,
-        //   step: 1,
-        //   showStepperButtons: true
-        // }
       },
       {
         field: 'iFixedQty',
@@ -200,9 +193,11 @@ export default function EditModal(props: EditModalProps) {
       {
         field: 'cWareHouseCode',
         headerName: '仓库编码',
+        cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cWareHouseCode}
             options={warehouseCandidates}
             fieldNames={{
@@ -228,6 +223,7 @@ export default function EditModal(props: EditModalProps) {
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cDepCode}
             options={departmentCandidates}
             fieldNames={Department.departmentSelectFieldNames}
@@ -279,7 +275,7 @@ export default function EditModal(props: EditModalProps) {
                 onClick={() => {
                   const iRowNumber = `${+params.node.data!.iRowNumber! + 1}`
                   if (tableData.some((i) => i.iRowNumber === iRowNumber)) {
-                    message.warning('当前行号已存在，无法添加')
+                    message.warning('当前行号已存在，无法增行')
                     return
                   }
                   setTableData((draft) => {
@@ -298,7 +294,7 @@ export default function EditModal(props: EditModalProps) {
                   })
                 }}
               >
-                添加
+                增行
               </Button>
             )}
             <Button
@@ -311,7 +307,7 @@ export default function EditModal(props: EditModalProps) {
                 })
               }}
             >
-              删除
+              删行
             </Button>
           </Space>
         )
@@ -555,7 +551,7 @@ export default function EditModal(props: EditModalProps) {
               })
             }
           >
-            新增
+            增行
           </Button>
         </Space>
 
@@ -564,11 +560,6 @@ export default function EditModal(props: EditModalProps) {
             ref={gridRef}
             columnDefs={columnDefs}
             rowData={tableData}
-            headerHeight={36}
-            rowHeight={36}
-            tooltipShowDelay={1000}
-            tooltipHideDelay={0}
-            noRowsOverlayComponent={() => '暂无数据'}
             editType="fullRow"
           />
         </div>

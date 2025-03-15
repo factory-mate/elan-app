@@ -1,7 +1,5 @@
 import type { AxiosResponse } from 'axios'
 
-import type { FullPageDto, Page, PageDto } from '@/features/pagination'
-
 import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
 
 export class BOMAPI {

@@ -8,6 +8,7 @@ import * as BOM from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
 import { defaultMaxPageDto } from '@/features/pagination'
 import {
+  BOMType,
   bomTypeOptions,
   detailBodysQO,
   detailBodyssQO,
@@ -15,7 +16,7 @@ import {
   type ProductionOrderBody,
   type ProductionOrderHead,
   useEditMutation,
-  VouchType
+  vouchTypeOptions
 } from '@/features/production-plan/production-order'
 
 import { ChildListModal } from './-components'
@@ -59,7 +60,6 @@ function RouteComponent() {
         headerName: '行号',
         valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
       },
-      // { field: 'cVouchTypeName', headerName: '类型' },
       {
         field: 'cInvName',
         headerName: '车间',
@@ -67,6 +67,7 @@ function RouteComponent() {
         cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cDefindParm04}
             options={departmentCandidates}
             fieldNames={Department.departmentSelectFieldNames}
@@ -88,6 +89,7 @@ function RouteComponent() {
         cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cInvCode}
             options={inventoryCandidates}
             fieldNames={{
@@ -131,7 +133,8 @@ function RouteComponent() {
         )
       },
       { field: 'cInvName', headerName: '料品名称' },
-      { field: 'cInvStd', headerName: '规格型号', editable: true },
+      { field: 'cInvStd', headerName: '规格型号' },
+      { field: 'cUnitName', headerName: '计量单位' },
       {
         field: 'nQuantity',
         headerName: '生产数量',
@@ -143,19 +146,28 @@ function RouteComponent() {
           showStepperButtons: true
         }
       },
-      { field: 'cUnitName', headerName: '计量单位', editable: true },
       { field: 'dBeginTime', headerName: '开工时间', editable: true, cellDataType: 'dateString' },
       { field: 'dEndTime', headerName: '完工时间', editable: true, cellDataType: 'dateString' },
       {
         field: 'cBomType',
         headerName: 'BOM类型',
-        // cellRenderer: (params: CustomCellRendererProps<ProductionOrderBody>) =>
-        //   bomTypeLabelMap.get(params.data?.cBomType ?? ''),
-        editable: true,
-        cellEditor: 'agSelectCellEditor',
-        cellEditorParams: {
-          values: bomTypeOptions
-        }
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+          <Select
+            className="size-full"
+            variant="borderless"
+            value={params.data?.cBomType}
+            options={bomTypeOptions}
+            onSelect={(value) => {
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cBomType: value
+                }
+              })
+            }}
+          />
+        )
       },
       {
         field: 'cBomVersion',
@@ -165,6 +177,7 @@ function RouteComponent() {
         cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
           <Select
             className="size-full"
+            variant="borderless"
             value={params.data?.cBomVersion}
             options={params.data?.versionCandidates}
             fieldNames={{
@@ -197,12 +210,18 @@ function RouteComponent() {
               onClick={() => {
                 setTableData((draft) => {
                   draft.splice(params.node.rowIndex! + 1, 0, {
+                    dBeginTime: DateUtils.formatTime(form.getFieldValue('dDate'), 'YYYY-MM-DD'),
+                    dEndTime: DateUtils.formatTime(
+                      DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
+                      'YYYY-MM-DD'
+                    ),
+                    cBomType: BOMType.STANDARD,
                     bodyss: []
                   })
                 })
               }}
             >
-              新增
+              增行
             </Button>
             <Button
               size="small"
@@ -214,7 +233,7 @@ function RouteComponent() {
                 })
               }}
             >
-              删除
+              删行
             </Button>
             <Button
               size="small"
@@ -232,7 +251,7 @@ function RouteComponent() {
         )
       }
     ],
-    [childListModal, setTableData]
+    [childListModal, departmentCandidates, inventoryCandidates, setTableData]
   )
 
   const onFinish: FormProps<ProductionOrderHead>['onFinish'] = (values) =>
@@ -303,12 +322,7 @@ function RouteComponent() {
                 name="cVouchType"
                 label="生产订单类别"
               >
-                <Select
-                  options={[
-                    { label: '标准', value: VouchType.STANDARD },
-                    { label: '非标准', value: VouchType.NON_STANDARD }
-                  ]}
-                />
+                <Select options={vouchTypeOptions} />
               </Form.Item>
             </Col>
             <Col span={8}>
@@ -341,12 +355,13 @@ function RouteComponent() {
                     DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
                     'YYYY-MM-DD'
                   ),
+                  cBomType: BOMType.STANDARD,
                   bodyss: []
                 })
               })
             }
           >
-            新增
+            增行
           </Button>
         </Space>
 
@@ -355,11 +370,6 @@ function RouteComponent() {
             ref={gridRef}
             columnDefs={columnDefs}
             rowData={tableData}
-            headerHeight={36}
-            rowHeight={36}
-            tooltipShowDelay={1000}
-            tooltipHideDelay={0}
-            noRowsOverlayComponent={() => '暂无数据'}
             editType="fullRow"
           />
         </div>

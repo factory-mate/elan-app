@@ -159,3 +159,15 @@ declare global {
   const useUserStore: typeof import('../src/shared/store/user')['useUserStore']
   const z: typeof import('zod')['z']
 }
+// for type re-export
+declare global {
+  // @ts-ignore
+  export type { ErrorPageProps } from '../src/shared/components/ErrorPage/index'
+  import('../src/shared/components/ErrorPage/index')
+  // @ts-ignore
+  export type { UseModalProps, UseModal } from '../src/shared/hooks/useModal'
+  import('../src/shared/hooks/useModal')
+  // @ts-ignore
+  export type { Page, PageDto, FullPageDto } from '../src/shared/types/pagination'
+  import('../src/shared/types/pagination')
+}

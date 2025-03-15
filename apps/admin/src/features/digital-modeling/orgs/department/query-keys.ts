@@ -1,5 +1,3 @@
-import type { FullPageDto, PageDto } from '@/features/pagination'
-
 export const TREE_QK = 'department:tree'
 
 export const FULL_LIST_QK = 'department:full-list'

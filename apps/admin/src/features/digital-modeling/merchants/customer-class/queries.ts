@@ -1,5 +1,3 @@
-import type { PageDto } from '@/features/pagination'
-
 import { CustomerClassAPI } from './api'
 import { detailQK, listQK, treeQK } from './query-keys'
 

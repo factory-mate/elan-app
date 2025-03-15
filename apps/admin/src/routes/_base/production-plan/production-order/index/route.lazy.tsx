@@ -82,7 +82,10 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams<ProductionOrderVo>) => (
           <Space>
-            <Link to={`/production-plan/production-order/${params.data!.UID}/edit`}>
+            <Link
+              to="/production-plan/production-order/$id/edit"
+              params={{ id: params.data!.UID }}
+            >
               <Button
                 size="small"
                 color="primary"
@@ -189,12 +192,7 @@ function RouteComponent() {
               pinned: 'left',
               lockPinned: true
             }}
-            headerHeight={36}
-            rowHeight={36}
-            tooltipShowDelay={1000}
-            tooltipHideDelay={0}
             loading={isFetching}
-            noRowsOverlayComponent={() => '暂无数据'}
             onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
           />
         </div>

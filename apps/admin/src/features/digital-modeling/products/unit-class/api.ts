@@ -1,5 +1,3 @@
-import type { FullPageDto, Page, PageDto } from '@/features/pagination'
-
 import type { UnitClassAddDto, UnitClassEditDto, UnitClassTreeItemVo, UnitClassVo } from './types'
 
 export class UnitClassAPI {

@@ -1,5 +1,3 @@
-import type { PageDto } from '@/features/pagination'
-
 import { ProductionOrderAPI } from './api'
 import { detailBodysQK, detailBodyssQK, detailQK, listQK } from './query-keys'
 

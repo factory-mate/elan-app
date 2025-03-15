@@ -1,5 +1,3 @@
-import type { PageDto } from '@/features/pagination'
-
 export const LIST_QK = 'employee:list'
 
 export const DETAIL_QK = 'employee:detail'

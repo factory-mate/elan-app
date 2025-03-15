@@ -1,4 +1,3 @@
-import type { Router } from '@tanstack/react-router'
 import type { MessageInstance } from 'antd/es/message/interface'
 import type { HttpStatusCode } from 'axios'
 
@@ -6,7 +5,7 @@ export interface InterceptorInitOptions {
   /**
    * Tanstack Router instance.
    */
-  router?: Router<any, any, any>
+  router?: any
   /**
    * antd Message instance.
    */

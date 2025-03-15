@@ -1,5 +1,3 @@
-import type { PageDto } from '@/features/pagination'
-
 import { SalesOrderAPI } from './api'
 import { listQK } from './query-keys'
 

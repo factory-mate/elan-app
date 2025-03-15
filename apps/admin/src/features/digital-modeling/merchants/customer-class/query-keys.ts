@@ -1,5 +1,3 @@
-import type { PageDto } from '@/features/pagination'
-
 export const TREE_QK = 'customer-class:tree'
 
 export const LIST_QK = 'customer-class:list'

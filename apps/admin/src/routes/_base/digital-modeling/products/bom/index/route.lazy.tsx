@@ -63,17 +63,7 @@ function RouteComponent() {
       { field: 'iBasicQty', headerName: '基本用量', width: 120 },
       { field: 'iBaseQty', headerName: '基础用量', width: 120 },
       { field: 'iLossRate', headerName: '损耗率', width: 120 },
-      {
-        field: 'iUseQty',
-        headerName: '单位用量',
-        valueGetter: (params) => {
-          if (params.data?.iBaseQty && params.data?.iBasicQty) {
-            return params.data.iBaseQty / params.data.iBasicQty
-          }
-          return undefined
-        },
-        width: 120
-      },
+      { field: 'iUseQty', headerName: '单位用量', width: 120 },
       {
         field: 'iFixedQty',
         headerName: '固定用量',
@@ -97,16 +87,12 @@ function RouteComponent() {
       {
         field: 'dEffectiveDate',
         headerName: '生效日期',
-        width: 120,
-        valueFormatter: (params: ValueFormatterParams) =>
-          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+        width: 200
       },
       {
         field: 'dExpirationDate',
         headerName: '失效日期',
-        width: 120,
-        valueFormatter: (params: ValueFormatterParams) =>
-          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+        width: 200
       }
     ],
     []

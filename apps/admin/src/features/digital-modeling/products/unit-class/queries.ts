@@ -1,5 +1,3 @@
-import type { FullPageDto, PageDto } from '@/features/pagination'
-
 import { UnitClassAPI } from './api'
 import { detailQK, fullListQK, listQK } from './query-keys'
 

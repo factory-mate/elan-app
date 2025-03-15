@@ -111,11 +111,6 @@ export default function ChildListModal(props: ChildListModalProps) {
             ref={gridRef}
             columnDefs={columnDefs}
             rowData={tableData}
-            headerHeight={36}
-            rowHeight={36}
-            tooltipShowDelay={1000}
-            tooltipHideDelay={0}
-            noRowsOverlayComponent={() => '暂无数据'}
             editType="fullRow"
           />
         </div>
