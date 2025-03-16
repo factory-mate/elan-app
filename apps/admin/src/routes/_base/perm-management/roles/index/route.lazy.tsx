@@ -13,7 +13,7 @@ import { queryBuilder } from '@/features/query-builder'
 
 import { AddModal, EditModal, SetPermsModal } from './-components'
 import FilterArea from './-components/FilterArea'
-import type { EditModalMeta, FilterForm } from './-types'
+import type { EditModalMeta, FilterForm, SetPermsModalMeta } from './-types'
 
 export const Route = createLazyFileRoute('/_base/perm-management/roles/')({
   component: RouteComponent
@@ -28,7 +28,7 @@ function RouteComponent() {
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
-  const setPermsModal = useModal()
+  const setPermsModal = useModal<SetPermsModalMeta>()
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({

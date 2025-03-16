@@ -1,5 +1,12 @@
 import { EmployeeAPI } from './api'
-import { detailQK, listQK } from './query-keys'
+import { detailQK, fullListQK, listQK } from './query-keys'
+
+export const fullListQO = () =>
+  queryOptions({
+    queryKey: fullListQK(),
+    queryFn: ({ signal }) => EmployeeAPI.fullList(signal),
+    placeholderData: keepPreviousData
+  })
 
 export const listQO = (params: PageDto) =>
   queryOptions({

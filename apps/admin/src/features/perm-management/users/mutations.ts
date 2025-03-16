@@ -9,3 +9,11 @@ export const useChangePasswordMutation = () => {
     onSuccess: () => message.success('修改密码成功')
   })
 }
+
+export const useResetPasswordMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (ids: string[]) => UsersAPI.resetPassword(ids),
+    onSuccess: () => showMessage('success')
+  })
+}

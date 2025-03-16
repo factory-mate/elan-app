@@ -4,11 +4,17 @@ import type { Key } from 'react'
 
 import {
   useDeleteMutation,
+  useFreezeMutation,
   useStartMutation,
-  useStopMutation
+  useStopMutation,
+  useUnfreezeMutation
 } from '@/features/digital-modeling/orgs/employee'
 import { type EmployeeVo, listQO } from '@/features/digital-modeling/orgs/employee'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
+import * as Users from '@/features/perm-management/users'
+
+import { EditDeptModal, EditPositionModal } from './-components'
+import type { EditDeptModalMeta, EditPositionModalMeta } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/')({
   component: RouteComponent
@@ -16,6 +22,10 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/
 
 function RouteComponent() {
   const { showMessage } = useMessage()
+
+  const editDeptModal = useModal<EditDeptModalMeta>()
+  const editPositionModal = useModal<EditPositionModalMeta>()
+
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
@@ -32,57 +42,77 @@ function RouteComponent() {
   )
   const startMutation = useStartMutation()
   const stopMutation = useStopMutation()
+  const freezeMutation = useFreezeMutation()
+  const unfreezeMutation = useUnfreezeMutation()
   const deleteMutation = useDeleteMutation()
+  const resetPasswordMutation = Users.useResetPasswordMutation()
 
   const columnDefs = useMemo<ColDef<EmployeeVo>[]>(
     () => [
       { field: 'cPersonCode', headerName: '编码' },
       { field: 'cPersonName', headerName: '姓名' },
-      { field: 'cSexTypeCode', headerName: '性别' },
+      // { field: 'cSexTypeCode', headerName: '性别' },
       { field: 'cDepName', headerName: '部门' },
       { field: 'cProfessionalTypeName', headerName: '职务' },
       { field: 'cMobile', headerName: '手机' },
-      { field: 'cEmployeeStatuCode', headerName: '账号状态' },
+      {
+        field: 'IsValid',
+        headerName: '是否启用',
+        editable: true,
+        cellDataType: 'boolean',
+        onCellValueChanged: (event) => {
+          if (event.newValue) {
+            startMutation.mutate([event.data.UID])
+          } else {
+            stopMutation.mutate([event.data.UID])
+          }
+        }
+      },
+      {
+        field: 'bFreeze',
+        headerName: '是否冻结',
+        editable: true,
+        cellDataType: 'boolean',
+        onCellValueChanged: (event) => {
+          if (event.newValue) {
+            freezeMutation.mutate([event.data.UID])
+          } else {
+            unfreezeMutation.mutate([event.data.UID])
+          }
+        }
+      },
       { field: 'dEndLoginTime', headerName: '最后登录' },
       {
         headerName: '操作',
-        width: 300,
         sortable: false,
         pinned: 'right',
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams) => (
           <Space>
-            <Link to="/404">
+            <Link
+              to="/digital-modeling/orgs/employee/$id/edit"
+              params={{ id: params.data!.UID }}
+            >
               <Button
                 size="small"
                 color="primary"
                 variant="text"
-                onClick={() => {}}
               >
-                设置
+                编辑
               </Button>
             </Link>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
+            {/* <Link
+              to="/digital-modeling/orgs/employee/$id/detail"
+              params={{ id: params.data!.UID }}
             >
-              停用
-            </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-            >
-              冻结
-            </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-            >
-              解冻
-            </Button>
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+              >
+                查看
+              </Button>
+            </Link> */}
             <Button
               size="small"
               color="primary"
@@ -96,7 +126,7 @@ function RouteComponent() {
         )
       }
     ],
-    [deleteMutation]
+    [deleteMutation, freezeMutation, startMutation, stopMutation, unfreezeMutation]
   )
 
   return (
@@ -124,11 +154,77 @@ function RouteComponent() {
             </Button>
           </Space>
           <Space>
-            <Button type="primary">修改部门</Button>
-            <Button type="primary">修改职务</Button>
-            <Button type="primary">停用员工</Button>
-            <Button type="primary">冻结员工</Button>
-            <Button type="primary">重置密码</Button>
+            <Button
+              onClick={() => {
+                editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                editDeptModal.toggle()
+              }}
+            >
+              修改部门
+            </Button>
+            <Button
+              onClick={() => {
+                editPositionModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                editPositionModal.toggle()
+              }}
+            >
+              修改职务
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                startMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              启用员工
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                stopMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              停用员工
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                freezeMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              冻结员工
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                unfreezeMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              解冻员工
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              重置密码
+            </Button>
             <Link to="/digital-modeling/orgs/employee/add">
               <Button type="primary">新增职员</Button>
             </Link>
@@ -178,6 +274,16 @@ function RouteComponent() {
           />
         </Flex>
       </Space>
+      <EditDeptModal
+        meta={editDeptModal.meta}
+        open={editDeptModal.open}
+        setOpen={editDeptModal.setOpen}
+      />
+      <EditPositionModal
+        meta={editPositionModal.meta}
+        open={editPositionModal.open}
+        setOpen={editPositionModal.setOpen}
+      />
     </PageContainer>
   )
 }

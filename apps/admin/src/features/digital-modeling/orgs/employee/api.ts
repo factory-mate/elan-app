@@ -1,13 +1,19 @@
 import type {
   EmployeeAddDto,
   EmployeeEditDto,
+  EmployeeSetDeptDto,
   EmployeeSetFreezeStatusDto,
+  EmployeeSetPositionDto,
   EmployeeUpdateDeptDto,
   EmployeeVo
 } from './types'
 
 export class EmployeeAPI {
   private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/employee`
+
+  static async fullList(signal?: AbortSignal) {
+    return httpClient.get<EmployeeVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })
+  }
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<EmployeeVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })
@@ -43,5 +49,13 @@ export class EmployeeAPI {
 
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
+  }
+
+  static async setDept(data: EmployeeSetDeptDto) {
+    return httpClient.post(`${this.apiPrefix}/SetDepartment`, data)
+  }
+
+  static async setPosition(data: EmployeeSetPositionDto) {
+    return httpClient.post(`${this.apiPrefix}/SetProfessionalType`, data)
   }
 }

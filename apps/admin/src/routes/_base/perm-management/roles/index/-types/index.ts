@@ -2,7 +2,7 @@ export interface EditModalMeta {
   UID: string
 }
 
-export interface SetRoleModalMeta {
+export interface SetPermsModalMeta {
   cRoleCode: string
 }
 

@@ -20,37 +20,31 @@ export interface EmployeeVo {
   iStatus: number
   cEmployeeStatuCode: string
   dEndLoginTime: string
-}
-
-export interface EmployeeAddDto {
-  cEmployeeCode: string
-  cEmployeeName: string
-  cSexTypeCode: string
-  cProfessionalTypeCode: string
-  cProfessionalTypeName: string
-  cDepCode: string
-  cDepName: string
-  cMobile: string
-  dBirthDay: string
-  cMeil: string
-  cWeChat: string
-  cPhoneAreaNumber: string
-  cPhoneNumber: string
-  cPhoneExtensionNumber: string
-  cAdress: string
-}
-
-export interface EmployeeEditDto extends EmployeeAddDto {
-  UID: string
+  IsValid: boolean
+  bFreeze: boolean
   utfs: string
 }
 
+export interface EmployeeAddDto extends EmployeeVo {}
+
+export interface EmployeeEditDto extends EmployeeAddDto {}
+
 export interface EmployeeUpdateDeptDto {
-  UID: string[]
+  KeyVal: string[]
   cDepCode: string
 }
 
 export interface EmployeeSetFreezeStatusDto {
-  UID: string[]
+  KeyVal: string[]
   bFreeze: boolean
+}
+
+export interface EmployeeSetDeptDto {
+  KeyVal: string[]
+  cDepCode: string
+}
+
+export interface EmployeeSetPositionDto {
+  KeyVal: string[]
+  cProfessionalTypeCode: string
 }

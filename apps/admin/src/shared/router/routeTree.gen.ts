@@ -38,6 +38,8 @@ import { Route as BaseDigitalModelingOrgsDepartmentIndexRouteImport } from './..
 import { Route as BaseDigitalModelingMerchantsCustomerIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer/index/route'
 import { Route as BaseDigitalModelingMerchantsCustomerClassIndexRouteImport } from './../../routes/_base/digital-modeling/merchants/customer-class/index/route'
 import { Route as BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteImport } from './../../routes/_base/digital-modeling/basic-settings/coding-scheme/index/route'
+import { Route as BaseDigitalModelingOrgsEmployeeIdEditRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/$id/edit/route'
+import { Route as BaseDigitalModelingOrgsEmployeeIdDetailRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/$id/detail/route'
 
 // Create/Update Routes
 
@@ -185,7 +187,11 @@ const BaseDigitalModelingOrgsEmployeeAddRouteRoute =
     id: '/digital-modeling/orgs/employee/add',
     path: '/digital-modeling/orgs/employee/add',
     getParentRoute: () => BaseRouteRoute,
-  } as any)
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/orgs/employee/add/route.lazy'
+    ).then((d) => d.Route),
+  )
 
 const BaseDigitalModelingProductsUnitIndexRouteRoute =
   BaseDigitalModelingProductsUnitIndexRouteImport.update({
@@ -305,6 +311,28 @@ const BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/digital-modeling/basic-settings/coding-scheme/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingOrgsEmployeeIdEditRouteRoute =
+  BaseDigitalModelingOrgsEmployeeIdEditRouteImport.update({
+    id: '/digital-modeling/orgs/employee/$id/edit',
+    path: '/digital-modeling/orgs/employee/$id/edit',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/orgs/employee/$id/edit/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute =
+  BaseDigitalModelingOrgsEmployeeIdDetailRouteImport.update({
+    id: '/digital-modeling/orgs/employee/$id/detail',
+    path: '/digital-modeling/orgs/employee/$id/detail',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/orgs/employee/$id/detail/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -501,6 +529,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseProductionPlanProductionOrderIdEditRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/orgs/employee/$id/detail': {
+      id: '/_base/digital-modeling/orgs/employee/$id/detail'
+      path: '/digital-modeling/orgs/employee/$id/detail'
+      fullPath: '/digital-modeling/orgs/employee/$id/detail'
+      preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/digital-modeling/orgs/employee/$id/edit': {
+      id: '/_base/digital-modeling/orgs/employee/$id/edit'
+      path: '/digital-modeling/orgs/employee/$id/edit'
+      fullPath: '/digital-modeling/orgs/employee/$id/edit'
+      preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeIdEditRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
   }
 }
 
@@ -530,6 +572,8 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseProductionPlanProductionOrderIdEditRouteRoute: typeof BaseProductionPlanProductionOrderIdEditRouteRoute
+  BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
+  BaseDigitalModelingOrgsEmployeeIdEditRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
 
 const BaseRouteRouteChildren: BaseRouteRouteChildren = {
@@ -575,6 +619,10 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingOrgsEmployeeAddRouteRoute,
   BaseProductionPlanProductionOrderIdEditRouteRoute:
     BaseProductionPlanProductionOrderIdEditRouteRoute,
+  BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute:
+    BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute,
+  BaseDigitalModelingOrgsEmployeeIdEditRouteRoute:
+    BaseDigitalModelingOrgsEmployeeIdEditRouteRoute,
 }
 
 const BaseRouteRouteWithChildren = BaseRouteRoute._addFileChildren(
@@ -620,6 +668,8 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
+  '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
+  '/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
 
 export interface FileRoutesByTo {
@@ -649,6 +699,8 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
+  '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
+  '/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
 
 export interface FileRoutesById {
@@ -680,6 +732,8 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
+  '/_base/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
+  '/_base/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
 
 export interface FileRouteTypes {
@@ -711,6 +765,8 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
+    | '/digital-modeling/orgs/employee/$id/detail'
+    | '/digital-modeling/orgs/employee/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
@@ -739,6 +795,8 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
+    | '/digital-modeling/orgs/employee/$id/detail'
+    | '/digital-modeling/orgs/employee/$id/edit'
   id:
     | '__root__'
     | '/$'
@@ -768,6 +826,8 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/unit/'
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/production-plan/production-order/$id/edit'
+    | '/_base/digital-modeling/orgs/employee/$id/detail'
+    | '/_base/digital-modeling/orgs/employee/$id/edit'
   fileRoutesById: FileRoutesById
 }
 
@@ -826,7 +886,9 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
         "/_base/digital-modeling/orgs/employee/add",
-        "/_base/production-plan/production-order/$id/edit"
+        "/_base/production-plan/production-order/$id/edit",
+        "/_base/digital-modeling/orgs/employee/$id/detail",
+        "/_base/digital-modeling/orgs/employee/$id/edit"
       ]
     },
     "/_public": {
@@ -929,6 +991,14 @@ export const routeTree = rootRoute
     },
     "/_base/production-plan/production-order/$id/edit": {
       "filePath": "_base/production-plan/production-order/$id/edit/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/orgs/employee/$id/detail": {
+      "filePath": "_base/digital-modeling/orgs/employee/$id/detail/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/orgs/employee/$id/edit": {
+      "filePath": "_base/digital-modeling/orgs/employee/$id/edit/route.tsx",
       "parent": "/_base"
     }
   }

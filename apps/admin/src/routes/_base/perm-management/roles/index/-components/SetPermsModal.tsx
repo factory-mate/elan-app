@@ -10,10 +10,10 @@ import {
 } from '@/features/perm-management/perms'
 import { queryBuilder } from '@/features/query-builder'
 
-import type { SetRoleModalMeta } from '../-types'
+import type { SetPermsModalMeta } from '../-types'
 
 interface SetPermsModalProps {
-  meta?: SetRoleModalMeta
+  meta?: SetPermsModalMeta
   open?: boolean
   setOpen?: Dispatch<SetStateAction<boolean>>
 }
@@ -108,7 +108,10 @@ export default function SetPermsModal(props: SetPermsModalProps) {
       onCancel={() => setOpen?.(false)}
       forceRender
       width="40%"
-      okButtonProps={{ loading: editMutation.isPending }}
+      okButtonProps={{
+        loading: editMutation.isPending,
+        disabled: editMutation.isPending
+      }}
     >
       <Tree
         treeData={treeData}

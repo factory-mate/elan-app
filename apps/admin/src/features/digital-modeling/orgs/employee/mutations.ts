@@ -1,5 +1,11 @@
 import { EmployeeAPI } from './api'
-import type { EmployeeAddDto, EmployeeEditDto, EmployeeUpdateDeptDto } from './types'
+import type {
+  EmployeeAddDto,
+  EmployeeEditDto,
+  EmployeeSetDeptDto,
+  EmployeeSetPositionDto,
+  EmployeeUpdateDeptDto
+} from './types'
 
 export const useStartMutation = () => {
   const { showMessage } = useMessage()
@@ -52,7 +58,7 @@ export const useUpdateDeptMutation = () => {
 export const useFreezeMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => EmployeeAPI.setFreezeStatus({ UID: ids, bFreeze: true }),
+    mutationFn: (ids: string[]) => EmployeeAPI.setFreezeStatus({ KeyVal: ids, bFreeze: true }),
     onSuccess: () => showMessage('success')
   })
 }
@@ -60,7 +66,23 @@ export const useFreezeMutation = () => {
 export const useUnfreezeMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => EmployeeAPI.setFreezeStatus({ UID: ids, bFreeze: false }),
+    mutationFn: (ids: string[]) => EmployeeAPI.setFreezeStatus({ KeyVal: ids, bFreeze: false }),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useSetDeptMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: EmployeeSetDeptDto) => EmployeeAPI.setDept(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useSetPositionMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: EmployeeSetPositionDto) => EmployeeAPI.setPosition(data),
     onSuccess: () => showMessage('success')
   })
 }
