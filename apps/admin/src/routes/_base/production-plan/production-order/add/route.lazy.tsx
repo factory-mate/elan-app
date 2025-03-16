@@ -113,7 +113,6 @@ function RouteComponent() {
                   cInvStd: option.cInvstd,
                   cUnitCode: option.cProductUnitCode,
                   cUnitName: option.cProductUnitName,
-                  cBomUID: option.UID,
                   cBomVersion: matchedBom?.cVersion ?? undefined,
                   cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
                   versionCandidates
@@ -187,6 +186,7 @@ function RouteComponent() {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
                   cBomVersion: value,
+                  cBomUID: option.UID,
                   cVerisionMemo: option.cVerisionMemo
                 }
               })
