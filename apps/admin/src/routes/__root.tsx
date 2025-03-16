@@ -1,13 +1,6 @@
 import type { QueryClient } from '@tanstack/react-query'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Suspense } from 'react'
-
-const TanStackRouterDevtools = import.meta.env.PROD
-  ? () => null
-  : lazy(() =>
-      import('@tanstack/router-devtools').then((res) => ({
-        default: res.TanStackRouterDevtools
-      }))
-    )
 
 const ReactQueryDevtools = lazy(() =>
   import('@tanstack/react-query-devtools').then((res) => ({
@@ -31,7 +24,6 @@ function Root() {
 
   return (
     <>
-      <ScrollRestoration />
       <AnimatePresence>
         <Outlet />
       </AnimatePresence>
