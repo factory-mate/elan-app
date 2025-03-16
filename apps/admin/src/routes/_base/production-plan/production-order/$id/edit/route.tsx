@@ -2,7 +2,8 @@ import { detailBodysQO, detailQO } from '@/features/production-plan/production-o
 
 export const Route = createFileRoute('/_base/production-plan/production-order/$id/edit')({
   staticData: {
-    title: '编辑生产订单'
+    title: '编辑生产订单',
+    authKey: 'production-order:edit'
   },
   beforeLoad: async (ctx) => {
     await Promise.all([

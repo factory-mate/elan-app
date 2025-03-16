@@ -1,5 +1,6 @@
 export const Route = createFileRoute('/_base/production-plan/sales-order/')({
   staticData: {
-    title: '销售订单'
+    title: '销售订单',
+    authKey: 'sales-order'
   }
 })

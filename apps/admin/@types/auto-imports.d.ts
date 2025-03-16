@@ -75,6 +75,7 @@ declare global {
   const Tabs: typeof import('antd')['Tabs']
   const ThemeUtils: typeof import('@bit-ocean/utils')['ThemeUtils']
   const Tooltip: typeof import('antd')['Tooltip']
+  const Transfer: typeof import('antd')['Transfer']
   const Tree: typeof import('antd')['Tree']
   const TreeSelect: typeof import('antd')['TreeSelect']
   const appConfig: typeof import('@elan/config')['appConfig']

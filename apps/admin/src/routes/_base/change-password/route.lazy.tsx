@@ -1,4 +1,7 @@
-import { type ChangePasswordFormValues, useChangePasswordMutation } from '@/features/users'
+import {
+  type ChangePasswordFormValues,
+  useChangePasswordMutation
+} from '@/features/perm-management/users'
 
 export const Route = createLazyFileRoute('/_base/change-password')({
   component: RouteComponent

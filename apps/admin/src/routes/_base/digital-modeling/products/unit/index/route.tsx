@@ -4,7 +4,8 @@ import { defaultPageDto } from '@/features/pagination'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
   staticData: {
-    title: '计量单位档案'
+    title: '计量单位档案',
+    authKey: 'unit'
   },
   beforeLoad: async () => {
     await Promise.allSettled([

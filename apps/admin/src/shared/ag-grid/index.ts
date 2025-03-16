@@ -12,7 +12,8 @@ provideGlobalGridOptions({
   headerHeight: 36,
   rowHeight: 36,
   tooltipShowDelay: 1000,
-  tooltipHideDelay: 0,
+  tooltipHideDelay: 5000,
+  tooltipTrigger: 'hover',
   noRowsOverlayComponent: () => '暂无数据'
 })
 

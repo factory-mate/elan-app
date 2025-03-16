@@ -92,13 +92,13 @@ export default function FilterArea(props: FilterAreaProps) {
                 </Button>
               </Tooltip>
               <Tooltip title="重置">
-                <Button>
-                  <LucideRefreshCcw
-                    onClick={() => {
-                      form.resetFields()
-                      setFilterData?.({})
-                    }}
-                  />
+                <Button
+                  onClick={() => {
+                    form.resetFields()
+                    setFilterData?.({})
+                  }}
+                >
+                  <LucideRefreshCcw />
                 </Button>
               </Tooltip>
 

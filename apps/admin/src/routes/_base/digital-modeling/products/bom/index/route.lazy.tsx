@@ -241,12 +241,7 @@ function RouteComponent() {
                   getRowId={(params) => params.data.UID!}
                   columnDefs={columnDefs}
                   rowData={childListData}
-                  headerHeight={36}
-                  rowHeight={36}
-                  tooltipShowDelay={1000}
-                  tooltipHideDelay={0}
                   loading={isChildListFetching}
-                  noRowsOverlayComponent={() => '暂无数据'}
                 />
               </div>
             </Space>

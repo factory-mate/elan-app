@@ -1,5 +1,7 @@
 import nprogress from 'nprogress'
 
+import type { PermCode } from '@/features/perm-management/perms'
+
 import { queryClient } from '../query-client'
 import { routeTree } from './routeTree.gen'
 
@@ -47,5 +49,6 @@ declare module '@tanstack/react-router' {
 
   interface StaticDataRouteOption {
     title?: string
+    authKey?: PermCode | PermCode[]
   }
 }
