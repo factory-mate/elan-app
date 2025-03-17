@@ -1,5 +1,7 @@
+import type { FullPageDto } from '@/shared/types'
+
 import { RoleAPI } from './api'
-import { detailQK, fullListQK, listQK } from './query-keys'
+import { detailQK, fullListQK, listQK, userRoleFullListQK } from './query-keys'
 
 export const fullListQO = () =>
   queryOptions({
@@ -20,4 +22,11 @@ export const detailQO = (id?: string) =>
     queryKey: detailQK(id!),
     queryFn: ({ signal }) => RoleAPI.detail(id!, signal),
     enabled: !!id
+  })
+
+export const userRoleFullListQO = (params: FullPageDto) =>
+  queryOptions({
+    queryKey: userRoleFullListQK(params),
+    queryFn: ({ signal }) => RoleAPI.userRoleFullList(params, signal),
+    placeholderData: keepPreviousData
   })

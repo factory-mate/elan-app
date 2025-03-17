@@ -1,3 +1,5 @@
+import type { FullPageDto } from '@/shared/types'
+
 import type { RoleAddDto, RoleBatchAddDto, RoleEditDto, RoleVo } from './types'
 
 export class RoleAPI {
@@ -37,5 +39,11 @@ export class RoleAPI {
 
   static async batchAdd(data: RoleBatchAddDto) {
     return httpClient.post(`${this.apiPrefix}/UserRole/BatchAdd`, data)
+  }
+
+  static async userRoleFullList(params: FullPageDto, signal?: AbortSignal) {
+    return httpClient.get<RoleVo[]>(`${this.apiPrefix}/UserRole/GetForList`, params, {
+      signal
+    })
   }
 }

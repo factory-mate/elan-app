@@ -47,6 +47,7 @@ export default function EditRoleModal(props: EditRoleModalProps) {
       }
     )
   }
+
   useEffect(() => {
     if (open) {
       form.setFieldsValue({ cLoginName: meta?.ids, cRoleCode: [] })
