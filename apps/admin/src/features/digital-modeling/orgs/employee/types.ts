@@ -48,3 +48,8 @@ export interface EmployeeSetPositionDto {
   KeyVal: string[]
   cProfessionalTypeCode: string
 }
+
+export interface EmployeeSetRoleDto {
+  cLoginName: string[]
+  cRoleCode: string[]
+}

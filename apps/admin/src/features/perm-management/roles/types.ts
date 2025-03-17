@@ -10,3 +10,12 @@ export interface RoleVo {
 export interface RoleAddDto extends RoleVo {}
 
 export interface RoleEditDto extends RoleAddDto {}
+
+export interface RoleBatchAddDto {
+  Items: RoleBatchAddItemDto[]
+}
+
+export interface RoleBatchAddItemDto {
+  cLoginName: string
+  cRoleCode: string
+}

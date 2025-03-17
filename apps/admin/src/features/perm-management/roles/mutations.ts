@@ -1,5 +1,5 @@
 import { RoleAPI } from './api'
-import type { RoleAddDto, RoleEditDto } from './types'
+import type { RoleAddDto, RoleBatchAddDto, RoleEditDto } from './types'
 
 export const useStartMutation = () => {
   const { showMessage } = useMessage()
@@ -37,6 +37,14 @@ export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
     mutationFn: (data: RoleEditDto) => RoleAPI.edit(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useBatchAddMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: RoleBatchAddDto) => RoleAPI.batchAdd(data),
     onSuccess: () => showMessage('success')
   })
 }

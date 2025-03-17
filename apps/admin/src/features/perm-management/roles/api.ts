@@ -1,7 +1,11 @@
-import type { RoleAddDto, RoleEditDto, RoleVo } from './types'
+import type { RoleAddDto, RoleBatchAddDto, RoleEditDto, RoleVo } from './types'
 
 export class RoleAPI {
   private static apiPrefix = MANAGER_CENTER_API_PREFIX
+
+  static async fullList(signal?: AbortSignal) {
+    return httpClient.get<RoleVo[]>(`${this.apiPrefix}/role/GetForList`, {}, { signal })
+  }
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<RoleVo>>(`${this.apiPrefix}/role/GetForPage`, params, { signal })
@@ -29,5 +33,9 @@ export class RoleAPI {
 
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/role/Del`, { data: ids })
+  }
+
+  static async batchAdd(data: RoleBatchAddDto) {
+    return httpClient.post(`${this.apiPrefix}/UserRole/BatchAdd`, data)
   }
 }

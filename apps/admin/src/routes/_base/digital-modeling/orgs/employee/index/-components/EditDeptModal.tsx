@@ -13,7 +13,7 @@ interface EditDeptModalProps {
   setOpen?: Dispatch<SetStateAction<boolean>>
 }
 
-export function EditDeptModal(props: EditDeptModalProps) {
+export default function EditDeptModal(props: EditDeptModalProps) {
   const { meta, open, setOpen } = props
 
   const [form] = Form.useForm<EmployeeSetDeptDto>()

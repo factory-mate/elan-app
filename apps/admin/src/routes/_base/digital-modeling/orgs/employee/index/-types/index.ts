@@ -5,3 +5,7 @@ export interface EditDeptModalMeta {
 export interface EditPositionModalMeta {
   ids: string[]
 }
+
+export interface EditRoleModalMeta {
+  ids: string[]
+}

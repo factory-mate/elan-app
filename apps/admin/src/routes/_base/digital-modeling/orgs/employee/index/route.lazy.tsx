@@ -13,8 +13,8 @@ import { type EmployeeVo, listQO } from '@/features/digital-modeling/orgs/employ
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 import * as Users from '@/features/perm-management/users'
 
-import { EditDeptModal, EditPositionModal } from './-components'
-import type { EditDeptModalMeta, EditPositionModalMeta } from './-types'
+import { EditDeptModal, EditPositionModal, EditRoleModal } from './-components'
+import type { EditDeptModalMeta, EditPositionModalMeta, EditRoleModalMeta } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/')({
   component: RouteComponent
@@ -25,6 +25,7 @@ function RouteComponent() {
 
   const editDeptModal = useModal<EditDeptModalMeta>()
   const editPositionModal = useModal<EditPositionModalMeta>()
+  const editRoleModal = useModal<EditRoleModalMeta>()
 
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
@@ -156,6 +157,14 @@ function RouteComponent() {
           <Space>
             <Button
               onClick={() => {
+                editRoleModal.setMeta({ ids: selectedRows.map((i) => i.cEmployeeCode) })
+                editRoleModal.toggle()
+              }}
+            >
+              修改角色
+            </Button>
+            <Button
+              onClick={() => {
                 editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
                 editDeptModal.toggle()
               }}
@@ -283,6 +292,11 @@ function RouteComponent() {
         meta={editPositionModal.meta}
         open={editPositionModal.open}
         setOpen={editPositionModal.setOpen}
+      />
+      <EditRoleModal
+        meta={editRoleModal.meta}
+        open={editRoleModal.open}
+        setOpen={editRoleModal.setOpen}
       />
     </PageContainer>
   )
