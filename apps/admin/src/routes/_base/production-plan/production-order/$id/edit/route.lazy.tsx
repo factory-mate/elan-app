@@ -42,7 +42,7 @@ function RouteComponent() {
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: vouchCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchStandardType'))
   const { data: detailData } = useSuspenseQuery(detailQO(id))
-  const { data: detailBodysData } = useSuspenseQuery(detailBodysQO(id))
+  const { data: detailBodysData } = useSuspenseQuery(detailBodysQO(detailData.MID))
   const editMutation = useEditMutation()
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
@@ -119,6 +119,7 @@ function RouteComponent() {
                   cInvStd: option.cInvstd,
                   cUnitCode: option.cProductUnitCode,
                   cUnitName: option.cProductUnitName,
+                  cBomUID: matchedBom?.UID ?? undefined,
                   cBomVersion: matchedBom?.cVersion ?? undefined,
                   cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
                   versionCandidates

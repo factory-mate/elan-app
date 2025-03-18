@@ -41,20 +41,19 @@ export default function BasicInfo() {
       }
     >
       <Form.Item<EmployeeVo>
-        name="cEmployeeName"
-        label="姓名"
-        rules={[{ required: true, message: '请输入姓名' }]}
-      >
-        <Input placeholder="请输入姓名" />
-      </Form.Item>
-
-      <Form.Item<EmployeeVo>
         name="cEmployeeCode"
         label="账号"
       >
         <Input readOnly />
       </Form.Item>
 
+      <Form.Item<EmployeeVo>
+        name="cEmployeeName"
+        label="姓名"
+        rules={[{ required: true, message: '请输入姓名' }]}
+      >
+        <Input placeholder="请输入姓名" />
+      </Form.Item>
       <Form.Item<EmployeeVo>
         name="cDepCode"
         label="部门"
@@ -67,7 +66,6 @@ export default function BasicInfo() {
           placeholder="请选择部门"
         />
       </Form.Item>
-
       <Form.Item<EmployeeVo>
         name="cProfessionalTypeCode"
         label="职务"
@@ -79,7 +77,6 @@ export default function BasicInfo() {
           placeholder="请选择职务"
         />
       </Form.Item>
-
       <Form.Item<EmployeeVo>
         name="cMobile"
         label="手机"
@@ -87,21 +84,18 @@ export default function BasicInfo() {
       >
         <Input placeholder="请输入手机" />
       </Form.Item>
-
       <Form.Item<EmployeeVo>
         name="cMeil"
         label="邮箱"
       >
         <Input placeholder="请输入邮箱" />
       </Form.Item>
-
       <Form.Item<EmployeeVo>
         name="cWeChat"
         label="微信"
       >
         <Input placeholder="请输入微信" />
       </Form.Item>
-
       <Form.Item>
         <Button
           className="w-full"

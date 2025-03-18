@@ -1,9 +1,12 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
+import { useReactToPrint } from 'react-to-print'
 
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 import {
   listQO,
+  printDetailQO,
+  type PrintDetailVo,
   type ProductionOrderVo,
   useAbandonMutation,
   useAuditMutation,
@@ -14,6 +17,7 @@ import {
 import { queryBuilder } from '@/features/query-builder'
 
 import { FilterArea } from './-components'
+import styles from './-styles/print.module.scss'
 import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/production-plan/production-order/')({
@@ -23,9 +27,15 @@ export const Route = createLazyFileRoute('/_base/production-plan/production-orde
 function RouteComponent() {
   const { showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [filterData, setFilterData] = useState<FilterForm>({})
+  const [printData, setPrintData] = useState<PrintDetailVo>({})
+  const [isPrint, setIsPrint] = useState(false)
+
+  const reactToPrintFn = useReactToPrint({ contentRef })
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
@@ -115,6 +125,29 @@ function RouteComponent() {
         >
           <Space>
             <Button
+              onClick={async () => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                if (selectedRows.length > 1) {
+                  showMessage('select-only-one')
+                  return
+                }
+                setIsPrint(true)
+                const pData =
+                  (await queryClient.ensureQueryData(printDetailQO(selectedRows[0].UID))).at(0) ??
+                  {}
+                setPrintData(pData)
+                setTimeout(() => {
+                  reactToPrintFn()
+                  setIsPrint(false)
+                }, 16)
+              }}
+            >
+              打印
+            </Button>
+            <Button
               onClick={() => {
                 if (selectedRows.length === 0) {
                   showMessage('select-data')
@@ -142,10 +175,10 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                closeMutation.mutate(selectedRows.map((i) => i.UID))
+                openMutation.mutate(selectedRows.map((i) => i.UID))
               }}
             >
-              关闭
+              打开
             </Button>
             <Button
               onClick={() => {
@@ -153,10 +186,10 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                openMutation.mutate(selectedRows.map((i) => i.UID))
+                closeMutation.mutate(selectedRows.map((i) => i.UID))
               }}
             >
-              打开
+              关闭
             </Button>
             <Button
               onClick={() => {
@@ -215,6 +248,69 @@ function RouteComponent() {
           />
         </Flex>
       </Space>
+
+      <div
+        ref={contentRef}
+        className={styles.printContent}
+      >
+        <div className="relative h-screen p-8">
+          <div className="flex items-center justify-between">
+            <div />
+            <div className="text-2xl">Elan 配方投产单</div>
+            <div className="right-0">批号：{printData?.cDefindParm06}</div>
+          </div>
+          <div className="mt-4 border-b-2 border-black text-lg">
+            <div className="grid grid-cols-4">
+              <div>编号：{printData?.cInvCode}</div>
+              <div>名称：{printData?.cInvName}</div>
+              <div>确认状态：{}</div>
+              <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+            </div>
+          </div>
+
+          <div className="mt-2 border-b border-black text-lg">
+            <div className="grid grid-cols-6">
+              <div>编号</div>
+              <div>名称</div>
+              <div>配比</div>
+              <div>用量（公斤）</div>
+              <div>实际投料</div>
+              <div>验单号</div>
+            </div>
+          </div>
+
+          {printData.List_BOM?.map((item, index) => (
+            <div
+              className="mt-2 border-b border-black text-lg"
+              key={index}
+            >
+              <div className="grid grid-cols-6">
+                <div>{item?.cMaterialCode}</div>
+                <div>{item?.cMaterialName}</div>
+                <div>{item?.cDefindParm01}</div>
+                <div>{item?.nQuantity}</div>
+                <div />
+                <div />
+              </div>
+            </div>
+          ))}
+
+          <div className="mt-2 flex justify-end space-x-12">
+            <div>总配比（%）：{printData?.SumRate}</div>
+            <div>总用量（公斤）：{printData?.SumQuantity}</div>
+          </div>
+
+          <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+            <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+              <div className={styles.textUnderline}>签发：</div>
+              <div className={styles.textUnderline}>生产：</div>
+              <div className={styles.textUnderline}>核对：</div>
+              <div className={styles.textUnderline}>库存管理：</div>
+              <div className={styles.textUnderline}>生产日期：</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </PageContainer>
   )
 }

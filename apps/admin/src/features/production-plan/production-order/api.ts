@@ -1,4 +1,5 @@
 import type {
+  PrintDetailVo,
   ProductionOrderAddDto,
   ProductionOrderBody,
   ProductionOrderBodyss,
@@ -52,5 +53,9 @@ export class ProductionOrderAPI {
 
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
+  }
+
+  static async printDetail(val: string, signal?: AbortSignal) {
+    return httpClient.get<PrintDetailVo[]>(`${this.apiPrefix}/GetPrintData`, { val }, { signal })
   }
 }

@@ -113,6 +113,7 @@ function RouteComponent() {
                   cInvStd: option.cInvstd,
                   cUnitCode: option.cProductUnitCode,
                   cUnitName: option.cProductUnitName,
+                  cBomUID: matchedBom?.UID ?? undefined,
                   cBomVersion: matchedBom?.cVersion ?? undefined,
                   cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
                   versionCandidates

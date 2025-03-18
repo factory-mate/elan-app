@@ -15,6 +15,7 @@ import { Route as PublicRouteImport } from './../../routes/_public/route'
 import { Route as BaseRouteImport } from './../../routes/_base/route'
 import { Route as SplatRouteImport } from './../../routes/$/route'
 import { Route as PublicLoginRouteImport } from './../../routes/_public/login/route'
+import { Route as BasePrintRouteImport } from './../../routes/_base/print/route'
 import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/change-password/route'
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteImport } from './../../routes/_base/403/route'
@@ -69,6 +70,14 @@ const PublicLoginRouteRoute = PublicLoginRouteImport.update({
   getParentRoute: () => PublicRouteRoute,
 } as any).lazy(() =>
   import('./../../routes/_public/login/route.lazy').then((d) => d.Route),
+)
+
+const BasePrintRouteRoute = BasePrintRouteImport.update({
+  id: '/print',
+  path: '/print',
+  getParentRoute: () => BaseRouteRoute,
+} as any).lazy(() =>
+  import('./../../routes/_base/print/route.lazy').then((d) => d.Route),
 )
 
 const BaseChangePasswordRouteRoute = BaseChangePasswordRouteImport.update({
@@ -389,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseChangePasswordRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/print': {
+      id: '/_base/print'
+      path: '/print'
+      fullPath: '/print'
+      preLoaderRoute: typeof BasePrintRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_public/login': {
       id: '/_public/login'
       path: '/login'
@@ -553,6 +569,7 @@ interface BaseRouteRouteChildren {
   Base403RouteRoute: typeof Base403RouteRoute
   Base404RouteRoute: typeof Base404RouteRoute
   BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
+  BasePrintRouteRoute: typeof BasePrintRouteRoute
   BasePermManagementRolesIndexRouteRoute: typeof BasePermManagementRolesIndexRouteRoute
   BaseProductionPlanProductionOrderIndexRouteRoute: typeof BaseProductionPlanProductionOrderIndexRouteRoute
   BaseProductionPlanSalesOrderIndexRouteRoute: typeof BaseProductionPlanSalesOrderIndexRouteRoute
@@ -581,6 +598,7 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   Base403RouteRoute: Base403RouteRoute,
   Base404RouteRoute: Base404RouteRoute,
   BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
+  BasePrintRouteRoute: BasePrintRouteRoute,
   BasePermManagementRolesIndexRouteRoute:
     BasePermManagementRolesIndexRouteRoute,
   BaseProductionPlanProductionOrderIndexRouteRoute:
@@ -648,6 +666,7 @@ export interface FileRoutesByFullPath {
   '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
+  '/print': typeof BasePrintRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/perm-management/roles': typeof BasePermManagementRolesIndexRouteRoute
   '/production-plan/production-order': typeof BaseProductionPlanProductionOrderIndexRouteRoute
@@ -679,6 +698,7 @@ export interface FileRoutesByTo {
   '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
+  '/print': typeof BasePrintRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/perm-management/roles': typeof BasePermManagementRolesIndexRouteRoute
   '/production-plan/production-order': typeof BaseProductionPlanProductionOrderIndexRouteRoute
@@ -712,6 +732,7 @@ export interface FileRoutesById {
   '/_base/403': typeof Base403RouteRoute
   '/_base/404': typeof Base404RouteRoute
   '/_base/change-password': typeof BaseChangePasswordRouteRoute
+  '/_base/print': typeof BasePrintRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
   '/_base/perm-management/roles/': typeof BasePermManagementRolesIndexRouteRoute
   '/_base/production-plan/production-order/': typeof BaseProductionPlanProductionOrderIndexRouteRoute
@@ -745,6 +766,7 @@ export interface FileRouteTypes {
     | '/403'
     | '/404'
     | '/change-password'
+    | '/print'
     | '/login'
     | '/perm-management/roles'
     | '/production-plan/production-order'
@@ -775,6 +797,7 @@ export interface FileRouteTypes {
     | '/403'
     | '/404'
     | '/change-password'
+    | '/print'
     | '/login'
     | '/perm-management/roles'
     | '/production-plan/production-order'
@@ -806,6 +829,7 @@ export interface FileRouteTypes {
     | '/_base/403'
     | '/_base/404'
     | '/_base/change-password'
+    | '/_base/print'
     | '/_public/login'
     | '/_base/perm-management/roles/'
     | '/_base/production-plan/production-order/'
@@ -868,6 +892,7 @@ export const routeTree = rootRoute
         "/_base/403",
         "/_base/404",
         "/_base/change-password",
+        "/_base/print",
         "/_base/perm-management/roles/",
         "/_base/production-plan/production-order/",
         "/_base/production-plan/sales-order/",
@@ -911,6 +936,10 @@ export const routeTree = rootRoute
     },
     "/_base/change-password": {
       "filePath": "_base/change-password/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/print": {
+      "filePath": "_base/print/route.tsx",
       "parent": "/_base"
     },
     "/_public/login": {

@@ -35,19 +35,19 @@ function RouteComponent() {
         }
       >
         <Form.Item<EmployeeVo>
-          name="cEmployeeName"
-          label="姓名"
-          rules={[{ required: true, message: '请输入姓名' }]}
-        >
-          <Input placeholder="请输入姓名" />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
           name="cEmployeeCode"
           label="账号"
           rules={[{ required: true, message: '请输入账号' }]}
         >
           <Input placeholder="请输入账号" />
+        </Form.Item>
+
+        <Form.Item<EmployeeVo>
+          name="cEmployeeName"
+          label="姓名"
+          rules={[{ required: true, message: '请输入姓名' }]}
+        >
+          <Input placeholder="请输入姓名" />
         </Form.Item>
 
         <Form.Item<EmployeeVo>
