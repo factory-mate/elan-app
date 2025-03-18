@@ -33,7 +33,6 @@ function RouteComponent() {
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [filterData, setFilterData] = useState<FilterForm>({})
   const [printData, setPrintData] = useState<PrintDetailVo>({})
-  const [isPrint, setIsPrint] = useState(false)
 
   const reactToPrintFn = useReactToPrint({ contentRef })
 
@@ -134,15 +133,11 @@ function RouteComponent() {
                   showMessage('select-only-one')
                   return
                 }
-                setIsPrint(true)
-                const pData =
+                setPrintData(
                   (await queryClient.ensureQueryData(printDetailQO(selectedRows[0].UID))).at(0) ??
-                  {}
-                setPrintData(pData)
-                setTimeout(() => {
-                  reactToPrintFn()
-                  setIsPrint(false)
-                }, 16)
+                    {}
+                )
+                setTimeout(() => reactToPrintFn(), 16)
               }}
             >
               打印
