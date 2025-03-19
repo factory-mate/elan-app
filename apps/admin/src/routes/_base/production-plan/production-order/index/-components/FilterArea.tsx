@@ -87,15 +87,18 @@ export default function FilterArea(props: FilterAreaProps) {
                 <Button
                   type="primary"
                   htmlType="submit"
+                  onClick={() => queryClient.invalidateQueries()}
                 >
                   <LucideSearch />
                 </Button>
               </Tooltip>
               <Tooltip title="重置">
                 <Button
+                  htmlType="submit"
                   onClick={() => {
                     form.resetFields()
                     setFilterData?.({})
+                    queryClient.invalidateQueries()
                   }}
                 >
                   <LucideRefreshCcw />
