@@ -64,8 +64,8 @@ export default function BOMListModal(props: BOMListModalProps) {
                   cMaterialCode: value,
                   cMaterialName: option.cInvName,
                   cMaterialStd: option.cInvstd,
-                  nAssUnitCode: option.cSaleUnitCode,
-                  nAssUnitName: option.cSaleUnitName
+                  cUnitCode: option.cSaleUnitCode,
+                  cUnitName: option.cSaleUnitName
                 }
               })
             }}
@@ -80,25 +80,7 @@ export default function BOMListModal(props: BOMListModalProps) {
       },
       { field: 'cMaterialName', headerName: '子件名称' },
       { field: 'cMaterialStd', headerName: '子件规格' },
-      { field: 'nAssUnitName', headerName: '计量单位' },
-      // {
-      //   field: 'cDefindParm04',
-      //   headerName: '基本用量',
-      //   editable: true,
-      //   cellDataType: 'number',
-      //   cellEditorParams: {
-      //     precision: 8
-      //   }
-      // },
-      // {
-      //   field: 'cDefindParm05',
-      //   headerName: '基础用量',
-      //   editable: true,
-      //   cellDataType: 'number',
-      //   cellEditorParams: {
-      //     precision: 8
-      //   }
-      // },
+      { field: 'cUnitName', headerName: '计量单位' },
       {
         field: 'iLossRate',
         headerName: '损耗率',
@@ -111,39 +93,10 @@ export default function BOMListModal(props: BOMListModalProps) {
         }
       },
       {
-        field: 'cDefindParm06',
-        headerName: '单位用量',
-        valueGetter: (params) =>
-          // if (params.data?.iBasicQty && params.data?.iBasicQty && params.data.nQuantity) {
-          //   const iBaseQty = new Decimal(params.data?.iBaseQty)
-          //   const iBasicQty = new Decimal(params.data?.iBasicQty)
-          //   return iBaseQty.dividedBy(iBasicQty.times(params.data.nQuantity)).toNumber()
-          // }
-          undefined
+        field: 'nQuantity',
+        headerName: '数量'
       },
       { field: 'cMaterialTypeName', headerName: '物料属性' },
-      // {
-      //   field: 'nQuantity',
-      //   headerName: '应领数量',
-      //   editable: true,
-      //   cellDataType: 'number',
-      //   cellEditorParams: {
-      //     precision: 0,
-      //     step: 1,
-      //     showStepperButtons: true
-      //   }
-      // },
-      // { field: 'cDefindParm02', headerName: '已领数量' },
-      // {
-      //   field: 'cDefindParm07',
-      //   headerName: '使用数量',
-      //   editable: true,
-      //   cellEditorParams: {
-      //     precision: 0,
-      //     step: 1,
-      //     showStepperButtons: true
-      //   }
-      // },
       {
         field: 'cWareHouseCode',
         headerName: '仓库编码',
@@ -152,7 +105,7 @@ export default function BOMListModal(props: BOMListModalProps) {
           <Select
             className="size-full"
             variant="borderless"
-            value={params.data?.cDefindParm09}
+            value={params.data?.cWareHouseCode}
             options={warehouseCandidates}
             fieldNames={{
               value: 'cWareHouseCode',
@@ -192,12 +145,7 @@ export default function BOMListModal(props: BOMListModalProps) {
                   draft.splice(params.node.rowIndex! + 1, 0, {
                     iRow,
                     iProcessNumber: BOM.DEFAULT_PROCESS_NUMBER,
-                    // iBasicQty: 1,
-                    // iBaseQty: 1,
-                    // iUseQty: 1,
                     iLossRate: 0
-                    // iFixedQty: 0,
-                    // cSupplyType: '1',
                   })
                 })
               }}
@@ -237,10 +185,6 @@ export default function BOMListModal(props: BOMListModalProps) {
         UID: currentOperateRow?.current?.UID,
         utfs: currentOperateRow?.current?.utfs,
         list_bom: tableData
-        // list_bom: tableData.map((i) => ({
-        //   ...i,
-        //   iUseQty: i.iBaseQty! / (i.iBasicQty! * values.nQuantity)
-        // }))
       },
       {
         onSuccess: () => setOpen?.(false)
@@ -270,12 +214,7 @@ export default function BOMListModal(props: BOMListModalProps) {
                 draft.push({
                   iRow: `${draft.length === 0 ? 10 : +draft.at(-1)!.iRow! + 10}`,
                   iProcessNumber: BOM.DEFAULT_PROCESS_NUMBER,
-                  //           iBasicQty: 1,
-                  //           iBaseQty: 1,
-                  //           iUseQty: 1,
                   iLossRate: 0
-                  //           iFixedQty: 0,
-                  //           cSupplyType: '1',
                 })
               })
             }

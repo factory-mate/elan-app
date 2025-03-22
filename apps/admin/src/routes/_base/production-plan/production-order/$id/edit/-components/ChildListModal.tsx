@@ -28,7 +28,7 @@ export default function ChildListModal(props: ChildListModalProps) {
       { field: 'cDefindParm01', headerName: '子件属性', editable: true },
       { field: 'nQuantity', headerName: '应领数量', editable: true },
       { field: 'cDefindParm02', headerName: '已领数量', editable: true },
-      { field: 'cDefindParm03', headerName: '计量单位', editable: true },
+      { field: 'cUnitName', headerName: '计量单位', editable: true },
       { field: 'cDefindParm04', headerName: '基本用量', editable: true },
       { field: 'cDefindParm05', headerName: '基础用量', editable: true },
       { field: 'cDefindParm06', headerName: '损耗率', editable: true },
@@ -75,7 +75,7 @@ export default function ChildListModal(props: ChildListModalProps) {
 
   useEffect(() => {
     setTableData?.([...(currentOperateRow?.current?.bodyss ?? [])])
-  }, [open])
+  }, [currentOperateRow, open])
 
   return (
     <Modal

@@ -148,6 +148,8 @@ export interface BOMItemVo {
   cMaterialType?: string
   cMaterialTypeName?: string
   iProcessNumber?: string
+  cUnitCode?: string
+  cUnitName?: string
 }
 
 export interface ProductionOrderBOMListEditDto {

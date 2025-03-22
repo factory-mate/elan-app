@@ -299,7 +299,6 @@ function RouteComponent() {
               variant="text"
               onClick={() => {
                 currentOperateRow.current = params.data ?? null
-                setCurrentOperateRowUID(params.data?.UID ?? null)
                 bomListModal.toggle()
               }}
               disabled={currentOperateUID === params.data?.UID}
