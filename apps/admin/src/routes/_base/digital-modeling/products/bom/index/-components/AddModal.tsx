@@ -208,6 +208,7 @@ export default function AddModal(props: AddModalProps) {
           />
         )
       },
+      { field: 'cWareHouseName', headerName: '仓库名称' },
       {
         field: 'cDepName',
         headerName: '领料部门',
@@ -265,7 +266,7 @@ export default function AddModal(props: AddModalProps) {
                 color="primary"
                 variant="text"
                 onClick={() => {
-                  const iRowNumber = `${+params.node.data!.iRowNumber! + 1}`
+                  const iRowNumber = `${+params.data!.iRowNumber! + 1}`
                   if (tableData.some((i) => i.iRowNumber === iRowNumber)) {
                     message.warning('当前行号已存在，无法增行')
                     return
@@ -293,11 +294,11 @@ export default function AddModal(props: AddModalProps) {
               size="small"
               color="primary"
               variant="text"
-              onClick={() => {
+              onClick={() =>
                 setTableData((draft) => {
                   draft.splice(params.node.rowIndex!, 1)
                 })
-              }}
+              }
             >
               删行
             </Button>

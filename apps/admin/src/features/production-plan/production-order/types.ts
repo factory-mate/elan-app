@@ -1,6 +1,7 @@
 import type { BOMVo } from '@/features/digital-modeling/products/bom'
 
 export interface ProductionOrderVo {
+  iRow: string
   RestQuantity: number
   cCode: string
   dDate: string
@@ -42,6 +43,7 @@ export interface ProductionOrderVo {
   cBomType: string
   cBomTypeName: string
   cBomVersion: string
+  cVerisionMemo: string
   dBeginTime: string
   cBomUID: string
   UID: string
@@ -108,24 +110,28 @@ export interface ProductionOrderBody {
   cUnitCode?: string
   dEndTime?: string
   cBomType?: string
+  cBomTypeName?: string
   cBomVersion?: string
   dBeginTime?: string
   cBomUID?: string
-  bodyss?: ProductionOrderBodyss[]
+  bodyss?: BOMItemVo[]
   MID?: string
   UID?: string
   cVerisionMemo?: string
   versionCandidates?: BOMVo[]
+  utfs?: string
 }
 
-export interface ProductionOrderBodyss {
-  cInvCode?: string
-  cInvName?: string
-  cInvStd?: string
-  cSourceCode?: string
-  cSourceRowUID?: string
+export interface BOMItemVo {
+  iRow?: string
+  cMaterialCode?: string
+  cMaterialName?: string
+  cMaterialStd?: string
   nQuantity?: number
   cMemo?: string
+  cAssQuantity?: number
+  nAssUnitCode?: string
+  nAssUnitName?: string
   cDefindParm01?: string
   cDefindParm02?: string
   cDefindParm03?: string
@@ -133,9 +139,21 @@ export interface ProductionOrderBodyss {
   cDefindParm05?: string
   cDefindParm06?: string
   cDefindParm07?: string
-  cDefindParm08?: string
+  cDefindParm08?: string | null
   cDefindParm09?: string
   cDefindParm10?: string
+  cWareHouseCode?: string
+  cWareHouseName?: string | null
+  iLossRate?: number
+  cMaterialType?: string
+  cMaterialTypeName?: string
+  iProcessNumber?: string
+}
+
+export interface ProductionOrderBOMListEditDto {
+  UID?: string
+  utfs?: string
+  list_bom: BOMItemVo[]
 }
 
 export interface ProductionOrderEditDto extends ProductionOrderHead {

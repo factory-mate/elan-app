@@ -1,5 +1,5 @@
 import { ProductionOrderAPI } from './api'
-import { detailBodysQK, detailBodyssQK, detailQK, listQK, printDetailQK } from './query-keys'
+import { bomListQK, detailBodysQK, detailQK, listQK, printDetailQK } from './query-keys'
 
 export const listQO = (params: PageDto) =>
   queryOptions({
@@ -22,10 +22,10 @@ export const detailBodysQO = (id?: string) =>
     enabled: !!id
   })
 
-export const detailBodyssQO = (id?: string) =>
+export const bomListQO = (id?: string) =>
   queryOptions({
-    queryKey: detailBodyssQK(id!),
-    queryFn: ({ signal }) => ProductionOrderAPI.detailBodyss(id!, signal),
+    queryKey: bomListQK(id!),
+    queryFn: ({ signal }) => ProductionOrderAPI.bomList(id!, signal),
     enabled: !!id
   })
 

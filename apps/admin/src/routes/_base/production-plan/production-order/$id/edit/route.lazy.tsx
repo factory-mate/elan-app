@@ -9,9 +9,9 @@ import * as BOM from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
 import { defaultMaxPageDto } from '@/features/pagination'
 import {
+  bomListQO,
   BOMType,
   detailBodysQO,
-  detailBodyssQO,
   detailQO,
   type ProductionOrderBody,
   type ProductionOrderHead,
@@ -33,7 +33,7 @@ function RouteComponent() {
 
   const [tableData, setTableData] = useImmer<ProductionOrderBody[]>([])
   const currentOperateRow = useRef<ProductionOrderBody | null>(null)
-  const currentOperateRowIndex = useRef<number>(-1)
+  const currentOperateRowIndex = useRef(-1)
 
   const [form] = Form.useForm<ProductionOrderHead>()
 
@@ -62,7 +62,7 @@ function RouteComponent() {
         valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
       },
       {
-        field: 'cInvName',
+        field: 'cDefindParm04',
         headerName: '车间',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
@@ -245,7 +245,7 @@ function RouteComponent() {
               color="primary"
               variant="text"
               onClick={() => {
-                currentOperateRow.current = params.node.data ?? null
+                currentOperateRow.current = params.data ?? null
                 currentOperateRowIndex.current = params.node.rowIndex ?? -1
                 childListModal.toggle()
               }}
@@ -278,7 +278,7 @@ function RouteComponent() {
     form.setFieldsValue(detailData ?? {})
     setTableData(detailBodysData ?? [])
     const results = await Promise.all(
-      detailBodysData.map((i) => queryClient.ensureQueryData(detailBodyssQO(i.MID)))
+      detailBodysData.map((i) => queryClient.ensureQueryData(bomListQO(i.MID)))
     )
     setTableData((draft) => {
       results.forEach((result, index) => {

@@ -1,22 +1,16 @@
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import {
-  listQO,
-  printDetailQO,
-  type PrintDetailVo,
-  type ProductionOrderVo,
-  useAbandonMutation,
-  useAuditMutation,
-  useCloseMutation,
-  useDeleteMutation,
-  useOpenMutation
-} from '@/features/production-plan/production-order'
+import * as Dicts from '@/features/dicts'
+import * as Department from '@/features/digital-modeling/orgs/department'
+import * as BOM from '@/features/digital-modeling/products/bom'
+import * as Inventory from '@/features/digital-modeling/products/inventory'
+import { defaultMaxPageDto, defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
+import * as ProductionOrder from '@/features/production-plan/production-order'
 import { queryBuilder } from '@/features/query-builder'
 
-import { FilterArea } from './-components'
+import { BOMListModal, FilterArea } from './-components'
 import styles from './-styles/print.module.scss'
 import type { FilterForm } from './-types'
 
@@ -26,18 +20,22 @@ export const Route = createLazyFileRoute('/_base/production-plan/production-orde
 
 function RouteComponent() {
   const { showMessage } = useMessage()
+  const bomListModal = useModal()
+
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [filterData, setFilterData] = useState<FilterForm>({})
-  const [printData, setPrintData] = useState<PrintDetailVo>({})
+  const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo>({})
+  const currentOperateRow = useRef<ProductionOrder.ProductionOrderBody | null>(null)
+  const [currentOperateUID, setCurrentOperateRowUID] = useState<string | null>(null)
 
   const reactToPrintFn = useReactToPrint({ contentRef })
 
-  const { data, isFetching, isPlaceholderData } = useQuery(
-    listQO({
+  const { data, isFetching, isPlaceholderData, refetch } = useQuery(
+    ProductionOrder.listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
         { key: 'cVouchType', type: 'eq', val: filterData.cVouchType },
@@ -48,36 +46,203 @@ function RouteComponent() {
       ])
     })
   )
+  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
+  const { data: departmentCandidates } = useQuery(
+    Department.fullListQO({ conditions: 'bProduct = true' })
+  )
+  const { data: { data: inventoryCandidates } = {} } = useQuery(
+    Inventory.listQO({
+      ...defaultMaxPageDto,
+      conditions: 'IsProduct = true'
+    })
+  )
 
-  const auditMutation = useAuditMutation()
-  const abandonMutation = useAbandonMutation()
-  const openMutation = useOpenMutation()
-  const closeMutation = useCloseMutation()
-  const deleteMutation = useDeleteMutation()
+  const auditMutation = ProductionOrder.useAuditMutation()
+  const abandonMutation = ProductionOrder.useAbandonMutation()
+  const openMutation = ProductionOrder.useOpenMutation()
+  const closeMutation = ProductionOrder.useCloseMutation()
+  const deleteMutation = ProductionOrder.useDeleteMutation()
+  const editMutation = ProductionOrder.useEditMutation()
 
-  const columnDefs = useMemo<ColDef<ProductionOrderVo>[]>(
+  const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderVo>[]>(
     () => [
       { field: 'cCode', headerName: '生产订单号' },
-      { field: 'cSourceRowUID', headerName: '行号' },
+      { field: 'iRow', headerName: '行号' },
       { field: 'cVouchTypeName', headerName: '类型' },
-      { field: 'cInvName', headerName: '车间' },
-      { field: 'iStatus', headerName: '状态' },
+      {
+        field: 'cDefindParm04',
+        headerName: '车间',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cDefindParm04}
+              options={departmentCandidates}
+              fieldNames={Department.departmentSelectFieldNames}
+              onSelect={(value) =>
+                params.api.applyTransaction({
+                  update: [{ ...params.data, cDefindParm04: value }]
+                })
+              }
+            />
+          ) : (
+            params.data?.cDefindParm04
+          )
+      },
       { field: 'cCreateUserName', headerName: '制单人' },
       { field: 'cModifyUserName', headerName: '审核人' },
       { field: 'cModifyUserName', headerName: '关闭人' },
       { field: 'dBeginTime', headerName: '订单时间' },
-      { field: 'cInvCode', headerName: '料品编码' },
+      {
+        field: 'cInvCode',
+        headerName: '料品编码',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cInvCode}
+              options={inventoryCandidates}
+              fieldNames={{
+                value: 'cInvCode',
+                label: 'cInvCode'
+              }}
+              showSearch
+              filterOption={(input, option) =>
+                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+              }
+              onSelect={async (value, option) => {
+                const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
+                  BOM.listQO({
+                    ...defaultMaxPageDto,
+                    conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`,
+                    orderByFileds: 'dCreateTime desc'
+                  })
+                )
+                const matchedBom = versionCandidates.at(0)
+                params.api.applyTransaction({
+                  update: [
+                    {
+                      ...params.data,
+                      cInvCode: value,
+                      cInvName: option.cInvName,
+                      cInvStd: option.cInvstd,
+                      cUnitCode: option.cProductUnitCode,
+                      cUnitName: option.cProductUnitName,
+                      cBomUID: matchedBom?.UID ?? undefined,
+                      cBomVersion: matchedBom?.cVersion ?? undefined,
+                      cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
+                      versionCandidates
+                    }
+                  ]
+                })
+              }}
+              optionRender={(option) => (
+                <Flex justify="space-between">
+                  <span>{option.data.cInvCode}</span>
+                  <span> {option.data.cInvName}</span>
+                </Flex>
+              )}
+            />
+          ) : (
+            params.data?.cInvCode
+          )
+      },
       { field: 'cInvName', headerName: '料品名称' },
       { field: 'cInvStd', headerName: '规格型号' },
-      { field: 'nQuantity', headerName: '生产数量' },
       { field: 'cUnitName', headerName: '计量单位' },
-      { field: 'dBeginTime', headerName: '开工时间' },
-      { field: 'dEndTime', headerName: '完工时间' },
+      {
+        field: 'nQuantity',
+        headerName: '生产数量',
+        cellDataType: 'number',
+        cellEditorParams: {
+          precision: 0,
+          step: 1,
+          showStepperButtons: true
+        },
+        editable: (params) => currentOperateUID === params.data?.UID
+      },
+      {
+        field: 'dBeginTime',
+        headerName: '开工时间',
+        cellDataType: 'dateString',
+        valueFormatter: (params: ValueFormatterParams) =>
+          params.value ? DateUtils.formatTime(params.value, 'YYYY-MM-DD') : '',
+        editable: (params) => currentOperateUID === params.data?.UID
+      },
+      {
+        field: 'dEndTime',
+        headerName: '完工时间',
+        cellDataType: 'dateString',
+        valueFormatter: (params: ValueFormatterParams) =>
+          params.value ? DateUtils.formatTime(params.value, 'YYYY-MM-DD') : '',
+        editable: (params) => currentOperateUID === params.data?.UID
+      },
       { field: 'cAssQuantity', headerName: '已完工数量' },
       { field: 'RestQuantity', headerName: '未完工数量' },
-      { field: 'cBomTypeName', headerName: 'BOM类型' },
-      { field: 'cBomVersion', headerName: 'BOM版本' },
-      { field: 'cBomVersion', headerName: 'BOM版本说明' },
+      {
+        field: 'cBomType',
+        headerName: 'BOM类型',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cBomType}
+              options={bomCandidates}
+              fieldNames={Dicts.dictSelectFieldNames}
+              onSelect={(value) =>
+                params.api.applyTransaction({
+                  update: [{ ...params.data, cBomType: value }]
+                })
+              }
+            />
+          ) : (
+            params.data?.cBomTypeName
+          )
+      },
+      {
+        field: 'cBomVersion',
+        headerName: 'BOM版本',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cBomVersion}
+              options={params.data?.versionCandidates}
+              fieldNames={{
+                value: 'cVersion',
+                label: 'cVersion'
+              }}
+              onSelect={(value, option) => {
+                params.api.applyTransaction({
+                  update: [
+                    {
+                      ...params.data,
+                      cBomVersion: value,
+                      cBomUID: option.UID,
+                      cVerisionMemo: option.cVerisionMemo
+                    }
+                  ]
+                })
+              }}
+            />
+          ) : (
+            params.data?.cBomVersion
+          )
+      },
+      {
+        field: 'cVerisionMemo',
+        headerName: 'BOM版本说明',
+        editable: (params) => currentOperateUID === params.data?.UID
+      },
       { field: 'dVerifyTime', headerName: '审核时间' },
       { field: 'dEndTime', headerName: '关闭时间' },
       {
@@ -85,25 +250,75 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<ProductionOrderVo>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderVo>) => (
           <Space>
-            <Link
-              to="/production-plan/production-order/$id/edit"
-              params={{ id: params.data!.UID }}
+            <Button
+              size="small"
+              color="primary"
+              variant="text"
+              onClick={() => {
+                if (currentOperateUID !== params.data?.UID) {
+                  currentOperateRow.current = params.data ?? null
+                  setCurrentOperateRowUID(params.data?.UID ?? null)
+                } else {
+                  params.api.stopEditing()
+                  editMutation.mutate(
+                    {
+                      ...params.data,
+                      bodys: [params.data]
+                    },
+                    {
+                      onSuccess: () => {
+                        currentOperateRow.current = null
+                        setCurrentOperateRowUID(null)
+                      }
+                    }
+                  )
+                }
+              }}
             >
+              {currentOperateUID === params.data?.UID ? '保存' : '编辑'}
+            </Button>
+            {currentOperateUID === params.data?.UID && (
               <Button
                 size="small"
                 color="primary"
                 variant="text"
+                onClick={() => {
+                  refetch()
+                  currentOperateRow.current = null
+                  setCurrentOperateRowUID(null)
+                }}
               >
-                编辑
+                取消
               </Button>
-            </Link>
+            )}
+            <Button
+              size="small"
+              color="primary"
+              variant="text"
+              onClick={() => {
+                currentOperateRow.current = params.data ?? null
+                setCurrentOperateRowUID(params.data?.UID ?? null)
+                bomListModal.toggle()
+              }}
+              disabled={currentOperateUID === params.data?.UID}
+            >
+              子件
+            </Button>
           </Space>
         )
       }
     ],
-    []
+    [
+      bomCandidates,
+      bomListModal,
+      currentOperateUID,
+      departmentCandidates,
+      editMutation,
+      inventoryCandidates,
+      refetch
+    ]
   )
 
   return (
@@ -130,8 +345,11 @@ function RouteComponent() {
                   return
                 }
                 setPrintData(
-                  (await queryClient.ensureQueryData(printDetailQO(selectedRows[0].UID))).at(0) ??
-                    {}
+                  (
+                    await queryClient.ensureQueryData(
+                      ProductionOrder.printDetailQO(selectedRows[0].UID)
+                    )
+                  ).at(0) ?? {}
                 )
                 setTimeout(() => reactToPrintFn(), 16)
               }}
@@ -202,7 +420,7 @@ function RouteComponent() {
         </Flex>
 
         <div className="ag-theme-quartz h-[calc(100vh-210px)]">
-          <AgGridReact<ProductionOrderVo>
+          <AgGridReact<ProductionOrder.ProductionOrderVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}
             columnDefs={columnDefs}
@@ -216,8 +434,17 @@ function RouteComponent() {
               pinned: 'left',
               lockPinned: true
             }}
+            editType="fullRow"
             loading={isFetching}
             onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+            getRowStyle={(params) => {
+              if (params.data?.UID === currentOperateUID) {
+                return {
+                  backgroundColor: '#fff7e6'
+                }
+              }
+              return undefined
+            }}
           />
         </div>
 
@@ -239,6 +466,12 @@ function RouteComponent() {
           />
         </Flex>
       </Space>
+
+      <BOMListModal
+        open={bomListModal.open}
+        setOpen={bomListModal.setOpen}
+        currentOperateRow={currentOperateRow}
+      />
 
       <div
         ref={contentRef}

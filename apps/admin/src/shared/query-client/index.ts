@@ -2,6 +2,14 @@ import type { Query } from '@tanstack/react-query'
 import { MutationCache, QueryClient } from '@tanstack/react-query'
 
 export const STALE = Object.freeze({
+  SECONDS: {
+    ONE: 1e3,
+    TWO: 1e3 * 2,
+    THREE: 1e3 * 3,
+    FOUR: 1e3 * 4,
+    FIVE: 1e3 * 5,
+    TEN: 1e3 * 10
+  },
   MINUTES: {
     HALF: (1e3 * 60) / 2,
     ONE: 1e3 * 60,
@@ -22,8 +30,8 @@ export const STALE = Object.freeze({
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: STALE.MINUTES.HALF,
-      gcTime: STALE.MINUTES.TWO,
+      staleTime: STALE.SECONDS.FIVE,
+      gcTime: STALE.MINUTES.TEN,
       retry: 1
     }
   },

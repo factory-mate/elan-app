@@ -216,6 +216,7 @@ export default function EditModal(props: EditModalProps) {
           />
         )
       },
+      { field: 'cWareHouseName', headerName: '仓库名称' },
       {
         field: 'cDepName',
         headerName: '领料部门',
@@ -273,7 +274,7 @@ export default function EditModal(props: EditModalProps) {
                 color="primary"
                 variant="text"
                 onClick={() => {
-                  const iRowNumber = `${+params.node.data!.iRowNumber! + 1}`
+                  const iRowNumber = `${+params.data!.iRowNumber! + 1}`
                   if (tableData.some((i) => i.iRowNumber === iRowNumber)) {
                     message.warning('当前行号已存在，无法增行')
                     return

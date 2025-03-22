@@ -1,8 +1,9 @@
 import type {
+  BOMItemVo,
   PrintDetailVo,
   ProductionOrderAddDto,
   ProductionOrderBody,
-  ProductionOrderBodyss,
+  ProductionOrderBOMListEditDto,
   ProductionOrderEditDto,
   ProductionOrderVo
 } from './types'
@@ -28,20 +29,20 @@ export class ProductionOrderAPI {
     )
   }
 
-  static async detailBodyss(val: string, signal?: AbortSignal) {
-    return httpClient.get<ProductionOrderBodyss[]>(
-      `${this.apiPrefix}/GetListBodyssByMID`,
-      { val },
-      { signal }
-    )
-  }
-
   static async add(data: ProductionOrderAddDto) {
     return httpClient.post(`${this.apiPrefix}/Add`, data)
   }
 
   static async edit(data: ProductionOrderEditDto) {
     return httpClient.post(`${this.apiPrefix}/Edit`, data)
+  }
+
+  static async bomList(val: string, signal?: AbortSignal) {
+    return httpClient.get<BOMItemVo[]>(`${this.apiPrefix}/GetListBOM`, { val }, { signal })
+  }
+
+  static async editBOMList(data: ProductionOrderBOMListEditDto) {
+    return httpClient.post(`${this.apiPrefix}/SaveBOM`, data)
   }
 
   static async setStatus(ids: string[], status: number) {

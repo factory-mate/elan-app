@@ -2,10 +2,7 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { Dispatch, MutableRefObject, SetStateAction } from 'react'
 
-import type {
-  ProductionOrderBody,
-  ProductionOrderBodyss
-} from '@/features/production-plan/production-order'
+import type { BOMItemVo, ProductionOrderBody } from '@/features/production-plan/production-order'
 
 interface ChildListModalProps {
   open?: boolean
@@ -19,15 +16,15 @@ export default function ChildListModal(props: ChildListModalProps) {
 
   const gridRef = useRef<AgGridReact>(null)
 
-  const [tableData, setTableData] = useState<ProductionOrderBodyss[]>([])
+  const [tableData, setTableData] = useState<BOMItemVo[]>([])
 
-  const columnDefs = useMemo<ColDef<ProductionOrderBodyss>[]>(
+  const columnDefs = useMemo<ColDef<BOMItemVo>[]>(
     () => [
-      { field: 'cSourceCode', headerName: '子件行号', editable: true },
+      { field: 'iRow', headerName: '子件行号', editable: true },
       { field: 'cDefindParm10', headerName: '工序行号', editable: true },
-      { field: 'cInvCode', headerName: '子件编码', editable: true },
-      { field: 'cInvName', headerName: '子件名称', editable: true },
-      { field: 'cInvStd', headerName: '规格型号', editable: true },
+      { field: 'cMaterialCode', headerName: '子件编码', editable: true },
+      { field: 'cMaterialName', headerName: '子件名称', editable: true },
+      { field: 'cMaterialStd', headerName: '规格型号', editable: true },
       { field: 'cDefindParm01', headerName: '子件属性', editable: true },
       { field: 'nQuantity', headerName: '应领数量', editable: true },
       { field: 'cDefindParm02', headerName: '已领数量', editable: true },
@@ -43,7 +40,7 @@ export default function ChildListModal(props: ChildListModalProps) {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBodyss>) => (
+        cellRenderer: (params: ICellRendererParams<BOMItemVo>) => (
           <Space>
             <Button
               size="small"
@@ -107,7 +104,7 @@ export default function ChildListModal(props: ChildListModalProps) {
         </Space>
 
         <div className="ag-theme-quartz h-[500px]">
-          <AgGridReact<ProductionOrderBodyss>
+          <AgGridReact<BOMItemVo>
             ref={gridRef}
             columnDefs={columnDefs}
             rowData={tableData}

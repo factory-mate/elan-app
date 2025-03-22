@@ -7,14 +7,7 @@ import * as Department from '@/features/digital-modeling/orgs/department'
 import * as BOM from '@/features/digital-modeling/products/bom'
 import * as Inventory from '@/features/digital-modeling/products/inventory'
 import { defaultMaxPageDto } from '@/features/pagination'
-import {
-  BOMType,
-  type ProductionOrderBody,
-  type ProductionOrderHead,
-  useAddMutation
-} from '@/features/production-plan/production-order'
-
-import { ChildListModal } from './-components'
+import * as ProductionOrder from '@/features/production-plan/production-order'
 
 export const Route = createLazyFileRoute('/_base/production-plan/production-order/add')({
   component: RouteComponent
@@ -26,13 +19,9 @@ function RouteComponent() {
   const navigate = useNavigate()
   const match = Route.useMatch()
 
-  const [tableData, setTableData] = useImmer<ProductionOrderBody[]>([])
-  const currentOperateRow = useRef<ProductionOrderBody | null>(null)
-  const currentOperateRowIndex = useRef<number>(-1)
+  const [tableData, setTableData] = useImmer<ProductionOrder.ProductionOrderBody[]>([])
 
-  const [form] = Form.useForm<ProductionOrderHead>()
-
-  const childListModal = useModal()
+  const [form] = Form.useForm<ProductionOrder.ProductionOrderHead>()
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
   const { data: vouchCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchStandardType'))
@@ -46,20 +35,20 @@ function RouteComponent() {
     })
   )
 
-  const addMutation = useAddMutation()
+  const addMutation = ProductionOrder.useAddMutation()
 
-  const columnDefs = useMemo<ColDef<ProductionOrderBody>[]>(
+  const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderBody>[]>(
     () => [
-      {
-        field: 'cSourceCode',
-        headerName: '行号',
-        valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
-      },
+      // {
+      //   field: 'cSourceCode',
+      //   headerName: '行号',
+      //   valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
+      // },
       {
         field: 'cDefindParm04',
         headerName: '车间',
         cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
             className="size-full"
             variant="borderless"
@@ -81,7 +70,7 @@ function RouteComponent() {
         field: 'cInvCode',
         headerName: '料品编码',
         cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
             className="size-full"
             variant="borderless"
@@ -149,7 +138,7 @@ function RouteComponent() {
         field: 'cBomType',
         headerName: 'BOM类型',
         cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
             className="size-full"
             variant="borderless"
@@ -172,7 +161,7 @@ function RouteComponent() {
         field: 'cBomVersion',
         headerName: 'BOM版本',
         cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
             className="size-full"
             variant="borderless"
@@ -200,7 +189,7 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<ProductionOrderBody>) => (
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Space>
             <Button
               size="small"
@@ -214,7 +203,7 @@ function RouteComponent() {
                       DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
                       'YYYY-MM-DD'
                     ),
-                    cBomType: BOMType.STANDARD,
+                    cBomType: ProductionOrder.BOMType.STANDARD,
                     bodyss: []
                   })
                 })
@@ -234,26 +223,14 @@ function RouteComponent() {
             >
               删行
             </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                currentOperateRow.current = params.node.data ?? null
-                currentOperateRowIndex.current = params.node.rowIndex ?? -1
-                childListModal.toggle()
-              }}
-            >
-              子件
-            </Button>
           </Space>
         )
       }
     ],
-    [departmentCandidates, setTableData, inventoryCandidates, bomCandidates, form, childListModal]
+    [departmentCandidates, setTableData, inventoryCandidates, bomCandidates, form]
   )
 
-  const onFinish: FormProps<ProductionOrderHead>['onFinish'] = (values) =>
+  const onFinish: FormProps<ProductionOrder.ProductionOrderHead>['onFinish'] = (values) =>
     addMutation.mutate(
       {
         head: { ...values },
@@ -302,7 +279,7 @@ function RouteComponent() {
         >
           <Row>
             <Col span={8}>
-              <Form.Item<ProductionOrderHead>
+              <Form.Item<ProductionOrder.ProductionOrderHead>
                 name="cCode"
                 label="生产订单号"
               >
@@ -310,7 +287,7 @@ function RouteComponent() {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item<ProductionOrderHead>
+              <Form.Item<ProductionOrder.ProductionOrderHead>
                 name="cVouchType"
                 label="生产订单类别"
               >
@@ -321,7 +298,7 @@ function RouteComponent() {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item<ProductionOrderHead>
+              <Form.Item<ProductionOrder.ProductionOrderHead>
                 name="cDefindParm01"
                 label="生产工厂"
               >
@@ -329,7 +306,7 @@ function RouteComponent() {
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item<ProductionOrderHead>
+              <Form.Item<ProductionOrder.ProductionOrderHead>
                 name="dDate"
                 label="订单日期"
               >
@@ -350,7 +327,7 @@ function RouteComponent() {
                     DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
                     'YYYY-MM-DD'
                   ),
-                  cBomType: BOMType.STANDARD,
+                  cBomType: ProductionOrder.BOMType.STANDARD,
                   bodyss: []
                 })
               })
@@ -361,7 +338,7 @@ function RouteComponent() {
         </Space>
 
         <div className="ag-theme-quartz h-[calc(100vh-210px)]">
-          <AgGridReact<ProductionOrderBody>
+          <AgGridReact<ProductionOrder.ProductionOrderBody>
             ref={gridRef}
             columnDefs={columnDefs}
             rowData={tableData}
@@ -369,22 +346,6 @@ function RouteComponent() {
           />
         </div>
       </Space>
-
-      <ChildListModal
-        open={childListModal.open}
-        setOpen={childListModal.setOpen}
-        currentOperateRow={currentOperateRow}
-        onSave={(data) => {
-          if (data && currentOperateRowIndex.current > -1) {
-            setTableData((draft) => {
-              draft[currentOperateRowIndex.current] = {
-                ...data,
-                bodyss: [...(data.bodyss ?? [])]
-              }
-            })
-          }
-        }}
-      />
     </PageContainer>
   )
 }

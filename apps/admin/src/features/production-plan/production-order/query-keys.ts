@@ -4,7 +4,7 @@ export const DETAIL_QK = 'production-order:detail'
 
 export const DETAIL_BODYS_QK = 'production-order:detail-bodys'
 
-export const DETAIL_BODYSS_QK = 'production-order:detail-bodyss'
+export const BOM_LIST_QK = 'production-order:bom-list'
 
 export const PRINT_DETAIL_QK = 'production-order:print-detail'
 
@@ -14,6 +14,6 @@ export const detailQK = (id: string) => [DETAIL_QK, id] as const
 
 export const detailBodysQK = (id: string) => [DETAIL_BODYS_QK, id] as const
 
-export const detailBodyssQK = (id: string) => [DETAIL_BODYSS_QK, id] as const
+export const bomListQK = (id: string) => [BOM_LIST_QK, id] as const
 
 export const printDetailQK = (id: string) => [PRINT_DETAIL_QK, id] as const

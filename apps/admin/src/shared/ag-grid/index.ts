@@ -8,13 +8,14 @@ ModuleRegistry.registerModules([AllEnterpriseModule])
 
 provideGlobalGridOptions({
   localeText: AG_GRID_LOCALE_CN,
-  stopEditingWhenCellsLoseFocus: true,
   headerHeight: 36,
   rowHeight: 36,
   tooltipShowDelay: 1000,
   tooltipHideDelay: 5000,
   tooltipTrigger: 'hover',
-  noRowsOverlayComponent: () => '暂无数据'
+  noRowsOverlayComponent: () => '暂无数据',
+  singleClickEdit: true,
+  stopEditingWhenCellsLoseFocus: true
 })
 
 export * from './utils'

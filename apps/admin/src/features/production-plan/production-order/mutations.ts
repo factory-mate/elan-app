@@ -1,5 +1,10 @@
 import { ProductionOrderAPI } from './api'
-import { type ProductionOrderAddDto, type ProductionOrderEditDto, TaskStatus } from './types'
+import {
+  type ProductionOrderAddDto,
+  type ProductionOrderBOMListEditDto,
+  type ProductionOrderEditDto,
+  TaskStatus
+} from './types'
 
 export const useAuditMutation = () => {
   const { showMessage } = useMessage()
@@ -53,6 +58,14 @@ export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
     mutationFn: (data: ProductionOrderEditDto) => ProductionOrderAPI.edit(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useEditBOMListMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: ProductionOrderBOMListEditDto) => ProductionOrderAPI.editBOMList(data),
     onSuccess: () => showMessage('success')
   })
 }
