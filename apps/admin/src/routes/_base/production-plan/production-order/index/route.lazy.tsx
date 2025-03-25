@@ -361,7 +361,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                auditMutation.mutate(selectedRows.map((i) => i.UID))
+                auditMutation.mutate(selectedRows.map((i) => i.MID))
               }}
             >
               审核
@@ -372,7 +372,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                abandonMutation.mutate(selectedRows.map((i) => i.UID))
+                abandonMutation.mutate(selectedRows.map((i) => i.MID))
               }}
             >
               弃审
@@ -383,7 +383,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                openMutation.mutate(selectedRows.map((i) => i.UID))
+                openMutation.mutate(selectedRows.map((i) => i.MID))
               }}
             >
               打开
@@ -394,7 +394,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                closeMutation.mutate(selectedRows.map((i) => i.UID))
+                closeMutation.mutate(selectedRows.map((i) => i.MID))
               }}
             >
               关闭
@@ -405,7 +405,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+                deleteMutation.mutate(selectedRows.map((i) => i.MID))
               }}
             >
               删除
