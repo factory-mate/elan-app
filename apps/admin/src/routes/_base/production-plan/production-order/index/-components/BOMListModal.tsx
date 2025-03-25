@@ -94,7 +94,14 @@ export default function BOMListModal(props: BOMListModalProps) {
       },
       {
         field: 'nQuantity',
-        headerName: '数量'
+        headerName: '数量',
+        editable: true,
+        cellDataType: 'number',
+        cellEditorParams: {
+          precision: 0,
+          step: 1,
+          showStepperButtons: true
+        }
       },
       { field: 'cMaterialTypeName', headerName: '物料属性' },
       {

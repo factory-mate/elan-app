@@ -31,6 +31,6 @@ export const Route = createFileRoute('/_base')({
     const data = await queryClient.ensureQueryData(Perms.userPermCodesQO())
     usePermStore
       .getState()
-      .setCodes(new Set(data.filter((i) => i.cMenuPath).map((i) => i.cMenuPath!)))
+      .setCodes(new Set(data.map((i) => i.cOperationPath ?? i.cMenuPath ?? '').filter((i) => i)))
   }
 })

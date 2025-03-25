@@ -9,6 +9,7 @@ export interface PermVo {
   cParentCode?: string
   cOperationCode?: string
   cMenuPath?: string
+  cOperationPath?: string
 }
 
 export interface PermTreeItemVo extends PermVo {

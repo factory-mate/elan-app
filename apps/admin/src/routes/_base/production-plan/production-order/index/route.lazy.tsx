@@ -1,4 +1,4 @@
-import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
@@ -168,19 +168,19 @@ function RouteComponent() {
       },
       {
         field: 'dBeginTime',
-        headerName: '开工时间',
-        cellDataType: 'dateString',
-        valueFormatter: (params: ValueFormatterParams) =>
-          params.value ? DateUtils.formatTime(params.value, 'YYYY-MM-DD') : '',
-        editable: (params) => currentOperateUID === params.data?.UID
+        headerName: '开工时间'
+        // cellDataType: 'dateString'
+        // valueFormatter: (params: ValueFormatterParams) =>
+        //   params.value ? DateUtils.formatTime(params.value) : '',
+        // editable: (params) => currentOperateUID === params.data?.UID
       },
       {
         field: 'dEndTime',
-        headerName: '完工时间',
-        cellDataType: 'dateString',
-        valueFormatter: (params: ValueFormatterParams) =>
-          params.value ? DateUtils.formatTime(params.value, 'YYYY-MM-DD') : '',
-        editable: (params) => currentOperateUID === params.data?.UID
+        headerName: '完工时间'
+        // cellDataType: 'dateString'
+        // valueFormatter: (params: ValueFormatterParams) =>
+        //   params.value ? DateUtils.formatTime(params.value) : '',
+        // editable: (params) => currentOperateUID === params.data?.UID
       },
       { field: 'cAssQuantity', headerName: '已完工数量' },
       { field: 'RestQuantity', headerName: '未完工数量' },
@@ -244,7 +244,7 @@ function RouteComponent() {
         editable: (params) => currentOperateUID === params.data?.UID
       },
       { field: 'dVerifyTime', headerName: '审核时间' },
-      { field: 'dEndTime', headerName: '关闭时间' },
+      { field: 'dCloseTime', headerName: '关闭时间' },
       {
         headerName: '操作',
         sortable: false,
