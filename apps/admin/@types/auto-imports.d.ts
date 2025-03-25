@@ -57,6 +57,7 @@ declare global {
   const Outlet: typeof import('@tanstack/react-router')['Outlet']
   const PageContainer: typeof import('../src/shared/components/PageContainer/index')['default']
   const Pagination: typeof import('antd')['Pagination']
+  const PermCodeProvider: typeof import('../src/shared/providers/PermCodeProvider/index')['PermCodeProvider']
   const QueryClient: typeof import('@tanstack/react-query')['QueryClient']
   const QueryClientProvider: typeof import('@tanstack/react-query')['QueryClientProvider']
   const QueryProvider: typeof import('../src/shared/providers/QueryProvider/index')['default']
@@ -134,6 +135,8 @@ declare global {
   const useNavigate: typeof import('@tanstack/react-router')['useNavigate']
   const useParams: typeof import('@tanstack/react-router')['useParams']
   const useParentMatches: typeof import('@tanstack/react-router')['useParentMatches']
+  const usePermCode: typeof import('../src/shared/hooks/usePermCode')['usePermCode']
+  const usePermStore: typeof import('../src/shared/store/perm')['usePermStore']
   const useQueries: typeof import('@tanstack/react-query')['useQueries']
   const useQuery: typeof import('@tanstack/react-query')['useQuery']
   const useQueryClient: typeof import('@tanstack/react-query')['useQueryClient']
@@ -171,4 +174,7 @@ declare global {
   // @ts-ignore
   export type { Page, PageDto, FullPageDto } from '../src/shared/types/pagination'
   import('../src/shared/types/pagination')
+  // @ts-ignore
+  export type { PermCode } from '../src/shared/types/perm'
+  import('../src/shared/types/perm')
 }

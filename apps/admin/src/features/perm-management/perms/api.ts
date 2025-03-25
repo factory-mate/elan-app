@@ -6,7 +6,7 @@ export class PermAPI {
   private static apiPrefix = MANAGER_CENTER_API_PREFIX
 
   static async getPermsByUser() {
-    return httpClient.get<PermVo[]>(`${this.apiPrefix}/RoleAuth/GetAuthByUser`)
+    return httpClient.post<PermVo[]>(`${this.apiPrefix}/RoleAuth/GetAuthByUser`)
   }
 
   static async getPermsByRoleCode(params: FullPageDto) {

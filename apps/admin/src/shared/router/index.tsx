@@ -1,7 +1,5 @@
 import nprogress from 'nprogress'
 
-import type { PermCode } from '@/features/perm-management/perms'
-
 import { queryClient } from '../query-client'
 import { routeTree } from './routeTree.gen'
 
@@ -19,8 +17,7 @@ export const router = createRouter({
   )
 })
 
-export const getRouterStaticData = (path: string) =>
-  router.matchRoutes(path, {}).at(-1)!.staticData ?? {}
+const getRouterStaticData = (path: string) => router.matchRoutes(path, {}).at(-1)!.staticData ?? {}
 
 // NProgress
 nprogress.configure({ showSpinner: false })
@@ -49,6 +46,6 @@ declare module '@tanstack/react-router' {
 
   interface StaticDataRouteOption {
     title?: string
-    authKey?: PermCode | PermCode[]
+    permCode?: PermCode | PermCode[]
   }
 }

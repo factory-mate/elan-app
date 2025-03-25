@@ -1,5 +1,5 @@
 import { PermAPI } from './api'
-import { codeListQK, treeQK } from './query-keys'
+import { codeListQK, treeQK, userPermCodesQK } from './query-keys'
 
 export const treeQO = () =>
   queryOptions({
@@ -11,4 +11,10 @@ export const codeListQO = (params: FullPageDto) =>
   queryOptions({
     queryKey: codeListQK(params),
     queryFn: () => PermAPI.getPermsByRoleCode(params)
+  })
+
+export const userPermCodesQO = () =>
+  queryOptions({
+    queryKey: userPermCodesQK(),
+    queryFn: () => PermAPI.getPermsByUser()
   })

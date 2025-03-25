@@ -1,99 +1,3 @@
-export type PermCode =
-  | 'x:x:x' // 不需要权限
-  | 'digital-modeling' // 数字化建模
-  | 'coding-scheme' // 编码方案
-  | 'coding-scheme:view'
-  | 'coding-scheme:add'
-  | 'coding-scheme:edit'
-  | 'coding-scheme:detail'
-  | 'coding-scheme:delete'
-  | 'basic-settings' // 基本设置
-  | 'orgs' // 组织架构
-  | 'department' // 部门档案
-  | 'department:view'
-  | 'department:add'
-  | 'department:edit'
-  | 'department:delete'
-  | 'employee' // 职员档案
-  | 'employee:view'
-  | 'employee:add'
-  | 'employee:edit'
-  | 'employee:delete'
-  | 'employee:edit-dept'
-  | 'employee:edit-position'
-  | 'employee:freeze'
-  | 'employee:unfreeze'
-  | 'employee:reset-password'
-  | 'products' // 产品建模
-  | 'unit-class' // 计量单位组档案
-  | 'unit-class:view'
-  | 'unit-class:add'
-  | 'unit-class:edit'
-  | 'unit-class:delete'
-  | 'unit' // 计量单位档案
-  | 'unit:view'
-  | 'unit:add'
-  | 'unit:edit'
-  | 'unit:delete'
-  | 'inventory-class' // 料品分类
-  | 'inventory-class:view'
-  | 'inventory-class:add'
-  | 'inventory-class:edit'
-  | 'inventory-class:delete'
-  | 'inventory' // 料品档案
-  | 'inventory:view'
-  | 'inventory:add'
-  | 'inventory:edit'
-  | 'inventory:delete'
-  | 'bom' // 物料清单/配方
-  | 'bom:view'
-  | 'bom:add'
-  | 'bom:edit'
-  | 'bom:delete'
-  | 'bom:import'
-  | 'bom:export'
-  | 'bom:audit'
-  | 'bom:quit-audit'
-  | 'bom-cost' // BOM Cost 报表
-  | 'bom-cost:view'
-  | 'merchants' // 客商信息
-  | 'customer-class' // 客户分类
-  | 'customer-class:view'
-  | 'customer-class:add'
-  | 'customer-class:edit'
-  | 'customer-class:delete'
-  | 'customer' // 客户档案
-  | 'customer:view'
-  | 'customer:add'
-  | 'customer:edit'
-  | 'customer:delete'
-  | 'vendor-class' // 供应商分类
-  | 'vendor-class:view'
-  | 'vendor-class:add'
-  | 'vendor-class:edit'
-  | 'vendor-class:delete'
-  | 'vendor' // 供应商档案
-  | 'vendor:view'
-  | 'vendor:add'
-  | 'vendor:edit'
-  | 'vendor:delete'
-  | 'production-plan' // 生产计划
-  | 'sales-order' // 销售订单
-  | 'sales-order:view'
-  | 'sales-order:delete'
-  | 'sales-order:sync'
-  | 'production-order' // 生产订单
-  | 'production-order:view'
-  | 'production-order:add'
-  | 'production-order:edit'
-  | 'production-order:delete'
-  | 'perm-management' // 权限管理
-  | 'roles' // 角色管理
-  | 'roles:view'
-  | 'roles:add'
-  | 'roles:edit'
-  | 'roles:delete'
-
 export interface PermVo {
   UID?: string
   key?: string
@@ -104,6 +8,7 @@ export interface PermVo {
   cModelCode?: string
   cParentCode?: string
   cOperationCode?: string
+  cMenuPath?: string
 }
 
 export interface PermTreeItemVo extends PermVo {
