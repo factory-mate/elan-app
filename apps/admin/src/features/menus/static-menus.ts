@@ -1,10 +1,5 @@
 import type { MenuProps } from 'antd'
 
-type ExtendedMenuItemType = NonNullable<MenuProps['items']>[number] & {
-  permCode?: PermCode | PermCode[]
-  children?: ExtendedMenuItemType[]
-}
-
 export const staticMenus: ExtendedMenuItemType[] = [
   { label: '仪表盘', key: '/' },
   {
@@ -75,19 +70,39 @@ export const staticMenus: ExtendedMenuItemType[] = [
   }
 ]
 
-// export const filterPermMenus = (menus: ExtendedMenuItemType[]): MenuProps['items'] => {
-//   // 递归过滤权限菜单
-//   const filter = (menus: ExtendedMenuItemType[]): ExtendedMenuItemType[] =>
-//     menus.filter((menu) => {
-//       if (menu.permCode) {
-//         // 如果有权限码，判断是否有权限
-//         return true
-//       }
-//       if (menu.children) {
-//         // 如果有子菜单，递归过滤
-//         menu.children = filter(menu.children)
-//         return menu.children.length > 0
-//       }
-//       return true
-//     })
-// }
+type BaseMenuItemType = NonNullable<MenuProps['items']>[number]
+
+type ExtendedMenuItemType = BaseMenuItemType & {
+  permCode?: PermCode | PermCode[]
+  children?: ExtendedMenuItemType[]
+}
+
+type FilteredMenuItemType = Omit<BaseMenuItemType, 'children'> & {
+  children?: FilteredMenuItemType[]
+}
+
+export function filterMenuTree(tree: ExtendedMenuItemType[]): FilteredMenuItemType[] {
+  return tree
+    .filter((node) => {
+      if (!node) {
+        return false
+      }
+      if (!node.permCode) {
+        return true
+      }
+      const codes = Array.isArray(node.permCode) ? node.permCode : [node.permCode]
+      return codes.some((code: string) => usePermStore.getState().hasCode(code))
+    })
+    .map((node) => {
+      if (!node) {
+        return node
+      }
+      // eslint-disable-next-line unused-imports/no-unused-vars
+      const { permCode, children, ...rest } = node
+      if (children) {
+        const filteredChildren = filterMenuTree(children)
+        return filteredChildren.length > 0 ? { ...rest, children: filteredChildren } : { ...rest }
+      }
+      return rest
+    })
+}

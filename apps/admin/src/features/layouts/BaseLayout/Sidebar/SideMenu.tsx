@@ -1,6 +1,6 @@
 import { type MenuProps, theme } from 'antd'
 
-import { staticMenus } from '@/features/menus'
+import { filterMenuTree, staticMenus } from '@/features/menus'
 
 export default function SideMenu() {
   const { siderBg } = theme.useToken().token.Layout!
@@ -38,7 +38,7 @@ export default function SideMenu() {
         width: '100%',
         overflowY: 'auto'
       }}
-      items={staticMenus}
+      items={filterMenuTree(staticMenus) as MenuProps['items']}
       mode="vertical"
       selectedKeys={selectedKeys}
       openKeys={openKeys}
