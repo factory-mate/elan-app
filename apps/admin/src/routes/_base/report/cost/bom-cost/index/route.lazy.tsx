@@ -1,13 +1,10 @@
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO } from '@/features/digital-modeling/products/bom-cost/queries'
-import {
-  type BOMCostDto,
-  type BOMCostVo
-} from '@/features/digital-modeling/products/bom-cost/types'
+import { listQO } from '@/features/report/cost/bom-cost/queries'
+import { type BOMCostDto, type BOMCostVo } from '@/features/report/cost/bom-cost/types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/products/bom-cost/')({
+export const Route = createLazyFileRoute('/_base/report/cost/bom-cost/')({
   component: RouteComponent
 })
 

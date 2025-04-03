@@ -54,8 +54,6 @@ export type PermCode =
   | 'bom:export'
   | 'bom:audit'
   | 'bom:quit-audit'
-  | 'bom-cost' // BOM Cost 报表
-  | 'bom-cost:view'
   | 'merchants' // 客商信息
   | 'customer-class' // 客户分类
   | 'customer-class:view'
@@ -87,6 +85,13 @@ export type PermCode =
   | 'production-order:add'
   | 'production-order:edit'
   | 'production-order:delete'
+  | 'report' // 报表
+  | 'cost' // 成本
+  | 'bom-cost'
+  | 'bom-cost:view'
+  | 'production' // 生产
+  | 'production-material'
+  | 'production-material:view'
   | 'perm-management' // 权限管理
   | 'roles' // 角色管理
   | 'roles:view'

@@ -34,8 +34,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
           { label: '计量单位档案', key: '/unit', permCode: 'unit' },
           { label: '料品分类', key: '/inventory-class', permCode: 'inventory-class' },
           { label: '料品档案', key: '/inventory', permCode: 'inventory' },
-          { label: '物料清单/配方', key: '/bom', permCode: 'bom' },
-          { label: 'BOM Cost 报表', key: '/bom-cost', permCode: 'bom-cost' }
+          { label: '物料清单/配方', key: '/bom', permCode: 'bom' }
           // { label: '工序档案', key: '/process' },
           // { label: '工艺路线档案', key: '/process-route' }
         ]
@@ -60,6 +59,31 @@ export const staticMenus: ExtendedMenuItemType[] = [
     children: [
       { label: '销售订单', key: '/sales-order', permCode: 'sales-order' },
       { label: '生产订单', key: '/production-order', permCode: 'production-order' }
+    ]
+  },
+  {
+    label: '报表',
+    key: '/report',
+    // permCode: 'report',
+    children: [
+      {
+        label: '成本',
+        key: '/cost',
+        permCode: 'cost',
+        children: [{ label: 'BOM Cost', key: '/bom-cost', permCode: 'bom-cost' }]
+      },
+      {
+        label: '生产',
+        key: '/production',
+        permCode: 'production',
+        children: [
+          {
+            label: '生产订单用料明细',
+            key: '/production-material',
+            permCode: 'production-material'
+          }
+        ]
+      }
     ]
   },
   {
