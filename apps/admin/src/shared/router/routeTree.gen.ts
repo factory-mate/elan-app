@@ -28,6 +28,7 @@ import { Route as BaseProductionPlanProductionOrderIndexRouteImport } from './..
 import { Route as BasePermManagementRolesIndexRouteImport } from './../../routes/_base/perm-management/roles/index/route'
 import { Route as BaseProductionPlanProductionOrderIdEditRouteImport } from './../../routes/_base/production-plan/production-order/$id/edit/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
+import { Route as BaseReportProductionProductionMaterialIndexRouteImport } from './../../routes/_base/report/production/production-material/index/route'
 import { Route as BaseReportCostBomCostIndexRouteImport } from './../../routes/_base/report/cost/bom-cost/index/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
@@ -199,6 +200,17 @@ const BaseDigitalModelingOrgsEmployeeAddRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/digital-modeling/orgs/employee/add/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseReportProductionProductionMaterialIndexRouteRoute =
+  BaseReportProductionProductionMaterialIndexRouteImport.update({
+    id: '/report/production/production-material/',
+    path: '/report/production/production-material/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/report/production/production-material/index/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -531,6 +543,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseReportCostBomCostIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/report/production/production-material/': {
+      id: '/_base/report/production/production-material/'
+      path: '/report/production/production-material'
+      fullPath: '/report/production/production-material'
+      preLoaderRoute: typeof BaseReportProductionProductionMaterialIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/orgs/employee/add': {
       id: '/_base/digital-modeling/orgs/employee/add'
       path: '/digital-modeling/orgs/employee/add'
@@ -587,6 +606,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   BaseReportCostBomCostIndexRouteRoute: typeof BaseReportCostBomCostIndexRouteRoute
+  BaseReportProductionProductionMaterialIndexRouteRoute: typeof BaseReportProductionProductionMaterialIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseProductionPlanProductionOrderIdEditRouteRoute: typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -632,6 +652,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   BaseDigitalModelingProductsUnitIndexRouteRoute:
     BaseDigitalModelingProductsUnitIndexRouteRoute,
   BaseReportCostBomCostIndexRouteRoute: BaseReportCostBomCostIndexRouteRoute,
+  BaseReportProductionProductionMaterialIndexRouteRoute:
+    BaseReportProductionProductionMaterialIndexRouteRoute,
   BaseDigitalModelingOrgsEmployeeAddRouteRoute:
     BaseDigitalModelingOrgsEmployeeAddRouteRoute,
   BaseProductionPlanProductionOrderIdEditRouteRoute:
@@ -684,6 +706,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
+  '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -716,6 +739,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
+  '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -750,6 +774,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/_base/report/cost/bom-cost/': typeof BaseReportCostBomCostIndexRouteRoute
+  '/_base/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/_base/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -784,6 +809,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/report/cost/bom-cost'
+    | '/report/production/production-material'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/orgs/employee/$id/detail'
@@ -815,6 +841,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/report/cost/bom-cost'
+    | '/report/production/production-material'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/orgs/employee/$id/detail'
@@ -847,6 +874,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/unit-class/'
     | '/_base/digital-modeling/products/unit/'
     | '/_base/report/cost/bom-cost/'
+    | '/_base/report/production/production-material/'
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/production-plan/production-order/$id/edit'
     | '/_base/digital-modeling/orgs/employee/$id/detail'
@@ -909,6 +937,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
         "/_base/report/cost/bom-cost/",
+        "/_base/report/production/production-material/",
         "/_base/digital-modeling/orgs/employee/add",
         "/_base/production-plan/production-order/$id/edit",
         "/_base/digital-modeling/orgs/employee/$id/detail",
@@ -1011,6 +1040,10 @@ export const routeTree = rootRoute
     },
     "/_base/report/cost/bom-cost/": {
       "filePath": "_base/report/cost/bom-cost/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/report/production/production-material/": {
+      "filePath": "_base/report/production/production-material/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/orgs/employee/add": {

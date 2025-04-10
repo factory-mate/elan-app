@@ -246,6 +246,28 @@ function RouteComponent() {
       { field: 'dVerifyTime', headerName: '审核时间' },
       { field: 'dCloseTime', headerName: '关闭时间' },
       {
+        field: 'cDefindParm02',
+        headerName: '生产部门',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cDefindParm02}
+              options={departmentCandidates}
+              fieldNames={Department.departmentSelectFieldNames}
+              onSelect={(value, option) =>
+                params.api.applyTransaction({
+                  update: [{ ...params.data, cDefindParm02: value, cDefindParm03: option.cDepName }]
+                })
+              }
+            />
+          ) : (
+            params.data?.cDefindParm03
+          )
+      },
+      {
         headerName: '操作',
         sortable: false,
         pinned: 'right',

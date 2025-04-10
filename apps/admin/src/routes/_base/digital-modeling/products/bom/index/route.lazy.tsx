@@ -166,7 +166,13 @@ function RouteComponent() {
         >
           <Button>导入</Button>
         </Upload>
-        <Button onClick={() => exportMutation.mutate()}>导出</Button>
+        <Button
+          onClick={() => exportMutation.mutate()}
+          loading={exportMutation.isPending}
+          disabled={exportMutation.isPending}
+        >
+          导出
+        </Button>
       </Space>
       <Splitter>
         <Splitter.Panel collapsible>

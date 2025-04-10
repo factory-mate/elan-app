@@ -1,19 +1,23 @@
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO } from '@/features/report/cost/bom-cost/queries'
-import { type BOMCostDto, type BOMCostVo } from '@/features/report/cost/bom-cost/types'
+import { type BOMCostVo, listQO, useExportMutation } from '@/features/report/cost/bom-cost'
+
+import { FilterArea } from './-components'
+import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/report/cost/bom-cost/')({
   component: RouteComponent
 })
 
 function RouteComponent() {
-  const { showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
-  const [filterData, setFilterData] = useState<BOMCostDto>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    isExpand: true
+  })
 
-  const { data, isFetching } = useQuery(listQO({ ...filterData }))
+  const { data, isFetching } = useQuery(listQO({}))
+  const exportMutation = useExportMutation({})
 
   const columnDefs = useMemo<ColDef<BOMCostVo>[]>(
     () => [
@@ -33,6 +37,30 @@ function RouteComponent() {
         direction="vertical"
         className="w-full"
       >
+        <FilterArea setFilterData={setFilterData} />
+        <Flex
+          className="h-8"
+          justify="flex-end"
+          align="center"
+        >
+          <Space>
+            {/* <Button
+              type="primary"
+              onClick={() => {}}
+            >
+              打印
+            </Button> */}
+            <Button
+              type="primary"
+              onClick={() => exportMutation.mutate()}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </Space>
+        </Flex>
+
         <div className="ag-theme-quartz h-[calc(100vh-251px)]">
           <AgGridReact<BOMCostVo>
             ref={gridRef}
@@ -48,7 +76,7 @@ function RouteComponent() {
               type: 'fitGridWidth'
             }}
             getDataPath={(d) => (d.Child ? [d.cInvCode!] : [])}
-            groupDefaultExpanded={-1}
+            groupDefaultExpanded={filterData.isExpand ? -1 : 0}
             loading={isFetching}
           />
         </div>
