@@ -16,7 +16,12 @@ function RouteComponent() {
     isExpand: true
   })
 
-  const { data, isFetching } = useQuery(listQO({}))
+  const { data, isFetching } = useQuery(
+    listQO({
+      ...filterData,
+      iQty: filterData.iQty ? filterData.iQty : 1
+    })
+  )
   const exportMutation = useExportMutation({})
 
   const columnDefs = useMemo<ColDef<BOMCostVo>[]>(

@@ -25,8 +25,40 @@ export default function FilterArea(props: FilterAreaProps) {
         <Row>
           <Col span={8}>
             <Form.Item<FilterForm>
-              name="cInvCode"
-              label="产品编码"
+              name="cInvCodeStart"
+              label="产品编码（开始）"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cInvCodeEnd"
+              label="产品编码（结束）"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cInvNameStart"
+              label="产品名称1（开始）"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cInvNameEnd"
+              label="产品名称（结束）"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="iQty"
+              label="数量"
             >
               <Input />
             </Form.Item>
@@ -39,7 +71,7 @@ export default function FilterArea(props: FilterAreaProps) {
               <Switch />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={24}>
             <Flex
               justify="end"
               align="center"
