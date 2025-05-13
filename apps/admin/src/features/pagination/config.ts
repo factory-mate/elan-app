@@ -12,4 +12,4 @@ export const defaultMaxPageDto = Object.freeze<PageDto>({
   pageSize: DEFAULT_PAGE_MAX_SIZE
 })
 
-export const defaultPageSizeOptions = [DEFAULT_PAGE_SIZE, 50, 100]
+export const defaultPageSizeOptions = [DEFAULT_PAGE_SIZE, 50, 100, 500]

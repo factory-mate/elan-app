@@ -38,6 +38,7 @@ function RouteComponent() {
     ProductionOrder.listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
+        { key: 'cStandardType', type: 'eq', val: filterData.cStandardType },
         { key: 'cVouchType', type: 'eq', val: filterData.cVouchType },
         { key: 'iStatus', type: 'eq', val: filterData.iStatus },
         { key: 'cCode', type: 'like', val: filterData.cCode },
@@ -56,6 +57,10 @@ function RouteComponent() {
       conditions: 'IsProduct = true'
     })
   )
+  const { data: standardTypeCandidates } = useSuspenseQuery(
+    Dicts.fullListQO('ProductVouchStandardType')
+  )
+  const { data: vouchTypeCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchType'))
 
   const auditMutation = ProductionOrder.useAuditMutation()
   const abandonMutation = ProductionOrder.useAbandonMutation()
@@ -68,11 +73,63 @@ function RouteComponent() {
     () => [
       { field: 'cCode', headerName: '生产订单号' },
       { field: 'iRow', headerName: '行号' },
-      { field: 'cStandardTypeName', headerName: '类型' },
-      { field: 'cVouchTypeName', headerName: '类别' },
+      {
+        field: 'cStandardType',
+        headerName: '类型',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cStandardType}
+              options={standardTypeCandidates}
+              fieldNames={Dicts.dictSelectFieldNames}
+              onSelect={(value) =>
+                params.api.applyTransaction({
+                  update: [
+                    {
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      cStandardType: value
+                    }
+                  ]
+                })
+              }
+            />
+          ) : (
+            params.data?.cStandardTypeName
+          )
+      },
+      {
+        field: 'cVouchType',
+        headerName: '类别',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cVouchType}
+              options={vouchTypeCandidates}
+              fieldNames={Dicts.dictSelectFieldNames}
+              onSelect={(value) =>
+                params.api.applyTransactionAsync({
+                  update: [
+                    {
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      cVouchType: value
+                    }
+                  ]
+                })
+              }
+            />
+          ) : (
+            params.data?.cVouchTypeName
+          )
+      },
       {
         field: 'cDefindParm04',
-        headerName: '车间',
+        headerName: '生产部门',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
           currentOperateUID === params.data?.UID ? (
@@ -82,14 +139,20 @@ function RouteComponent() {
               value={params.data?.cDefindParm04}
               options={departmentCandidates}
               fieldNames={Department.departmentSelectFieldNames}
-              onSelect={(value) =>
+              onSelect={(value, option) =>
                 params.api.applyTransaction({
-                  update: [{ ...params.data, cDefindParm04: value }]
+                  update: [
+                    {
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      cDefindParm04: value,
+                      cDefindParm05: option.cDepName
+                    }
+                  ]
                 })
               }
             />
           ) : (
-            params.data?.cDefindParm04
+            params.data?.cDefindParm05
           )
       },
       { field: 'cCreateUserName', headerName: '制单人' },
@@ -128,7 +191,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.data,
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
                       cInvCode: value,
                       cInvName: option.cInvName,
                       cInvStd: option.cInvstd,
@@ -199,7 +262,12 @@ function RouteComponent() {
               fieldNames={Dicts.dictSelectFieldNames}
               onSelect={(value) =>
                 params.api.applyTransaction({
-                  update: [{ ...params.data, cBomType: value }]
+                  update: [
+                    {
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      cBomType: value
+                    }
+                  ]
                 })
               }
             />
@@ -226,7 +294,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.data,
+                      ...params.api.getRowNode(params.data!.UID!)!.data,
                       cBomVersion: value,
                       cBomUID: option.UID,
                       cVerisionMemo: option.cVerisionMemo
@@ -246,28 +314,6 @@ function RouteComponent() {
       },
       { field: 'dVerifyTime', headerName: '审核时间' },
       { field: 'dCloseTime', headerName: '关闭时间' },
-      {
-        field: 'cDefindParm02',
-        headerName: '生产部门',
-        cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
-          currentOperateUID === params.data?.UID ? (
-            <Select
-              className="size-full"
-              variant="borderless"
-              value={params.data?.cDefindParm02}
-              options={departmentCandidates}
-              fieldNames={Department.departmentSelectFieldNames}
-              onSelect={(value, option) =>
-                params.api.applyTransaction({
-                  update: [{ ...params.data, cDefindParm02: value, cDefindParm03: option.cDepName }]
-                })
-              }
-            />
-          ) : (
-            params.data?.cDefindParm03
-          )
-      },
       {
         headerName: '操作',
         sortable: false,
@@ -339,7 +385,9 @@ function RouteComponent() {
       departmentCandidates,
       editMutation,
       inventoryCandidates,
-      refetch
+      refetch,
+      standardTypeCandidates,
+      vouchTypeCandidates
     ]
   )
 

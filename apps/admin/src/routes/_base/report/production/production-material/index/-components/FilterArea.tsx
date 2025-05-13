@@ -33,13 +33,21 @@ export default function FilterArea(props: FilterAreaProps) {
           </Col>
           <Col span={8}>
             <Form.Item<FilterForm>
+              name="cCode"
+              label="生产订单号"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
               name="cInvCode"
               label="料品编码"
             >
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={24}>
             <Flex
               justify="end"
               align="center"

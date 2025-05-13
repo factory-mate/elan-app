@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-import { TaskStatus, VouchType } from '@/features/production-plan/production-order'
+import * as Dicts from '@/features/dicts'
+import { TaskStatus } from '@/features/production-plan/production-order'
 
 import type { FilterForm } from '../-types'
 
@@ -15,6 +16,11 @@ export default function FilterArea(props: FilterAreaProps) {
 
   // const [expand, setExpand] = useState(false)
 
+  const { data: standardTypeCandidates } = useSuspenseQuery(
+    Dicts.fullListQO('ProductVouchStandardType')
+  )
+  const { data: vouchTypeCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchType'))
+
   return (
     <Card size="small">
       <Form<FilterForm>
@@ -27,14 +33,25 @@ export default function FilterArea(props: FilterAreaProps) {
         <Row>
           <Col span={8}>
             <Form.Item<FilterForm>
-              name="cVouchType"
+              name="cStandardType"
               label="生产订单类型"
             >
               <Select
-                options={[
-                  { label: '标准', value: VouchType.STANDARD },
-                  { label: '非标准', value: VouchType.NON_STANDARD }
-                ]}
+                options={standardTypeCandidates}
+                fieldNames={Dicts.dictSelectFieldNames}
+                allowClear
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<FilterForm>
+              name="cVouchType"
+              label="生产订单类别"
+            >
+              <Select
+                options={vouchTypeCandidates}
+                fieldNames={Dicts.dictSelectFieldNames}
+                allowClear
               />
             </Form.Item>
           </Col>
@@ -77,7 +94,7 @@ export default function FilterArea(props: FilterAreaProps) {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={24}>
             <Flex
               justify="end"
               align="center"

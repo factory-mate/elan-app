@@ -28,6 +28,7 @@ function RouteComponent() {
       orderByFileds: 'cCode desc,iMaterialRow',
       conditions: queryBuilder<FilterForm>([
         { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
+        { key: 'cCode', type: 'like', val: filterData.cCode },
         { key: 'cInvCode', type: 'like', val: filterData.cInvCode }
       ])
     })

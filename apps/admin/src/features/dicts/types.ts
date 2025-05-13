@@ -10,4 +10,5 @@ export type DictTypes =
   | 'BOMType' // BOM类型
   | 'PeriodUnitType' // 保质期单位
   | 'ProductVouchStandardType' // 生产订单类型
+  | 'ProductVouchType' // 生产订单类别
   | 'cProfessionalTypeCode' // 职务

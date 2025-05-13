@@ -80,8 +80,8 @@ export interface ProductionOrderHead {
   cDefindParm08: string
   cDefindParm09: string
   cDefindParm10: string
-  cVouchType: string
   cStandardType: string
+  cVouchType: string
 }
 
 export interface ProductionOrderBody {
@@ -120,6 +120,10 @@ export interface ProductionOrderBody {
   cVerisionMemo?: string
   versionCandidates?: BOMVo[]
   utfs?: string
+  cStandardType?: string
+  cStandardTypeName?: string
+  cVouchType?: string
+  cVouchTypeName?: string
 }
 
 export interface BOMItemVo {

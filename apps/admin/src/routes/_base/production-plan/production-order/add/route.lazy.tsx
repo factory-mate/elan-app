@@ -24,7 +24,10 @@ function RouteComponent() {
   const [form] = Form.useForm<ProductionOrder.ProductionOrderHead>()
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
-  const { data: vouchCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchStandardType'))
+  const { data: standardTypeCandidates } = useSuspenseQuery(
+    Dicts.fullListQO('ProductVouchStandardType')
+  )
+  const { data: vouchTypeCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchType'))
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
@@ -46,7 +49,7 @@ function RouteComponent() {
       // },
       {
         field: 'cDefindParm04',
-        headerName: '车间',
+        headerName: '生产部门',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
@@ -55,11 +58,12 @@ function RouteComponent() {
             value={params.data?.cDefindParm04}
             options={departmentCandidates}
             fieldNames={Department.departmentSelectFieldNames}
-            onSelect={(value) => {
+            onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cDefindParm04: value
+                  cDefindParm04: value,
+                  cDefindParm05: option.cDepName
                 }
               })
             }}
@@ -288,11 +292,22 @@ function RouteComponent() {
             </Col>
             <Col span={8}>
               <Form.Item<ProductionOrder.ProductionOrderHead>
+                name="cStandardType"
+                label="生产订单类型"
+              >
+                <Select
+                  options={standardTypeCandidates}
+                  fieldNames={Dicts.dictSelectFieldNames}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item<ProductionOrder.ProductionOrderHead>
                 name="cVouchType"
                 label="生产订单类别"
               >
                 <Select
-                  options={vouchCandidates}
+                  options={vouchTypeCandidates}
                   fieldNames={Dicts.dictSelectFieldNames}
                 />
               </Form.Item>
