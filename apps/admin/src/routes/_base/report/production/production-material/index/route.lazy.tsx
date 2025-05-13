@@ -77,12 +77,6 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            {/* <Button
-              type="primary"
-              onClick={() => {}}
-            >
-              打印
-            </Button> */}
             <Button
               type="primary"
               onClick={() => exportMutation.mutate()}

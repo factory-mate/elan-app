@@ -1,0 +1,25 @@
+.printContent {
+  display: none;
+
+  @media print {
+    display: block;
+  }
+
+  html,
+  body {
+    height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  table {
+    border-collapse: separate;
+    border-spacing: 8px 0;
+    width: 100%;
+  }
+
+  th {
+    text-align: start;
+  }
+}

@@ -105,4 +105,5 @@ export interface BOMCostVo {
    * 时间戳
    */
   utfs?: null | string
+  iGrade: number
 }
