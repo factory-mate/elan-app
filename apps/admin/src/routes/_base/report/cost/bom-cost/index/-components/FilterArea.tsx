@@ -1,15 +1,15 @@
+import type { FormInstance } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import type { FilterForm } from '../-types'
 
 interface FilterAreaProps {
+  form: FormInstance<FilterForm>
   setFilterData?: Dispatch<SetStateAction<FilterForm>>
 }
 
 export default function FilterArea(props: FilterAreaProps) {
-  const { setFilterData } = props
-
-  const [form] = Form.useForm()
+  const { form, setFilterData } = props
 
   // const [expand, setExpand] = useState(false)
 
@@ -42,7 +42,7 @@ export default function FilterArea(props: FilterAreaProps) {
           <Col span={8}>
             <Form.Item<FilterForm>
               name="cInvNameStart"
-              label="产品名称1（开始）"
+              label="产品名称（开始）"
             >
               <Input />
             </Form.Item>

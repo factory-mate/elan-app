@@ -16,6 +16,8 @@ function RouteComponent() {
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  const [form] = Form.useForm()
+
   const [filterData, setFilterData] = useState<FilterForm>({
     isExpand: true
   })
@@ -28,7 +30,7 @@ function RouteComponent() {
       iQty: filterData.iQty ? filterData.iQty : 1
     })
   )
-  const exportMutation = useExportMutation({})
+  const exportMutation = useExportMutation()
 
   const columnDefs = useMemo<ColDef<BOMCostVo>[]>(
     () => [
@@ -48,7 +50,10 @@ function RouteComponent() {
         direction="vertical"
         className="w-full"
       >
-        <FilterArea setFilterData={setFilterData} />
+        <FilterArea
+          form={form}
+          setFilterData={setFilterData}
+        />
         <Flex
           className="h-8"
           justify="flex-end"
@@ -63,7 +68,13 @@ function RouteComponent() {
             </Button>
             <Button
               type="primary"
-              onClick={() => exportMutation.mutate()}
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                exportMutation.mutate({
+                  ...formData,
+                  iQty: formData.iQty ? formData.iQty : 1
+                })
+              }}
               loading={exportMutation.isPending}
               disabled={exportMutation.isPending}
             >
@@ -82,7 +93,10 @@ function RouteComponent() {
             autoGroupColumnDef={{
               headerName: '产品编码',
               minWidth: 250,
-              field: 'cInvCode'
+              field: 'cInvCode',
+              cellRendererParams: {
+                suppressCount: true
+              }
             }}
             autoSizeStrategy={{
               type: 'fitGridWidth'

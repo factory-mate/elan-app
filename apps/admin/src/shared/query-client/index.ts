@@ -39,7 +39,6 @@ export const queryClient = new QueryClient({
    * Automatically invalidate queries after a mutation.
    * @see https://tkdodo.eu/blog/automatic-query-invalidation-after-mutations#tie-it-to-the-mutationkey
    */
-
   mutationCache: new MutationCache({
     onSuccess: (_data, _variables, _context, mutation) => {
       // queryClient.invalidateQueries({
