@@ -21,7 +21,6 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<BOMCostVo>[]>(
     () => [
-      { field: 'cInvCode', headerName: '产品编码' },
       { field: 'cInvName', headerName: '名称' },
       { field: 'cInvstd', headerName: '规格型号' },
       { field: 'iQty', headerName: '数量' },
@@ -44,12 +43,12 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            {/* <Button
+            <Button
               type="primary"
               onClick={() => {}}
             >
               打印
-            </Button> */}
+            </Button>
             <Button
               type="primary"
               onClick={() => exportMutation.mutate()}
@@ -70,12 +69,13 @@ function RouteComponent() {
             treeData
             autoGroupColumnDef={{
               headerName: '产品编码',
-              minWidth: 340
+              minWidth: 250,
+              field: 'cInvCode'
             }}
             autoSizeStrategy={{
               type: 'fitGridWidth'
             }}
-            getDataPath={(d) => (d.Child ? [d.cInvCode!] : [])}
+            treeDataChildrenField="Child"
             groupDefaultExpanded={filterData.isExpand ? -1 : 0}
             loading={isFetching}
           />

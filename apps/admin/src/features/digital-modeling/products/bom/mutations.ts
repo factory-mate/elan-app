@@ -61,7 +61,7 @@ export const useCancelMutation = () => {
 export const useExportMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: () => BOMAPI.export(),
+    mutationFn: (data: FullPageDto) => BOMAPI.export(data),
     onSuccess: (res) => {
       downloadExcel(res)
       showMessage('export-success')

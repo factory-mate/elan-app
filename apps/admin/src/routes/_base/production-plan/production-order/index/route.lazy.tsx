@@ -68,7 +68,8 @@ function RouteComponent() {
     () => [
       { field: 'cCode', headerName: '生产订单号' },
       { field: 'iRow', headerName: '行号' },
-      { field: 'cVouchTypeName', headerName: '类型' },
+      { field: 'cStandardTypeName', headerName: '类型' },
+      { field: 'cVouchTypeName', headerName: '类别' },
       {
         field: 'cDefindParm04',
         headerName: '车间',

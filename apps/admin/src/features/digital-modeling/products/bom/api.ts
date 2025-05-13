@@ -49,12 +49,10 @@ export class BOMAPI {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
   }
 
-  static async export() {
-    return httpClient.post<AxiosResponse<BlobPart>>(
-      `${this.apiPrefix}/Export`,
-      { orderByFileds: 'cParentCode' },
-      { responseType: 'blob' }
-    )
+  static async export(data: FullPageDto) {
+    return httpClient.post<AxiosResponse<BlobPart>>(`${this.apiPrefix}/Export`, data, {
+      responseType: 'blob'
+    })
   }
 
   static async import(data: FormData) {

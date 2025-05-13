@@ -167,7 +167,14 @@ function RouteComponent() {
           <Button>导入</Button>
         </Upload>
         <Button
-          onClick={() => exportMutation.mutate()}
+          onClick={() =>
+            exportMutation.mutate({
+              conditions: selectedTreeData?.cInvCode
+                ? `cParentCode = ${selectedTreeData?.cInvCode}`
+                : undefined,
+              orderByFileds: 'cParentCode'
+            })
+          }
           loading={exportMutation.isPending}
           disabled={exportMutation.isPending}
         >
