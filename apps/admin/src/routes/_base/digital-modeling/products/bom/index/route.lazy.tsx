@@ -170,7 +170,7 @@ function RouteComponent() {
           onClick={() =>
             exportMutation.mutate({
               conditions: selectedTreeData?.cInvCode
-                ? `cParentCode = ${selectedTreeData?.cInvCode}`
+                ? `cParentCode=${selectedTreeData?.cInvCode} && cParentVersion=${selectedTreeData?.cVersion}`
                 : undefined,
               orderByFileds: 'cParentCode'
             })
