@@ -3,7 +3,7 @@ import type { FullPageDto } from '@/shared/types'
 import type { PermTreeItemVo, PermVo, SetPermsDto } from './types'
 
 export class PermAPI {
-  private static apiPrefix = MANAGER_CENTER_API_PREFIX
+  private static apiPrefix = MANAGE_CENTER_API_PREFIX
 
   static async getPermsByUser() {
     return httpClient.post<PermVo[]>(`${this.apiPrefix}/RoleAuth/GetAuthByUser`)

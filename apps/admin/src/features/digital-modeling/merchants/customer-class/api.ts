@@ -6,7 +6,7 @@ import type {
 } from './types'
 
 export class CustomerClassAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/customerclass`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/customerclass`
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<CustomerClassTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })

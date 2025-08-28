@@ -1,7 +1,7 @@
 import type { UnitAddDto, UnitEditDto, UnitVo } from './types'
 
 export class UnitAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/unit`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/unit`
 
   static async fullList(params: FullPageDto, signal?: AbortSignal) {
     return httpClient.get<UnitVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })

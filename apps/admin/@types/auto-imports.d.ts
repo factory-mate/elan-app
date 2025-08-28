@@ -47,7 +47,7 @@ declare global {
   const LucideRefreshCcw: typeof import('~icons/lucide/refresh-ccw.jsx')['default']
   const LucideSearch: typeof import('~icons/lucide/search.jsx')['default']
   const LucideShrink: typeof import('~icons/lucide/shrink.jsx')['default']
-  const MANAGER_CENTER_API_PREFIX: typeof import('../src/shared/api/index')['MANAGER_CENTER_API_PREFIX']
+  const MANAGE_CENTER_API_PREFIX: typeof import('../src/shared/api/index')['MANAGE_CENTER_API_PREFIX']
   const MES_SERVICE_API_PREFIX: typeof import('../src/shared/api/index')['MES_SERVICE_API_PREFIX']
   const MatchRoute: typeof import('@tanstack/react-router')['MatchRoute']
   const Menu: typeof import('antd')['Menu']

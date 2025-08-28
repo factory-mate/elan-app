@@ -9,7 +9,7 @@ import type {
 } from './types'
 
 export class EmployeeAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/employee`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/employee`
 
   static async fullList(signal?: AbortSignal) {
     return httpClient.get<EmployeeVo[]>(`${this.apiPrefix}/GetForList`, {}, { signal })

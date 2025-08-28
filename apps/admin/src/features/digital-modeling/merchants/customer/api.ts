@@ -1,7 +1,7 @@
 import type { CustomerAddDto, CustomerEditDto, CustomerVo } from './types'
 
 export class CustomerAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/customer`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/customer`
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<CustomerVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

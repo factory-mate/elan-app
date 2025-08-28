@@ -6,7 +6,7 @@ import type {
 } from './types'
 
 export class DepartmentAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/department`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/department`
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<DepartmentTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })

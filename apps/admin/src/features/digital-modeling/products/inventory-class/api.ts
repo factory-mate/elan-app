@@ -6,7 +6,7 @@ import type {
 } from './types'
 
 export class InventoryClassAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/inventoryclass`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/inventoryclass`
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<InventoryClassTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })

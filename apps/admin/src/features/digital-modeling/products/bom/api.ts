@@ -3,7 +3,7 @@ import type { AxiosResponse } from 'axios'
 import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from './types'
 
 export class BOMAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/mes_bom`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/mes_bom`
 
   static async tree(signal?: AbortSignal) {
     return httpClient.get<BOMTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })

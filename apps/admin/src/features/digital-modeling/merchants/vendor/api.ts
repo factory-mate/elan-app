@@ -1,7 +1,7 @@
 import type { VendorAddDto, VendorEditDto, VendorVo } from './types'
 
 export class VendorAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/vendor`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/vendor`
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<VendorVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

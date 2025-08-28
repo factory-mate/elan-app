@@ -3,7 +3,7 @@ import type { FullPageDto } from '@/shared/types'
 import type { RoleAddDto, RoleBatchAddDto, RoleEditDto, RoleVo } from './types'
 
 export class RoleAPI {
-  private static apiPrefix = MANAGER_CENTER_API_PREFIX
+  private static apiPrefix = MANAGE_CENTER_API_PREFIX
 
   static async fullList(signal?: AbortSignal) {
     return httpClient.get<RoleVo[]>(`${this.apiPrefix}/role/GetForList`, {}, { signal })

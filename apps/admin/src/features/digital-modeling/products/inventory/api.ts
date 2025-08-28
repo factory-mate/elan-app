@@ -1,7 +1,7 @@
 import type { InventoryAddDto, InventoryDetailVo, InventoryEditDto, InventoryVo } from './types'
 
 export class InventoryAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/inventory`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/inventory`
 
   static async fullList(params: FullPageDto, signal?: AbortSignal) {
     return httpClient.get<InventoryVo[]>(`${this.apiPrefix}/GetForList`, params, { signal })

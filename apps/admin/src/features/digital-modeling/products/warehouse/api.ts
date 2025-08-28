@@ -1,7 +1,7 @@
 import type { WarehouseAddDto, WarehouseEditDto, WarehouseVo } from './types'
 
 export class WarehouseAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/warehouse`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/warehouse`
 
   static async list(params: PageDto, signal?: AbortSignal) {
     return httpClient.post<Page<WarehouseVo>>(`${this.apiPrefix}/GetForPage`, params, { signal })

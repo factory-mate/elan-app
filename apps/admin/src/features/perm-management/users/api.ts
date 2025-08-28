@@ -1,7 +1,7 @@
 import type { ChangePasswordDto } from './types'
 
 export class UsersAPI {
-  private static apiPrefix = `${MANAGER_CENTER_API_PREFIX}/User`
+  private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/User`
 
   static async changePassword(changePasswordDto: ChangePasswordDto) {
     return httpClient.post(`${this.apiPrefix}/SetPass`, changePasswordDto)

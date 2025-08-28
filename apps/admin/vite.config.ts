@@ -23,18 +23,18 @@ export default defineConfig(({ mode }) => {
   const environment = loadEnv(mode, envPath) as ImportMetaEnv
   const {
     VITE_PORT,
-    VITE_MANAGER_CENTER_API_PREFIX,
-    VITE_MANAGER_CENTER_API_URL,
+    VITE_MANAGE_CENTER_API_PREFIX,
+    VITE_MANAGE_CENTER_API_URL,
     VITE_MES_SERVICE_API_PREFIX,
     VITE_MES_SERVICE_API_URL
   } = environment
 
   const port = Number.parseInt(VITE_PORT, 10) || DEFAULT_APP_PORT
   const proxy: Record<string, string | ProxyOptions> = {
-    [VITE_MANAGER_CENTER_API_PREFIX]: {
-      target: VITE_MANAGER_CENTER_API_URL,
+    [VITE_MANAGE_CENTER_API_PREFIX]: {
+      target: VITE_MANAGE_CENTER_API_URL,
       changeOrigin: true,
-      rewrite: (p: string) => p.replace(VITE_MANAGER_CENTER_API_PREFIX, '')
+      rewrite: (p: string) => p.replace(VITE_MANAGE_CENTER_API_PREFIX, '')
     },
     [VITE_MES_SERVICE_API_PREFIX]: {
       target: VITE_MES_SERVICE_API_URL,
