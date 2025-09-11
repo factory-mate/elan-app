@@ -69,6 +69,41 @@ export default function AddModal(props: AddModalProps) {
         headerName: '子件编码',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
+          //           <AutoComplete
+          //   className="size-full"
+          //   variant="borderless"
+          //   fieldNames={{
+          //     value: 'cInvCode',
+          //     label: 'cInvCode'
+          //   }}
+          //   options={childInventoryOptions}
+          //   optionRender={(option) => (
+          //     <Flex justify="space-between">
+          //       <span>{option.data.cInvCode}</span>
+          //       <span> {option.data.cInvName}</span>
+          //     </Flex>
+          //   )}
+          //   onSearch={async (value) => {
+          //     if (!value) {
+          //       setChildInventoryOptions([...(childInventoryCandidates ?? [])])
+          //     }
+          //     try {
+          //       const options =
+          //         (await queryClient.fetchQuery(
+          //           Inventory.listQO({
+          //             ...defaultMinPageDto,
+          //             conditions: queryBuilder([
+          //               { key: 'cInvCode', type: 'like', val: value },
+          //               { key: 'IsMaterial', type: 'eq', val: 'true' }
+          //             ])
+          //           })
+          //         )) ?? []
+          //       setChildInventoryOptions([...options.data])
+          //     } catch {
+          //       setChildInventoryOptions([...[]])
+          //     }
+          //   }}
+          // />
           <Select
             className="size-full"
             variant="borderless"

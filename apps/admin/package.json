@@ -3,6 +3,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:staging": "cross-env NODE_ENV=staging vite --mode staging",
+    "dev:prod": "cross-env NODE_ENV=production vite --mode production",
     "build": "tsc && vite build",
     "build:staging": "cross-env NODE_ENV=staging vite build --mode staging",
     "build:prod": "cross-env NODE_ENV=production vite build --mode production",

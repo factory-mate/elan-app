@@ -10,6 +10,7 @@ declare global {
   const AntdProvider: typeof import('../src/shared/providers/AntdProvider/index')['default']
   const App: typeof import('antd')['App']
   const AuthUtils: typeof import('@bit-ocean/utils')['AuthUtils']
+  const AutoComplete: typeof import('antd')['AutoComplete']
   const Avatar: typeof import('antd')['Avatar']
   const Await: typeof import('@tanstack/react-router')['Await']
   const AxiosProvider: typeof import('../src/shared/providers/AxiosProvider/index')['default']
