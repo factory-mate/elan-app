@@ -179,7 +179,7 @@ export default function AddModal(props: AddModalProps) {
           if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
             const iBaseQty = new Decimal(params.data?.iBaseQty)
             const iBasicQty = new Decimal(params.data?.iBasicQty)
-            return iBaseQty.dividedBy(iBasicQty.times(parentQuantity)).toNumber()
+            return iBasicQty.dividedBy(iBaseQty.times(parentQuantity)).toNumber()
           }
           return undefined
         }

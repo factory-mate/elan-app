@@ -152,7 +152,7 @@ export default function EditModal(props: EditModalProps) {
           if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
             const iBaseQty = new Decimal(params.data?.iBaseQty)
             const iBasicQty = new Decimal(params.data?.iBasicQty)
-            return iBaseQty.dividedBy(iBasicQty.times(new Decimal(parentQuantity))).toNumber()
+            return iBasicQty.dividedBy(iBaseQty.times(parentQuantity)).toNumber()
           }
           return undefined
         }
