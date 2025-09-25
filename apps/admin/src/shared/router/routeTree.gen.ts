@@ -28,6 +28,7 @@ import { Route as BaseProductionPlanProductionOrderIndexRouteImport } from './..
 import { Route as BasePermManagementRolesIndexRouteImport } from './../../routes/_base/perm-management/roles/index/route'
 import { Route as BaseProductionPlanProductionOrderIdEditRouteImport } from './../../routes/_base/production-plan/production-order/$id/edit/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
+import { Route as BaseReportTraceProductionDateDiffIndexRouteImport } from './../../routes/_base/report/trace/production-date-diff/index/route'
 import { Route as BaseReportProductionProductionMaterialIndexRouteImport } from './../../routes/_base/report/production/production-material/index/route'
 import { Route as BaseReportCostBomCostIndexRouteImport } from './../../routes/_base/report/cost/bom-cost/index/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
@@ -200,6 +201,17 @@ const BaseDigitalModelingOrgsEmployeeAddRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/digital-modeling/orgs/employee/add/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseReportTraceProductionDateDiffIndexRouteRoute =
+  BaseReportTraceProductionDateDiffIndexRouteImport.update({
+    id: '/report/trace/production-date-diff/',
+    path: '/report/trace/production-date-diff/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/report/trace/production-date-diff/index/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -550,6 +562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseReportProductionProductionMaterialIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/report/trace/production-date-diff/': {
+      id: '/_base/report/trace/production-date-diff/'
+      path: '/report/trace/production-date-diff'
+      fullPath: '/report/trace/production-date-diff'
+      preLoaderRoute: typeof BaseReportTraceProductionDateDiffIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/orgs/employee/add': {
       id: '/_base/digital-modeling/orgs/employee/add'
       path: '/digital-modeling/orgs/employee/add'
@@ -607,6 +626,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   BaseReportCostBomCostIndexRouteRoute: typeof BaseReportCostBomCostIndexRouteRoute
   BaseReportProductionProductionMaterialIndexRouteRoute: typeof BaseReportProductionProductionMaterialIndexRouteRoute
+  BaseReportTraceProductionDateDiffIndexRouteRoute: typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseProductionPlanProductionOrderIdEditRouteRoute: typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -654,6 +674,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
   BaseReportCostBomCostIndexRouteRoute: BaseReportCostBomCostIndexRouteRoute,
   BaseReportProductionProductionMaterialIndexRouteRoute:
     BaseReportProductionProductionMaterialIndexRouteRoute,
+  BaseReportTraceProductionDateDiffIndexRouteRoute:
+    BaseReportTraceProductionDateDiffIndexRouteRoute,
   BaseDigitalModelingOrgsEmployeeAddRouteRoute:
     BaseDigitalModelingOrgsEmployeeAddRouteRoute,
   BaseProductionPlanProductionOrderIdEditRouteRoute:
@@ -707,6 +729,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
+  '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -740,6 +763,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
+  '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -775,6 +799,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/_base/report/cost/bom-cost/': typeof BaseReportCostBomCostIndexRouteRoute
   '/_base/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
+  '/_base/report/trace/production-date-diff/': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/_base/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
@@ -810,6 +835,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
+    | '/report/trace/production-date-diff'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/orgs/employee/$id/detail'
@@ -842,6 +868,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/unit'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
+    | '/report/trace/production-date-diff'
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/orgs/employee/$id/detail'
@@ -875,6 +902,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/unit/'
     | '/_base/report/cost/bom-cost/'
     | '/_base/report/production/production-material/'
+    | '/_base/report/trace/production-date-diff/'
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/production-plan/production-order/$id/edit'
     | '/_base/digital-modeling/orgs/employee/$id/detail'
@@ -938,6 +966,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/unit/",
         "/_base/report/cost/bom-cost/",
         "/_base/report/production/production-material/",
+        "/_base/report/trace/production-date-diff/",
         "/_base/digital-modeling/orgs/employee/add",
         "/_base/production-plan/production-order/$id/edit",
         "/_base/digital-modeling/orgs/employee/$id/detail",
@@ -1044,6 +1073,10 @@ export const routeTree = rootRoute
     },
     "/_base/report/production/production-material/": {
       "filePath": "_base/report/production/production-material/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/report/trace/production-date-diff/": {
+      "filePath": "_base/report/trace/production-date-diff/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/orgs/employee/add": {

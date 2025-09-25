@@ -92,6 +92,9 @@ export type PermCode =
   | 'production' // 生产
   | 'production-material'
   | 'production-material:view'
+  | 'trace' // 产品追溯
+  | 'production-date-diff'
+  | 'production-date-diff:view'
   | 'perm-management' // 权限管理
   | 'roles' // 角色管理
   | 'roles:view'

@@ -64,13 +64,19 @@ export const staticMenus: ExtendedMenuItemType[] = [
   {
     label: '报表',
     key: '/report',
-    // permCode: 'report',
+    permCode: 'report',
     children: [
       {
         label: '成本',
         key: '/cost',
         permCode: 'cost',
-        children: [{ label: 'BOM Cost', key: '/bom-cost', permCode: 'bom-cost' }]
+        children: [
+          {
+            label: 'BOM Cost',
+            key: '/bom-cost',
+            permCode: 'bom-cost'
+          }
+        ]
       },
       {
         label: '生产',
@@ -81,6 +87,18 @@ export const staticMenus: ExtendedMenuItemType[] = [
             label: '生产订单用料明细',
             key: '/production-material',
             permCode: 'production-material'
+          }
+        ]
+      },
+      {
+        label: '产品追溯',
+        key: '/trace',
+        // permCode: 'trace',
+        children: [
+          {
+            label: '生产日期差异表',
+            key: '/production-date-diff'
+            // permCode: 'production-date-diff'
           }
         ]
       }
