@@ -155,6 +155,9 @@ export default function EditModal(props: EditModalProps) {
             return iBasicQty.dividedBy(iBaseQty.times(parentQuantity)).toNumber()
           }
           return undefined
+        },
+        cellEditorParams: {
+          precision: 8
         }
       },
       {
@@ -283,7 +286,7 @@ export default function EditModal(props: EditModalProps) {
                     draft.splice(params.node.rowIndex! + 1, 0, {
                       iRowNumber,
                       iProcessNumber: DEFAULT_PROCESS_NUMBER,
-                      iBasicQty: 1,
+                      iBasicQty: 100,
                       iBaseQty: 1,
                       iUseQty: 1,
                       iLossRate: 0,
@@ -540,7 +543,7 @@ export default function EditModal(props: EditModalProps) {
                 draft.push({
                   iRowNumber: `${draft.length === 0 ? 10 : +draft.at(-1)!.iRowNumber! + 10}`,
                   iProcessNumber: DEFAULT_PROCESS_NUMBER,
-                  iBasicQty: 1,
+                  iBasicQty: 100,
                   iBaseQty: 1,
                   iUseQty: 1,
                   iLossRate: 0,
