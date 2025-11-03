@@ -399,7 +399,7 @@ export default function EditModal(props: EditModalProps) {
               <Col span={8}>
                 <Form.Item<BOMVo>
                   name="cInvCode"
-                  label="母件编码"
+                  label="产品编码"
                   rules={[{ required: true }]}
                 >
                   <Select
@@ -433,7 +433,7 @@ export default function EditModal(props: EditModalProps) {
               <Col span={8}>
                 <Form.Item<BOMVo>
                   name="cInvName"
-                  label="母件名称"
+                  label="产品名称"
                   rules={[{ required: true }]}
                 >
                   <Input disabled />
@@ -466,7 +466,7 @@ export default function EditModal(props: EditModalProps) {
               <Col span={8}>
                 <Form.Item<BOMVo>
                   name="nQuantity"
-                  label="母件数量"
+                  label="产品数量"
                   rules={[{ required: true }]}
                 >
                   <Input />

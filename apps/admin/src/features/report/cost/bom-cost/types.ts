@@ -15,11 +15,11 @@ export interface BOMCostVo {
   cCreateUserCode?: null | string
   cCreateUserName?: null | string
   /**
-   * 母件编码
+   * 产品编码
    */
   cInvCode?: null | string
   /**
-   * 母件名称
+   * 产品名称
    */
   cInvName?: null | string
   /**

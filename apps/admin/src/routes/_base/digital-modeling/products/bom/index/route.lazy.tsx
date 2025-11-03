@@ -207,10 +207,10 @@ function RouteComponent() {
                       <Form.Item<BOMVo> label="BOM 类型">{detailData?.cBOMTypeName}</Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item<BOMVo> label="母件编码">{detailData?.cInvCode}</Form.Item>
+                      <Form.Item<BOMVo> label="产品编码">{detailData?.cInvCode}</Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item<BOMVo> label="母件名称">{detailData?.cInvName}</Form.Item>
+                      <Form.Item<BOMVo> label="产品名称">{detailData?.cInvName}</Form.Item>
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="英文名称">{detailData?.cEnglishName}</Form.Item>
@@ -219,7 +219,7 @@ function RouteComponent() {
                       <Form.Item<BOMVo> label="规格型号">{detailData?.cInvstd}</Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item<BOMVo> label="母件数量">{detailData?.nQuantity}</Form.Item>
+                      <Form.Item<BOMVo> label="产品数量">{detailData?.nQuantity}</Form.Item>
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="计量单位">{detailData?.cUnitName}</Form.Item>
