@@ -49,11 +49,8 @@ export default function EditModal(props: EditModalProps) {
   const onFinish: FormProps<InventoryEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
-        info: { ...detailData?.info, ...values.info },
-        qc: { ...detailData?.qc, ...values.qc },
-        control: { ...detailData?.control, ...values.control },
-        cost: { ...detailData?.cost, ...values.cost },
-        ...detailData?.extend
+        ...detailData,
+        ...values
       },
       {
         onSuccess: () => setOpen?.(false)
@@ -508,6 +505,86 @@ export default function EditModal(props: EditModalProps) {
                       <Form.Item<InventoryEditDto>
                         name={['cost', 'iReferencePrice']}
                         label="参考售价"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )
+              },
+              {
+                label: '扩展',
+                key: 'extend',
+                children: (
+                  <Row>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm02']}
+                        label="CAS"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm03']}
+                        label="EINECS"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm04']}
+                        label="FEMA"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm05']}
+                        label="天然过敏源"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm06']}
+                        label="天然IFRA成分"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm07']}
+                        label="26过敏源"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm08']}
+                        label="玩具过敏源"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm09']}
+                        label="食品过敏源"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm10']}
+                        label="禁用原料"
                       >
                         <Input />
                       </Form.Item>

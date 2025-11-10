@@ -21,7 +21,7 @@ export interface InventoryDetailVo {
   qc?: InventoryQCDto
   control?: InventoryControlDto
   cost?: InventoryCostDto
-  extend?: any
+  extend?: InventoryExtendDto
 }
 
 export interface InventoryAddDto {
@@ -29,6 +29,7 @@ export interface InventoryAddDto {
   qc?: InventoryQCDto
   control?: InventoryControlDto
   cost?: InventoryCostDto
+  extend?: InventoryExtendDto
 }
 
 export interface InventoryInfoDto {
@@ -87,8 +88,28 @@ export interface InventoryCostDto {
   iReferencePrice: number
 }
 
+export interface InventoryExtendDto {
+  // CAS
+  cDefindParm02: string
+  // EINECS
+  cDefindParm03: string
+  // FEMA
+  cDefindParm04: string
+  // 天然过敏源
+  cDefindParm05: string
+  // 天然IFRA成分
+  cDefindParm06: string
+  // 26过敏源
+  cDefindParm07: string
+  // 玩具过敏源
+  cDefindParm08: string
+  // 食品过敏源
+  cDefindParm09: string
+  // 禁用原料
+  cDefindParm10: string
+}
+
 export interface InventoryEditDto extends InventoryAddDto {
   UID: string
   utfs: string
-  extend?: any
 }

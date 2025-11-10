@@ -500,6 +500,86 @@ export default function AddModal(props: AddModalProps) {
                   </Col>
                 </Row>
               )
+            },
+            {
+              label: '扩展',
+              key: 'extend',
+              children: (
+                <Row>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm02']}
+                      label="CAS"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm03']}
+                      label="EINECS"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm04']}
+                      label="FEMA"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm05']}
+                      label="天然过敏源"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm06']}
+                      label="天然IFRA成分"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm07']}
+                      label="26过敏源"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm08']}
+                      label="玩具过敏源"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm09']}
+                      label="食品过敏源"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm10']}
+                      label="禁用原料"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              )
             }
           ]}
         />
