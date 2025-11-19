@@ -44,6 +44,7 @@ declare global {
   const Link: typeof import('@tanstack/react-router')['Link']
   const LoaderContext: typeof import('@tanstack/react-router')['LoaderContext']
   const LucideChevronsDown: typeof import('~icons/lucide/chevrons-down.jsx')['default']
+  const LucideEllipsis: typeof import('~icons/lucide/ellipsis.jsx')['default']
   const LucideExpand: typeof import('~icons/lucide/expand.jsx')['default']
   const LucideRefreshCcw: typeof import('~icons/lucide/refresh-ccw.jsx')['default']
   const LucideSearch: typeof import('~icons/lucide/search.jsx')['default']

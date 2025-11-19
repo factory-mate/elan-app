@@ -91,6 +91,28 @@ export const staticMenus: ExtendedMenuItemType[] = [
         ]
       },
       {
+        label: '质量',
+        key: '/qc',
+        // permCode: 'qc',
+        children: [
+          {
+            label: '质控常规报告',
+            key: '/normal-material'
+            // permCode: 'normal-material'
+          },
+          {
+            label: '质控所有成分报告',
+            key: '/all-material'
+            // permCode: 'all-material'
+          },
+          {
+            label: '配方含量查询',
+            key: '/bom-content'
+            // permCode: 'bom-content'
+          }
+        ]
+      },
+      {
         label: '产品追溯',
         key: '/trace',
         // permCode: 'trace',

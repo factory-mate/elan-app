@@ -92,6 +92,13 @@ export type PermCode =
   | 'production' // 生产
   | 'production-material'
   | 'production-material:view'
+  | 'qc' // 质量
+  | 'normal-material' // 质控常规报告
+  | 'normal-material:view'
+  | 'all-material' // 质控所有成分报告
+  | 'all-material:view'
+  | 'bom-content' // 配方含量查询
+  | 'bom-content:view'
   | 'trace' // 产品追溯
   | 'production-date-diff'
   | 'production-date-diff:view'

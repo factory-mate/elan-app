@@ -20,6 +20,9 @@ import { Route as BaseChangePasswordRouteImport } from './../../routes/_base/cha
 import { Route as Base404RouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteImport } from './../../routes/_base/403/route'
 import { Route as BaseIndexRouteImport } from './../../routes/_base/index/route'
+import { Route as BaseReportQcNormalMaterialRouteImport } from './../../routes/_base/report/qc/normal-material/route'
+import { Route as BaseReportQcBomContentRouteImport } from './../../routes/_base/report/qc/bom-content/route'
+import { Route as BaseReportQcAllMaterialRouteImport } from './../../routes/_base/report/qc/all-material/route'
 import { Route as BaseProductionPlanProductionOrderAddRouteImport } from './../../routes/_base/production-plan/production-order/add/route'
 import { Route as BaseDigitalModelingMerchantsVendorClassRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor-class/route'
 import { Route as BaseDigitalModelingMerchantsVendorRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor/route'
@@ -115,6 +118,39 @@ const BaseIndexRouteRoute = BaseIndexRouteImport.update({
 } as any).lazy(() =>
   import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
 )
+
+const BaseReportQcNormalMaterialRouteRoute =
+  BaseReportQcNormalMaterialRouteImport.update({
+    id: '/report/qc/normal-material',
+    path: '/report/qc/normal-material',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/report/qc/normal-material/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const BaseReportQcBomContentRouteRoute =
+  BaseReportQcBomContentRouteImport.update({
+    id: '/report/qc/bom-content',
+    path: '/report/qc/bom-content',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/report/qc/bom-content/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const BaseReportQcAllMaterialRouteRoute =
+  BaseReportQcAllMaterialRouteImport.update({
+    id: '/report/qc/all-material',
+    path: '/report/qc/all-material',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/report/qc/all-material/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 const BaseProductionPlanProductionOrderAddRouteRoute =
   BaseProductionPlanProductionOrderAddRouteImport.update({
@@ -478,6 +514,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseProductionPlanProductionOrderAddRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/report/qc/all-material': {
+      id: '/_base/report/qc/all-material'
+      path: '/report/qc/all-material'
+      fullPath: '/report/qc/all-material'
+      preLoaderRoute: typeof BaseReportQcAllMaterialRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/report/qc/bom-content': {
+      id: '/_base/report/qc/bom-content'
+      path: '/report/qc/bom-content'
+      fullPath: '/report/qc/bom-content'
+      preLoaderRoute: typeof BaseReportQcBomContentRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
+    '/_base/report/qc/normal-material': {
+      id: '/_base/report/qc/normal-material'
+      path: '/report/qc/normal-material'
+      fullPath: '/report/qc/normal-material'
+      preLoaderRoute: typeof BaseReportQcNormalMaterialRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/basic-settings/coding-scheme/': {
       id: '/_base/digital-modeling/basic-settings/coding-scheme/'
       path: '/digital-modeling/basic-settings/coding-scheme'
@@ -614,6 +671,9 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingMerchantsVendorRouteRoute: typeof BaseDigitalModelingMerchantsVendorRouteRoute
   BaseDigitalModelingMerchantsVendorClassRouteRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   BaseProductionPlanProductionOrderAddRouteRoute: typeof BaseProductionPlanProductionOrderAddRouteRoute
+  BaseReportQcAllMaterialRouteRoute: typeof BaseReportQcAllMaterialRouteRoute
+  BaseReportQcBomContentRouteRoute: typeof BaseReportQcBomContentRouteRoute
+  BaseReportQcNormalMaterialRouteRoute: typeof BaseReportQcNormalMaterialRouteRoute
   BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute: typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   BaseDigitalModelingMerchantsCustomerIndexRouteRoute: typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
@@ -651,6 +711,9 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingMerchantsVendorClassRouteRoute,
   BaseProductionPlanProductionOrderAddRouteRoute:
     BaseProductionPlanProductionOrderAddRouteRoute,
+  BaseReportQcAllMaterialRouteRoute: BaseReportQcAllMaterialRouteRoute,
+  BaseReportQcBomContentRouteRoute: BaseReportQcBomContentRouteRoute,
+  BaseReportQcNormalMaterialRouteRoute: BaseReportQcNormalMaterialRouteRoute,
   BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute:
     BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute,
   BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute:
@@ -717,6 +780,9 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
+  '/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
+  '/report/qc/normal-material': typeof BaseReportQcNormalMaterialRouteRoute
   '/digital-modeling/basic-settings/coding-scheme': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
@@ -751,6 +817,9 @@ export interface FileRoutesByTo {
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
+  '/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
+  '/report/qc/normal-material': typeof BaseReportQcNormalMaterialRouteRoute
   '/digital-modeling/basic-settings/coding-scheme': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
@@ -787,6 +856,9 @@ export interface FileRoutesById {
   '/_base/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/_base/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/_base/production-plan/production-order/add': typeof BaseProductionPlanProductionOrderAddRouteRoute
+  '/_base/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
+  '/_base/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
+  '/_base/report/qc/normal-material': typeof BaseReportQcNormalMaterialRouteRoute
   '/_base/digital-modeling/basic-settings/coding-scheme/': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
   '/_base/digital-modeling/merchants/customer-class/': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
   '/_base/digital-modeling/merchants/customer/': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
@@ -823,6 +895,9 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
     | '/production-plan/production-order/add'
+    | '/report/qc/all-material'
+    | '/report/qc/bom-content'
+    | '/report/qc/normal-material'
     | '/digital-modeling/basic-settings/coding-scheme'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
@@ -856,6 +931,9 @@ export interface FileRouteTypes {
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
     | '/production-plan/production-order/add'
+    | '/report/qc/all-material'
+    | '/report/qc/bom-content'
+    | '/report/qc/normal-material'
     | '/digital-modeling/basic-settings/coding-scheme'
     | '/digital-modeling/merchants/customer-class'
     | '/digital-modeling/merchants/customer'
@@ -890,6 +968,9 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/merchants/vendor'
     | '/_base/digital-modeling/merchants/vendor-class'
     | '/_base/production-plan/production-order/add'
+    | '/_base/report/qc/all-material'
+    | '/_base/report/qc/bom-content'
+    | '/_base/report/qc/normal-material'
     | '/_base/digital-modeling/basic-settings/coding-scheme/'
     | '/_base/digital-modeling/merchants/customer-class/'
     | '/_base/digital-modeling/merchants/customer/'
@@ -954,6 +1035,9 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/merchants/vendor",
         "/_base/digital-modeling/merchants/vendor-class",
         "/_base/production-plan/production-order/add",
+        "/_base/report/qc/all-material",
+        "/_base/report/qc/bom-content",
+        "/_base/report/qc/normal-material",
         "/_base/digital-modeling/basic-settings/coding-scheme/",
         "/_base/digital-modeling/merchants/customer-class/",
         "/_base/digital-modeling/merchants/customer/",
@@ -1025,6 +1109,18 @@ export const routeTree = rootRoute
     },
     "/_base/production-plan/production-order/add": {
       "filePath": "_base/production-plan/production-order/add/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/report/qc/all-material": {
+      "filePath": "_base/report/qc/all-material/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/report/qc/bom-content": {
+      "filePath": "_base/report/qc/bom-content/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/report/qc/normal-material": {
+      "filePath": "_base/report/qc/normal-material/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/basic-settings/coding-scheme/": {
