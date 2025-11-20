@@ -20,8 +20,13 @@ function RouteComponent() {
 
   const [pageParams] = useState(defaultMinPageDto)
   const [filterData, setFilterData] = useState<FilterForm>({})
+  const [shouldExport, setShouldExport] = useState(false)
 
-  const { data: { data = [] } = {}, isFetching } = useQuery(
+  const {
+    data: { data = [] } = {},
+    isFetching,
+    isSuccess
+  } = useQuery(
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
@@ -76,6 +81,22 @@ function RouteComponent() {
     []
   )
 
+  useEffect(() => {
+    if (shouldExport && !isFetching && isSuccess) {
+      setShouldExport(false)
+
+      if (!data || !data.length) {
+        message.warning('暂无数据可导出')
+        return
+      }
+
+      gridRef.current!.api.exportDataAsExcel({
+        fileName: '质控常规报表.xlsx',
+        sheetName: '导出数据'
+      })
+    }
+  }, [data, isFetching, isSuccess, message, shouldExport])
+
   return (
     <PageContainer>
       <Space
@@ -100,15 +121,11 @@ function RouteComponent() {
                   message.warning('请选择产品')
                   return
                 }
-                if (!data.length) {
-                  message.warning('暂无数据可导出')
-                  return
-                }
-                gridRef.current!.api.exportDataAsExcel({
-                  fileName: '质控常规报表.xlsx',
-                  sheetName: '导出数据'
-                })
+                setFilterData(formData)
+                setShouldExport(true)
               }}
+              loading={isFetching && shouldExport}
+              disabled={isFetching && shouldExport}
             >
               导出
             </Button>

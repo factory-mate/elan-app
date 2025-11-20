@@ -64,6 +64,7 @@ declare global {
   const QueryClientProvider: typeof import('@tanstack/react-query')['QueryClientProvider']
   const QueryProvider: typeof import('../src/shared/providers/QueryProvider/index')['default']
   const ReactChart: typeof import('@bit-ocean/echarts')['ReactChart']
+  const RemoteSelect: typeof import('../src/shared/components/RemoteSelect/index')['default']
   const Result: typeof import('antd')['Result']
   const RouterProvider: typeof import('@tanstack/react-router')['RouterProvider']
   const Row: typeof import('antd')['Row']

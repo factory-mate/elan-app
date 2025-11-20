@@ -1,8 +1,9 @@
 import type { FormInstance } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import * as Inventory from '@/features/digital-modeling/products/inventory'
+import { InventoryAPI } from '@/features/digital-modeling/products/inventory'
 import { defaultMinPageDto } from '@/features/pagination'
+import { queryBuilder } from '@/features/query-builder'
 import { LIST_QK } from '@/features/report/qc/normal-material'
 
 import type { FilterForm } from '../-types'
@@ -14,13 +15,6 @@ interface FilterAreaProps {
 
 export default function FilterArea(props: FilterAreaProps) {
   const { form, setFilterData } = props
-
-  const { data: { data: parentInventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMinPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
 
   // const [expand, setExpand] = useState(false)
 
@@ -39,24 +33,38 @@ export default function FilterArea(props: FilterAreaProps) {
               name="cInvCode"
               label="产品名称"
             >
-              <Select
-                options={parentInventoryCandidates}
+              <RemoteSelect
                 fieldNames={{
                   label: 'cInvCode',
                   value: 'cInvCode'
                 }}
-                showSearch
-                filterOption={(input, option) =>
-                  (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                  (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-                }
                 optionRender={(option) => (
                   <Flex justify="space-between">
                     <span>{option.data.cInvCode}</span>
-                    <span>{option.data.cInvName}</span>
+                    <span> {option.data.cInvName}</span>
                   </Flex>
                 )}
-                allowClear
+                handler={(currentValue, v, callback) =>
+                  InventoryAPI.list({
+                    ...defaultMinPageDto,
+                    conditions: queryBuilder([
+                      { key: 'IsProduct', type: 'eq', val: true },
+                      {
+                        key: 'cInvCode',
+                        type: 'like',
+                        val: currentValue.replaceAll(' ', '')
+                      }
+                    ])
+                  }).then((res) => {
+                    if (currentValue === v) {
+                      const d = res.data.map((i) => ({
+                        ...i,
+                        value: i.cInvCode
+                      }))
+                      callback(d ?? [])
+                    }
+                  })
+                }
               />
             </Form.Item>
           </Col>
