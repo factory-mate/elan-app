@@ -27,6 +27,7 @@ declare global {
   const Divider: typeof import('antd')['Divider']
   const Dropdown: typeof import('antd')['Dropdown']
   const ErrorPage: typeof import('../src/shared/components/ErrorPage/index')['default']
+  const FilterArea: typeof import('../src/shared/components/FilterArea/index')['default']
   const Flex: typeof import('antd')['Flex']
   const Form: typeof import('antd')['Form']
   const Fragment: typeof import('react')['Fragment']

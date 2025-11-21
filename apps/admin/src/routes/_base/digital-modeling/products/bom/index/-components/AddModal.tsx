@@ -1,5 +1,6 @@
 import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-community'
 import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
+import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'
 import Decimal from 'decimal.js'
 import type { Dispatch, SetStateAction } from 'react'
@@ -354,6 +355,16 @@ export default function AddModal(props: AddModalProps) {
       warehouseCandidates
     ]
   )
+
+  useAsyncEffect(async () => {
+    if (open) {
+      form.setFieldsValue({})
+      setTableData([])
+    } else {
+      form.resetFields()
+      setTableData([])
+    }
+  }, [form, open, setTableData])
 
   const onFinish: FormProps<BOMAddDto>['onFinish'] = (values) => {
     if (tableData.some((i) => !i.iBaseQty || !i.iBasicQty)) {
