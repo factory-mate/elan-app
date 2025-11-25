@@ -10,9 +10,28 @@ export interface InventoryVo {
   cSaleUnitName: string
   cProductUnitCode: string
   cProductUnitName: string
+  cStoreUnitName: string
   cEnglishName: string
   cBuyUnitCode: string
   cBuyUnitName: string
+  // CAS
+  cDefindParm02: string
+  // EINECS
+  cDefindParm03: string
+  // FEMA
+  cDefindParm04: string
+  // 天然过敏源
+  cDefindParm05: string
+  // 天然IFRA成分
+  cDefindParm06: string
+  // 26过敏源
+  cDefindParm07: string
+  // 玩具过敏源
+  cDefindParm08: string
+  // 食品过敏源
+  cDefindParm09: string
+  // 禁用原料
+  cDefindParm10: string
 }
 
 export interface InventoryDetailVo {

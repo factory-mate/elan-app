@@ -44,8 +44,21 @@ function RouteComponent() {
       { field: 'cEnglishName', headerName: '英文名称' },
       { field: 'cInvstd', headerName: '规格型号' },
       { field: 'cInvClassName', headerName: '所属分类' },
-      { field: 'cBuyUnitName', headerName: '计量单位' },
       { field: 'cVendorName', headerName: '默认供应商' },
+      { field: 'cUnitClassName', headerName: '计量单位组' },
+      { field: 'cBuyUnitName', headerName: '采购计量单位' },
+      { field: 'cSaleUnitName', headerName: '销售计量单位' },
+      { field: 'cStoreUnitName', headerName: '库存计量单位' },
+      { field: 'cProductUnitName', headerName: '生产计量单位' },
+      { field: 'cDefindParm02', headerName: 'CAS' },
+      { field: 'cDefindParm03', headerName: 'EINECS' },
+      { field: 'cDefindParm04', headerName: 'FEMA' },
+      { field: 'cDefindParm05', headerName: '天然过敏源' },
+      { field: 'cDefindParm06', headerName: '天然IFRA成分' },
+      { field: 'cDefindParm07', headerName: '26过敏源' },
+      { field: 'cDefindParm08', headerName: '玩具过敏源' },
+      { field: 'cDefindParm09', headerName: '食品过敏源' },
+      { field: 'cDefindParm10', headerName: '禁用原料' },
       {
         headerName: '操作',
         sortable: false,
@@ -141,7 +154,8 @@ function RouteComponent() {
                   lockPinned: true
                 }}
                 autoSizeStrategy={{
-                  type: 'fitGridWidth'
+                  type: 'fitGridWidth',
+                  defaultMinWidth: 200
                 }}
                 loading={isFetching}
                 onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
