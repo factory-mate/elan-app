@@ -50,6 +50,7 @@ function RouteComponent() {
       { field: 'cSaleUnitName', headerName: '销售计量单位' },
       { field: 'cStoreUnitName', headerName: '库存计量单位' },
       { field: 'cProductUnitName', headerName: '生产计量单位' },
+      { field: 'cDefindParm01', headerName: 'IFRA(R)' },
       { field: 'cDefindParm02', headerName: 'CAS' },
       { field: 'cDefindParm03', headerName: 'EINECS' },
       { field: 'cDefindParm04', headerName: 'FEMA' },

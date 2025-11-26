@@ -508,6 +508,14 @@ export default function AddModal(props: AddModalProps) {
                 <Row>
                   <Col span={12}>
                     <Form.Item<InventoryAddDto>
+                      name={['extend', 'cDefindParm01']}
+                      label="IFRA(R)"
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
                       name={['extend', 'cDefindParm02']}
                       label="CAS"
                     >

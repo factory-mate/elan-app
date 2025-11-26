@@ -519,6 +519,14 @@ export default function EditModal(props: EditModalProps) {
                   <Row>
                     <Col span={12}>
                       <Form.Item<InventoryEditDto>
+                        name={['extend', 'cDefindParm01']}
+                        label="IFRA(R)"
+                      >
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item<InventoryEditDto>
                         name={['extend', 'cDefindParm02']}
                         label="CAS"
                       >

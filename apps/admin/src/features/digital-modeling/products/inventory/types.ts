@@ -14,6 +14,8 @@ export interface InventoryVo {
   cEnglishName: string
   cBuyUnitCode: string
   cBuyUnitName: string
+  // IFRA(R)
+  cDefindParm01: string
   // CAS
   cDefindParm02: string
   // EINECS
@@ -108,6 +110,8 @@ export interface InventoryCostDto {
 }
 
 export interface InventoryExtendDto {
+  // IFRA(R)
+  cDefindParm01: string
   // CAS
   cDefindParm02: string
   // EINECS
