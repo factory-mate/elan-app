@@ -130,6 +130,8 @@ export interface InventoryExtendDto {
   cDefindParm09: string
   // 禁用原料
   cDefindParm10: string
+  // 提前期
+  iDefindParm11: number
 }
 
 export interface InventoryEditDto extends InventoryAddDto {

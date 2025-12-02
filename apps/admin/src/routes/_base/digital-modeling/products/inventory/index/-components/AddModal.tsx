@@ -586,6 +586,14 @@ export default function AddModal(props: AddModalProps) {
                       <Input />
                     </Form.Item>
                   </Col>
+                  <Col span={12}>
+                    <Form.Item<InventoryAddDto>
+                      name={['extend', 'iDefindParm11']}
+                      label="提前期"
+                    >
+                      <InputNumber />
+                    </Form.Item>
+                  </Col>
                 </Row>
               )
             }
