@@ -45,6 +45,10 @@ export type PermCode =
   | 'inventory:add'
   | 'inventory:edit'
   | 'inventory:delete'
+  | 'craft' // 工艺
+  | 'process' // 工序档案
+  | 'step' // 工步档案
+  | 'craft-route' // 工艺路线
   | 'bom' // 物料清单/配方
   | 'bom:view'
   | 'bom:add'

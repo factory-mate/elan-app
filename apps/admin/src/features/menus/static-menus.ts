@@ -34,9 +34,29 @@ export const staticMenus: ExtendedMenuItemType[] = [
           { label: '计量单位档案', key: '/unit', permCode: 'unit' },
           { label: '料品分类', key: '/inventory-class', permCode: 'inventory-class' },
           { label: '料品档案', key: '/inventory', permCode: 'inventory' },
-          { label: '物料清单/配方', key: '/bom', permCode: 'bom' }
-          // { label: '工序档案', key: '/process' },
-          // { label: '工艺路线档案', key: '/process-route' }
+          { label: '物料清单/配方', key: '/bom', permCode: 'bom' },
+          {
+            label: '工艺',
+            key: '/craft',
+            // permCode: 'craft',
+            children: [
+              {
+                label: '工序档案',
+                key: '/process'
+                // permCode: 'process'
+              },
+              {
+                label: '工步档案',
+                key: '/step'
+                // permCode: 'step'
+              },
+              {
+                label: '工艺路线',
+                key: '/craft-route'
+                // permCode: 'craft-route'
+              }
+            ]
+          }
         ]
       },
       {
