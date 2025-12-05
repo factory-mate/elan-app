@@ -45,18 +45,9 @@ export default function AddModal(props: AddModalProps) {
         name="add-form"
         form={form}
         labelCol={{ span: 6 }}
-        initialValues={{
-          IsValid: true
-        }}
+        initialValues={{}}
         onFinish={onFinish}
       >
-        <Form.Item<ProcessAddDto>
-          name="cProcessCode"
-          label="工序编码"
-          rules={[{ required: true }]}
-        >
-          <Input />
-        </Form.Item>
         <Form.Item<ProcessAddDto>
           name="cProcessName"
           label="工序名称"

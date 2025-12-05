@@ -2,10 +2,10 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import {
+  type CraftRouteEditDto,
   detailQO,
-  type StepEditDto,
   useEditMutation
-} from '@/features/digital-modeling/products/craft/step'
+} from '@/features/digital-modeling/products/craft/craft-route'
 
 import type { EditModalMeta } from '../-types'
 
@@ -18,7 +18,7 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<StepEditDto>()
+  const [form] = Form.useForm<CraftRouteEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
 
@@ -32,7 +32,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<StepEditDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<CraftRouteEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
         ...detailData,
@@ -45,12 +45,12 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑工步"
+      title="编辑工艺路线"
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
-      width="600px"
+      width="90%"
     >
       <Form
         className="pt-3"
@@ -61,31 +61,19 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item<StepEditDto>
-            name="cStepCode"
-            label="工步编码"
+          <Form.Item<CraftRouteEditDto>
+            name="cCraftRouteCode"
+            label="工艺路线编码"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<StepEditDto>
-            name="cStepName"
-            label="工步名称"
+          <Form.Item<CraftRouteEditDto>
+            name="cCraftRouteName"
+            label="工艺路线名称"
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
-          {/* <Form.Item<StepEditDto>
-            name="isDevice"
-            label="是否对接设备"
-          >
-            <Switch />
-          </Form.Item>
-          <Form.Item<StepEditDto>
-            name="isBussiness"
-            label="是否对接业务"
-          >
-            <Switch />
-          </Form.Item> */}
         </Skeleton>
       </Form>
     </Modal>

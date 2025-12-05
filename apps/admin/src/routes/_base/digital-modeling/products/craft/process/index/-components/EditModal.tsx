@@ -64,9 +64,8 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<ProcessEditDto>
             name="cProcessCode"
             label="工序编码"
-            rules={[{ required: true }]}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item<ProcessEditDto>
             name="cProcessName"

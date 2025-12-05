@@ -2,10 +2,10 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
 import {
+  type CraftRouteVo,
   listQO,
-  type StepVo,
   useDeleteMutation
-} from '@/features/digital-modeling/products/craft/step'
+} from '@/features/digital-modeling/products/craft/craft-route'
 import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
 import { queryBuilder } from '@/features/query-builder'
 
@@ -13,7 +13,7 @@ import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft/step/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft/craft-route/')({
   component: RouteComponent
 })
 
@@ -31,19 +31,17 @@ function RouteComponent() {
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cStepCode', type: 'like', val: filterData.cStepCode },
-        { key: 'cStepName', type: 'like', val: filterData.cStepName }
+        { key: 'cCraftRouteCode', type: 'like', val: filterData.cCraftRouteCode },
+        { key: 'cCraftRouteName', type: 'like', val: filterData.cCraftRouteName }
       ])
     })
   )
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<StepVo>[]>(
+  const columnDefs = useMemo<ColDef<CraftRouteVo>[]>(
     () => [
-      { field: 'cStepCode', headerName: '工步编码', flex: 1 },
-      { field: 'cStepName', headerName: '工步名称', flex: 1 },
-      // { field: 'isDevice', headerName: '是否对接设备', flex: 1 },
-      // { field: 'isBussiness', headerName: '是否对接业务', flex: 1 },
+      { field: 'cCraftRouteCode', headerName: '工艺路线编码', flex: 1 },
+      { field: 'cCraftRouteName', headerName: '工艺路线名称', flex: 1 },
       { field: 'cCreateUserName', headerName: '创建人', flex: 1 },
       { field: 'dCreateTime', headerName: '创建时间', flex: 1 },
       {
@@ -52,7 +50,7 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<StepVo>) => (
+        cellRenderer: (params: ICellRendererParams<CraftRouteVo>) => (
           <Space>
             <Button
               size="small"
@@ -117,7 +115,7 @@ function RouteComponent() {
         </Flex>
 
         <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-          <AgGridReact<StepVo>
+          <AgGridReact<CraftRouteVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}
             columnDefs={columnDefs}
