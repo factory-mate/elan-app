@@ -1,10 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type ProcessAddDto,
-  useAddMutation
-} from '@/features/digital-modeling/products/craft/process'
+import { type StepAddDto, useAddMutation } from '@/features/digital-modeling/products/craft/step'
 
 interface AddModalProps {
   open?: boolean
@@ -14,11 +11,11 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
-  const [form] = Form.useForm<ProcessAddDto>()
+  const [form] = Form.useForm<StepAddDto>()
 
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<ProcessAddDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<StepAddDto>['onFinish'] = (values) =>
     addMutation.mutate(
       {
         ...values
@@ -33,12 +30,12 @@ export default function AddModal(props: AddModalProps) {
 
   return (
     <Modal
-      title="新增工序"
+      title="新增工步"
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
-      width="400px"
+      width="600px"
     >
       <Form
         className="pt-3"
@@ -50,19 +47,31 @@ export default function AddModal(props: AddModalProps) {
         }}
         onFinish={onFinish}
       >
-        <Form.Item<ProcessAddDto>
-          name="cProcessCode"
-          label="工序编码"
+        <Form.Item<StepAddDto>
+          name="cStepCode"
+          label="工步编码"
           rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item<ProcessAddDto>
-          name="cProcessName"
-          label="工序名称"
+        <Form.Item<StepAddDto>
+          name="cStepName"
+          label="工步名称"
           rules={[{ required: true }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item<StepAddDto>
+          name="isDevice"
+          label="是否对接设备"
+        >
+          <Switch />
+        </Form.Item>
+        <Form.Item<StepAddDto>
+          name="isBussiness"
+          label="是否对接业务"
+        >
+          <Switch />
         </Form.Item>
       </Form>
     </Modal>

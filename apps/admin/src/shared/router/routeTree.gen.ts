@@ -46,6 +46,7 @@ import { Route as BaseDigitalModelingMerchantsCustomerClassIndexRouteImport } fr
 import { Route as BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteImport } from './../../routes/_base/digital-modeling/basic-settings/coding-scheme/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeIdEditRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/$id/edit/route'
 import { Route as BaseDigitalModelingOrgsEmployeeIdDetailRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/$id/detail/route'
+import { Route as BaseDigitalModelingProductsCraftStepIndexRouteImport } from './../../routes/_base/digital-modeling/products/craft/step/index/route'
 import { Route as BaseDigitalModelingProductsCraftProcessIndexRouteImport } from './../../routes/_base/digital-modeling/products/craft/process/index/route'
 
 // Create/Update Routes
@@ -406,6 +407,17 @@ const BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute =
     ).then((d) => d.Route),
   )
 
+const BaseDigitalModelingProductsCraftStepIndexRouteRoute =
+  BaseDigitalModelingProductsCraftStepIndexRouteImport.update({
+    id: '/digital-modeling/products/craft/step/',
+    path: '/digital-modeling/products/craft/step/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/craft/step/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
 const BaseDigitalModelingProductsCraftProcessIndexRouteRoute =
   BaseDigitalModelingProductsCraftProcessIndexRouteImport.update({
     id: '/digital-modeling/products/craft/process/',
@@ -659,6 +671,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsCraftProcessIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/products/craft/step/': {
+      id: '/_base/digital-modeling/products/craft/step/'
+      path: '/digital-modeling/products/craft/step'
+      fullPath: '/digital-modeling/products/craft/step'
+      preLoaderRoute: typeof BaseDigitalModelingProductsCraftStepIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/orgs/employee/$id/detail': {
       id: '/_base/digital-modeling/orgs/employee/$id/detail'
       path: '/digital-modeling/orgs/employee/$id/detail'
@@ -709,6 +728,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseProductionPlanProductionOrderIdEditRouteRoute: typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   BaseDigitalModelingProductsCraftProcessIndexRouteRoute: typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
+  BaseDigitalModelingProductsCraftStepIndexRouteRoute: typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
   BaseDigitalModelingOrgsEmployeeIdEditRouteRoute: typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
@@ -765,6 +785,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseProductionPlanProductionOrderIdEditRouteRoute,
   BaseDigitalModelingProductsCraftProcessIndexRouteRoute:
     BaseDigitalModelingProductsCraftProcessIndexRouteRoute,
+  BaseDigitalModelingProductsCraftStepIndexRouteRoute:
+    BaseDigitalModelingProductsCraftStepIndexRouteRoute,
   BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute:
     BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute,
   BaseDigitalModelingOrgsEmployeeIdEditRouteRoute:
@@ -821,6 +843,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/products/craft/process': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
+  '/digital-modeling/products/craft/step': typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
   '/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
@@ -859,6 +882,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/digital-modeling/products/craft/process': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
+  '/digital-modeling/products/craft/step': typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
   '/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
   '/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
@@ -899,6 +923,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/production-plan/production-order/$id/edit': typeof BaseProductionPlanProductionOrderIdEditRouteRoute
   '/_base/digital-modeling/products/craft/process/': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
+  '/_base/digital-modeling/products/craft/step/': typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/$id/detail': typeof BaseDigitalModelingOrgsEmployeeIdDetailRouteRoute
   '/_base/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
@@ -939,6 +964,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/products/craft/process'
+    | '/digital-modeling/products/craft/step'
     | '/digital-modeling/orgs/employee/$id/detail'
     | '/digital-modeling/orgs/employee/$id/edit'
   fileRoutesByTo: FileRoutesByTo
@@ -976,6 +1002,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/orgs/employee/add'
     | '/production-plan/production-order/$id/edit'
     | '/digital-modeling/products/craft/process'
+    | '/digital-modeling/products/craft/step'
     | '/digital-modeling/orgs/employee/$id/detail'
     | '/digital-modeling/orgs/employee/$id/edit'
   id:
@@ -1014,6 +1041,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/production-plan/production-order/$id/edit'
     | '/_base/digital-modeling/products/craft/process/'
+    | '/_base/digital-modeling/products/craft/step/'
     | '/_base/digital-modeling/orgs/employee/$id/detail'
     | '/_base/digital-modeling/orgs/employee/$id/edit'
   fileRoutesById: FileRoutesById
@@ -1082,6 +1110,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/orgs/employee/add",
         "/_base/production-plan/production-order/$id/edit",
         "/_base/digital-modeling/products/craft/process/",
+        "/_base/digital-modeling/products/craft/step/",
         "/_base/digital-modeling/orgs/employee/$id/detail",
         "/_base/digital-modeling/orgs/employee/$id/edit"
       ]
@@ -1214,6 +1243,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/products/craft/process/": {
       "filePath": "_base/digital-modeling/products/craft/process/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/craft/step/": {
+      "filePath": "_base/digital-modeling/products/craft/step/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/orgs/employee/$id/detail": {
