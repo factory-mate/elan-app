@@ -1,7 +1,7 @@
 import type { FormProps } from 'antd'
 
-import * as Employee from '@/features/digital-modeling/orgs/employee'
-import * as Role from '@/features/perm-management/roles'
+import * as Employee from '@/features/employee'
+import * as Role from '@/features/roles'
 
 interface FormValues {
   cRoleCode: string[]

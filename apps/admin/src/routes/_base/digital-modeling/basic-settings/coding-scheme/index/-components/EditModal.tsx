@@ -1,11 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type CodingSchemeEditDto,
-  detailQO,
-  useEditMutation
-} from '@/features/digital-modeling/basic-settings/coding-scheme'
+import { type CodingSchemeEditDto, detailQO, useEditMutation } from '@/features/coding-scheme'
 
 import type { EditModalMeta } from '../-types'
 

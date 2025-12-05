@@ -1,4 +1,4 @@
-import { detailQO } from '@/features/digital-modeling/orgs/employee'
+import { detailQO } from '@/features/employee'
 
 export const Route = createFileRoute('/_base/digital-modeling/orgs/employee/$id/edit')({
   staticData: {

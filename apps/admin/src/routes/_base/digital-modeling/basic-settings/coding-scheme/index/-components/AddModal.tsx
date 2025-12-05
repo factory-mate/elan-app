@@ -1,10 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type CodingSchemeAddDto,
-  useAddMutation
-} from '@/features/digital-modeling/basic-settings/coding-scheme'
+import { type CodingSchemeAddDto, useAddMutation } from '@/features/coding-scheme'
 
 interface AddModalProps {
   open?: boolean

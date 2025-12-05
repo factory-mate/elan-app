@@ -6,7 +6,7 @@ import {
   customerClassTreeSelectFieldNames,
   treeQO,
   useAddMutation
-} from '@/features/digital-modeling/merchants/customer-class'
+} from '@/features/customer-class'
 
 interface AddModalProps {
   open?: boolean

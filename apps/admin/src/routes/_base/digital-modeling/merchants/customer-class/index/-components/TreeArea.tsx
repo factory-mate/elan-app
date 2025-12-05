@@ -1,9 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import {
-  customerClassTreeFieldNames,
-  treeQO
-} from '@/features/digital-modeling/merchants/customer-class'
+import { customerClassTreeFieldNames, treeQO } from '@/features/customer-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]

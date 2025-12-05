@@ -2,10 +2,8 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { SelectProps } from 'antd'
 
-import type { InventoryVo } from '@/features/digital-modeling/products/inventory'
-import { InventoryAPI, listQO } from '@/features/digital-modeling/products/inventory'
-import { defaultMinPageDto, defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { queryBuilder } from '@/features/query-builder'
+import type { InventoryVo } from '@/features/inventory'
+import { InventoryAPI, listQO } from '@/features/inventory'
 
 interface InventoryRemoteSelectProps extends SelectProps {}
 

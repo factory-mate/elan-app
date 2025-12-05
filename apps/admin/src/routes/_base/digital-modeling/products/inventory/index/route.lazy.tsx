@@ -2,12 +2,7 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import {
-  type InventoryVo,
-  listQO,
-  useDeleteMutation
-} from '@/features/digital-modeling/products/inventory'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
+import { type InventoryVo, listQO, useDeleteMutation } from '@/features/inventory'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'

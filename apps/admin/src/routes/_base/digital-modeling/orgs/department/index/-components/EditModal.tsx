@@ -7,7 +7,7 @@ import {
   detailQO,
   treeQO,
   useEditMutation
-} from '@/features/digital-modeling/orgs/department'
+} from '@/features/department'
 
 import type { EditModalMeta } from '../-types'
 

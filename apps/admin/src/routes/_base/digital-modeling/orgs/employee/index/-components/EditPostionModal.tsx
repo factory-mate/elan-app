@@ -2,8 +2,8 @@ import type { FormProps } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import * as Dicts from '@/features/dicts'
-import type { EmployeeSetPositionDto } from '@/features/digital-modeling/orgs/employee'
-import * as Employee from '@/features/digital-modeling/orgs/employee'
+import type { EmployeeSetPositionDto } from '@/features/employee'
+import * as Employee from '@/features/employee'
 
 import type { EditPositionModalMeta } from '../-types'
 

@@ -1,10 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  bomClassTreeFieldNames,
-  type BOMVo,
-  treeQO
-} from '@/features/digital-modeling/products/bom'
+import { bomClassTreeFieldNames, type BOMVo, treeQO } from '@/features/bom'
 
 interface TreeAreaProps {
   setSelectedTreeData: Dispatch<SetStateAction<BOMVo | null>>

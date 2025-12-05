@@ -1,6 +1,5 @@
-import { listQO } from '@/features/digital-modeling/products/unit'
-import { fullListQO } from '@/features/digital-modeling/products/unit-class'
-import { defaultPageDto } from '@/features/pagination'
+import { listQO } from '@/features/unit'
+import { fullListQO } from '@/features/unit-class'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/unit/')({
   staticData: {

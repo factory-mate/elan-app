@@ -2,14 +2,10 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
-import {
-  type InventoryAddDto,
-  useAddMutation
-} from '@/features/digital-modeling/products/inventory'
-import * as InventoryClass from '@/features/digital-modeling/products/inventory-class'
-import * as Unit from '@/features/digital-modeling/products/unit'
-import * as UnitClass from '@/features/digital-modeling/products/unit-class'
-import { onlyCanSelectTreeLeafNode } from '@/shared/antd'
+import { type InventoryAddDto, useAddMutation } from '@/features/inventory'
+import * as InventoryClass from '@/features/inventory-class'
+import * as Unit from '@/features/unit'
+import * as UnitClass from '@/features/unit-class'
 
 interface AddModalProps {
   open?: boolean

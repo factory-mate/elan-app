@@ -1,5 +1,5 @@
+import { treeQO } from '@/features/bom'
 import { fullListQO } from '@/features/dicts'
-import { treeQO } from '@/features/digital-modeling/products/bom'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/bom/')({
   staticData: {

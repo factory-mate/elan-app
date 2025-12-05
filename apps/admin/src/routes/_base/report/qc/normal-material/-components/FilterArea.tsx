@@ -1,10 +1,8 @@
 import type { FormInstance } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { InventoryAPI } from '@/features/digital-modeling/products/inventory'
-import { defaultMinPageDto } from '@/features/pagination'
-import { queryBuilder } from '@/features/query-builder'
-import { LIST_QK } from '@/features/report/qc/normal-material'
+import { InventoryAPI } from '@/features/inventory'
+import { LIST_QK } from '@/features/normal-material'
 
 import type { FilterForm } from '../-types'
 

@@ -1,9 +1,7 @@
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { queryBuilder } from '@/features/query-builder'
-import * as ProductionMaterial from '@/features/report/production/production-material'
+import * as ProductionMaterial from '@/features/production-material'
 
 import { FilterArea } from './-components'
 import type { FilterForm } from './-types'

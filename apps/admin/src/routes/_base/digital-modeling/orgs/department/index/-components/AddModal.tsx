@@ -6,7 +6,7 @@ import {
   departmentTreeSelectFieldNames,
   treeQO,
   useAddMutation
-} from '@/features/digital-modeling/orgs/department'
+} from '@/features/department'
 
 interface AddModalProps {
   open?: boolean

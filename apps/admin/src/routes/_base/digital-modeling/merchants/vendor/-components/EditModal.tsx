@@ -1,15 +1,8 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  detailQO,
-  useEditMutation,
-  type VendorEditDto
-} from '@/features/digital-modeling/merchants/vendor'
-import {
-  treeQO,
-  vendorClassTreeSelectFieldNames
-} from '@/features/digital-modeling/merchants/vendor-class'
+import { detailQO, useEditMutation, type VendorEditDto } from '@/features/vendor'
+import { treeQO, vendorClassTreeSelectFieldNames } from '@/features/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 

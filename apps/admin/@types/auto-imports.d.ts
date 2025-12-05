@@ -14,8 +14,10 @@ declare global {
   const Avatar: typeof import('antd')['Avatar']
   const Await: typeof import('@tanstack/react-router')['Await']
   const AxiosProvider: typeof import('../src/shared/providers/AxiosProvider/index')['default']
+  const BaseLayout: typeof import('../src/shared/layouts/index')['BaseLayout']
   const BasicTable: typeof import('../src/shared/components/BasicTable/index')['default']
   const Block: typeof import('@tanstack/react-router')['Block']
+  const BooleanValue: typeof import('../src/shared/enums/index')['BooleanValue']
   const BrowserUtils: typeof import('@bit-ocean/utils')['BrowserUtils']
   const Button: typeof import('antd')['Button']
   const Card: typeof import('antd')['Card']
@@ -61,6 +63,7 @@ declare global {
   const PageContainer: typeof import('../src/shared/components/PageContainer/index')['default']
   const Pagination: typeof import('antd')['Pagination']
   const PermCodeProvider: typeof import('../src/shared/providers/PermCodeProvider/index')['PermCodeProvider']
+  const PublicLayout: typeof import('../src/shared/layouts/index')['PublicLayout']
   const QueryClient: typeof import('@tanstack/react-query')['QueryClient']
   const QueryClientProvider: typeof import('@tanstack/react-query')['QueryClientProvider']
   const QueryProvider: typeof import('../src/shared/providers/QueryProvider/index')['default']
@@ -84,6 +87,8 @@ declare global {
   const Tree: typeof import('antd')['Tree']
   const TreeSelect: typeof import('antd')['TreeSelect']
   const appConfig: typeof import('@elan/config')['appConfig']
+  const booleanLabelValueGetter: typeof import('../src/shared/ag-grid/utils')['booleanLabelValueGetter']
+  const buildIndexColDef: typeof import('../src/shared/ag-grid/utils')['buildIndexColDef']
   const cloneElement: typeof import('react')['cloneElement']
   const clsx: typeof import('clsx')['default']
   const createContext: typeof import('react')['createContext']
@@ -94,6 +99,10 @@ declare global {
   const createRootRouteWithContext: typeof import('@tanstack/react-router')['createRootRouteWithContext']
   const createRouter: typeof import('@tanstack/react-router')['createRouter']
   const dayjs: typeof import('dayjs')['default']
+  const defaultMaxPageDto: typeof import('../src/shared/consts/pagination/index')['defaultMaxPageDto']
+  const defaultMinPageDto: typeof import('../src/shared/consts/pagination/index')['defaultMinPageDto']
+  const defaultPageDto: typeof import('../src/shared/consts/pagination/index')['defaultPageDto']
+  const defaultPageSizeOptions: typeof import('../src/shared/consts/pagination/index')['defaultPageSizeOptions']
   const downloadExcel: typeof import('../src/shared/utils/browser')['downloadExcel']
   const focusManager: typeof import('@tanstack/react-query')['focusManager']
   const forwardRef: typeof import('react')['forwardRef']
@@ -105,6 +114,8 @@ declare global {
   const motion: typeof import('framer-motion')['motion']
   const notFound: typeof import('@tanstack/react-router')['notFound']
   const onlineManager: typeof import('@tanstack/react-query')['onlineManager']
+  const onlyCanSelectTreeLeafNode: typeof import('../src/shared/antd/utils')['onlyCanSelectTreeLeafNode']
+  const queryBuilder: typeof import('../src/shared/utils/query-builder')['queryBuilder']
   const queryClient: typeof import('@/shared/query-client')['queryClient']
   const queryOptions: typeof import('@tanstack/react-query')['queryOptions']
   const redirect: typeof import('@tanstack/react-router')['redirect']
@@ -172,6 +183,9 @@ declare global {
   // @ts-ignore
   export type { ErrorPageProps } from '../src/shared/components/ErrorPage/index'
   import('../src/shared/components/ErrorPage/index')
+  // @ts-ignore
+  export type { BooleanValue } from '../src/shared/enums/index'
+  import('../src/shared/enums/index')
   // @ts-ignore
   export type { UseModalProps, UseModal } from '../src/shared/hooks/useModal'
   import('../src/shared/hooks/useModal')

@@ -1,9 +1,9 @@
 import type { FormProps } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import * as Department from '@/features/digital-modeling/orgs/department'
-import type { EmployeeSetDeptDto } from '@/features/digital-modeling/orgs/employee'
-import * as Employee from '@/features/digital-modeling/orgs/employee'
+import * as Department from '@/features/department'
+import type { EmployeeSetDeptDto } from '@/features/employee'
+import * as Employee from '@/features/employee'
 
 import type { EditDeptModalMeta } from '../-types'
 

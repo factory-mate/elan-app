@@ -7,7 +7,7 @@ import {
   detailQO,
   treeQO,
   useEditMutation
-} from '@/features/digital-modeling/merchants/customer-class'
+} from '@/features/customer-class'
 
 import type { EditModalMeta } from '../-types'
 

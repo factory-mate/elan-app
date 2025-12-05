@@ -1,9 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import {
-  fullListQO,
-  unitClassTreeFieldNames
-} from '@/features/digital-modeling/products/unit-class'
+import { fullListQO, unitClassTreeFieldNames } from '@/features/unit-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]

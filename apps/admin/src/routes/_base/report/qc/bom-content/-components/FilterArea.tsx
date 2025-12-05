@@ -1,7 +1,7 @@
 import type { FormInstance } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { LIST_QK } from '@/features/report/qc/bom-content'
+import { LIST_QK } from '@/features/bom-content'
 
 import type { FilterForm } from '../-types'
 

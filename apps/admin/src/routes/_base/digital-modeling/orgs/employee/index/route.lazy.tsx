@@ -8,10 +8,9 @@ import {
   useStartMutation,
   useStopMutation,
   useUnfreezeMutation
-} from '@/features/digital-modeling/orgs/employee'
-import { type EmployeeVo, listQO } from '@/features/digital-modeling/orgs/employee'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import * as Users from '@/features/perm-management/users'
+} from '@/features/employee'
+import { type EmployeeVo, listQO } from '@/features/employee'
+import * as Users from '@/features/users'
 
 import { EditDeptModal, EditPositionModal, EditRoleModal } from './-components'
 import type { EditDeptModalMeta, EditPositionModalMeta, EditRoleModalMeta } from './-types'

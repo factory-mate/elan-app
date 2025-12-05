@@ -2,10 +2,7 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
-import {
-  type UnitClassAddDto,
-  useAddMutation
-} from '@/features/digital-modeling/products/unit-class'
+import { type UnitClassAddDto, useAddMutation } from '@/features/unit-class'
 
 interface AddModalProps {
   open?: boolean

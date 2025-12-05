@@ -2,9 +2,7 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import { listQO, type UnitVo, useDeleteMutation } from '@/features/digital-modeling/products/unit'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { booleanLabelValueGetter } from '@/shared/ag-grid'
+import { listQO, type UnitVo, useDeleteMutation } from '@/features/unit'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'

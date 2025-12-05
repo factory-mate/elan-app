@@ -1,4 +1,4 @@
-import * as Perms from '@/features/perm-management/perms'
+import * as Perms from '@/features/perms'
 
 const getRouterStaticData = (path: string) => router.matchRoutes(path, {}).at(-1)!.staticData ?? {}
 

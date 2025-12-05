@@ -57,10 +57,15 @@ export default defineConfig(({ mode }) => {
           { from: '@/shared/query-client', imports: ['queryClient'] }
         ],
         dirs: [
+          'src/shared/ag-grid/*',
+          'src/shared/antd/*',
           'src/shared/api/*',
           'src/shared/components/**',
+          'src/shared/consts/*',
+          'src/shared/enums/*',
           'src/shared/echarts/*',
           'src/shared/hooks/**',
+          'src/shared/layouts/*',
           'src/shared/providers/**',
           'src/shared/store/*',
           'src/shared/utils/*',

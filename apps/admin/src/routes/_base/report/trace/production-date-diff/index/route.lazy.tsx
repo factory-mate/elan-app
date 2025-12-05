@@ -1,8 +1,7 @@
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import * as ProductionDateDiff from '@/features/report/trace/production-date-diff'
+import * as ProductionDateDiff from '@/features/production-date-diff'
 
 export const Route = createLazyFileRoute('/_base/report/trace/production-date-diff/')({
   component: RouteComponent

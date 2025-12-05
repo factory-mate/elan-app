@@ -1,20 +1,10 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { useAddMutation, type VendorAddDto } from '@/features/digital-modeling/merchants/vendor'
-import {
-  treeQO,
-  vendorClassTreeSelectFieldNames
-} from '@/features/digital-modeling/merchants/vendor-class'
-import {
-  departmentSelectFieldNames,
-  listQO as departmentListQO
-} from '@/features/digital-modeling/orgs/department'
-import {
-  employeeSelectFieldNames,
-  listQO as employeeListQO
-} from '@/features/digital-modeling/orgs/employee'
-import { defaultPageDto } from '@/features/pagination'
+import { departmentSelectFieldNames, listQO as departmentListQO } from '@/features/department'
+import { employeeSelectFieldNames, listQO as employeeListQO } from '@/features/employee'
+import { useAddMutation, type VendorAddDto } from '@/features/vendor'
+import { treeQO, vendorClassTreeSelectFieldNames } from '@/features/vendor-class'
 
 interface AddModalProps {
   open?: boolean

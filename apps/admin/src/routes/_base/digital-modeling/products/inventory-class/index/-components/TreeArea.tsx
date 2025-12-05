@@ -1,9 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import {
-  inventoryClassTreeFieldNames,
-  treeQO
-} from '@/features/digital-modeling/products/inventory-class'
+import { inventoryClassTreeFieldNames, treeQO } from '@/features/inventory-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]

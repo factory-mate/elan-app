@@ -7,7 +7,7 @@ import {
   inventoryClassTreeSelectFieldNames,
   treeQO,
   useEditMutation
-} from '@/features/digital-modeling/products/inventory-class'
+} from '@/features/inventory-class'
 
 import type { EditModalMeta } from '../-types'
 

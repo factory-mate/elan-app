@@ -1,4 +1,4 @@
-import { treeQO } from '@/features/digital-modeling/orgs/department'
+import { treeQO } from '@/features/department'
 
 export const Route = createFileRoute('/_base/digital-modeling/orgs/department/')({
   staticData: {

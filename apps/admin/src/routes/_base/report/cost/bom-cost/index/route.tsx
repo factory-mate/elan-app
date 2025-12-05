@@ -1,4 +1,4 @@
-import { listQO } from '@/features/report/cost/bom-cost'
+import { listQO } from '@/features/bom-cost'
 
 export const Route = createFileRoute('/_base/report/cost/bom-cost/')({
   staticData: {

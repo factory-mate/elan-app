@@ -1,15 +1,8 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  detailQO,
-  type UnitEditDto,
-  useEditMutation
-} from '@/features/digital-modeling/products/unit'
-import {
-  fullListQO,
-  unitClassSelectFieldNames
-} from '@/features/digital-modeling/products/unit-class'
+import { detailQO, type UnitEditDto, useEditMutation } from '@/features/unit'
+import { fullListQO, unitClassSelectFieldNames } from '@/features/unit-class'
 
 import type { EditModalMeta } from '../-types'
 

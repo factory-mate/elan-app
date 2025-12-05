@@ -5,8 +5,6 @@ import { type FormProps, Modal } from 'antd'
 import Decimal from 'decimal.js'
 import type { Dispatch, SetStateAction } from 'react'
 
-import * as Dicts from '@/features/dicts'
-import * as Department from '@/features/digital-modeling/orgs/department'
 import {
   type BOMAddDto,
   type BOMChildItemVo,
@@ -16,11 +14,11 @@ import {
   supplyTypeLabelMap,
   supplyTypeOptions,
   useAddMutation
-} from '@/features/digital-modeling/products/bom'
-import * as Inventory from '@/features/digital-modeling/products/inventory'
-import * as Warehouse from '@/features/digital-modeling/products/warehouse'
-import { BooleanValue } from '@/features/general'
-import { defaultMaxPageDto } from '@/features/pagination'
+} from '@/features/bom'
+import * as Department from '@/features/department'
+import * as Dicts from '@/features/dicts'
+import * as Inventory from '@/features/inventory'
+import * as Warehouse from '@/features/warehouse'
 
 interface AddModalProps {
   open?: boolean

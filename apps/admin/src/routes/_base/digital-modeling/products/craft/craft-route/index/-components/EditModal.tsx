@@ -1,11 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type CraftRouteEditDto,
-  detailQO,
-  useEditMutation
-} from '@/features/digital-modeling/products/craft/craft-route'
+import { type CraftRouteEditDto, detailQO, useEditMutation } from '@/features/craft/craft-route'
 
 import type { EditModalMeta } from '../-types'
 

@@ -1,9 +1,7 @@
 import type { ColGroupDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { defaultMinPageDto } from '@/features/pagination'
-import { queryBuilder } from '@/features/query-builder'
-import { listQO, type NormalMaterialVo } from '@/features/report/qc/normal-material'
+import { listQO, type NormalMaterialVo } from '@/features/normal-material'
 
 import { FilterArea } from './-components'
 import type { FilterForm } from './-types'

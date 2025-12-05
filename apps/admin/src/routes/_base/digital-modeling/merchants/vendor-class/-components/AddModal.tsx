@@ -6,7 +6,7 @@ import {
   useAddMutation,
   type VendorClassAddDto,
   vendorClassTreeSelectFieldNames
-} from '@/features/digital-modeling/merchants/vendor-class'
+} from '@/features/vendor-class'
 
 interface AddModalProps {
   open?: boolean

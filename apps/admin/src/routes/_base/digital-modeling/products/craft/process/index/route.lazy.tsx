@@ -1,13 +1,7 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import {
-  listQO,
-  type ProcessVo,
-  useDeleteMutation
-} from '@/features/digital-modeling/products/craft/process'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { queryBuilder } from '@/features/query-builder'
+import { listQO, type ProcessVo, useDeleteMutation } from '@/features/craft/process'
 
 import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'

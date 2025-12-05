@@ -1,7 +1,7 @@
+import * as Department from '@/features/department'
 import * as Dicts from '@/features/dicts'
-import * as Department from '@/features/digital-modeling/orgs/department'
-import * as Employee from '@/features/digital-modeling/orgs/employee'
-import { type EmployeeVo } from '@/features/digital-modeling/orgs/employee'
+import * as Employee from '@/features/employee'
+import { type EmployeeVo } from '@/features/employee'
 
 export default function BasicInfo() {
   const [form] = Form.useForm<EmployeeVo>()

@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { departmentTreeFieldNames, treeQO } from '@/features/digital-modeling/orgs/department'
+import { departmentTreeFieldNames, treeQO } from '@/features/department'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]

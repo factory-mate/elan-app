@@ -1,7 +1,7 @@
+import * as Department from '@/features/department'
 import * as Dicts from '@/features/dicts'
-import * as Department from '@/features/digital-modeling/orgs/department'
-import { type EmployeeVo } from '@/features/digital-modeling/orgs/employee'
-import * as Employee from '@/features/digital-modeling/orgs/employee'
+import { type EmployeeVo } from '@/features/employee'
+import * as Employee from '@/features/employee'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/add')({
   component: RouteComponent

@@ -1,12 +1,7 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import {
-  type CodingSchemeVo,
-  listQO,
-  useDeleteMutation
-} from '@/features/digital-modeling/basic-settings/coding-scheme'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
+import { type CodingSchemeVo, listQO, useDeleteMutation } from '@/features/coding-scheme'
 
 import { AddModal, EditModal } from './-components'
 import type { EditModalMeta } from './-types'

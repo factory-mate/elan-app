@@ -7,7 +7,7 @@ import {
   useEditMutation,
   type VendorClassEditDto,
   vendorClassTreeSelectFieldNames
-} from '@/features/digital-modeling/merchants/vendor-class'
+} from '@/features/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 

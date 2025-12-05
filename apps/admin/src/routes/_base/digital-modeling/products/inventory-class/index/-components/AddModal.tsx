@@ -6,7 +6,7 @@ import {
   inventoryClassTreeSelectFieldNames,
   treeQO,
   useAddMutation
-} from '@/features/digital-modeling/products/inventory-class'
+} from '@/features/inventory-class'
 
 interface AddModalProps {
   open?: boolean

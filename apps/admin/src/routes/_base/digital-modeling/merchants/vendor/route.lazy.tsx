@@ -2,12 +2,7 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import {
-  listQO,
-  useDeleteMutation,
-  type VendorVo
-} from '@/features/digital-modeling/merchants/vendor'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
+import { listQO, useDeleteMutation, type VendorVo } from '@/features/vendor'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'

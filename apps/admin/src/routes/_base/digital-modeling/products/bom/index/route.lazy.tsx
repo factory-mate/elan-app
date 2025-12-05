@@ -14,8 +14,7 @@ import {
   useDeleteMutation,
   useExportMutation,
   useImportMutation
-} from '@/features/digital-modeling/products/bom'
-import { booleanLabelValueGetter } from '@/shared/ag-grid'
+} from '@/features/bom'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'

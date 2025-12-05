@@ -1,10 +1,10 @@
 import type { FormProps } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import type { EmployeeSetRoleDto } from '@/features/digital-modeling/orgs/employee'
-import * as Employee from '@/features/digital-modeling/orgs/employee'
-import type { RoleBatchAddItemDto } from '@/features/perm-management/roles'
-import * as Role from '@/features/perm-management/roles'
+import type { EmployeeSetRoleDto } from '@/features/employee'
+import * as Employee from '@/features/employee'
+import type { RoleBatchAddItemDto } from '@/features/roles'
+import * as Role from '@/features/roles'
 
 import type { EditRoleModalMeta } from '../-types'
 

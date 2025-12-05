@@ -2,14 +2,8 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import { type DepartmentVo, listQO } from '@/features/digital-modeling/orgs/department'
-import {
-  useDeleteMutation,
-  useStartMutation,
-  useStopMutation
-} from '@/features/digital-modeling/orgs/department'
-import { defaultPageDto, defaultPageSizeOptions } from '@/features/pagination'
-import { booleanLabelValueGetter } from '@/shared/ag-grid'
+import { type DepartmentVo, listQO } from '@/features/department'
+import { useDeleteMutation, useStartMutation, useStopMutation } from '@/features/department'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'

@@ -2,7 +2,7 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
-import { type BOMCostVo, listQO, useExportMutation } from '@/features/report/cost/bom-cost'
+import { type BOMCostVo, listQO, useExportMutation } from '@/features/bom-cost'
 
 import { FilterArea } from './-components'
 import styles from './-styles/print.module.scss'

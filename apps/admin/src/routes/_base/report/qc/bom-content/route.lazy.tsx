@@ -1,7 +1,7 @@
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { type BomContentVo, listQO, useExportMutation } from '@/features/report/qc/bom-content'
+import { type BomContentVo, listQO, useExportMutation } from '@/features/bom-content'
 
 import { FilterArea } from './-components'
 import type { FilterForm } from './-types'

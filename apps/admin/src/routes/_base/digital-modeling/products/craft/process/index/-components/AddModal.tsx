@@ -1,10 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type ProcessAddDto,
-  useAddMutation
-} from '@/features/digital-modeling/products/craft/process'
+import { type ProcessAddDto, useAddMutation } from '@/features/craft/process'
 
 interface AddModalProps {
   open?: boolean
