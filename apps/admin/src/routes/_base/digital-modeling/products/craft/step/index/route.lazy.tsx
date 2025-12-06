@@ -1,7 +1,7 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type StepVo, useDeleteMutation } from '@/features/craft/step'
+import { listQO, type StepVo, useDeleteMutation } from '@/features/step'
 
 import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'

@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { type CraftRouteAddDto, useAddMutation } from '@/features/craft/craft-route'
+import { type CraftRouteAddDto, useAddMutation } from '@/features/craft-route'
 
 interface AddModalProps {
   open?: boolean

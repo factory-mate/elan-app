@@ -1,7 +1,7 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { type CraftRouteVo, listQO, useDeleteMutation } from '@/features/craft/craft-route'
+import { type CraftRouteVo, listQO, useDeleteMutation } from '@/features/craft-route'
 
 import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'

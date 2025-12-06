@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { detailQO, type ProcessEditDto, useEditMutation } from '@/features/craft/process'
+import { detailQO, type ProcessEditDto, useEditMutation } from '@/features/process'
 
 import type { EditModalMeta } from '../-types'
 

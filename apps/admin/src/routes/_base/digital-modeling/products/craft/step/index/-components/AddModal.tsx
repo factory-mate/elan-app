@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { type StepAddDto, useAddMutation } from '@/features/craft/step'
+import { type StepAddDto, useAddMutation } from '@/features/step'
 
 interface AddModalProps {
   open?: boolean

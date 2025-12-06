@@ -1,0 +1,84 @@
+import type { FormProps } from 'antd'
+
+import { fullListQO, type MpsParamsEditDto, useEditMutation } from '@/features/mps-params'
+
+export const Route = createLazyFileRoute('/_base/plan-mgt/production-plan/mps-params/')({
+  component: RouteComponent
+})
+
+function RouteComponent() {
+  const [form] = Form.useForm<MpsParamsEditDto>()
+
+  const { data: listData } = useSuspenseQuery(fullListQO())
+
+  const editMutation = useEditMutation()
+
+  const onFinish: FormProps<MpsParamsEditDto>['onFinish'] = (values) =>
+    editMutation.mutate(
+      {
+        ...listData?.[0],
+        ...values
+      },
+      {
+        onSettled: () => form.setFieldsValue(listData?.[0])
+      }
+    )
+
+  return (
+    <PageContainer>
+      <Card
+        size="small"
+        className="w-[360px]"
+      >
+        <Form
+          className="pt-3"
+          name="add-form"
+          form={form}
+          labelCol={{ span: 16 }}
+          initialValues={{ ...listData[0] }}
+          onFinish={onFinish}
+        >
+          <Form.Item<MpsParamsEditDto>
+            name="bSalePrediction"
+            label="是否考虑销售预测"
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item<MpsParamsEditDto>
+            name="bSaleOrder"
+            label="是否考虑销售订单"
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item<MpsParamsEditDto>
+            name="bUnEndVouch"
+            label="是否考虑未完工订单"
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item<MpsParamsEditDto>
+            name="bStock"
+            label="是否考虑库存"
+          >
+            <Switch />
+          </Form.Item>
+          <Form.Item<MpsParamsEditDto>
+            name="bMerge"
+            label="是否考虑合并订单"
+          >
+            <Switch />
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="float-right"
+            disabled={editMutation.isPending}
+            loading={editMutation.isPending}
+          >
+            提交
+          </Button>
+        </Form>
+      </Card>
+    </PageContainer>
+  )
+}

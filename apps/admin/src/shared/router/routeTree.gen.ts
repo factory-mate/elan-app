@@ -34,6 +34,7 @@ import { Route as BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteImport } from '.
 import { Route as BaseReportTraceProductionDateDiffIndexRouteImport } from './../../routes/_base/report/trace/production-date-diff/index/route'
 import { Route as BaseReportProductionProductionMaterialIndexRouteImport } from './../../routes/_base/report/production/production-material/index/route'
 import { Route as BaseReportCostBomCostIndexRouteImport } from './../../routes/_base/report/cost/bom-cost/index/route'
+import { Route as BasePlanMgtProductionPlanMpsParamsIndexRouteImport } from './../../routes/_base/plan-mgt/production-plan/mps-params/index/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
 import { Route as BaseDigitalModelingProductsInventoryIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory/index/route'
@@ -275,6 +276,17 @@ const BaseReportCostBomCostIndexRouteRoute =
     import('./../../routes/_base/report/cost/bom-cost/index/route.lazy').then(
       (d) => d.Route,
     ),
+  )
+
+const BasePlanMgtProductionPlanMpsParamsIndexRouteRoute =
+  BasePlanMgtProductionPlanMpsParamsIndexRouteImport.update({
+    id: '/plan-mgt/production-plan/mps-params/',
+    path: '/plan-mgt/production-plan/mps-params/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/plan-mgt/production-plan/mps-params/index/route.lazy'
+    ).then((d) => d.Route),
   )
 
 const BaseDigitalModelingProductsUnitIndexRouteRoute =
@@ -635,6 +647,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsUnitIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/plan-mgt/production-plan/mps-params/': {
+      id: '/_base/plan-mgt/production-plan/mps-params/'
+      path: '/plan-mgt/production-plan/mps-params'
+      fullPath: '/plan-mgt/production-plan/mps-params'
+      preLoaderRoute: typeof BasePlanMgtProductionPlanMpsParamsIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/report/cost/bom-cost/': {
       id: '/_base/report/cost/bom-cost/'
       path: '/report/cost/bom-cost'
@@ -741,6 +760,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsInventoryIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  BasePlanMgtProductionPlanMpsParamsIndexRouteRoute: typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   BaseReportCostBomCostIndexRouteRoute: typeof BaseReportCostBomCostIndexRouteRoute
   BaseReportProductionProductionMaterialIndexRouteRoute: typeof BaseReportProductionProductionMaterialIndexRouteRoute
   BaseReportTraceProductionDateDiffIndexRouteRoute: typeof BaseReportTraceProductionDateDiffIndexRouteRoute
@@ -792,6 +812,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingProductsUnitClassIndexRouteRoute,
   BaseDigitalModelingProductsUnitIndexRouteRoute:
     BaseDigitalModelingProductsUnitIndexRouteRoute,
+  BasePlanMgtProductionPlanMpsParamsIndexRouteRoute:
+    BasePlanMgtProductionPlanMpsParamsIndexRouteRoute,
   BaseReportCostBomCostIndexRouteRoute: BaseReportCostBomCostIndexRouteRoute,
   BaseReportProductionProductionMaterialIndexRouteRoute:
     BaseReportProductionProductionMaterialIndexRouteRoute,
@@ -858,6 +880,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/plan-mgt/production-plan/mps-params': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
@@ -898,6 +921,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/plan-mgt/production-plan/mps-params': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
@@ -940,6 +964,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/_base/plan-mgt/production-plan/mps-params/': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/_base/report/cost/bom-cost/': typeof BaseReportCostBomCostIndexRouteRoute
   '/_base/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/_base/report/trace/production-date-diff/': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
@@ -982,6 +1007,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
+    | '/plan-mgt/production-plan/mps-params'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
     | '/report/trace/production-date-diff'
@@ -1021,6 +1047,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
+    | '/plan-mgt/production-plan/mps-params'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
     | '/report/trace/production-date-diff'
@@ -1061,6 +1088,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/inventory/'
     | '/_base/digital-modeling/products/unit-class/'
     | '/_base/digital-modeling/products/unit/'
+    | '/_base/plan-mgt/production-plan/mps-params/'
     | '/_base/report/cost/bom-cost/'
     | '/_base/report/production/production-material/'
     | '/_base/report/trace/production-date-diff/'
@@ -1131,6 +1159,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/inventory/",
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
+        "/_base/plan-mgt/production-plan/mps-params/",
         "/_base/report/cost/bom-cost/",
         "/_base/report/production/production-material/",
         "/_base/report/trace/production-date-diff/",
@@ -1244,6 +1273,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/products/unit/": {
       "filePath": "_base/digital-modeling/products/unit/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/plan-mgt/production-plan/mps-params/": {
+      "filePath": "_base/plan-mgt/production-plan/mps-params/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/report/cost/bom-cost/": {
