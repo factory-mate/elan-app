@@ -46,7 +46,7 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams<CraftRouteVo>) => (
           <Space>
-            <Button
+            {/* <Button
               size="small"
               color="primary"
               variant="text"
@@ -56,7 +56,7 @@ function RouteComponent() {
               }}
             >
               编辑
-            </Button>
+            </Button> */}
             <Button
               size="small"
               color="primary"

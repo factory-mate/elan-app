@@ -20,7 +20,10 @@ function RouteComponent() {
         ...values
       },
       {
-        onSettled: () => form.setFieldsValue(listData?.[0])
+        onSettled: async () => {
+          const data = await queryClient.fetchQuery(fullListQO())
+          form.setFieldsValue(data?.[0])
+        }
       }
     )
 

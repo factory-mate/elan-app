@@ -35,6 +35,7 @@ import { Route as BaseReportTraceProductionDateDiffIndexRouteImport } from './..
 import { Route as BaseReportProductionProductionMaterialIndexRouteImport } from './../../routes/_base/report/production/production-material/index/route'
 import { Route as BaseReportCostBomCostIndexRouteImport } from './../../routes/_base/report/cost/bom-cost/index/route'
 import { Route as BasePlanMgtProductionPlanMpsParamsIndexRouteImport } from './../../routes/_base/plan-mgt/production-plan/mps-params/index/route'
+import { Route as BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteImport } from './../../routes/_base/plan-mgt/production-plan/main-production-plan-mps/index/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
 import { Route as BaseDigitalModelingProductsInventoryIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory/index/route'
@@ -286,6 +287,17 @@ const BasePlanMgtProductionPlanMpsParamsIndexRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/plan-mgt/production-plan/mps-params/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute =
+  BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteImport.update({
+    id: '/plan-mgt/production-plan/main-production-plan-mps/',
+    path: '/plan-mgt/production-plan/main-production-plan-mps/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/plan-mgt/production-plan/main-production-plan-mps/index/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -647,6 +659,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsUnitIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/plan-mgt/production-plan/main-production-plan-mps/': {
+      id: '/_base/plan-mgt/production-plan/main-production-plan-mps/'
+      path: '/plan-mgt/production-plan/main-production-plan-mps'
+      fullPath: '/plan-mgt/production-plan/main-production-plan-mps'
+      preLoaderRoute: typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/plan-mgt/production-plan/mps-params/': {
       id: '/_base/plan-mgt/production-plan/mps-params/'
       path: '/plan-mgt/production-plan/mps-params'
@@ -760,6 +779,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsInventoryIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute: typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
   BasePlanMgtProductionPlanMpsParamsIndexRouteRoute: typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   BaseReportCostBomCostIndexRouteRoute: typeof BaseReportCostBomCostIndexRouteRoute
   BaseReportProductionProductionMaterialIndexRouteRoute: typeof BaseReportProductionProductionMaterialIndexRouteRoute
@@ -812,6 +832,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingProductsUnitClassIndexRouteRoute,
   BaseDigitalModelingProductsUnitIndexRouteRoute:
     BaseDigitalModelingProductsUnitIndexRouteRoute,
+  BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute:
+    BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute,
   BasePlanMgtProductionPlanMpsParamsIndexRouteRoute:
     BasePlanMgtProductionPlanMpsParamsIndexRouteRoute,
   BaseReportCostBomCostIndexRouteRoute: BaseReportCostBomCostIndexRouteRoute,
@@ -880,6 +902,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/plan-mgt/production-plan/main-production-plan-mps': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
   '/plan-mgt/production-plan/mps-params': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
@@ -921,6 +944,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/plan-mgt/production-plan/main-production-plan-mps': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
   '/plan-mgt/production-plan/mps-params': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
@@ -964,6 +988,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/_base/plan-mgt/production-plan/main-production-plan-mps/': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
   '/_base/plan-mgt/production-plan/mps-params/': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
   '/_base/report/cost/bom-cost/': typeof BaseReportCostBomCostIndexRouteRoute
   '/_base/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
@@ -1007,6 +1032,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
+    | '/plan-mgt/production-plan/main-production-plan-mps'
     | '/plan-mgt/production-plan/mps-params'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
@@ -1047,6 +1073,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/inventory'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
+    | '/plan-mgt/production-plan/main-production-plan-mps'
     | '/plan-mgt/production-plan/mps-params'
     | '/report/cost/bom-cost'
     | '/report/production/production-material'
@@ -1088,6 +1115,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/inventory/'
     | '/_base/digital-modeling/products/unit-class/'
     | '/_base/digital-modeling/products/unit/'
+    | '/_base/plan-mgt/production-plan/main-production-plan-mps/'
     | '/_base/plan-mgt/production-plan/mps-params/'
     | '/_base/report/cost/bom-cost/'
     | '/_base/report/production/production-material/'
@@ -1159,6 +1187,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/inventory/",
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
+        "/_base/plan-mgt/production-plan/main-production-plan-mps/",
         "/_base/plan-mgt/production-plan/mps-params/",
         "/_base/report/cost/bom-cost/",
         "/_base/report/production/production-material/",
@@ -1273,6 +1302,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/products/unit/": {
       "filePath": "_base/digital-modeling/products/unit/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/plan-mgt/production-plan/main-production-plan-mps/": {
+      "filePath": "_base/plan-mgt/production-plan/main-production-plan-mps/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/plan-mgt/production-plan/mps-params/": {

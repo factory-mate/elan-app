@@ -3,17 +3,19 @@ import { AgGridReact } from 'ag-grid-react'
 
 import {
   listQO,
-  type RoleVo,
+  type MainProductionPlanMpsVo,
+  useCancelMutation,
   useDeleteMutation,
-  useStartMutation,
-  useStopMutation
-} from '@/features/roles'
+  usePushMutation
+} from '@/features/main-production-plan-mps'
 
-import { AddModal, EditModal, SetPermsModal } from './-components'
+import { EditModal, MpsModal } from './-components'
 import FilterArea from './-components/FilterArea'
-import type { EditModalMeta, FilterForm, SetPermsModalMeta } from './-types'
+import type { EditModalMeta, FilterForm } from './-types'
 
-export const Route = createLazyFileRoute('/_base/perm-mgt/roles/')({
+export const Route = createLazyFileRoute(
+  '/_base/plan-mgt/production-plan/main-production-plan-mps/'
+)({
   component: RouteComponent
 })
 
@@ -24,49 +26,56 @@ function RouteComponent() {
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [filterData, setFilterData] = useState<FilterForm>({})
 
-  const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
-  const setPermsModal = useModal<SetPermsModalMeta>()
+  const mpsModal = useModal()
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cRoleCode', type: 'like', val: filterData.cRoleCode },
-        { key: 'cRoleName', type: 'like', val: filterData.cRoleName }
+        { key: 'cInvCode', type: 'gte', val: filterData.cInvCodeStart },
+        { key: 'cInvCode', type: 'lte', val: filterData.cInvCodeEnd },
+        { key: 'cDepCode', type: 'eq', val: filterData.cDepCode },
+        {
+          key: 'dStartDate',
+          type: 'gte',
+          val: filterData.dStartDate
+            ? DateUtils.formatTime(filterData.dStartDate, 'YYYY-MM-DD')
+            : undefined
+        },
+        {
+          key: 'dEndDate',
+          type: 'lte',
+          val: filterData.dEndDate
+            ? DateUtils.formatTime(filterData.dEndDate, 'YYYY-MM-DD')
+            : undefined
+        }
       ])
     })
   )
   const deleteMutation = useDeleteMutation()
-  const startMutation = useStartMutation()
-  const stopMutation = useStopMutation()
+  const pushMutation = usePushMutation()
+  const cancelMutation = useCancelMutation()
 
-  const columnDefs = useMemo<ColDef<RoleVo>[]>(
+  const columnDefs = useMemo<ColDef<MainProductionPlanMpsVo>[]>(
     () => [
-      { field: 'cRoleCode', headerName: '角色编码', flex: 1 },
-      { field: 'cRoleName', headerName: '角色名称', flex: 1 },
-      {
-        field: 'IsValid',
-        headerName: '是否启用',
-        editable: true,
-        cellDataType: 'boolean',
-        flex: 1,
-        onCellValueChanged: (event) => {
-          if (event.newValue) {
-            startMutation.mutate([event.data.UID])
-          } else {
-            stopMutation.mutate([event.data.UID])
-          }
-        }
-      },
-      { field: 'cMemo', headerName: '备注', tooltipField: 'cMemo', flex: 1 },
+      { field: 'cInvCode', headerName: '产品编码', width: 200 },
+      { field: 'cInvName', headerName: '产品名称', width: 300, tooltipField: 'cInvName' },
+      { field: 'cInvStd', headerName: '规格型号', width: 150 },
+      { field: 'cDepName', headerName: '生产部门', width: 150 },
+      { field: 'nQuantity', headerName: '计划数量', width: 120 },
+      { field: 'nStockQuantity', headerName: '库存', width: 100 },
+      { field: 'dStartDate', headerName: '开始日期', width: 200 },
+      { field: 'dEndDate', headerName: '结束日期', width: 200 },
+      { field: 'iStatusName', headerName: '状态', width: 150 },
+      { field: 'cModifyUserName', headerName: '修改人', width: 150 },
       {
         headerName: '操作',
         width: 250,
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<RoleVo>) => (
+        cellRenderer: (params: ICellRendererParams<MainProductionPlanMpsVo>) => (
           <Space>
             <Button
               size="small"
@@ -83,17 +92,6 @@ function RouteComponent() {
               size="small"
               color="primary"
               variant="text"
-              onClick={() => {
-                setPermsModal.setMeta({ cRoleCode: params.data!.cRoleCode })
-                setPermsModal.toggle()
-              }}
-            >
-              权限配置
-            </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
               disabled={deleteMutation.isPending}
               onClick={() => deleteMutation.mutate([params.data!.UID])}
             >
@@ -103,7 +101,7 @@ function RouteComponent() {
         )
       }
     ],
-    [deleteMutation, editModal, setPermsModal, startMutation, stopMutation]
+    [deleteMutation, editModal]
   )
 
   return (
@@ -125,6 +123,28 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
+                pushMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              生单
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
+                cancelMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              撤单
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedRows.length === 0) {
+                  showMessage('select-data')
+                  return
+                }
                 deleteMutation.mutate(selectedRows.map((i) => i.UID))
               }}
             >
@@ -132,17 +152,12 @@ function RouteComponent() {
             </Button>
           </Space>
           <Space>
-            <Button
-              type="primary"
-              onClick={() => addModal.toggle()}
-            >
-              新增
-            </Button>
+            <Button onClick={() => mpsModal.toggle()}>MPS运算</Button>
           </Space>
         </Flex>
 
         <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-          <AgGridReact<RoleVo>
+          <AgGridReact<MainProductionPlanMpsVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}
             columnDefs={columnDefs}
@@ -188,19 +203,14 @@ function RouteComponent() {
         </Flex>
       </Space>
 
-      <AddModal
-        open={addModal.open}
-        setOpen={addModal.setOpen}
-      />
       <EditModal
         meta={editModal.meta}
         open={editModal.open}
         setOpen={editModal.setOpen}
       />
-      <SetPermsModal
-        meta={setPermsModal.meta}
-        open={setPermsModal.open}
-        setOpen={setPermsModal.setOpen}
+      <MpsModal
+        open={mpsModal.open}
+        setOpen={mpsModal.setOpen}
       />
     </PageContainer>
   )
