@@ -100,85 +100,99 @@ function RouteComponent() {
   return (
     <PageContainer>
       <Space>
-        <Button
-          type="primary"
-          onClick={() => addModal.toggle()}
-        >
-          新增
-        </Button>
-        <Button
-          onClick={() => {
-            if (!selectedTreeData) {
-              showMessage('select-data')
-              return
+        <PermCodeProvider code="bom:add">
+          <Button
+            type="primary"
+            onClick={() => addModal.toggle()}
+          >
+            新增
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:edit">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              if (!selectedTreeData.IsProduct) {
+                message.warning('非自制件，无法维护 BOM')
+                return
+              }
+              editModal.setMeta({ UID: selectedTreeData.UID })
+              editModal.toggle()
+            }}
+          >
+            编辑
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:delete">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              deleteMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            删除
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:audit">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              auditMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            审核
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:quit-audit">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              cancelMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            弃审
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:import">
+          <Upload
+            customRequest={({ file }) => {
+              const formData = new FormData()
+              formData.append('cfile', file)
+              importMutation.mutate(formData)
+            }}
+            showUploadList={false}
+          >
+            <Button>导入</Button>
+          </Upload>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:export">
+          <Button
+            onClick={() =>
+              exportMutation.mutate({
+                conditions: selectedTreeData?.cInvCode
+                  ? `cParentCode=${selectedTreeData?.cInvCode} && cParentVersion=${selectedTreeData?.cVersion}`
+                  : undefined,
+                orderByFileds: 'cParentCode'
+              })
             }
-            if (!selectedTreeData.IsProduct) {
-              message.warning('非自制件，无法维护 BOM')
-              return
-            }
-            editModal.setMeta({ UID: selectedTreeData.UID })
-            editModal.toggle()
-          }}
-        >
-          编辑
-        </Button>
-        <Button
-          onClick={() => {
-            if (!selectedTreeData) {
-              showMessage('select-data')
-              return
-            }
-            deleteMutation.mutate([selectedTreeData.UID])
-          }}
-        >
-          删除
-        </Button>
-        <Button
-          onClick={() => {
-            if (!selectedTreeData) {
-              showMessage('select-data')
-              return
-            }
-            auditMutation.mutate([selectedTreeData.UID])
-          }}
-        >
-          审核
-        </Button>
-        <Button
-          onClick={() => {
-            if (!selectedTreeData) {
-              showMessage('select-data')
-              return
-            }
-            cancelMutation.mutate([selectedTreeData.UID])
-          }}
-        >
-          弃审
-        </Button>
-        <Upload
-          customRequest={({ file }) => {
-            const formData = new FormData()
-            formData.append('cfile', file)
-            importMutation.mutate(formData)
-          }}
-          showUploadList={false}
-        >
-          <Button>导入</Button>
-        </Upload>
-        <Button
-          onClick={() =>
-            exportMutation.mutate({
-              conditions: selectedTreeData?.cInvCode
-                ? `cParentCode=${selectedTreeData?.cInvCode} && cParentVersion=${selectedTreeData?.cVersion}`
-                : undefined,
-              orderByFileds: 'cParentCode'
-            })
-          }
-          loading={exportMutation.isPending}
-          disabled={exportMutation.isPending}
-        >
-          导出
-        </Button>
+            loading={exportMutation.isPending}
+            disabled={exportMutation.isPending}
+          >
+            导出
+          </Button>
+        </PermCodeProvider>
       </Space>
       <Splitter>
         <Splitter.Panel collapsible>

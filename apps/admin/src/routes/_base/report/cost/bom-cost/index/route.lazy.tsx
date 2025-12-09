@@ -60,26 +60,30 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              onClick={() => setTimeout(() => reactToPrintFn(), 16)}
-            >
-              打印
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => {
-                const formData = form.getFieldsValue()
-                exportMutation.mutate({
-                  ...formData,
-                  iQty: formData.iQty ? formData.iQty : 1
-                })
-              }}
-              loading={exportMutation.isPending}
-              disabled={exportMutation.isPending}
-            >
-              导出
-            </Button>
+            <PermCodeProvider code="bom-cost:print">
+              <Button
+                type="primary"
+                onClick={() => setTimeout(() => reactToPrintFn(), 16)}
+              >
+                打印
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="bom-cost:export">
+              <Button
+                type="primary"
+                onClick={() => {
+                  const formData = form.getFieldsValue()
+                  exportMutation.mutate({
+                    ...formData,
+                    iQty: formData.iQty ? formData.iQty : 1
+                  })
+                }}
+                loading={exportMutation.isPending}
+                disabled={exportMutation.isPending}
+              >
+                导出
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

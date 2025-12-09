@@ -301,14 +301,16 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              disabled={editMutation.isPending}
-              loading={editMutation.isPending}
-              onClick={() => form.submit()}
-            >
-              保存
-            </Button>
+            <PermCodeProvider code="production-order:edit">
+              <Button
+                type="primary"
+                disabled={editMutation.isPending}
+                loading={editMutation.isPending}
+                onClick={() => form.submit()}
+              >
+                保存
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

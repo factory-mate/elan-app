@@ -71,15 +71,17 @@ function RouteComponent() {
           >
             <Switch />
           </Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="float-right"
-            disabled={editMutation.isPending}
-            loading={editMutation.isPending}
-          >
-            提交
-          </Button>
+          <PermCodeProvider code="mps-params:edit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="float-right"
+              disabled={editMutation.isPending}
+              loading={editMutation.isPending}
+            >
+              提交
+            </Button>
+          </PermCodeProvider>
         </Form>
       </Card>
     </PageContainer>

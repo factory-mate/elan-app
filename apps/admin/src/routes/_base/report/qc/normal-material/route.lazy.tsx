@@ -16,6 +16,8 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { message } = App.useApp()
 
+  const hasToyPermCode = usePermCode('normal-material:toy')
+
   const [pageParams] = useState(defaultMinPageDto)
   const [filterData, setFilterData] = useState<FilterForm>({})
   const [shouldExport, setShouldExport] = useState(false)
@@ -62,9 +64,9 @@ function RouteComponent() {
       {
         headerName: '玩具过敏源',
         children: [
-          { field: 'Toy_cInvCode', headerName: '原料编码' },
-          { field: 'Toy_cInvName', headerName: '原料名称' },
-          { field: 'Toy_nQuantity', headerName: '含量' }
+          { field: 'Toy_cInvCode', headerName: '原料编码', hide: !hasToyPermCode },
+          { field: 'Toy_cInvName', headerName: '原料名称', hide: !hasToyPermCode },
+          { field: 'Toy_nQuantity', headerName: '含量', hide: !hasToyPermCode }
         ]
       },
       {
@@ -76,7 +78,7 @@ function RouteComponent() {
         ]
       }
     ],
-    []
+    [hasToyPermCode]
   )
 
   useEffect(() => {
@@ -111,22 +113,24 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                const formData = form.getFieldsValue()
-                if (!formData.cInvCode) {
-                  message.warning('请选择产品')
-                  return
-                }
-                setFilterData(formData)
-                setShouldExport(true)
-              }}
-              loading={isFetching && shouldExport}
-              disabled={isFetching && shouldExport}
-            >
-              导出
-            </Button>
+            <PermCodeProvider code="normal-material:export">
+              <Button
+                type="primary"
+                onClick={() => {
+                  const formData = form.getFieldsValue()
+                  if (!formData.cInvCode) {
+                    message.warning('请选择产品')
+                    return
+                  }
+                  setFilterData(formData)
+                  setShouldExport(true)
+                }}
+                loading={isFetching && shouldExport}
+                disabled={isFetching && shouldExport}
+              >
+                导出
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

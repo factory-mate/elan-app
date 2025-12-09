@@ -319,47 +319,51 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderVo>) => (
           <Space>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                if (currentOperateUID !== params.data?.UID) {
-                  currentOperateRow.current = params.data ?? null
-                  setCurrentOperateRowUID(params.data?.UID ?? null)
-                } else {
-                  params.api.stopEditing()
-                  editMutation.mutate(
-                    {
-                      ...params.data,
-                      bodys: [params.data]
-                    },
-                    {
-                      onSuccess: () => {
-                        currentOperateRow.current = null
-                        setCurrentOperateRowUID(null)
-                      }
-                    }
-                  )
-                }
-              }}
-            >
-              {currentOperateUID === params.data?.UID ? '保存' : '编辑'}
-            </Button>
-            {currentOperateUID === params.data?.UID && (
+            <PermCodeProvider code="production-order:edit">
               <Button
                 size="small"
                 color="primary"
                 variant="text"
                 onClick={() => {
-                  refetch()
-                  currentOperateRow.current = null
-                  setCurrentOperateRowUID(null)
+                  if (currentOperateUID !== params.data?.UID) {
+                    currentOperateRow.current = params.data ?? null
+                    setCurrentOperateRowUID(params.data?.UID ?? null)
+                  } else {
+                    params.api.stopEditing()
+                    editMutation.mutate(
+                      {
+                        ...params.data,
+                        bodys: [params.data]
+                      },
+                      {
+                        onSuccess: () => {
+                          currentOperateRow.current = null
+                          setCurrentOperateRowUID(null)
+                        }
+                      }
+                    )
+                  }
                 }}
               >
-                取消
+                {currentOperateUID === params.data?.UID ? '保存' : '编辑'}
               </Button>
-            )}
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:edit">
+              {currentOperateUID === params.data?.UID && (
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  onClick={() => {
+                    refetch()
+                    currentOperateRow.current = null
+                    setCurrentOperateRowUID(null)
+                  }}
+                >
+                  取消
+                </Button>
+              )}
+            </PermCodeProvider>
             <Button
               size="small"
               color="primary"
@@ -402,88 +406,102 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              onClick={async () => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                if (selectedRows.length > 1) {
-                  showMessage('select-only-one')
-                  return
-                }
-                setPrintData(
-                  (
-                    await queryClient.ensureQueryData(
-                      ProductionOrder.printDetailQO(selectedRows[0].UID)
-                    )
-                  ).at(0) ?? {}
-                )
-                setTimeout(() => reactToPrintFn(), 16)
-              }}
-            >
-              打印
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                auditMutation.mutate(selectedRows.map((i) => i.MID))
-              }}
-            >
-              审核
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                abandonMutation.mutate(selectedRows.map((i) => i.MID))
-              }}
-            >
-              弃审
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                openMutation.mutate(selectedRows.map((i) => i.MID))
-              }}
-            >
-              打开
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                closeMutation.mutate(selectedRows.map((i) => i.MID))
-              }}
-            >
-              关闭
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                deleteMutation.mutate(selectedRows.map((i) => i.MID))
-              }}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="production-order:print">
+              <Button
+                onClick={async () => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  if (selectedRows.length > 1) {
+                    showMessage('select-only-one')
+                    return
+                  }
+                  setPrintData(
+                    (
+                      await queryClient.ensureQueryData(
+                        ProductionOrder.printDetailQO(selectedRows[0].UID)
+                      )
+                    ).at(0) ?? {}
+                  )
+                  setTimeout(() => reactToPrintFn(), 16)
+                }}
+              >
+                打印
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:audit">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  auditMutation.mutate(selectedRows.map((i) => i.MID))
+                }}
+              >
+                审核
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:quit-audit">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  abandonMutation.mutate(selectedRows.map((i) => i.MID))
+                }}
+              >
+                弃审
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:open">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  openMutation.mutate(selectedRows.map((i) => i.MID))
+                }}
+              >
+                打开
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:close">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  closeMutation.mutate(selectedRows.map((i) => i.MID))
+                }}
+              >
+                关闭
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="production-order:delete">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  deleteMutation.mutate(selectedRows.map((i) => i.MID))
+                }}
+              >
+                删除
+              </Button>
+            </PermCodeProvider>
           </Space>
           <Space>
-            <Link to="/production-mgt/production-order/add">
-              <Button type="primary">新增</Button>
-            </Link>
+            <PermCodeProvider code="production-order:add">
+              <Link to="/production-mgt/production-order/add">
+                <Button type="primary">新增</Button>
+              </Link>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

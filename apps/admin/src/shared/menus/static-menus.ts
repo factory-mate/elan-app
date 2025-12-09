@@ -38,23 +38,11 @@ export const staticMenus: ExtendedMenuItemType[] = [
           {
             label: '工艺',
             key: '/craft',
-            // permCode: 'craft',
+            permCode: 'craft',
             children: [
-              {
-                label: '工序档案',
-                key: '/process'
-                // permCode: 'process'
-              },
-              {
-                label: '工步档案',
-                key: '/step'
-                // permCode: 'step'
-              },
-              {
-                label: '工艺路线',
-                key: '/craft-route'
-                // permCode: 'craft-route'
-              }
+              { label: '工序档案', key: '/process', permCode: 'process' },
+              { label: '工步档案', key: '/step', permCode: 'step' },
+              { label: '工艺路线', key: '/craft-route', permCode: 'craft-route' }
             ]
           }
         ]
@@ -75,41 +63,31 @@ export const staticMenus: ExtendedMenuItemType[] = [
   {
     label: '供应链管理',
     key: '/supply-chain-mgt',
-    // permCode: 'supply-chain-mgt',
+    permCode: 'supply-chain-mgt',
     children: [
       {
         label: '销售管理',
         key: '/sales-mgt',
-        // permCode: 'sales-mgt',
-        children: [
-          {
-            label: '销售订单',
-            key: '/sales-order',
-            permCode: 'sales-order'
-          }
-        ]
+        permCode: 'sales-mgt',
+        children: [{ label: '销售订单', key: '/sales-order', permCode: 'sales-order' }]
       }
     ]
   },
   {
     label: '计划管理',
     key: '/plan-mgt',
-    // permCode: 'plan-mgt',
+    permCode: 'plan-mgt',
     children: [
       {
         label: '生产计划',
         key: '/production-plan',
-        // permCode: 'production-plan'
+        permCode: 'production-plan',
         children: [
-          {
-            label: 'MPS参数',
-            key: '/mps-params'
-            // permCode: 'mps-params'
-          },
+          { label: 'MPS参数', key: '/mps-params', permCode: 'mps-params' },
           {
             label: '主生产计划MPS运算',
-            key: '/main-production-plan-mps'
-            // permCode: 'main-production-plan-mps'
+            key: '/main-production-plan-mps',
+            permCode: 'main-production-plan-mps'
           }
         ]
       }
@@ -118,14 +96,8 @@ export const staticMenus: ExtendedMenuItemType[] = [
   {
     label: '生产管理',
     key: '/production-mgt',
-    // permCode: 'production-mgt',
-    children: [
-      {
-        label: '生产订单',
-        key: '/production-order',
-        permCode: 'production-order'
-      }
-    ]
+    permCode: 'production-mgt',
+    children: [{ label: '生产订单', key: '/production-order', permCode: 'production-order' }]
   },
   {
     label: '报表',
@@ -136,13 +108,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
         label: '成本',
         key: '/cost',
         permCode: 'cost',
-        children: [
-          {
-            label: 'BOM Cost',
-            key: '/bom-cost',
-            permCode: 'bom-cost'
-          }
-        ]
+        children: [{ label: 'BOM Cost', key: '/bom-cost', permCode: 'bom-cost' }]
       },
       {
         label: '生产',
@@ -161,21 +127,9 @@ export const staticMenus: ExtendedMenuItemType[] = [
         key: '/qc',
         permCode: 'qc',
         children: [
-          {
-            label: '质控常规报告',
-            key: '/normal-material',
-            permCode: 'normal-material'
-          },
-          {
-            label: '质控所有成分报告',
-            key: '/all-material',
-            permCode: 'all-material'
-          },
-          {
-            label: '配方含量查询',
-            key: '/bom-content',
-            permCode: 'bom-content'
-          }
+          { label: '质控常规报告', key: '/normal-material', permCode: 'normal-material' },
+          { label: '质控所有成分报告', key: '/all-material', permCode: 'all-material' },
+          { label: '配方含量查询', key: '/bom-content', permCode: 'bom-content' }
         ]
       },
       {

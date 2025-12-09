@@ -60,24 +60,28 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                }
-                deleteMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="sales-order:delete">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                  }
+                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                删除
+              </Button>
+            </PermCodeProvider>
           </Space>
           <Space>
-            <Button
-              type="primary"
-              onClick={() => syncMutation.mutate()}
-            >
-              同步
-            </Button>
+            <PermCodeProvider code="sales-order:sync">
+              <Button
+                type="primary"
+                onClick={() => syncMutation.mutate()}
+              >
+                同步
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

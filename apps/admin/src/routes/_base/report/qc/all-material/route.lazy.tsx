@@ -57,23 +57,25 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                const formData = form.getFieldsValue()
-                exportMutation.mutate({
-                  ...pageParams,
-                  conditions: queryBuilder<FilterForm>([
-                    { key: 'cInvCode', type: 'like', val: formData.cInvCode },
-                    { key: 'cInvName', type: 'like', val: formData.cInvName }
-                  ])
-                })
-              }}
-              loading={exportMutation.isPending}
-              disabled={exportMutation.isPending}
-            >
-              导出
-            </Button>
+            <PermCodeProvider code="all-material:export">
+              <Button
+                type="primary"
+                onClick={() => {
+                  const formData = form.getFieldsValue()
+                  exportMutation.mutate({
+                    ...pageParams,
+                    conditions: queryBuilder<FilterForm>([
+                      { key: 'cInvCode', type: 'like', val: formData.cInvCode },
+                      { key: 'cInvName', type: 'like', val: formData.cInvName }
+                    ])
+                  })
+                }}
+                loading={exportMutation.isPending}
+                disabled={exportMutation.isPending}
+              >
+                导出
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

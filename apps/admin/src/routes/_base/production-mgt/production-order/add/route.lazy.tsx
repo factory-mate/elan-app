@@ -259,14 +259,16 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              disabled={addMutation.isPending}
-              loading={addMutation.isPending}
-              onClick={() => form.submit()}
-            >
-              保存
-            </Button>
+            <PermCodeProvider code="production-order:add">
+              <Button
+                type="primary"
+                disabled={addMutation.isPending}
+                loading={addMutation.isPending}
+                onClick={() => form.submit()}
+              >
+                保存
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

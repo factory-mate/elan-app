@@ -76,14 +76,16 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              onClick={() => exportMutation.mutate()}
-              loading={exportMutation.isPending}
-              disabled={exportMutation.isPending}
-            >
-              导出
-            </Button>
+            <PermCodeProvider code="production-material:export">
+              <Button
+                type="primary"
+                onClick={() => exportMutation.mutate()}
+                loading={exportMutation.isPending}
+                disabled={exportMutation.isPending}
+              >
+                导出
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
         <div className="ag-theme-quartz h-[calc(100vh-355px)]">

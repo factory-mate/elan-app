@@ -89,39 +89,31 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams) => (
           <Space>
-            <Link
-              to="/digital-modeling/orgs/employee/$id/edit"
-              params={{ id: params.data!.UID }}
-            >
+            <PermCodeProvider code="employee:edit">
+              <Link
+                to="/digital-modeling/orgs/employee/$id/edit"
+                params={{ id: params.data!.UID }}
+              >
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                >
+                  编辑
+                </Button>
+              </Link>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:delete">
               <Button
                 size="small"
                 color="primary"
                 variant="text"
+                disabled={deleteMutation.isPending}
+                onClick={() => deleteMutation.mutate([params.data.UID])}
               >
-                编辑
+                删除
               </Button>
-            </Link>
-            {/* <Link
-              to="/digital-modeling/orgs/employee/$id/detail"
-              params={{ id: params.data!.UID }}
-            >
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-              >
-                查看
-              </Button>
-            </Link> */}
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              disabled={deleteMutation.isPending}
-              onClick={() => deleteMutation.mutate([params.data.UID])}
-            >
-              删除
-            </Button>
+            </PermCodeProvider>
           </Space>
         )
       }
@@ -141,101 +133,121 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                deleteMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="employee:delete">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                删除
+              </Button>
+            </PermCodeProvider>
           </Space>
           <Space>
-            <Button
-              onClick={() => {
-                editRoleModal.setMeta({ ids: selectedRows.map((i) => i.cEmployeeCode) })
-                editRoleModal.toggle()
-              }}
-            >
-              修改角色
-            </Button>
-            <Button
-              onClick={() => {
-                editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
-                editDeptModal.toggle()
-              }}
-            >
-              修改部门
-            </Button>
-            <Button
-              onClick={() => {
-                editPositionModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
-                editPositionModal.toggle()
-              }}
-            >
-              修改职务
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                startMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              启用员工
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                stopMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              停用员工
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                freezeMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              冻结员工
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                unfreezeMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              解冻员工
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              重置密码
-            </Button>
-            <Link to="/digital-modeling/orgs/employee/add">
-              <Button type="primary">新增职员</Button>
-            </Link>
+            <PermCodeProvider code="employee:edit-role">
+              <Button
+                onClick={() => {
+                  editRoleModal.setMeta({ ids: selectedRows.map((i) => i.cEmployeeCode) })
+                  editRoleModal.toggle()
+                }}
+              >
+                修改角色
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:edit-dept">
+              <Button
+                onClick={() => {
+                  editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                  editDeptModal.toggle()
+                }}
+              >
+                修改部门
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:edit-position">
+              <Button
+                onClick={() => {
+                  editPositionModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                  editPositionModal.toggle()
+                }}
+              >
+                修改职务
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:edit">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  startMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                启用员工
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:edit">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  stopMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                停用员工
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:freeze">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  freezeMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                冻结员工
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:unfreeze">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  unfreezeMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                解冻员工
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:reset-password">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                重置密码
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="employee:add">
+              <Link to="/digital-modeling/orgs/employee/add">
+                <Button type="primary">新增职员</Button>
+              </Link>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

@@ -77,26 +77,30 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams<MainProductionPlanMpsVo>) => (
           <Space>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                editModal.setMeta({ UID: params.data!.UID })
-                editModal.toggle()
-              }}
-            >
-              编辑
-            </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              disabled={deleteMutation.isPending}
-              onClick={() => deleteMutation.mutate([params.data!.UID])}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="main-production-plan-mps:edit">
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                onClick={() => {
+                  editModal.setMeta({ UID: params.data!.UID })
+                  editModal.toggle()
+                }}
+              >
+                编辑
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="main-production-plan-mps:delete">
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                disabled={deleteMutation.isPending}
+                onClick={() => deleteMutation.mutate([params.data!.UID])}
+              >
+                删除
+              </Button>
+            </PermCodeProvider>
           </Space>
         )
       }
@@ -117,28 +121,32 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                pushMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              生单
-            </Button>
-            <Button
-              onClick={() => {
-                if (selectedRows.length === 0) {
-                  showMessage('select-data')
-                  return
-                }
-                cancelMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              撤单
-            </Button>
+            <PermCodeProvider code="main-production-plan-mps:push">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  pushMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                生单
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="main-production-plan-mps:cancel-push">
+              <Button
+                onClick={() => {
+                  if (selectedRows.length === 0) {
+                    showMessage('select-data')
+                    return
+                  }
+                  cancelMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                撤单
+              </Button>
+            </PermCodeProvider>
             <Button
               onClick={() => {
                 if (selectedRows.length === 0) {
@@ -152,7 +160,9 @@ function RouteComponent() {
             </Button>
           </Space>
           <Space>
-            <Button onClick={() => mpsModal.toggle()}>MPS运算</Button>
+            <PermCodeProvider code="main-production-plan-mps:compute">
+              <Button onClick={() => mpsModal.toggle()}>MPS运算</Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 

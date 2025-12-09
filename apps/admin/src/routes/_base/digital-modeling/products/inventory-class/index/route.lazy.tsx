@@ -44,26 +44,30 @@ function RouteComponent() {
         lockPinned: true,
         cellRenderer: (params: ICellRendererParams) => (
           <Space>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                editModal.setMeta({ UID: params.data.UID })
-                editModal.toggle()
-              }}
-            >
-              编辑
-            </Button>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              disabled={deleteMutation.isPending}
-              onClick={() => deleteMutation.mutate([params.data.UID])}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="inventory-class:edit">
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                onClick={() => {
+                  editModal.setMeta({ UID: params.data.UID })
+                  editModal.toggle()
+                }}
+              >
+                编辑
+              </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="inventory-class:delete">
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                disabled={deleteMutation.isPending}
+                onClick={() => deleteMutation.mutate([params.data.UID])}
+              >
+                删除
+              </Button>
+            </PermCodeProvider>
           </Space>
         )
       }
@@ -94,25 +98,29 @@ function RouteComponent() {
               align="center"
             >
               <Space>
-                <Button
-                  onClick={() => {
-                    if (selectedRows.length === 0) {
-                      showMessage('select-data')
-                      return
-                    }
-                    deleteMutation.mutate(selectedRows.map((i) => i.UID))
-                  }}
-                >
-                  删除
-                </Button>
+                <PermCodeProvider code="inventory-class:delete">
+                  <Button
+                    onClick={() => {
+                      if (selectedRows.length === 0) {
+                        showMessage('select-data')
+                        return
+                      }
+                      deleteMutation.mutate(selectedRows.map((i) => i.UID))
+                    }}
+                  >
+                    删除
+                  </Button>
+                </PermCodeProvider>
               </Space>
               <Space>
-                <Button
-                  type="primary"
-                  onClick={() => addModal.toggle()}
-                >
-                  新增
-                </Button>
+                <PermCodeProvider code="inventory-class:add">
+                  <Button
+                    type="primary"
+                    onClick={() => addModal.toggle()}
+                  >
+                    新增
+                  </Button>
+                </PermCodeProvider>
               </Space>
             </Flex>
 

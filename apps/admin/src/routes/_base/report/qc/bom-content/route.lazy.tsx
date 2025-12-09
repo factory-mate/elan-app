@@ -51,24 +51,26 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <Button
-              type="primary"
-              onClick={() => {
-                const formData = form.getFieldsValue()
-                if (!formData.cParentInvCode) {
-                  message.warning('请输入产品编码')
-                  return
-                }
-                exportMutation.mutate({
-                  cInvCode: formData.cInvCode,
-                  cParentInvCode: formData.cParentInvCode
-                })
-              }}
-              loading={exportMutation.isPending}
-              disabled={exportMutation.isPending}
-            >
-              导出
-            </Button>
+            <PermCodeProvider code="bom-content:export">
+              <Button
+                type="primary"
+                onClick={() => {
+                  const formData = form.getFieldsValue()
+                  if (!formData.cParentInvCode) {
+                    message.warning('请输入产品编码')
+                    return
+                  }
+                  exportMutation.mutate({
+                    cInvCode: formData.cInvCode,
+                    cParentInvCode: formData.cParentInvCode
+                  })
+                }}
+                loading={exportMutation.isPending}
+                disabled={exportMutation.isPending}
+              >
+                导出
+              </Button>
+            </PermCodeProvider>
           </Space>
         </Flex>
 
