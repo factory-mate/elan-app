@@ -149,7 +149,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
   {
     label: '权限管理',
     key: '/perm-mgt',
-    // permCode: 'perm-mgt',
+    permCode: 'perm-mgt',
     children: [{ label: '角色管理', key: '/roles', permCode: 'roles' }]
   }
 ]
@@ -165,7 +165,10 @@ type FilteredMenuItemType = Omit<BaseMenuItemType, 'children'> & {
   children?: FilteredMenuItemType[]
 }
 
-export function filterMenuTree(tree: ExtendedMenuItemType[]): FilteredMenuItemType[] {
+export function filterMenuTree(
+  tree: ExtendedMenuItemType[],
+  permCodes: Set<string>
+): FilteredMenuItemType[] {
   return tree
     .filter((node) => {
       if (!node) {
@@ -175,7 +178,7 @@ export function filterMenuTree(tree: ExtendedMenuItemType[]): FilteredMenuItemTy
         return true
       }
       const codes = Array.isArray(node.permCode) ? node.permCode : [node.permCode]
-      return codes.some((code: string) => usePermStore.getState().hasCode(code))
+      return codes.some((code: string) => permCodes.has(code))
     })
     .map((node) => {
       if (!node) {
@@ -184,7 +187,7 @@ export function filterMenuTree(tree: ExtendedMenuItemType[]): FilteredMenuItemTy
       // eslint-disable-next-line unused-imports/no-unused-vars
       const { permCode, children, ...rest } = node
       if (children) {
-        const filteredChildren = filterMenuTree(children)
+        const filteredChildren = filterMenuTree(children, permCodes)
         return filteredChildren.length > 0 ? { ...rest, children: filteredChildren } : { ...rest }
       }
       return rest

@@ -40,6 +40,7 @@ export const useLogoutMutation = () => {
   const navigate = useNavigate()
   const { message } = App.useApp()
   const userStore = useUserStore()
+  const permStore = usePermStore()
 
   return useMutation({
     mutationFn: () => AuthAPI.logout(),
@@ -49,6 +50,7 @@ export const useLogoutMutation = () => {
       message.success('登出成功')
       await navigate({ to: '/login', replace: true })
       userStore.setUserInfo(null)
+      permStore.setCodes(new Set())
       queryClient.clear()
       router.history.flush()
     }

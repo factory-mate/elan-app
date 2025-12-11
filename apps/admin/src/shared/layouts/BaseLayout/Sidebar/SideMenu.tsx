@@ -7,8 +7,15 @@ export default function SideMenu() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const permStore = usePermStore()
+
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
+
+  const menuItems = useMemo(
+    () => filterMenuTree(staticMenus, permStore.codes) as MenuProps['items'],
+    [permStore.codes]
+  )
 
   useEffect(() => {
     const keys =
@@ -38,7 +45,7 @@ export default function SideMenu() {
         width: '100%',
         overflowY: 'auto'
       }}
-      items={filterMenuTree(staticMenus) as MenuProps['items']}
+      items={menuItems}
       mode="vertical"
       selectedKeys={selectedKeys}
       openKeys={openKeys}
