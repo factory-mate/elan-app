@@ -30,7 +30,7 @@ export default function Header() {
           <FullscreenButton />
         </Flex>
 
-        <Divider type="vertical" />
+        <Divider orientation="vertical" />
 
         <UserAvatar />
       </Flex>

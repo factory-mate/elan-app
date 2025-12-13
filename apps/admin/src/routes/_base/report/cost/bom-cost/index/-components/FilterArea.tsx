@@ -68,7 +68,10 @@ export default function FilterArea(props: FilterAreaProps) {
               name="isExpand"
               label="是否展开"
             >
-              <Switch />
+              <Switch
+                checkedChildren="是"
+                unCheckedChildren="否"
+              />
             </Form.Item>
           </Col>
           <Col span={24}>

@@ -205,7 +205,7 @@ function RouteComponent() {
           {selectedTreeData?.UID && selectedTreeData.UID !== NOT_FOUND_UID && (
             <Space
               className="w-full pl-2"
-              direction="vertical"
+              orientation="vertical"
             >
               <Form
                 layout="horizontal"

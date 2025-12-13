@@ -38,7 +38,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <Space
-        direction="vertical"
+        orientation="vertical"
         className="w-full"
       >
         <div className="ag-theme-quartz h-[calc(100vh-211px)]">

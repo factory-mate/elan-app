@@ -23,7 +23,7 @@ export class CraftRouteAPI {
 
   static async detail(val: string, signal?: AbortSignal) {
     return httpClient.get<CraftRouteVo>(
-      `${this.apiPrefix}/product_craftroute/GetById`,
+      `${this.apiPrefix}/product_craftroute/GetListForTree`,
       { val },
       { signal }
     )
@@ -39,5 +39,15 @@ export class CraftRouteAPI {
 
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/product_craftroute/Del`, { data: ids })
+  }
+
+  static async getListForTree(data: FullPageDto, signal?: AbortSignal) {
+    return httpClient.post<CraftRouteVo[]>(
+      `${this.apiPrefix}/product_craftroute/GetListForTree`,
+      data,
+      {
+        signal
+      }
+    )
   }
 }

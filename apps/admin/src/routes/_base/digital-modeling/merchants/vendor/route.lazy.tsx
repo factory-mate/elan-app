@@ -95,7 +95,7 @@ function RouteComponent() {
           min="70%"
         >
           <Space
-            direction="vertical"
+            orientation="vertical"
             className="w-full"
           >
             <Flex

@@ -34,6 +34,10 @@ export default function AddModal(props: AddModalProps) {
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
+      okButtonProps={{
+        disabled: addMutation.isPending,
+        loading: addMutation.isPending
+      }}
       forceRender
       width="400px"
     >

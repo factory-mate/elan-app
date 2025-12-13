@@ -74,13 +74,19 @@ export default function EditModal(props: EditModalProps) {
             name="isDevice"
             label="是否对接设备"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <Form.Item<StepEditDto>
             name="isBussiness"
             label="是否对接业务"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item> */}
         </Skeleton>
       </Form>

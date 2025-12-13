@@ -49,12 +49,13 @@ export default function RemoteSelect(props: RemoteSelectProps) {
   return (
     <Select
       options={data}
-      showSearch
+      showSearch={{
+        filterOption: false,
+        onSearch: handleSearch
+      }}
       allowClear
       value={value}
       defaultActiveFirstOption={false}
-      filterOption={false}
-      onSearch={handleSearch}
       onChange={handleChange}
       notFoundContent={null}
       {...props}

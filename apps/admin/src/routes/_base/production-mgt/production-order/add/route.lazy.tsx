@@ -83,11 +83,11 @@ function RouteComponent() {
               value: 'cInvCode',
               label: 'cInvCode'
             }}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }}
             onSelect={async (value, option) => {
               const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
                 BOM.listQO({
@@ -250,7 +250,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <Space
-        direction="vertical"
+        orientation="vertical"
         className="w-full"
       >
         <Flex

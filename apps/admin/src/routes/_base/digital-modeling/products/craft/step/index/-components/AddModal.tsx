@@ -56,13 +56,19 @@ export default function AddModal(props: AddModalProps) {
           name="isDevice"
           label="是否对接设备"
         >
-          <Switch />
+          <Switch
+            checkedChildren="是"
+            unCheckedChildren="否"
+          />
         </Form.Item>
         <Form.Item<StepAddDto>
           name="isBussiness"
           label="是否对接业务"
         >
-          <Switch />
+          <Switch
+            checkedChildren="是"
+            unCheckedChildren="否"
+          />
         </Form.Item> */}
       </Form>
     </Modal>

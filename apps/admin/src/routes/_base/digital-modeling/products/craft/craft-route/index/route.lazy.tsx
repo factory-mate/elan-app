@@ -47,28 +47,35 @@ function RouteComponent() {
         cellRenderer: (params: ICellRendererParams<CraftRouteVo>) => (
           <Space>
             <PermCodeProvider code="craft-route:edit">
-              {/* <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                editModal.setMeta({ UID: params.data!.UID })
-                editModal.toggle()
-              }}
-            >
-              编辑
-            </Button> */}
-            </PermCodeProvider>
-            <PermCodeProvider code="craft-route:delete">
               <Button
                 size="small"
                 color="primary"
                 variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data!.UID])}
+                onClick={() => {
+                  editModal.setMeta({ UID: params.data!.UID })
+                  editModal.toggle()
+                }}
               >
-                删除
+                编辑
               </Button>
+            </PermCodeProvider>
+            <PermCodeProvider code="craft-route:delete">
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => deleteMutation.mutate([params.data!.UID])}
+              >
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                >
+                  删除
+                </Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
         )
@@ -80,7 +87,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <Space
-        direction="vertical"
+        orientation="vertical"
         className="w-full"
       >
         <FilterArea setFilterData={setFilterData} />

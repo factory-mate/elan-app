@@ -111,7 +111,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <Space
-        direction="vertical"
+        orientation="vertical"
         className="w-full"
       >
         <FilterArea setFilterData={setFilterData} />

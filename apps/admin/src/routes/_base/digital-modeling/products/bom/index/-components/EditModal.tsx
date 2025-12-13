@@ -84,11 +84,11 @@ export default function EditModal(props: EditModalProps) {
               value: 'cInvCode',
               label: 'cInvCode'
             }}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }}
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -303,11 +303,11 @@ export default function EditModal(props: EditModalProps) {
               size="small"
               color="primary"
               variant="text"
-              onClick={() => {
+              onClick={() =>
                 setTableData((draft) => {
                   draft.splice(params.node.rowIndex!, 1)
                 })
-              }}
+              }
             >
               删行
             </Button>
@@ -362,13 +362,17 @@ export default function EditModal(props: EditModalProps) {
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
+      okButtonProps={{
+        disabled: editMutation.isPending,
+        loading: editMutation.isPending
+      }}
       forceRender
       width="80%"
       centered
     >
       <Space
         className="w-full pl-2"
-        direction="vertical"
+        orientation="vertical"
       >
         <Form
           className="pt-3"
@@ -406,11 +410,11 @@ export default function EditModal(props: EditModalProps) {
                       label: 'cInvCode',
                       value: 'cInvCode'
                     }}
-                    showSearch
-                    filterOption={(input, option) =>
-                      (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                      (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-                    }
+                    showSearch={{
+                      filterOption: (input, option) =>
+                        (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                        (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+                    }}
                     onSelect={(_value, option) => {
                       form.setFieldsValue({
                         cInvName: option.cInvName,

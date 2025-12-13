@@ -115,12 +115,13 @@ export default function InventoryRemoteSelect(props: InventoryRemoteSelectProps)
           label: 'cInvCode',
           value: 'cInvCode'
         }}
-        showSearch
+        showSearch={{
+          filterOption: false,
+          onSearch: handleSearch
+        }}
         allowClear
         value={value}
         defaultActiveFirstOption={false}
-        filterOption={false}
-        onSearch={handleSearch}
         onChange={handleChange}
         notFoundContent={null}
         optionRender={(option) => (
@@ -147,7 +148,7 @@ export default function InventoryRemoteSelect(props: InventoryRemoteSelectProps)
       >
         <Space
           className="w-full pl-2"
-          direction="vertical"
+          orientation="vertical"
         >
           <Form
             className="pt-3"

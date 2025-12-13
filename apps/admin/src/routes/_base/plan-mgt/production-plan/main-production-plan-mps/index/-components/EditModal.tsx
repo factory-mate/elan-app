@@ -86,11 +86,11 @@ export default function EditModal(props: EditModalProps) {
                 value: 'cInvCode',
                 label: 'cInvCode'
               }}
-              showSearch
-              filterOption={(input, option) =>
-                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-              }
+              showSearch={{
+                filterOption: (input, option) =>
+                  (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                  (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+              }}
               onSelect={(_value, option) => {
                 form.setFieldsValue({
                   cInvName: option.cInvName,

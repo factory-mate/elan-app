@@ -9,6 +9,10 @@ export interface UseModalProps<T> {
    * 模态框初始化打开状态
    */
   open?: boolean
+  /**
+   * 模态框类型
+   */
+  type?: string
 }
 
 export interface UseModal<T = any> {
@@ -38,15 +42,24 @@ export interface UseModal<T = any> {
    */
   resetMeta: () => void
   /**
+   * 模态框类型
+   */
+  type?: string
+  /**
+   * 设置模态框类型
+   */
+  setType: Dispatch<SetStateAction<string | undefined>>
+  /**
    * 关闭模态框
    */
   close: () => void
 }
 
 export const useModal = <T = any>(props?: UseModalProps<T>): UseModal<T> => {
-  const { meta: defaultMeta, open: defaultValue = false } = props ?? {}
+  const { type: defaultType, meta: defaultMeta, open: defaultValue = false } = props ?? {}
 
   const [meta, setMeta] = useState<T | undefined>(defaultMeta)
+  const [type, setType] = useState<string | undefined>(defaultType)
   const [open, setOpen] = useState(defaultValue)
 
   const toggle = useCallback(() => setOpen((prev) => !prev), [])
@@ -62,6 +75,8 @@ export const useModal = <T = any>(props?: UseModalProps<T>): UseModal<T> => {
     meta,
     setMeta,
     resetMeta,
-    close
+    close,
+    type,
+    setType
   }
 }

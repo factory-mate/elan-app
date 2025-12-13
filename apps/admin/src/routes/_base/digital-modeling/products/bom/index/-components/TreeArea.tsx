@@ -18,7 +18,7 @@ export default function TreeArea(props: TreeAreaProps) {
   return (
     <Space
       className="pr-2"
-      direction="vertical"
+      orientation="vertical"
     >
       {/* <Input.Search
         placeholder="请输入关键字"

@@ -45,31 +45,46 @@ function RouteComponent() {
             name="bSalePrediction"
             label="是否考虑销售预测"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <Form.Item<MpsParamsEditDto>
             name="bSaleOrder"
             label="是否考虑销售订单"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <Form.Item<MpsParamsEditDto>
             name="bUnEndVouch"
             label="是否考虑未完工订单"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <Form.Item<MpsParamsEditDto>
             name="bStock"
             label="是否考虑库存"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <Form.Item<MpsParamsEditDto>
             name="bMerge"
             label="是否考虑合并订单"
           >
-            <Switch />
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
           </Form.Item>
           <PermCodeProvider code="mps-params:edit">
             <Button

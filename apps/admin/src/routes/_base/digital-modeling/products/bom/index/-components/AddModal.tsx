@@ -112,11 +112,11 @@ export default function AddModal(props: AddModalProps) {
               value: 'cInvCode',
               label: 'cInvCode'
             }}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }}
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -398,7 +398,7 @@ export default function AddModal(props: AddModalProps) {
     >
       <Space
         className="w-full pl-2"
-        direction="vertical"
+        orientation="vertical"
       >
         <Form
           className="pt-3"
@@ -435,11 +435,11 @@ export default function AddModal(props: AddModalProps) {
                     label: 'cInvCode',
                     value: 'cInvCode'
                   }}
-                  showSearch
-                  filterOption={(input, option) =>
-                    (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                    (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-                  }
+                  showSearch={{
+                    filterOption: (input, option) =>
+                      (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                      (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+                  }}
                   onSelect={(_value, option) => {
                     form.setFieldsValue({
                       cInvName: option.cInvName,

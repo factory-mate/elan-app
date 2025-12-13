@@ -92,7 +92,7 @@ export default function ChildListModal(props: ChildListModalProps) {
     >
       <Space
         className="w-full"
-        direction="vertical"
+        orientation="vertical"
       >
         <Space>
           <Button

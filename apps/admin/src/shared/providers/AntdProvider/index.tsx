@@ -26,7 +26,6 @@ export default function AntdProvider(props: PropsWithChildren) {
     <ConfigProvider
       theme={{
         ...themeStore.lightThemeConfig,
-        cssVar: true,
         hashed: false
       }}
       locale={zhCN}

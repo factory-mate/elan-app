@@ -51,11 +51,11 @@ export default function BOMListModal(props: BOMListModalProps) {
               value: 'cInvCode',
               label: 'cInvCode'
             }}
-            showSearch
-            filterOption={(input, option) =>
-              (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-              (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }
+            showSearch={{
+              filterOption: (input, option) =>
+                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
+            }}
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -210,7 +210,7 @@ export default function BOMListModal(props: BOMListModalProps) {
     >
       <Space
         className="w-full"
-        direction="vertical"
+        orientation="vertical"
       >
         <Space>
           <Button
