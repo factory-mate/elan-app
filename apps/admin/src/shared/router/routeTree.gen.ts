@@ -39,6 +39,7 @@ import { Route as BasePlanMgtProductionPlanMpsParamsIndexRouteImport } from './.
 import { Route as BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteImport } from './../../routes/_base/plan-mgt/production-plan/main-production-plan-mps/index/route'
 import { Route as BaseDigitalModelingProductsUnitIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit/index/route'
 import { Route as BaseDigitalModelingProductsUnitClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/unit-class/index/route'
+import { Route as BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteImport } from './../../routes/_base/digital-modeling/products/recipe-employee-ref/index/route'
 import { Route as BaseDigitalModelingProductsInventoryIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory/index/route'
 import { Route as BaseDigitalModelingProductsInventoryClassIndexRouteImport } from './../../routes/_base/digital-modeling/products/inventory-class/index/route'
 import { Route as BaseDigitalModelingProductsBomIndexRouteImport } from './../../routes/_base/digital-modeling/products/bom/index/route'
@@ -328,6 +329,17 @@ const BaseDigitalModelingProductsUnitClassIndexRouteRoute =
   } as any).lazy(() =>
     import(
       './../../routes/_base/digital-modeling/products/unit-class/index/route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute =
+  BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteImport.update({
+    id: '/digital-modeling/products/recipe-employee-ref/',
+    path: '/digital-modeling/products/recipe-employee-ref/',
+    getParentRoute: () => BaseRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './../../routes/_base/digital-modeling/products/recipe-employee-ref/index/route.lazy'
     ).then((d) => d.Route),
   )
 
@@ -649,6 +661,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteImport
       parentRoute: typeof BaseRouteImport
     }
+    '/_base/digital-modeling/products/recipe-employee-ref/': {
+      id: '/_base/digital-modeling/products/recipe-employee-ref/'
+      path: '/digital-modeling/products/recipe-employee-ref'
+      fullPath: '/digital-modeling/products/recipe-employee-ref'
+      preLoaderRoute: typeof BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteImport
+      parentRoute: typeof BaseRouteImport
+    }
     '/_base/digital-modeling/products/unit-class/': {
       id: '/_base/digital-modeling/products/unit-class/'
       path: '/digital-modeling/products/unit-class'
@@ -775,6 +794,7 @@ interface BaseRouteRouteChildren {
   BaseDigitalModelingProductsBomIndexRouteRoute: typeof BaseDigitalModelingProductsBomIndexRouteRoute
   BaseDigitalModelingProductsInventoryClassIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   BaseDigitalModelingProductsInventoryIndexRouteRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
+  BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute: typeof BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute
   BaseDigitalModelingProductsUnitClassIndexRouteRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   BaseDigitalModelingProductsUnitIndexRouteRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute: typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
@@ -826,6 +846,8 @@ const BaseRouteRouteChildren: BaseRouteRouteChildren = {
     BaseDigitalModelingProductsInventoryClassIndexRouteRoute,
   BaseDigitalModelingProductsInventoryIndexRouteRoute:
     BaseDigitalModelingProductsInventoryIndexRouteRoute,
+  BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute:
+    BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute,
   BaseDigitalModelingProductsUnitClassIndexRouteRoute:
     BaseDigitalModelingProductsUnitClassIndexRouteRoute,
   BaseDigitalModelingProductsUnitIndexRouteRoute:
@@ -897,6 +919,7 @@ export interface FileRoutesByFullPath {
   '/digital-modeling/products/bom': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
+  '/digital-modeling/products/recipe-employee-ref': typeof BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/plan-mgt/production-plan/main-production-plan-mps': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
@@ -939,6 +962,7 @@ export interface FileRoutesByTo {
   '/digital-modeling/products/bom': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
+  '/digital-modeling/products/recipe-employee-ref': typeof BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute
   '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/plan-mgt/production-plan/main-production-plan-mps': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
@@ -983,6 +1007,7 @@ export interface FileRoutesById {
   '/_base/digital-modeling/products/bom/': typeof BaseDigitalModelingProductsBomIndexRouteRoute
   '/_base/digital-modeling/products/inventory-class/': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
   '/_base/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
+  '/_base/digital-modeling/products/recipe-employee-ref/': typeof BaseDigitalModelingProductsRecipeEmployeeRefIndexRouteRoute
   '/_base/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
   '/_base/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
   '/_base/plan-mgt/production-plan/main-production-plan-mps/': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
@@ -1027,6 +1052,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/bom'
     | '/digital-modeling/products/inventory-class'
     | '/digital-modeling/products/inventory'
+    | '/digital-modeling/products/recipe-employee-ref'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/plan-mgt/production-plan/main-production-plan-mps'
@@ -1068,6 +1094,7 @@ export interface FileRouteTypes {
     | '/digital-modeling/products/bom'
     | '/digital-modeling/products/inventory-class'
     | '/digital-modeling/products/inventory'
+    | '/digital-modeling/products/recipe-employee-ref'
     | '/digital-modeling/products/unit-class'
     | '/digital-modeling/products/unit'
     | '/plan-mgt/production-plan/main-production-plan-mps'
@@ -1110,6 +1137,7 @@ export interface FileRouteTypes {
     | '/_base/digital-modeling/products/bom/'
     | '/_base/digital-modeling/products/inventory-class/'
     | '/_base/digital-modeling/products/inventory/'
+    | '/_base/digital-modeling/products/recipe-employee-ref/'
     | '/_base/digital-modeling/products/unit-class/'
     | '/_base/digital-modeling/products/unit/'
     | '/_base/plan-mgt/production-plan/main-production-plan-mps/'
@@ -1182,6 +1210,7 @@ export const routeTree = rootRoute
         "/_base/digital-modeling/products/bom/",
         "/_base/digital-modeling/products/inventory-class/",
         "/_base/digital-modeling/products/inventory/",
+        "/_base/digital-modeling/products/recipe-employee-ref/",
         "/_base/digital-modeling/products/unit-class/",
         "/_base/digital-modeling/products/unit/",
         "/_base/plan-mgt/production-plan/main-production-plan-mps/",
@@ -1294,6 +1323,10 @@ export const routeTree = rootRoute
     },
     "/_base/digital-modeling/products/inventory/": {
       "filePath": "_base/digital-modeling/products/inventory/index/route.tsx",
+      "parent": "/_base"
+    },
+    "/_base/digital-modeling/products/recipe-employee-ref/": {
+      "filePath": "_base/digital-modeling/products/recipe-employee-ref/index/route.tsx",
       "parent": "/_base"
     },
     "/_base/digital-modeling/products/unit-class/": {

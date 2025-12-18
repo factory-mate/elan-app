@@ -62,15 +62,23 @@ function RouteComponent() {
               </Button>
             </PermCodeProvider>
             <PermCodeProvider code="step:delete">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data!.UID])}
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => deleteMutation.mutate([params.data!.UID])}
               >
-                删除
-              </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  disabled={deleteMutation.isPending}
+                >
+                  删除
+                </Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
         )
@@ -93,8 +101,13 @@ function RouteComponent() {
         >
           <Space>
             <PermCodeProvider code="step:delete">
-              <Button
-                onClick={() => {
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => {
                   if (selectedRows.length === 0) {
                     showMessage('select-data')
                     return
@@ -102,8 +115,8 @@ function RouteComponent() {
                   deleteMutation.mutate(selectedRows.map((i) => i.UID))
                 }}
               >
-                删除
-              </Button>
+                <Button disabled={deleteMutation.isPending}>删除</Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
           <Space>

@@ -72,6 +72,7 @@ function RouteComponent() {
                   size="small"
                   color="primary"
                   variant="text"
+                  disabled={deleteMutation.isPending}
                 >
                   删除
                 </Button>
@@ -98,8 +99,13 @@ function RouteComponent() {
         >
           <Space>
             <PermCodeProvider code="craft-route:delete">
-              <Button
-                onClick={() => {
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => {
                   if (selectedRows.length === 0) {
                     showMessage('select-data')
                     return
@@ -107,8 +113,8 @@ function RouteComponent() {
                   deleteMutation.mutate(selectedRows.map((i) => i.UID))
                 }}
               >
-                删除
-              </Button>
+                <Button disabled={deleteMutation.isPending}>删除</Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
           <Space>

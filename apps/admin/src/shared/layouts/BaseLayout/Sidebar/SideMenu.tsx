@@ -13,8 +13,8 @@ export default function SideMenu() {
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
   const menuItems = useMemo(
-    () => filterMenuTree(staticMenus, permStore.codes) as MenuProps['items'],
-    [permStore.codes]
+    () => filterMenuTree(staticMenus, permStore.codes, permStore.whiteList) as MenuProps['items'],
+    [permStore.codes, permStore.whiteList]
   )
 
   useEffect(() => {

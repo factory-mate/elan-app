@@ -35,6 +35,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
           { label: '料品分类', key: '/inventory-class', permCode: 'inventory-class' },
           { label: '料品档案', key: '/inventory', permCode: 'inventory' },
           { label: '物料清单/配方', key: '/bom', permCode: 'bom' },
+          { label: '配方职员对照', key: '/recipe-employee-ref', permCode: 'recipe-employee-ref' },
           {
             label: '工艺',
             key: '/craft',
@@ -167,7 +168,8 @@ type FilteredMenuItemType = Omit<BaseMenuItemType, 'children'> & {
 
 export function filterMenuTree(
   tree: ExtendedMenuItemType[],
-  permCodes: Set<string>
+  permCodes: Set<string>,
+  whiteList: PermCode[]
 ): FilteredMenuItemType[] {
   return tree
     .filter((node) => {
@@ -178,7 +180,9 @@ export function filterMenuTree(
         return true
       }
       const codes = Array.isArray(node.permCode) ? node.permCode : [node.permCode]
-      return codes.some((code: string) => permCodes.has(code))
+      return codes.some(
+        (code: string) => permCodes.has(code) || whiteList.includes(code as PermCode)
+      )
     })
     .map((node) => {
       if (!node) {
@@ -187,7 +191,7 @@ export function filterMenuTree(
       // eslint-disable-next-line unused-imports/no-unused-vars
       const { permCode, children, ...rest } = node
       if (children) {
-        const filteredChildren = filterMenuTree(children, permCodes)
+        const filteredChildren = filterMenuTree(children, permCodes, whiteList)
         return filteredChildren.length > 0 ? { ...rest, children: filteredChildren } : { ...rest }
       }
       return rest

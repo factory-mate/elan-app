@@ -167,10 +167,10 @@ export interface ProductionOrderEditDto extends ProductionOrderHead {
 }
 
 export enum TaskStatus {
-  AUDIT = 0,
-  ABANDON = 1,
-  OPEN = 2,
-  CLOSE = 3
+  AUDIT = 0, // 审核
+  ABANDON = 1, // 弃审
+  OPEN = 2, // 打开
+  CLOSE = 3 // 关闭
 }
 
 export interface PrintDetailVo {

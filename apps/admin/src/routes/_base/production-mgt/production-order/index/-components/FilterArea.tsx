@@ -62,10 +62,10 @@ export default function FilterArea(props: FilterAreaProps) {
             >
               <Select
                 options={[
-                  { label: '审核', value: TaskStatus.AUDIT },
-                  { label: '放弃', value: TaskStatus.ABANDON },
-                  { label: '打开', value: TaskStatus.OPEN },
-                  { label: '关闭', value: TaskStatus.CLOSE }
+                  { label: '保存', value: TaskStatus.AUDIT },
+                  { label: '弃审', value: TaskStatus.ABANDON }
+                  // { label: '打开', value: TaskStatus.OPEN },
+                  // { label: '关闭', value: TaskStatus.CLOSE }
                 ]}
               />
             </Form.Item>

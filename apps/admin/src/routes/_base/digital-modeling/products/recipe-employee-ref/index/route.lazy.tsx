@@ -1,13 +1,13 @@
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type ProcessVo, useDeleteMutation } from '@/features/process'
+import { listQO, type RecipeEmployeeRefVo, useDeleteMutation } from '@/features/recipe-employee-ref'
 
 import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft/process/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/products/recipe-employee-ref/')({
   component: RouteComponent
 })
 
@@ -20,33 +20,39 @@ function RouteComponent() {
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
-
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cProcessCode', type: 'like', val: filterData.cProcessCode },
-        { key: 'cProcessName', type: 'like', val: filterData.cProcessName }
+        { key: 'cEmployeeName', type: 'like', val: filterData.cEmployeeName },
+        { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
+        { key: 'cInvName', type: 'like', val: filterData.cInvName }
       ])
     })
   )
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<ProcessVo>[]>(
+  const columnDefs = useMemo<ColDef<RecipeEmployeeRefVo>[]>(
     () => [
-      { field: 'cProcessCode', headerName: '工序编码', flex: 1 },
-      { field: 'cProcessName', headerName: '工序名称', flex: 1 },
-      { field: 'cCreateUserName', headerName: '创建人', flex: 1 },
-      { field: 'dCreateTime', headerName: '创建时间', flex: 1 },
+      { field: 'cEmployeeCode', headerName: '职员编码', width: 150 },
+      { field: 'cEmployeeName', headerName: '职员名称', width: 150 },
+      { field: 'cInvCode', headerName: '产品编码', width: 150 },
+      { field: 'cInvName', headerName: '产品名称', width: 250 },
+      { field: 'cInvstd', headerName: '规格型号', width: 150 },
+      { field: 'iBOMStatusName', headerName: 'BOM状态', width: 150 },
+      { field: 'cBOMTypeName', headerName: 'BOM类别', width: 150 },
+      { field: 'cVersion', headerName: '版本代号', width: 150 },
+      { field: 'dVersionDate', headerName: '版本日期', width: 200 },
+      { field: 'cVerisionMemo', headerName: '版本说明', width: 200 },
       {
         headerName: '操作',
-        width: 250,
+        width: 150,
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<ProcessVo>) => (
+        cellRenderer: (params: ICellRendererParams<RecipeEmployeeRefVo>) => (
           <Space>
-            <PermCodeProvider code="process:edit">
+            <PermCodeProvider code="recipe-employee-ref:edit">
               <Button
                 size="small"
                 color="primary"
@@ -59,7 +65,7 @@ function RouteComponent() {
                 编辑
               </Button>
             </PermCodeProvider>
-            <PermCodeProvider code="process:delete">
+            <PermCodeProvider code="recipe-employee-ref:delete">
               <Popconfirm
                 title="确认执行该操作？"
                 okButtonProps={{
@@ -98,7 +104,7 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <PermCodeProvider code="process:delete">
+            <PermCodeProvider code="recipe-employee-ref:delete">
               <Popconfirm
                 title="确认执行该操作？"
                 okButtonProps={{
@@ -118,7 +124,7 @@ function RouteComponent() {
             </PermCodeProvider>
           </Space>
           <Space>
-            <PermCodeProvider code="process:add">
+            <PermCodeProvider code="recipe-employee-ref:add">
               <Button
                 type="primary"
                 onClick={() => addModal.toggle()}
@@ -130,7 +136,7 @@ function RouteComponent() {
         </Flex>
 
         <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-          <AgGridReact<ProcessVo>
+          <AgGridReact<RecipeEmployeeRefVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}
             columnDefs={columnDefs}

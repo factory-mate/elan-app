@@ -116,6 +116,33 @@ const treeData: TreeDataNode[] = [
             ]
           },
           {
+            key: 'recipe-employee-ref',
+            title: '配方职员对照',
+            style: { color: 'red' },
+            children: [
+              {
+                key: 'recipe-employee-ref:view',
+                title: '查看 recipe-employee-ref:view',
+                style: { color: 'red' }
+              },
+              {
+                key: 'recipe-employee-ref:add',
+                title: '新增 recipe-employee-ref:add',
+                style: { color: 'red' }
+              },
+              {
+                key: 'recipe-employee-ref:edit',
+                title: '编辑 recipe-employee-ref:edit',
+                style: { color: 'red' }
+              },
+              {
+                key: 'recipe-employee-ref:delete',
+                title: '删除 recipe-employee-ref:delete',
+                style: { color: 'red' }
+              }
+            ]
+          },
+          {
             key: 'craft',
             title: '工艺 craft',
             children: [

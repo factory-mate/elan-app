@@ -2,8 +2,11 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
+import { permWhiteList } from '../consts'
+
 interface State {
   codes: Set<string>
+  whiteList: PermCode[]
 }
 
 interface Actions {
@@ -47,7 +50,8 @@ interface Actions {
 }
 
 const initialState: State = {
-  codes: new Set([])
+  codes: new Set([]),
+  whiteList: permWhiteList
 }
 
 export const usePermStore = create<State & Actions>()(
@@ -65,8 +69,10 @@ export const usePermStore = create<State & Actions>()(
             state.codes.delete(code)
           }),
         setCodes: (codes) => set({ codes }),
-        hasCode: (...codes) => codes.some((code) => get().codes.has(code)),
-        hasAllCode: (...codes) => codes.every((code) => get().codes.has(code))
+        hasCode: (...codes) =>
+          codes.some((code) => get().codes.has(code) || get().whiteList.includes(code as PermCode)),
+        hasAllCode: (...codes) =>
+          codes.every((code) => get().codes.has(code) || get().whiteList.includes(code as PermCode))
       })),
       {
         name: 'perm_store',
@@ -76,6 +82,7 @@ export const usePermStore = create<State & Actions>()(
             return {
               state: {
                 ...JSON.parse(str ?? '').state,
+                whiteList: initialState.whiteList,
                 codes: new Set(JSON.parse(str ?? '').state.codes)
               }
             }
@@ -84,6 +91,7 @@ export const usePermStore = create<State & Actions>()(
             const str = JSON.stringify({
               state: {
                 ...newValue.state,
+                whiteList: initialState.whiteList,
                 codes: newValue.state.getList()
               }
             })
