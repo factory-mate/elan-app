@@ -52,6 +52,13 @@ export class ProductionOrderAPI {
     })
   }
 
+  static async setCloseStatus(ids: string[], status: number) {
+    return httpClient.post(`${this.apiPrefix}/SetCloseStatus`, {
+      KeyVal: ids,
+      iStatus: status
+    })
+  }
+
   static async delete(ids: string[]) {
     return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
   }

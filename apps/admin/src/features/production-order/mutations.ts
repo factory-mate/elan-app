@@ -3,6 +3,7 @@ import {
   type ProductionOrderAddDto,
   type ProductionOrderBOMListEditDto,
   type ProductionOrderEditDto,
+  Status,
   TaskStatus
 } from './types'
 
@@ -25,7 +26,7 @@ export const useAbandonMutation = () => {
 export const useOpenMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => ProductionOrderAPI.setStatus(ids, TaskStatus.OPEN),
+    mutationFn: (ids: string[]) => ProductionOrderAPI.setCloseStatus(ids, Status.OPEN),
     onSuccess: () => showMessage('success')
   })
 }
@@ -33,7 +34,7 @@ export const useOpenMutation = () => {
 export const useCloseMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => ProductionOrderAPI.setStatus(ids, TaskStatus.CLOSE),
+    mutationFn: (ids: string[]) => ProductionOrderAPI.setCloseStatus(ids, Status.CLOSE),
     onSuccess: () => showMessage('success')
   })
 }

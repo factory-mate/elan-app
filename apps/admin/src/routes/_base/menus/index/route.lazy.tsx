@@ -308,7 +308,11 @@ const treeData: TreeDataNode[] = [
           { key: 'production-order:delete', title: '删除 production-order:delete' },
           { key: 'production-order:print', title: '打印 production-order:print' },
           { key: 'production-order:audit', title: '审核 production-order:audit' },
-          { key: 'production-order:audit', title: '弃审 production-order:audit' },
+          {
+            key: 'production-order:quit-audit',
+            title: '弃审 production-order:quit-audit',
+            style: { color: 'red' }
+          },
           { key: 'production-order:open', title: '打开 production-order:open' },
           { key: 'production-order:close', title: '关闭 production-order:close' }
         ]

@@ -443,7 +443,7 @@ function RouteComponent() {
                 审核
               </Button>
             </PermCodeProvider>
-            <PermCodeProvider code="production-order:quit-audit">
+            <PermCodeProvider code="production-order:audit">
               <Button
                 onClick={() => {
                   if (selectedRows.length === 0) {

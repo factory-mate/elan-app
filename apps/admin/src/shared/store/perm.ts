@@ -2,8 +2,6 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { permWhiteList } from '../consts'
-
 interface State {
   codes: Set<string>
   whiteList: PermCode[]
@@ -48,6 +46,8 @@ interface Actions {
    */
   hasAllCode: (...codes: string[]) => boolean
 }
+
+export const permWhiteList: PermCode[] = []
 
 const initialState: State = {
   codes: new Set([]),
