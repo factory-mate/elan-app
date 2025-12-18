@@ -89,6 +89,7 @@ declare global {
   const Transfer: typeof import('antd')['Transfer']
   const Tree: typeof import('antd')['Tree']
   const TreeSelect: typeof import('antd')['TreeSelect']
+  const VisibleProvider: typeof import('../src/shared/providers/VisibleProvider/index')['VisibleProvider']
   const appConfig: typeof import('@elan/config')['appConfig']
   const booleanLabelValueGetter: typeof import('../src/shared/ag-grid/utils')['booleanLabelValueGetter']
   const buildIndexColDef: typeof import('../src/shared/ag-grid/utils')['buildIndexColDef']

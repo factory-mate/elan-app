@@ -63,7 +63,7 @@ export default function EditModal(props: EditModalProps) {
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
       forceRender
-      width="400px"
+      width="700px"
     >
       <Form
         className="pt-3"
@@ -140,10 +140,11 @@ export default function EditModal(props: EditModalProps) {
                 })
               }}
               optionRender={(option) => (
-                <Flex justify="space-between">
-                  <span>{option.data.cInvCode}</span>
-                  <span> {option.data.cInvName}</span>
-                </Flex>
+                <Row>
+                  <Col span={8}>{option.data.cInvCode}</Col>
+                  <Col span={12}> {option.data.cInvName}</Col>
+                  <Col span={4}> {option.data.cVersion}</Col>
+                </Row>
               )}
             />
           </Form.Item>

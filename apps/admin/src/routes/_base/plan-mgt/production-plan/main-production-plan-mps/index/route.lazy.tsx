@@ -20,7 +20,7 @@ export const Route = createLazyFileRoute(
 })
 
 function RouteComponent() {
-  const { showMessage } = useMessage()
+  const { message, showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
@@ -78,28 +78,32 @@ function RouteComponent() {
         cellRenderer: (params: ICellRendererParams<MainProductionPlanMpsVo>) => (
           <Space>
             <PermCodeProvider code="main-production-plan-mps:edit">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                onClick={() => {
-                  editModal.setMeta({ UID: params.data!.UID })
-                  editModal.toggle()
-                }}
-              >
-                编辑
-              </Button>
+              <VisibleProvider visible={params.data!.iStatus === 0}>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  onClick={() => {
+                    editModal.setMeta({ UID: params.data!.UID })
+                    editModal.toggle()
+                  }}
+                >
+                  编辑
+                </Button>
+              </VisibleProvider>
             </PermCodeProvider>
             <PermCodeProvider code="main-production-plan-mps:delete">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data!.UID])}
-              >
-                删除
-              </Button>
+              <VisibleProvider visible={params.data!.iStatus === 0}>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  disabled={deleteMutation.isPending}
+                  onClick={() => deleteMutation.mutate([params.data!.UID])}
+                >
+                  删除
+                </Button>
+              </VisibleProvider>
             </PermCodeProvider>
           </Space>
         )
@@ -151,6 +155,10 @@ function RouteComponent() {
               onClick={() => {
                 if (selectedRows.length === 0) {
                   showMessage('select-data')
+                  return
+                }
+                if (selectedRows.some((i) => i.iStatus === 0)) {
+                  message.warning('勾选了已生单数据，不允许删除')
                   return
                 }
                 deleteMutation.mutate(selectedRows.map((i) => i.UID))
