@@ -118,7 +118,7 @@ declare global {
   const notFound: typeof import('@tanstack/react-router')['notFound']
   const onlineManager: typeof import('@tanstack/react-query')['onlineManager']
   const onlyCanSelectTreeLeafNode: typeof import('../src/shared/antd/utils')['onlyCanSelectTreeLeafNode']
-  const permWhiteList: typeof import('../src/shared/consts/perm/index')['permWhiteList']
+  const permWhiteList: typeof import('../src/shared/store/perm')['permWhiteList']
   const queryBuilder: typeof import('../src/shared/utils/query-builder')['queryBuilder']
   const queryClient: typeof import('@/shared/query-client')['queryClient']
   const queryOptions: typeof import('@tanstack/react-query')['queryOptions']

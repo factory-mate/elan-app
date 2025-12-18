@@ -118,28 +118,11 @@ const treeData: TreeDataNode[] = [
           {
             key: 'recipe-employee-ref',
             title: '配方职员对照',
-            style: { color: 'red' },
             children: [
-              {
-                key: 'recipe-employee-ref:view',
-                title: '查看 recipe-employee-ref:view',
-                style: { color: 'red' }
-              },
-              {
-                key: 'recipe-employee-ref:add',
-                title: '新增 recipe-employee-ref:add',
-                style: { color: 'red' }
-              },
-              {
-                key: 'recipe-employee-ref:edit',
-                title: '编辑 recipe-employee-ref:edit',
-                style: { color: 'red' }
-              },
-              {
-                key: 'recipe-employee-ref:delete',
-                title: '删除 recipe-employee-ref:delete',
-                style: { color: 'red' }
-              }
+              { key: 'recipe-employee-ref:view', title: '查看 recipe-employee-ref:view' },
+              { key: 'recipe-employee-ref:add', title: '新增 recipe-employee-ref:add' },
+              { key: 'recipe-employee-ref:edit', title: '编辑 recipe-employee-ref:edit' },
+              { key: 'recipe-employee-ref:delete', title: '删除 recipe-employee-ref:delete' }
             ]
           },
           {
@@ -308,11 +291,7 @@ const treeData: TreeDataNode[] = [
           { key: 'production-order:delete', title: '删除 production-order:delete' },
           { key: 'production-order:print', title: '打印 production-order:print' },
           { key: 'production-order:audit', title: '审核 production-order:audit' },
-          {
-            key: 'production-order:quit-audit',
-            title: '弃审 production-order:quit-audit',
-            style: { color: 'red' }
-          },
+          { key: 'production-order:quit-audit', title: '弃审 production-order:quit-audit' },
           { key: 'production-order:open', title: '打开 production-order:open' },
           { key: 'production-order:close', title: '关闭 production-order:close' }
         ]
