@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { listQO } from '@/features/bom-cost'
 
 export const Route = createFileRoute('/_base/report/cost/bom-cost/')({

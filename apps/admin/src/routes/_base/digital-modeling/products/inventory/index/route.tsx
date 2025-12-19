@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { fullListQO } from '@/features/dicts'
 import { treeQO } from '@/features/inventory-class'
 

@@ -157,7 +157,9 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<RecipeEmployeeRefEditDto>
             name="BomUID"
             hidden
-          />
+          >
+            <Input />
+          </Form.Item>
           <Form.Item<RecipeEmployeeRefEditDto>
             name="cInvstd"
             label="规格型号"
@@ -167,7 +169,9 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<RecipeEmployeeRefEditDto>
             name="iBOMStatus"
             hidden
-          />
+          >
+            <Input />
+          </Form.Item>
           <Form.Item<RecipeEmployeeRefEditDto>
             name="iBOMStatusName"
             label="BOM状态"
@@ -177,7 +181,9 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<RecipeEmployeeRefEditDto>
             name="cBOMType"
             hidden
-          />
+          >
+            <Input />
+          </Form.Item>
           <Form.Item<RecipeEmployeeRefEditDto>
             name="cBOMTypeName"
             label="BOM类别"

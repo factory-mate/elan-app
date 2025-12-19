@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 const searchSchema = z.object({
   redirect: z.string().optional()
 })

@@ -8,16 +8,16 @@ export default function Header() {
 
   const sidebarStore = useSidebarStore()
 
-  const navToHome = () => navigate({ to: '/' })
+  const navToHome = () => navigate({ to: '/$' })
 
   return (
     <Link
-      to="/"
+      to="/$"
       className="!text-inherit"
     >
       <div
         className="flex h-14 w-full select-none items-center justify-center space-x-2.5"
-        onMouseEnter={() => router.preloadRoute({ to: '/' })}
+        onMouseEnter={() => router.preloadRoute({ to: '/$' })}
         onClick={navToHome}
       >
         <Image

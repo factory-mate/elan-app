@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { fullListQO } from '@/features/dicts'
 
 export const Route = createFileRoute('/_base/digital-modeling/products/unit-class/')({

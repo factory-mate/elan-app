@@ -1,3 +1,3 @@
 interface FilterAreaProps {}
 
-export default function FilterArea(props: FilterAreaProps) {}
+export default function FilterArea(_props: FilterAreaProps) {}

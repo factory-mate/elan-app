@@ -1,5 +1,5 @@
 import { AuthAPI } from './api'
-import type { LoginDto, LoginFormValues } from './types'
+import type { LoginFormValues } from './types'
 
 export const useLoginMutation = () => {
   const router = useRouter()
@@ -9,7 +9,7 @@ export const useLoginMutation = () => {
   const userStore = useUserStore()
 
   return useMutation({
-    mutationFn: (loginDto: LoginDto) =>
+    mutationFn: (loginDto: LoginFormValues) =>
       AuthAPI.login({
         ...loginDto,
         cSourceAppType: '001'

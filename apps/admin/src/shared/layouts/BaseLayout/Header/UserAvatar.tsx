@@ -19,7 +19,7 @@ export default function UserAvatar() {
     {
       key: UserAction['USER.INFO'],
       label: userStore.userInfo?.UserName,
-      onMouseEnter: () => router.preloadRoute({ to: '/' })
+      onMouseEnter: () => router.preloadRoute({ to: '/$' })
     },
     {
       key: UserAction['CHANGE.PASSWORD'],
@@ -36,7 +36,7 @@ export default function UserAvatar() {
   const handleClickMenu: MenuProps['onClick'] = async ({ key }) => {
     switch (key) {
       case UserAction['USER.INFO']: {
-        navigate({ to: '/' })
+        navigate({ to: '/$' })
         break
       }
       case UserAction['CHANGE.PASSWORD']: {

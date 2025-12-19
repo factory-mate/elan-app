@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { detailQO } from '@/features/employee'
 
 export const Route = createFileRoute('/_base/digital-modeling/orgs/employee/$id/edit')({

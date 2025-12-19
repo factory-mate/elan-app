@@ -141,7 +141,9 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<RecipeEmployeeRefAddDto>
           name="BomUID"
           hidden
-        />
+        >
+          <Input />
+        </Form.Item>
         <Form.Item<RecipeEmployeeRefAddDto>
           name="cInvstd"
           label="规格型号"
@@ -151,7 +153,9 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<RecipeEmployeeRefAddDto>
           name="iBOMStatus"
           hidden
-        />
+        >
+          <Input />
+        </Form.Item>
         <Form.Item<RecipeEmployeeRefAddDto>
           name="iBOMStatusName"
           label="BOM状态"
@@ -161,7 +165,9 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<RecipeEmployeeRefAddDto>
           name="cBOMType"
           hidden
-        />
+        >
+          <Input />
+        </Form.Item>
         <Form.Item<RecipeEmployeeRefAddDto>
           name="cBOMTypeName"
           label="BOM类别"

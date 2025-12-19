@@ -4,7 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { antdResolver, reactPresets } from '@bit-ocean/auto-import'
 import { BootstrapAnimation } from '@bit-ocean/bootstrap-animation'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import { tanstackRouter as TanStackRouter } from '@tanstack/router-plugin/vite'
 import ReactSWC from '@vitejs/plugin-react-swc'
 import { visualizer as Visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -45,11 +45,14 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      TanStackRouter({
+        target: 'react',
+        autoCodeSplitting: true
+      }),
       ReactSWC(),
-      TanStackRouterVite(),
       AutoImport({
         dts: '@types/auto-imports.d.ts',
-        include: [/\.[tj]sx?$/, /\.md$/],
+        include: [/\.[tj]sx?$/, /\.md$/, /tsr-split/],
         imports: [
           ...reactPresets,
           { from: '@elan/config', imports: ['appConfig'] },

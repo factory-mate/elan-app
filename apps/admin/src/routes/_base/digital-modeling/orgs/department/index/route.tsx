@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { treeQO } from '@/features/department'
 
 export const Route = createFileRoute('/_base/digital-modeling/orgs/department/')({

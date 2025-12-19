@@ -1,3 +1,4 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
 import type { TreeDataNode } from 'antd'
 
 export const Route = createLazyFileRoute('/_base/menus/')({
@@ -397,7 +398,7 @@ const treeData: TreeDataNode[] = [
 ]
 
 function RouteComponent() {
-  const treeRef = useRef<any>()
+  const treeRef = useRef<any>(undefined)
 
   return (
     <PageContainer>

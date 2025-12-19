@@ -1,3 +1,5 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
+
 import { BasicInfo, RolesInfo } from './-components'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/$id/edit')({

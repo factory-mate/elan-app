@@ -1,3 +1,5 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
+
 import { type ChangePasswordFormValues, useChangePasswordMutation } from '@/features/users'
 
 export const Route = createLazyFileRoute('/_base/change-password')({

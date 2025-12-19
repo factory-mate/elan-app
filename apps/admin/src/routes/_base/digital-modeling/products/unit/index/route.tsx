@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { listQO } from '@/features/unit'
 import { fullListQO } from '@/features/unit-class'
 

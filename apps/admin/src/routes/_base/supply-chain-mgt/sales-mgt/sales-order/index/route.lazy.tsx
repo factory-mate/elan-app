@@ -1,3 +1,4 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 

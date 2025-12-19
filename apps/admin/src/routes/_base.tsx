@@ -1,8 +1,11 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import * as Perms from '@/features/perms'
 
 const getRouterStaticData = (path: string) => router.matchRoutes(path, {}).at(-1)!.staticData ?? {}
 
 export const Route = createFileRoute('/_base')({
+  component: RouteComponent,
   beforeLoad: async (ctx) => {
     const { location } = ctx
     // 身份校验
@@ -42,3 +45,11 @@ export const Route = createFileRoute('/_base')({
       )
   }
 })
+
+function RouteComponent() {
+  return (
+    <BaseLayout>
+      <Outlet />
+    </BaseLayout>
+  )
+}

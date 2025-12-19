@@ -1,3 +1,4 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
 import type { FormProps } from 'antd'
 
 import { fullListQO, type MpsParamsEditDto, useEditMutation } from '@/features/mps-params'

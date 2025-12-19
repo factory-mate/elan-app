@@ -1,3 +1,4 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
 import { useReactToPrint } from 'react-to-print'
 
 import styles from './-styles/print.module.scss'

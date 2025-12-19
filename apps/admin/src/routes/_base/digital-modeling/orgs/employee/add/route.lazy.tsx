@@ -1,3 +1,5 @@
+import { createLazyFileRoute } from '@tanstack/react-router'
+
 import * as Department from '@/features/department'
 import * as Dicts from '@/features/dicts'
 import { type EmployeeVo } from '@/features/employee'

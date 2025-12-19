@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { detailBodysQO, detailQO } from '@/features/production-order'
 
 export const Route = createFileRoute('/_base/production-mgt/production-order/$id/edit')({

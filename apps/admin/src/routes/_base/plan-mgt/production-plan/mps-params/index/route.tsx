@@ -1,3 +1,5 @@
+import { createFileRoute } from '@tanstack/react-router'
+
 import { fullListQO } from '@/features/mps-params'
 
 export const Route = createFileRoute('/_base/plan-mgt/production-plan/mps-params/')({

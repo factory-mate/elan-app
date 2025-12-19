@@ -13,7 +13,7 @@ export default function ErrorPage(props: ErrorPageProps) {
         title={title}
         subTitle={subTitle}
         extra={
-          <Link to="/">
+          <Link to="/$">
             <Button type="primary">返回</Button>
           </Link>
         }
