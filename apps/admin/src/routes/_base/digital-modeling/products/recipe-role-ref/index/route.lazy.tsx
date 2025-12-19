@@ -2,13 +2,13 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type RecipeEmployeeRefVo, useDeleteMutation } from '@/features/recipe-employee-ref'
+import { listQO, type RecipeRoleRefVo, useDeleteMutation } from '@/features/recipe-role-ref'
 
 import { AddModal, EditModal } from './-components'
 import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
-export const Route = createLazyFileRoute('/_base/digital-modeling/products/recipe-employee-ref/')({
+export const Route = createLazyFileRoute('/_base/digital-modeling/products/recipe-role-ref/')({
   component: RouteComponent
 })
 
@@ -25,7 +25,7 @@ function RouteComponent() {
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cEmployeeName', type: 'like', val: filterData.cEmployeeName },
+        { key: 'cRoleName', type: 'like', val: filterData.cRoleName },
         { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
         { key: 'cInvName', type: 'like', val: filterData.cInvName }
       ])
@@ -33,10 +33,10 @@ function RouteComponent() {
   )
   const deleteMutation = useDeleteMutation()
 
-  const columnDefs = useMemo<ColDef<RecipeEmployeeRefVo>[]>(
+  const columnDefs = useMemo<ColDef<RecipeRoleRefVo>[]>(
     () => [
-      { field: 'cEmployeeCode', headerName: '职员编码', width: 150 },
-      { field: 'cEmployeeName', headerName: '职员名称', width: 150 },
+      { field: 'cRoleCode', headerName: '角色编码', width: 150 },
+      { field: 'cRoleName', headerName: '角色名称', width: 150 },
       { field: 'cInvCode', headerName: '产品编码', width: 150 },
       { field: 'cInvName', headerName: '产品名称', width: 250 },
       { field: 'cInvstd', headerName: '规格型号', width: 150 },
@@ -51,9 +51,9 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        cellRenderer: (params: ICellRendererParams<RecipeEmployeeRefVo>) => (
+        cellRenderer: (params: ICellRendererParams<RecipeRoleRefVo>) => (
           <Space>
-            <PermCodeProvider code="recipe-employee-ref:edit">
+            <PermCodeProvider code="recipe-role-ref:edit">
               <Button
                 size="small"
                 color="primary"
@@ -66,7 +66,7 @@ function RouteComponent() {
                 编辑
               </Button>
             </PermCodeProvider>
-            <PermCodeProvider code="recipe-employee-ref:delete">
+            <PermCodeProvider code="recipe-role-ref:delete">
               <Popconfirm
                 title="确认执行该操作？"
                 okButtonProps={{
@@ -105,7 +105,7 @@ function RouteComponent() {
           align="center"
         >
           <Space>
-            <PermCodeProvider code="recipe-employee-ref:delete">
+            <PermCodeProvider code="recipe-role-ref:delete">
               <Popconfirm
                 title="确认执行该操作？"
                 okButtonProps={{
@@ -125,7 +125,7 @@ function RouteComponent() {
             </PermCodeProvider>
           </Space>
           <Space>
-            <PermCodeProvider code="recipe-employee-ref:add">
+            <PermCodeProvider code="recipe-role-ref:add">
               <Button
                 type="primary"
                 onClick={() => addModal.toggle()}
@@ -137,7 +137,7 @@ function RouteComponent() {
         </Flex>
 
         <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-          <AgGridReact<RecipeEmployeeRefVo>
+          <AgGridReact<RecipeRoleRefVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}
             columnDefs={columnDefs}

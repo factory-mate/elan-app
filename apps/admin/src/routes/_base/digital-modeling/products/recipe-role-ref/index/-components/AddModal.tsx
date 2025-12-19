@@ -2,8 +2,8 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import * as BOM from '@/features/bom'
-import * as Employee from '@/features/employee'
-import { type RecipeEmployeeRefAddDto, useAddMutation } from '@/features/recipe-employee-ref'
+import { type RecipeRoleRefAddDto, useAddMutation } from '@/features/recipe-role-ref'
+import * as Role from '@/features/roles'
 
 interface AddModalProps {
   open?: boolean
@@ -13,22 +13,22 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
-  const [form] = Form.useForm<RecipeEmployeeRefAddDto>()
+  const [form] = Form.useForm<RecipeRoleRefAddDto>()
 
   const { data: { data: bomCandidates } = {} } = useQuery(
     BOM.listQO({
       ...defaultMaxPageDto
     })
   )
-  const { data: { data: employeeCandidates } = {} } = useQuery(
-    Employee.listQO({
+  const { data: { data: roleCandidates } = {} } = useQuery(
+    Role.listQO({
       ...defaultMaxPageDto
     })
   )
 
   const addMutation = useAddMutation()
 
-  const onFinish: FormProps<RecipeEmployeeRefAddDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<RecipeRoleRefAddDto>['onFinish'] = (values) =>
     addMutation.mutate(
       {
         ...values
@@ -43,7 +43,7 @@ export default function AddModal(props: AddModalProps) {
 
   return (
     <Modal
-      title="新增配方职员对照"
+      title="新增配方角色对照"
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
@@ -58,42 +58,42 @@ export default function AddModal(props: AddModalProps) {
         initialValues={{}}
         onFinish={onFinish}
       >
-        <Form.Item<RecipeEmployeeRefAddDto>
-          name="cEmployeeCode"
-          label="职员编码"
+        <Form.Item<RecipeRoleRefAddDto>
+          name="cRoleCode"
+          label="角色编码"
           rules={[{ required: true }]}
         >
           <Select
-            options={employeeCandidates}
+            options={roleCandidates}
             fieldNames={{
-              label: 'cEmployeeCode',
-              value: 'cEmployeeCode'
+              label: 'cRoleCode',
+              value: 'cRoleCode'
             }}
             showSearch={{
               filterOption: (input, option) =>
-                (option?.cEmployeeCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cEmployeeName ?? '').toLowerCase().includes(input.toLowerCase())
+                (option?.cRoleCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                (option?.cRoleName ?? '').toLowerCase().includes(input.toLowerCase())
             }}
             onSelect={(_value, option) => {
               form.setFieldsValue({
-                cEmployeeName: option.cEmployeeName
+                cRoleName: option.cRoleName
               })
             }}
             optionRender={(option) => (
               <Flex justify="space-between">
-                <span>{option.data.cEmployeeName}</span>
-                <span> {option.data.cEmployeeCode}</span>
+                <span>{option.data.cRoleName}</span>
+                <span> {option.data.cRoleCode}</span>
               </Flex>
             )}
           />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
-          name="cEmployeeName"
-          label="职员名称"
+        <Form.Item<RecipeRoleRefAddDto>
+          name="cRoleName"
+          label="角色名称"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cInvCode"
           label="产品编码"
           rules={[{ required: true }]}
@@ -132,61 +132,61 @@ export default function AddModal(props: AddModalProps) {
             )}
           />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cInvName"
           label="产品名称"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="BomUID"
           hidden
         >
           <Input />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cInvstd"
           label="规格型号"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="iBOMStatus"
           hidden
         >
           <Input />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="iBOMStatusName"
           label="BOM状态"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cBOMType"
           hidden
         >
           <Input />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cBOMTypeName"
           label="BOM类别"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cVersion"
           label="版本代号"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="dVersionDate"
           label="版本日期"
         >
           <Input disabled />
         </Form.Item>
-        <Form.Item<RecipeEmployeeRefAddDto>
+        <Form.Item<RecipeRoleRefAddDto>
           name="cVerisionMemo"
           label="版本说明"
         >

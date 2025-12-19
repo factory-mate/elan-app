@@ -1,8 +1,8 @@
 import type { Dayjs } from 'dayjs'
 
-export interface RecipeEmployeeRefVo {
-  cEmployeeCode: string
-  cEmployeeName: string
+export interface RecipeRoleRefVo {
+  cRoleCode: string
+  cRoleName: string
   iBOMStatus: number
   iBOMStatusName: string
   cBOMType: string | null
@@ -28,6 +28,6 @@ export interface RecipeEmployeeRefVo {
   utfs: string
 }
 
-export interface RecipeEmployeeRefAddDto extends RecipeEmployeeRefVo {}
+export interface RecipeRoleRefAddDto extends RecipeRoleRefVo {}
 
-export interface RecipeEmployeeRefEditDto extends RecipeEmployeeRefAddDto {}
+export interface RecipeRoleRefEditDto extends RecipeRoleRefAddDto {}

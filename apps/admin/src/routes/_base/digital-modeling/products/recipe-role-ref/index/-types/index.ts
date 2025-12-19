@@ -3,8 +3,8 @@ export interface EditModalMeta {
 }
 
 export interface FilterForm {
-  cEmployeeName?: string
-  cEmployeeCode?: string
+  cRoleName?: string
+  cRoleCode?: string
   cInvCode?: string
   cInvName?: string
 }

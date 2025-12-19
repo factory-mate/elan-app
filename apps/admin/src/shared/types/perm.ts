@@ -67,12 +67,12 @@ export type PermCode =
   | 'bom:quit-audit'
   | 'bom:import'
   | 'bom:export'
-  // 数字化建模 - 配方职员对照
-  | 'recipe-employee-ref'
-  | 'recipe-employee-ref:view'
-  | 'recipe-employee-ref:add'
-  | 'recipe-employee-ref:edit'
-  | 'recipe-employee-ref:delete'
+  // 数字化建模 - 配方角色对照
+  | 'recipe-role-ref'
+  | 'recipe-role-ref:view'
+  | 'recipe-role-ref:add'
+  | 'recipe-role-ref:edit'
+  | 'recipe-role-ref:delete'
   // 数字化建模 - 产品建模 - 工艺
   | 'craft'
   // 数字化建模 - 产品建模 - 工艺 - 工序档案

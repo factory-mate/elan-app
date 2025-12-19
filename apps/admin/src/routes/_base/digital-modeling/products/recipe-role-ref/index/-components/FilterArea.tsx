@@ -23,8 +23,8 @@ export default function FilterArea(props: FilterAreaProps) {
         <Row>
           <Col span={8}>
             <Form.Item<FilterForm>
-              name="cEmployeeName"
-              label="职员名称"
+              name="cRoleName"
+              label="角色名称"
             >
               <Input />
             </Form.Item>

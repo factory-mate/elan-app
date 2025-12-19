@@ -2,12 +2,8 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import * as BOM from '@/features/bom'
-import * as Employee from '@/features/employee'
-import {
-  detailQO,
-  type RecipeEmployeeRefEditDto,
-  useEditMutation
-} from '@/features/recipe-employee-ref'
+import { detailQO, type RecipeRoleRefEditDto, useEditMutation } from '@/features/recipe-role-ref'
+import * as Role from '@/features/roles'
 
 import type { EditModalMeta } from '../-types'
 
@@ -20,15 +16,15 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
-  const [form] = Form.useForm<RecipeEmployeeRefEditDto>()
+  const [form] = Form.useForm<RecipeRoleRefEditDto>()
 
   const { data: { data: bomCandidates } = {} } = useQuery(
     BOM.listQO({
       ...defaultMaxPageDto
     })
   )
-  const { data: { data: employeeCandidates } = {} } = useQuery(
-    Employee.listQO({
+  const { data: { data: roleCandidates } = {} } = useQuery(
+    Role.listQO({
       ...defaultMaxPageDto
     })
   )
@@ -45,7 +41,7 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<RecipeEmployeeRefEditDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<RecipeRoleRefEditDto>['onFinish'] = (values) =>
     editMutation.mutate(
       {
         ...detailData,
@@ -58,7 +54,7 @@ export default function EditModal(props: EditModalProps) {
 
   return (
     <Modal
-      title="编辑配方职员对照"
+      title="编辑配方角色对照"
       open={open}
       onOk={() => form.submit()}
       onCancel={() => setOpen?.(false)}
@@ -74,42 +70,42 @@ export default function EditModal(props: EditModalProps) {
         onFinish={onFinish}
       >
         <Skeleton loading={isPending}>
-          <Form.Item<RecipeEmployeeRefEditDto>
-            name="cEmployeeCode"
-            label="职员编码"
+          <Form.Item<RecipeRoleRefEditDto>
+            name="cRoleCode"
+            label="角色编码"
             rules={[{ required: true }]}
           >
             <Select
-              options={employeeCandidates}
+              options={roleCandidates}
               fieldNames={{
-                label: 'cEmployeeCode',
-                value: 'cEmployeeCode'
+                label: 'cRoleCode',
+                value: 'cRoleCode'
               }}
               showSearch={{
                 filterOption: (input, option) =>
-                  (option?.cEmployeeCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                  (option?.cEmployeeName ?? '').toLowerCase().includes(input.toLowerCase())
+                  (option?.cRoleCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
+                  (option?.cRoleName ?? '').toLowerCase().includes(input.toLowerCase())
               }}
               onSelect={(_value, option) => {
                 form.setFieldsValue({
-                  cEmployeeName: option.cEmployeeName
+                  cRoleName: option.cRoleName
                 })
               }}
               optionRender={(option) => (
                 <Flex justify="space-between">
-                  <span>{option.data.cEmployeeName}</span>
-                  <span> {option.data.cEmployeeCode}</span>
+                  <span>{option.data.cRoleName}</span>
+                  <span> {option.data.cRoleCode}</span>
                 </Flex>
               )}
             />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
-            name="cEmployeeName"
-            label="职员名称"
+          <Form.Item<RecipeRoleRefEditDto>
+            name="cRoleName"
+            label="角色名称"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cInvCode"
             label="产品编码"
             rules={[{ required: true }]}
@@ -148,61 +144,61 @@ export default function EditModal(props: EditModalProps) {
               )}
             />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cInvName"
             label="产品名称"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="BomUID"
             hidden
           >
             <Input />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cInvstd"
             label="规格型号"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="iBOMStatus"
             hidden
           >
             <Input />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="iBOMStatusName"
             label="BOM状态"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cBOMType"
             hidden
           >
             <Input />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cBOMTypeName"
             label="BOM类别"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cVersion"
             label="版本代号"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="dVersionDate"
             label="版本日期"
           >
             <Input disabled />
           </Form.Item>
-          <Form.Item<RecipeEmployeeRefEditDto>
+          <Form.Item<RecipeRoleRefEditDto>
             name="cVerisionMemo"
             label="版本说明"
           >

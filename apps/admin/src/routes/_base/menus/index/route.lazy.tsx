@@ -117,13 +117,13 @@ const treeData: TreeDataNode[] = [
             ]
           },
           {
-            key: 'recipe-employee-ref',
-            title: '配方职员对照',
+            key: 'recipe-role-ref',
+            title: '配方角色对照 recipe-role-ref',
             children: [
-              { key: 'recipe-employee-ref:view', title: '查看 recipe-employee-ref:view' },
-              { key: 'recipe-employee-ref:add', title: '新增 recipe-employee-ref:add' },
-              { key: 'recipe-employee-ref:edit', title: '编辑 recipe-employee-ref:edit' },
-              { key: 'recipe-employee-ref:delete', title: '删除 recipe-employee-ref:delete' }
+              { key: 'recipe-role-ref:view', title: '查看 recipe-role-ref:view' },
+              { key: 'recipe-role-ref:add', title: '新增 recipe-role-ref:add' },
+              { key: 'recipe-role-ref:edit', title: '编辑 recipe-role-ref:edit' },
+              { key: 'recipe-role-ref:delete', title: '删除 recipe-role-ref:delete' }
             ]
           },
           {

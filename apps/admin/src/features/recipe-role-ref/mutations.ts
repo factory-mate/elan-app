@@ -1,10 +1,10 @@
-import { RecipeEmployeeRefAPI } from './api'
-import type { RecipeEmployeeRefAddDto, RecipeEmployeeRefEditDto } from './types'
+import { RecipeRoleRefAPI } from './api'
+import type { RecipeRoleRefAddDto, RecipeRoleRefEditDto } from './types'
 
 export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => RecipeEmployeeRefAPI.delete(ids),
+    mutationFn: (ids: string[]) => RecipeRoleRefAPI.delete(ids),
     onSuccess: () => showMessage('success')
   })
 }
@@ -12,7 +12,7 @@ export const useDeleteMutation = () => {
 export const useAddMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: RecipeEmployeeRefAddDto) => RecipeEmployeeRefAPI.add(data),
+    mutationFn: (data: RecipeRoleRefAddDto) => RecipeRoleRefAPI.add(data),
     onSuccess: () => showMessage('success')
   })
 }
@@ -20,7 +20,7 @@ export const useAddMutation = () => {
 export const useEditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (data: RecipeEmployeeRefEditDto) => RecipeEmployeeRefAPI.edit(data),
+    mutationFn: (data: RecipeRoleRefEditDto) => RecipeRoleRefAPI.edit(data),
     onSuccess: () => showMessage('success')
   })
 }
