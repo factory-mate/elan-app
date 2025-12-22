@@ -6,7 +6,8 @@ import type { Key } from 'react'
 import { type InventoryVo, listQO, useDeleteMutation } from '@/features/inventory'
 
 import { AddModal, EditModal, TreeArea } from './-components'
-import type { EditModalMeta } from './-types'
+import FilterArea from './-components/FilterArea'
+import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/inventory/')({
   component: RouteComponent
@@ -18,6 +19,7 @@ function RouteComponent() {
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
+  const [filterData, setFilterData] = useState<FilterForm>({})
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
@@ -25,10 +27,11 @@ function RouteComponent() {
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
-      conditions:
-        selectedTreeKeys.length > 0
-          ? `cInvClassCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
-          : undefined
+      conditions: queryBuilder<FilterForm>([
+        { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
+        { key: 'cInvName', type: 'like', val: filterData.cInvName },
+        { key: 'cInvClassCode', type: 'in', val: selectedTreeKeys }
+      ])
     })
   )
   const deleteMutation = useDeleteMutation()
@@ -111,6 +114,7 @@ function RouteComponent() {
             orientation="vertical"
             className="w-full"
           >
+            <FilterArea setFilterData={setFilterData} />
             <Flex
               className="h-8"
               justify="space-between"
@@ -143,7 +147,7 @@ function RouteComponent() {
               </Space>
             </Flex>
 
-            <div className="ag-theme-quartz h-[calc(100vh-251px)]">
+            <div className="ag-theme-quartz h-[calc(100vh-341px)]">
               <AgGridReact<InventoryVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}

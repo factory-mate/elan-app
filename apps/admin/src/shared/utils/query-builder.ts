@@ -14,7 +14,7 @@ export const queryBuilder = <T extends object>(queryData: QueryDataItem<T>[] = [
         }
         break
       case 'in':
-        if (i.key && i.val) {
+        if (i.key && i.val && i.val.length > 0) {
           qsList.push(`${i.key} in (${i.val.join(',')})`)
         }
         break
