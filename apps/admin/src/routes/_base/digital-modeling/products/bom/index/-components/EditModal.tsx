@@ -567,6 +567,7 @@ export default function EditModal(props: EditModalProps) {
             columnDefs={columnDefs}
             rowData={tableData}
             editType="fullRow"
+            loading={isDetailFetching}
           />
         </div>
       </Space>

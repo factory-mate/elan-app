@@ -262,6 +262,11 @@ function RouteComponent() {
                     <Col span={8}>
                       <Form.Item<BOMVo> label="状态">{detailData?.iStatusName}</Form.Item>
                     </Col>
+                    <Col span={8}>
+                      <Form.Item<BOMVo> label="生效日期">
+                        {detailData?.dEffectiveDate?.format('YYYY-MM-DD')}
+                      </Form.Item>
+                    </Col>
                   </Row>
                 </Skeleton>
               </Form>
