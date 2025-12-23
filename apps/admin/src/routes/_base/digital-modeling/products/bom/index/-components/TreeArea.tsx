@@ -27,7 +27,7 @@ export default function TreeArea(props: TreeAreaProps) {
         onSearch={(value) => setCurrentSearchText(value)}
       /> */}
       <Tree
-        className="h-[calc(100vh-140px)]"
+        className="h-[calc(100vh-220px)]"
         treeData={data}
         selectedKeys={selectedTreeKeys}
         onSelect={(selectedKeys, info) => {

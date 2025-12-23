@@ -204,8 +204,8 @@ function RouteComponent() {
           <TreeArea setSelectedTreeData={setSelectedTreeData} />
         </Splitter.Panel>
         <Splitter.Panel
-          defaultSize="80%"
-          min="70%"
+          defaultSize="70%"
+          min="50%"
         >
           {selectedTreeData?.UID && selectedTreeData.UID !== NOT_FOUND_UID && (
             <Space
@@ -271,7 +271,7 @@ function RouteComponent() {
                 </Skeleton>
               </Form>
 
-              <div className="ag-theme-quartz h-[calc(100vh-251px)]">
+              <div className="ag-theme-quartz h-[calc(100vh-499px)]">
                 <AgGridReact<BOMChildItemVo>
                   ref={gridRef}
                   getRowId={(params) => params.data.UID!}
