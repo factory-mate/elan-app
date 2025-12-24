@@ -47,8 +47,8 @@ declare global {
   const LineMdMenuFoldRight: typeof import('~icons/line-md/menu-fold-right.jsx').default
   const Link: typeof import('@tanstack/react-router').Link
   const LoaderContext: typeof import('@tanstack/react-router').LoaderContext
-  const LucideChevronsDown: typeof import('~icons/lucide/chevrons-down.jsx')['default']
-  const LucideEllipsis: typeof import('~icons/lucide/ellipsis.jsx')['default']
+  const LucideChevronsDown: typeof import('~icons/lucide/chevrons-down.jsx').default
+  const LucideEllipsis: typeof import('~icons/lucide/ellipsis.jsx').default
   const LucideExpand: typeof import('~icons/lucide/expand.jsx').default
   const LucideRefreshCcw: typeof import('~icons/lucide/refresh-ccw.jsx').default
   const LucideSearch: typeof import('~icons/lucide/search.jsx').default
@@ -70,6 +70,7 @@ declare global {
   const QueryClientProvider: typeof import('@tanstack/react-query').QueryClientProvider
   const QueryProvider: typeof import('../src/shared/providers/QueryProvider/index').default
   const ReactChart: typeof import('@bit-ocean/echarts').ReactChart
+  const RefModal: typeof import('../src/shared/components/RefModal/index').default
   const RemoteSelect: typeof import('../src/shared/components/RemoteSelect/index').default
   const Result: typeof import('antd').Result
   const RouterProvider: typeof import('@tanstack/react-router').RouterProvider
@@ -195,6 +196,12 @@ declare global {
   // @ts-ignore
   export type { ErrorPageProps } from '../src/shared/components/ErrorPage/index'
   import('../src/shared/components/ErrorPage/index')
+  // @ts-ignore
+  export type { FilterAreaProps, FilterDef } from '../src/shared/components/FilterArea/index'
+  import('../src/shared/components/FilterArea/index')
+  // @ts-ignore
+  export type { RemoteSelectProps } from '../src/shared/components/RemoteSelect/index'
+  import('../src/shared/components/RemoteSelect/index')
   // @ts-ignore
   export type { BooleanValue } from '../src/shared/enums/index'
   import('../src/shared/enums/index')

@@ -31,7 +31,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: STALE.SECONDS.FIVE,
-      gcTime: STALE.MINUTES.TEN,
+      gcTime: STALE.MINUTES.FIVE,
       retry: 1
     }
   },

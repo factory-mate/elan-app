@@ -2,10 +2,13 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColGroupDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type NormalMaterialVo } from '@/features/normal-material'
+import { type InventoryVo, ProductCodeRemoteSelect } from '@/features/inventory'
+import { LIST_QK, listQO, type NormalMaterialVo } from '@/features/normal-material'
 
-import { FilterArea } from './-components'
-import type { FilterForm } from './-types'
+interface FilterForm {
+  cInvCode?: string
+  cInvName?: string
+}
 
 export const Route = createLazyFileRoute('/_base/report/qc/normal-material')({
   component: RouteComponent
@@ -35,6 +38,22 @@ function RouteComponent() {
       ])
     })
   )
+
+  const filterDefs: FilterDef<InventoryVo>[] = [
+    {
+      name: 'cInvCode',
+      label: '产品编码',
+      type: 'custom',
+      render: () => (
+        <ProductCodeRemoteSelect
+          onConfirm={(v) => {
+            form.setFieldValue('cInvCode', v.cInvCode)
+            form.setFieldValue('cInvName', v.cInvName)
+          }}
+        />
+      )
+    }
+  ]
 
   const columnDefs = useMemo<ColGroupDef<NormalMaterialVo>[]>(
     () => [
@@ -105,8 +124,13 @@ function RouteComponent() {
         className="w-full"
       >
         <FilterArea
-          form={form}
-          setFilterData={setFilterData}
+          form={{
+            form,
+            onFinish: (values) => setFilterData?.({ ...values })
+          }}
+          filterDefs={filterDefs}
+          onReset={() => setFilterData?.({})}
+          queryKey={LIST_QK}
         />
         <Flex
           className="h-8"

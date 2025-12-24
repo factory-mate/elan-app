@@ -1,64 +1,57 @@
 import type { SelectProps } from 'antd'
+import { debounce } from 'lodash-es'
 
-interface RemoteSelectProps extends SelectProps {
-  handler?: (currentValue: string, v: string, callback: (data: { value: string }[]) => void) => void
+export interface RemoteSelectProps extends Omit<SelectProps, 'children'> {
+  debounceTimeout?: number
+  fetchOptions?: (search: string) => Promise<SelectProps['options']>
 }
 
 export default function RemoteSelect(props: RemoteSelectProps) {
-  const { handler = () => {} } = props
+  const { debounceTimeout = 300, fetchOptions, showSearch, ...otherProps } = props
 
-  const [data, setData] = useState<SelectProps['options']>([])
-  const [value, setValue] = useState<string>()
+  const [options, setOptions] = useState<SelectProps['options']>([])
+  const [isFetching, setIsFetching] = useState(false)
 
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const currentValue = useRef<string>('')
+  const fetchRef = useRef(0)
 
-  const fetchData = useCallback(
-    (v: string, callback: (data: { value: string }[]) => void) => {
-      if (timeout.current) {
-        clearTimeout(timeout.current)
-        timeout.current = null
+  const debounceFetcher = useMemo(() => {
+    const loadOptions = (v: string) => {
+      if (!fetchOptions) {
+        return
       }
 
-      currentValue.current = v
+      fetchRef.current += 1
+      const fetchId = fetchRef.current
+      setOptions([])
+      setIsFetching(true)
 
-      // if (v) {
-      timeout.current = setTimeout(() => {
-        currentValue.current = v
-        handler(currentValue.current, v, callback)
-      }, 300)
-      // } else {
-      //   callback([])
-      // }
-    },
-    [handler]
-  )
+      fetchOptions((v ?? '').replaceAll(' ', '')).then((newOptions) => {
+        if (fetchId !== fetchRef.current) {
+          return
+        }
+        setOptions(newOptions)
+        setIsFetching(false)
+      })
+    }
 
-  const handleSearch = (newValue: string) => {
-    fetchData(newValue, setData)
-  }
-
-  const handleChange = (newValue: string) => {
-    setValue(newValue)
-  }
+    return debounce(loadOptions, debounceTimeout)
+  }, [fetchOptions, debounceTimeout])
 
   useEffect(() => {
-    fetchData('', setData)
-  }, [fetchData])
+    debounceFetcher('')
+  }, [debounceFetcher])
 
   return (
     <Select
-      options={data}
+      options={options}
       showSearch={{
         filterOption: false,
-        onSearch: handleSearch
+        onSearch: debounceFetcher,
+        ...(typeof showSearch === 'boolean' ? {} : showSearch)
       }}
       allowClear
-      value={value}
-      defaultActiveFirstOption={false}
-      onChange={handleChange}
-      notFoundContent={null}
-      {...props}
+      notFoundContent={isFetching ? <Spin size="small" /> : '未找到数据'}
+      {...otherProps}
     />
   )
 }
