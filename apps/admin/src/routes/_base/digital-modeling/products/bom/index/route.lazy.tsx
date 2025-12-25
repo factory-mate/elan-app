@@ -248,7 +248,7 @@ function RouteComponent() {
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="版本日期">
-                        {detailData?.dVersionDate?.format('YYYY-MM-DD')}
+                        {DateUtils.formatTime(detailData?.dVersionDate, 'YYYY-MM-DD')}
                       </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -265,7 +265,7 @@ function RouteComponent() {
                     </Col>
                     <Col span={8}>
                       <Form.Item<BOMVo> label="生效日期">
-                        {detailData?.dEffectiveDate?.format('YYYY-MM-DD')}
+                        {DateUtils.formatTime(detailData?.dEffectiveDate, 'YYYY-MM-DD')}
                       </Form.Item>
                     </Col>
                   </Row>

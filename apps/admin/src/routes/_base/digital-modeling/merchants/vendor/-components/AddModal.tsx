@@ -19,7 +19,7 @@ export default function AddModal(props: AddModalProps) {
   const cDepName = Form.useWatch('cDepName', form)
   const cEmployeeName = Form.useWatch('cEmployeeName', form)
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
   const { data: departmentData } = useQuery(
     departmentListQO({
       ...defaultPageDto,

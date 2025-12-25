@@ -21,7 +21,7 @@ export default function EditModal(props: EditModalProps) {
 
   const [form] = Form.useForm<InventoryClassEditDto>()
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
 
   const editMutation = useEditMutation()

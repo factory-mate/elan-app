@@ -23,7 +23,7 @@ export default function EditModal(props: EditModalProps) {
   const cEmployeeName = Form.useWatch('cEmployeeName', form)
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: treeData } = useSuspenseQuery(treeQO())
+  const { data: treeData } = useQuery(treeQO())
   const { data: departmentData } = useQuery(
     departmentListQO({
       ...defaultPageDto,
@@ -41,12 +41,7 @@ export default function EditModal(props: EditModalProps) {
 
   useEffect(() => {
     if (open) {
-      form.setFieldsValue({
-        ...detailData,
-        dRegisterDate: DateUtils.convertToDayjs(detailData?.dRegisterDate),
-        dDevelopmentDate: DateUtils.convertToDayjs(detailData?.dDevelopmentDate),
-        dStopDate: DateUtils.convertToDayjs(detailData?.dStopDate)
-      })
+      form.setFieldsValue({ ...detailData })
     } else {
       form.resetFields()
     }
@@ -163,6 +158,10 @@ export default function EditModal(props: EditModalProps) {
                       <Form.Item<CustomerEditDto>
                         name="dRegisterDate"
                         label="成立日期"
+                        getValueProps={(value) => ({
+                          value: value && DateUtils.convertToDayjs(value)
+                        })}
+                        normalize={(value) => value && DateUtils.formatTime(value)}
                       >
                         <DatePicker />
                       </Form.Item>
@@ -298,6 +297,10 @@ export default function EditModal(props: EditModalProps) {
                       <Form.Item<CustomerEditDto>
                         name="dDevelopmentDate"
                         label="发展日期"
+                        getValueProps={(value) => ({
+                          value: value && DateUtils.convertToDayjs(value)
+                        })}
+                        normalize={(value) => value && DateUtils.formatTime(value)}
                       >
                         <DatePicker />
                       </Form.Item>
@@ -306,6 +309,10 @@ export default function EditModal(props: EditModalProps) {
                       <Form.Item<CustomerEditDto>
                         name="dStopDate"
                         label="停止日期"
+                        getValueProps={(value) => ({
+                          value: value && DateUtils.convertToDayjs(value)
+                        })}
+                        normalize={(value) => value && DateUtils.formatTime(value)}
                       >
                         <DatePicker />
                       </Form.Item>

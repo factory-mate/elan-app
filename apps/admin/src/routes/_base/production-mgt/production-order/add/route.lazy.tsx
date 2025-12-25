@@ -23,11 +23,9 @@ function RouteComponent() {
 
   const [form] = Form.useForm<ProductionOrder.ProductionOrderHead>()
 
-  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
-  const { data: standardTypeCandidates } = useSuspenseQuery(
-    Dicts.fullListQO('ProductVouchStandardType')
-  )
-  const { data: vouchTypeCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchType'))
+  const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
+  const { data: standardTypeCandidates } = useQuery(Dicts.fullListQO('ProductVouchStandardType'))
+  const { data: vouchTypeCandidates } = useQuery(Dicts.fullListQO('ProductVouchType'))
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )

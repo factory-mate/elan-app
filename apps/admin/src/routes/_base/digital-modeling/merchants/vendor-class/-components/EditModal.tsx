@@ -17,7 +17,7 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<VendorClassEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: treeData } = useSuspenseQuery(treeQO())
+  const { data: treeData } = useQuery(treeQO())
 
   const editMutation = useEditMutation()
 

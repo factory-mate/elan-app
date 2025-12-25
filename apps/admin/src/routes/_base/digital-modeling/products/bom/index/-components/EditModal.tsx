@@ -41,7 +41,7 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<BOMEditDto>()
   const parentQuantity = Form.useWatch('nQuantity', form)
 
-  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
+  const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
   const { data: { data: parentInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
@@ -316,7 +316,7 @@ export default function EditModal(props: EditModalProps) {
 
   useAsyncEffect(async () => {
     if (open) {
-      form.setFieldsValue(detailData ?? {})
+      form.setFieldsValue({ ...detailData })
       const data = await queryClient.ensureQueryData(childListQO(meta?.UID))
       setTableData(data ?? [])
     } else {
@@ -480,6 +480,8 @@ export default function EditModal(props: EditModalProps) {
                   name="dVersionDate"
                   label="版本日期"
                   rules={[{ required: true }]}
+                  getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+                  normalize={(value) => value && DateUtils.formatTime(value)}
                 >
                   <DatePicker />
                 </Form.Item>
@@ -521,6 +523,8 @@ export default function EditModal(props: EditModalProps) {
                   name="dEffectiveDate"
                   label="生效日期"
                   rules={[{ required: true }]}
+                  getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+                  normalize={(value) => value && DateUtils.formatTime(value)}
                 >
                   <DatePicker />
                 </Form.Item>

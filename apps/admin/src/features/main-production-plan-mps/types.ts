@@ -1,5 +1,3 @@
-import type { Dayjs } from 'dayjs'
-
 export interface MainProductionPlanMpsVo {
   iStatusName: string
   iStatus: number
@@ -10,8 +8,8 @@ export interface MainProductionPlanMpsVo {
   cDepName: string
   nQuantity: number
   nStockQuantity: number
-  dStartDate: string | Dayjs
-  dEndDate: string | Dayjs
+  dStartDate: string
+  dEndDate: string
   cUnitName: string
   UID: string
   IsValid: true

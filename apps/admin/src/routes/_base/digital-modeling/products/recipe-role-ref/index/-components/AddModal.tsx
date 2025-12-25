@@ -183,8 +183,13 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<RecipeRoleRefAddDto>
           name="dVersionDate"
           label="版本日期"
+          getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+          normalize={(value) => value && DateUtils.formatTime(value)}
         >
-          <Input disabled />
+          <DatePicker
+            placeholder=""
+            disabled
+          />
         </Form.Item>
         <Form.Item<RecipeRoleRefAddDto>
           name="cVerisionMemo"

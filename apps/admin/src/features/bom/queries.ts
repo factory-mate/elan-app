@@ -26,12 +26,7 @@ export const detailQO = (id?: string) =>
   queryOptions({
     queryKey: detailQK(id!),
     queryFn: ({ signal }) => BOMAPI.detail(id!, signal),
-    enabled: !!id && id !== NOT_FOUND_UID,
-    select: (data) => ({
-      ...data,
-      dEffectiveDate: DateUtils.convertToDayjs(data.dEffectiveDate),
-      dVersionDate: DateUtils.convertToDayjs(data.dVersionDate)
-    })
+    enabled: !!id && id !== NOT_FOUND_UID
   })
 
 export const childListQO = (id?: string) =>

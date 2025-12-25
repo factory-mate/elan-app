@@ -18,7 +18,7 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<UnitEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: options } = useSuspenseQuery(fullListQO({}))
+  const { data: options } = useQuery(fullListQO({}))
 
   const editMutation = useEditMutation()
 

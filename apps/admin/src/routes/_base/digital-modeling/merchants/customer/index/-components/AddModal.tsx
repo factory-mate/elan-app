@@ -19,7 +19,7 @@ export default function AddModal(props: AddModalProps) {
   const cDepName = Form.useWatch('cDepName', form)
   const cEmployeeName = Form.useWatch('cEmployeeName', form)
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
   const { data: departmentData } = useQuery(
     departmentListQO({
       ...defaultPageDto,
@@ -145,6 +145,10 @@ export default function AddModal(props: AddModalProps) {
                     <Form.Item<CustomerAddDto>
                       name="dRegisterDate"
                       label="成立日期"
+                      getValueProps={(value) => ({
+                        value: value && DateUtils.convertToDayjs(value)
+                      })}
+                      normalize={(value) => value && DateUtils.formatTime(value)}
                     >
                       <DatePicker />
                     </Form.Item>
@@ -168,9 +172,10 @@ export default function AddModal(props: AddModalProps) {
                           label: 'cDepName',
                           value: 'cDepCode'
                         }}
-                        showSearch
+                        showSearch={{
+                          onSearch: (value) => form.setFieldValue('cDepName', value)
+                        }}
                         allowClear
-                        onSearch={(value) => form.setFieldValue('cDepName', value)}
                       />
                     </Form.Item>
                   </Col>
@@ -185,9 +190,10 @@ export default function AddModal(props: AddModalProps) {
                           label: 'cEmployeeName',
                           value: 'cEmployeeCode'
                         }}
-                        showSearch
+                        showSearch={{
+                          onSearch: (value) => form.setFieldValue('cEmployeeName', value)
+                        }}
                         allowClear
-                        onSearch={(value) => form.setFieldValue('cEmployeeName', value)}
                       />
                     </Form.Item>
                   </Col>
@@ -280,6 +286,10 @@ export default function AddModal(props: AddModalProps) {
                     <Form.Item<CustomerAddDto>
                       name="dDevelopmentDate"
                       label="发展日期"
+                      getValueProps={(value) => ({
+                        value: value && DateUtils.convertToDayjs(value)
+                      })}
+                      normalize={(value) => value && DateUtils.formatTime(value)}
                     >
                       <DatePicker />
                     </Form.Item>
@@ -288,6 +298,10 @@ export default function AddModal(props: AddModalProps) {
                     <Form.Item<CustomerAddDto>
                       name="dStopDate"
                       label="停止日期"
+                      getValueProps={(value) => ({
+                        value: value && DateUtils.convertToDayjs(value)
+                      })}
+                      normalize={(value) => value && DateUtils.formatTime(value)}
                     >
                       <DatePicker />
                     </Form.Item>

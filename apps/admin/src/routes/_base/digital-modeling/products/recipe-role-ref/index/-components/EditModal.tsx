@@ -195,8 +195,13 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<RecipeRoleRefEditDto>
             name="dVersionDate"
             label="版本日期"
+            getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+            normalize={(value) => value && DateUtils.formatTime(value)}
           >
-            <Input disabled />
+            <DatePicker
+              placeholder=""
+              disabled
+            />
           </Form.Item>
           <Form.Item<RecipeRoleRefEditDto>
             name="cVerisionMemo"

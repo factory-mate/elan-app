@@ -23,7 +23,7 @@ export default function EditModal(props: EditModalProps) {
   const cUnitClassCode = Form.useWatch(['info', 'cUnitClassCode'], form)
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.cInvCode))
-  const { data: periodUnitCandidates } = useSuspenseQuery(fullListQO('PeriodUnitType'))
+  const { data: periodUnitCandidates } = useQuery(fullListQO('PeriodUnitType'))
   const { data: inventoryClassCandidates } = useQuery(InventoryClass.fullListQO({}))
   const { data: unitClassCandidates } = useQuery(UnitClass.fullListQO({}))
   const { data: unitCandidates } = useQuery(

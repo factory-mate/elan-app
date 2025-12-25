@@ -14,7 +14,7 @@ export default function AddModal(props: AddModalProps) {
 
   const [form] = Form.useForm<UnitAddDto>()
 
-  const { data } = useSuspenseQuery(fullListQO({}))
+  const { data } = useQuery(fullListQO({}))
 
   const addMutation = useAddMutation()
 

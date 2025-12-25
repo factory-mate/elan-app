@@ -12,7 +12,7 @@ export default function RolesInfo() {
 
   const match = useMatch({ from: '/_base/digital-modeling/orgs/employee/$id/edit' })
 
-  const { data: detailData } = useSuspenseQuery(Employee.detailQO(match.params.id))
+  const { data: detailData } = useQuery(Employee.detailQO(match.params.id))
   const { data: roleCandidates } = useQuery(Role.fullListQO())
   const { data: userRoleData } = useQuery(
     Role.userRoleFullListQO({
@@ -24,7 +24,7 @@ export default function RolesInfo() {
 
   const onFinish: FormProps<FormValues>['onFinish'] = (values) =>
     batchAddMutation.mutate({
-      Items: values.cRoleCode.map((i) => ({ cRoleCode: i, cLoginName: detailData?.cEmployeeCode }))
+      Items: values.cRoleCode.map((i) => ({ cRoleCode: i, cLoginName: detailData!.cEmployeeCode }))
     })
 
   useEffect(() => {

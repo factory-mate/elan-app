@@ -37,7 +37,7 @@ export default function AddModal(props: AddModalProps) {
   const [form] = Form.useForm<BOMAddDto>()
   const parentQuantity = Form.useWatch('nQuantity', form)
 
-  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
+  const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
   const { data: { data: childInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       ...defaultMaxPageDto,
@@ -450,6 +450,8 @@ export default function AddModal(props: AddModalProps) {
                 name="dVersionDate"
                 label="版本日期"
                 rules={[{ required: true }]}
+                getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+                normalize={(value) => value && DateUtils.formatTime(value)}
               >
                 <DatePicker />
               </Form.Item>
@@ -491,6 +493,8 @@ export default function AddModal(props: AddModalProps) {
                 name="dEffectiveDate"
                 label="生效日期"
                 rules={[{ required: true }]}
+                getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+                normalize={(value) => value && DateUtils.formatTime(value)}
               >
                 <DatePicker />
               </Form.Item>

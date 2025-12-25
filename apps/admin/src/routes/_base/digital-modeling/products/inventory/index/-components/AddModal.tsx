@@ -19,7 +19,7 @@ export default function AddModal(props: AddModalProps) {
 
   const cUnitClassCode = Form.useWatch(['info', 'cUnitClassCode'], form)
 
-  const { data: periodUnitCandidates } = useSuspenseQuery(fullListQO('PeriodUnitType'))
+  const { data: periodUnitCandidates } = useQuery(fullListQO('PeriodUnitType'))
   const { data: inventoryClassCandidates } = useQuery(InventoryClass.treeQO())
   const { data: unitClassCandidates } = useQuery(UnitClass.fullListQO({}))
   const { data: unitCandidates } = useQuery(

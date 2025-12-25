@@ -1,5 +1,3 @@
-import type { Dayjs } from 'dayjs'
-
 export interface BOMVo {
   iStatusName: string
   cBOMTypeName: string
@@ -10,9 +8,9 @@ export interface BOMVo {
   cUnitCode: string
   cUnitName: string
   cVersion: string
-  dVersionDate: string | Dayjs
+  dVersionDate: string
   cVerisionMemo: string
-  dEffectiveDate?: string | Dayjs
+  dEffectiveDate?: string
   cReplaceStatus: string
   cReplaceMemo: string
   iStatus: number

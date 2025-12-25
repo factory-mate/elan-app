@@ -37,11 +37,7 @@ export default function EditModal(props: EditModalProps) {
 
   useEffect(() => {
     if (open) {
-      form.setFieldsValue({
-        ...detailData,
-        dStartDate: DateUtils.convertToDayjs(detailData?.dStartDate),
-        dEndDate: DateUtils.convertToDayjs(detailData?.dEndDate)
-      })
+      form.setFieldsValue({ ...detailData })
     } else {
       form.resetFields()
     }
@@ -133,7 +129,9 @@ export default function EditModal(props: EditModalProps) {
             name="cDepName"
             label="生产部门名称"
             hidden
-          />
+          >
+            <Input />
+          </Form.Item>
           <Form.Item<MainProductionPlanMpsEditDto>
             name="nQuantity"
             label="计划数量"
@@ -149,12 +147,16 @@ export default function EditModal(props: EditModalProps) {
           <Form.Item<MainProductionPlanMpsEditDto>
             name="dStartDate"
             label="开始日期"
+            getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+            normalize={(value) => value && DateUtils.formatTime(value)}
           >
             <DatePicker />
           </Form.Item>
           <Form.Item<MainProductionPlanMpsEditDto>
             name="dEndDate"
             label="结束日期"
+            getValueProps={(value) => ({ value: value && DateUtils.convertToDayjs(value) })}
+            normalize={(value) => value && DateUtils.formatTime(value)}
           >
             <DatePicker />
           </Form.Item>

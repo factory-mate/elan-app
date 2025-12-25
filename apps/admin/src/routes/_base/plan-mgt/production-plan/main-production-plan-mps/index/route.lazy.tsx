@@ -95,15 +95,23 @@ function RouteComponent() {
             </PermCodeProvider>
             <PermCodeProvider code="main-production-plan-mps:delete">
               <VisibleProvider visible={params.data!.iStatus === 0}>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="text"
-                  disabled={deleteMutation.isPending}
-                  onClick={() => deleteMutation.mutate([params.data!.UID])}
+                <Popconfirm
+                  title="确认执行该操作？"
+                  okButtonProps={{
+                    disabled: deleteMutation.isPending,
+                    loading: deleteMutation.isPending
+                  }}
+                  onConfirm={() => deleteMutation.mutate([params.data!.UID])}
                 >
-                  删除
-                </Button>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="text"
+                    disabled={deleteMutation.isPending}
+                  >
+                    删除
+                  </Button>
+                </Popconfirm>
               </VisibleProvider>
             </PermCodeProvider>
           </Space>
@@ -152,21 +160,28 @@ function RouteComponent() {
                 撤单
               </Button>
             </PermCodeProvider>
-            <Button
-              onClick={() => {
-                if (!selectedRows.length) {
-                  showMessage('select-data')
-                  return
-                }
-                if (selectedRows.some((i) => i.iStatus === 0)) {
-                  message.warning('勾选了已生单数据，不允许删除')
-                  return
-                }
-                deleteMutation.mutate(selectedRows.map((i) => i.UID))
-              }}
-            >
-              删除
-            </Button>
+            <PermCodeProvider code="main-production-plan-mps:delete">
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => {
+                  if (!selectedRows.length) {
+                    showMessage('select-data')
+                    return
+                  }
+                  if (selectedRows.some((i) => i.iStatus === 0)) {
+                    message.warning('勾选了已生单数据，不允许删除')
+                    return
+                  }
+                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
+                }}
+              >
+                <Button disabled={deleteMutation.isPending}>删除</Button>
+              </Popconfirm>
+            </PermCodeProvider>
           </Space>
           <Space>
             <PermCodeProvider code="main-production-plan-mps:compute">

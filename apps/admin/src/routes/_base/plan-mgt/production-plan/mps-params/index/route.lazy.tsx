@@ -10,7 +10,7 @@ export const Route = createLazyFileRoute('/_base/plan-mgt/production-plan/mps-pa
 function RouteComponent() {
   const [form] = Form.useForm<MpsParamsEditDto>()
 
-  const { data: listData } = useSuspenseQuery(fullListQO())
+  const { data: listData } = useQuery(fullListQO())
 
   const editMutation = useEditMutation()
 
@@ -28,6 +28,10 @@ function RouteComponent() {
       }
     )
 
+  useEffect(() => {
+    form.setFieldsValue({ ...listData?.[0] })
+  }, [listData, form])
+
   return (
     <PageContainer>
       <Card
@@ -39,7 +43,6 @@ function RouteComponent() {
           name="add-form"
           form={form}
           labelCol={{ span: 16 }}
-          initialValues={{ ...listData[0] }}
           onFinish={onFinish}
         >
           <Form.Item<MpsParamsEditDto>

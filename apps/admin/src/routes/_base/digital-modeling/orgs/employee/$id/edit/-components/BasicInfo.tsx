@@ -10,7 +10,7 @@ export default function BasicInfo() {
   const navigate = useNavigate()
   const match = useMatch({ from: '/_base/digital-modeling/orgs/employee/$id/edit' })
 
-  const { data: detailData } = useSuspenseQuery(Employee.detailQO(match.params.id))
+  const { data: detailData } = useQuery(Employee.detailQO(match.params.id))
   const { data: deptTreeData } = useQuery(Department.treeQO())
   const { data: positionCandidates } = useQuery(Dicts.fullListQO('cProfessionalTypeCode'))
 

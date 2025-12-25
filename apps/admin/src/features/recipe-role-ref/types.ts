@@ -1,5 +1,3 @@
-import type { Dayjs } from 'dayjs'
-
 export interface RecipeRoleRefVo {
   cRoleCode: string
   cRoleName: string
@@ -11,7 +9,7 @@ export interface RecipeRoleRefVo {
   cInvName: string
   cInvstd: string | null
   cVersion: string
-  dVersionDate: string | Dayjs
+  dVersionDate: string
   cVerisionMemo: string | null
   BomUID: string
   UID: string

@@ -13,7 +13,7 @@ export default function AddModal(props: AddModalProps) {
 
   const [form] = Form.useForm<VendorClassAddDto>()
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
 
   const addMutation = useAddMutation()
 

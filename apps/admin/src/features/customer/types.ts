@@ -1,5 +1,3 @@
-import type { Dayjs } from 'dayjs'
-
 export interface CustomerVo {
   UID: string
   cCustomerClassCode: string
@@ -41,7 +39,7 @@ export interface CustomerAddDto {
   cTaxID: string
   cLegalPerson: string
   cRegisterMoney: string
-  dRegisterDate: string | Dayjs
+  dRegisterDate: string
   cDepCode: string
   cDepName: string
   cManagerCode: string
@@ -50,8 +48,8 @@ export interface CustomerAddDto {
   cCreditLimit: string
   IsCreditTerm: boolean
   cCreditTerm: string
-  dDevelopmentDate: string | Dayjs
-  dStopDate: string | Dayjs
+  dDevelopmentDate: string
+  dStopDate: string
   cMemo: string
 }
 
