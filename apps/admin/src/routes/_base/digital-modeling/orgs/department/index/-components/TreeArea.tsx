@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { departmentTreeFieldNames, treeQO } from '@/features/department'
+import { treeQO } from '@/features/department'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]
@@ -10,7 +10,7 @@ interface TreeAreaProps {
 export default function TreeArea(props: TreeAreaProps) {
   const { selectedTreeKeys, setSelectedTreeKeys } = props
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
 
   return (
     <Tree
@@ -19,7 +19,11 @@ export default function TreeArea(props: TreeAreaProps) {
       checkable
       checkedKeys={selectedTreeKeys}
       onCheck={(checked) => setSelectedTreeKeys([...(checked as Key[])])}
-      fieldNames={departmentTreeFieldNames}
+      fieldNames={{
+        key: 'cDepCode',
+        title: 'cDepName',
+        children: 'Child'
+      }}
     />
   )
 }

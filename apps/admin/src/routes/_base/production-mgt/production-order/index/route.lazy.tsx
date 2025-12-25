@@ -83,7 +83,10 @@ function RouteComponent() {
               variant="borderless"
               value={params.data?.cStandardType}
               options={standardTypeCandidates}
-              fieldNames={Dicts.dictSelectFieldNames}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
               onSelect={(value) =>
                 params.api.applyTransaction({
                   update: [
@@ -110,7 +113,10 @@ function RouteComponent() {
               variant="borderless"
               value={params.data?.cVouchType}
               options={vouchTypeCandidates}
-              fieldNames={Dicts.dictSelectFieldNames}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
               onSelect={(value) =>
                 params.api.applyTransactionAsync({
                   update: [
@@ -137,7 +143,10 @@ function RouteComponent() {
               variant="borderless"
               value={params.data?.cDefindParm04}
               options={departmentCandidates}
-              fieldNames={Department.departmentSelectFieldNames}
+              fieldNames={{
+                label: 'cDepName',
+                value: 'cDepCode'
+              }}
               onSelect={(value, option) =>
                 params.api.applyTransaction({
                   update: [
@@ -258,7 +267,10 @@ function RouteComponent() {
               variant="borderless"
               value={params.data?.cBomType}
               options={bomCandidates}
-              fieldNames={Dicts.dictSelectFieldNames}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
               onSelect={(value) =>
                 params.api.applyTransaction({
                   update: [
@@ -410,7 +422,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:print">
               <Button
                 onClick={async () => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -434,7 +446,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:audit">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -447,7 +459,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:quit-audit">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -460,7 +472,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:open">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -473,7 +485,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:close">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -486,7 +498,7 @@ function RouteComponent() {
             <PermCodeProvider code="production-order:delete">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }

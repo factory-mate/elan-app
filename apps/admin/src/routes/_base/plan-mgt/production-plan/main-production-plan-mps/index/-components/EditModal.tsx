@@ -117,7 +117,10 @@ export default function EditModal(props: EditModalProps) {
           >
             <Select
               options={departmentCandidates}
-              fieldNames={Department.departmentSelectFieldNames}
+              fieldNames={{
+                label: 'cDepName',
+                value: 'cDepCode'
+              }}
               onSelect={(_value, option) => {
                 form.setFieldsValue({
                   cDepCode: option.cDepCode,

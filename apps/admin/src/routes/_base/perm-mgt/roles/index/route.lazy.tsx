@@ -129,7 +129,7 @@ function RouteComponent() {
             <PermCodeProvider code="roles:delete">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }

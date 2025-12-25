@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { fullListQO, unitClassTreeFieldNames } from '@/features/unit-class'
+import { fullListQO } from '@/features/unit-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]
@@ -19,7 +19,10 @@ export default function TreeArea(props: TreeAreaProps) {
       checkable
       checkedKeys={selectedTreeKeys}
       onCheck={(checked) => setSelectedTreeKeys([...(checked as Key[])])}
-      fieldNames={unitClassTreeFieldNames}
+      fieldNames={{
+        title: 'cUnitClassName',
+        key: 'cUnitClassCode'
+      }}
     />
   )
 }

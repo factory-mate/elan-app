@@ -54,7 +54,7 @@ export default function EditRoleModal(props: EditRoleModalProps) {
     } else {
       form.setFieldsValue({ cLoginName: [], cRoleCode: [] })
     }
-  }, [meta?.ids, open])
+  }, [form, meta?.ids, open])
 
   return (
     <Modal

@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
+import { fullListQO } from '@/features/dicts'
 import { type InventoryAddDto, useAddMutation } from '@/features/inventory'
 import * as InventoryClass from '@/features/inventory-class'
 import * as Unit from '@/features/unit'
@@ -115,7 +115,11 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <TreeSelect
                         treeData={onlyCanSelectTreeLeafNode(inventoryClassCandidates ?? [])}
-                        fieldNames={InventoryClass.inventoryClassTreeSelectFieldNames}
+                        fieldNames={{
+                          label: 'cInvClassName',
+                          value: 'cInvClassCode',
+                          children: 'Child'
+                        }}
                       />
                     </Form.Item>
                   </Col>
@@ -127,7 +131,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={unitClassCandidates}
-                        fieldNames={UnitClass.unitClassSelectFieldNames}
+                        fieldNames={{
+                          value: 'cUnitClassCode',
+                          label: 'cUnitClassName'
+                        }}
                         onSelect={async (value) => {
                           const mainUnit = await queryClient.ensureQueryData(
                             Unit.fullListQO({
@@ -163,7 +170,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={unitCandidates}
-                        fieldNames={Unit.unitSelectFieldNames}
+                        fieldNames={{
+                          label: 'cUnitName',
+                          value: 'cUnitCode'
+                        }}
                       />
                     </Form.Item>
                   </Col>
@@ -175,7 +185,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={unitCandidates}
-                        fieldNames={Unit.unitSelectFieldNames}
+                        fieldNames={{
+                          label: 'cUnitName',
+                          value: 'cUnitCode'
+                        }}
                       />
                     </Form.Item>
                   </Col>
@@ -188,7 +201,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={unitCandidates}
-                        fieldNames={Unit.unitSelectFieldNames}
+                        fieldNames={{
+                          label: 'cUnitName',
+                          value: 'cUnitCode'
+                        }}
                       />
                     </Form.Item>
                   </Col>
@@ -200,7 +216,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={unitCandidates}
-                        fieldNames={Unit.unitSelectFieldNames}
+                        fieldNames={{
+                          label: 'cUnitName',
+                          value: 'cUnitCode'
+                        }}
                       />
                     </Form.Item>
                   </Col>
@@ -240,7 +259,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={periodUnitCandidates}
-                        fieldNames={dictSelectFieldNames}
+                        fieldNames={{
+                          label: 'cDictonaryName',
+                          value: 'cDictonaryCode'
+                        }}
                       />
                     </Form.Item>
                   </Col>

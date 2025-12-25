@@ -222,7 +222,10 @@ export default function AddModal(props: AddModalProps) {
             variant="borderless"
             value={params.data?.cDepCode}
             options={departmentCandidates}
-            fieldNames={Department.departmentSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode'
+            }}
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -385,7 +388,10 @@ export default function AddModal(props: AddModalProps) {
               >
                 <Select
                   options={bomCandidates}
-                  fieldNames={Dicts.dictSelectFieldNames}
+                  fieldNames={{
+                    label: 'cDictonaryName',
+                    value: 'cDictonaryCode'
+                  }}
                 />
               </Form.Item>
             </Col>

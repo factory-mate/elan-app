@@ -2,7 +2,7 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { detailQO, type UnitEditDto, useEditMutation } from '@/features/unit'
-import { fullListQO, unitClassSelectFieldNames } from '@/features/unit-class'
+import { fullListQO } from '@/features/unit-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -68,7 +68,10 @@ export default function EditModal(props: EditModalProps) {
           >
             <Select
               options={options}
-              fieldNames={unitClassSelectFieldNames}
+              fieldNames={{
+                value: 'cUnitClassCode',
+                label: 'cUnitClassName'
+              }}
             />
           </Form.Item>
           <Form.Item<UnitEditDto>

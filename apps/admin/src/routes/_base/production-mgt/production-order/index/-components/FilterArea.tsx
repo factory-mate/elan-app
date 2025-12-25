@@ -38,7 +38,10 @@ export default function FilterArea(props: FilterAreaProps) {
             >
               <Select
                 options={standardTypeCandidates}
-                fieldNames={Dicts.dictSelectFieldNames}
+                fieldNames={{
+                  label: 'cDictonaryName',
+                  value: 'cDictonaryCode'
+                }}
                 allowClear
               />
             </Form.Item>
@@ -50,7 +53,10 @@ export default function FilterArea(props: FilterAreaProps) {
             >
               <Select
                 options={vouchTypeCandidates}
-                fieldNames={Dicts.dictSelectFieldNames}
+                fieldNames={{
+                  label: 'cDictonaryName',
+                  value: 'cDictonaryCode'
+                }}
                 allowClear
               />
             </Form.Item>

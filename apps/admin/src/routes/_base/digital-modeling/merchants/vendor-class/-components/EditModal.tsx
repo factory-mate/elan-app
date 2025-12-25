@@ -1,13 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  detailQO,
-  treeQO,
-  useEditMutation,
-  type VendorClassEditDto,
-  vendorClassTreeSelectFieldNames
-} from '@/features/vendor-class'
+import { detailQO, treeQO, useEditMutation, type VendorClassEditDto } from '@/features/vendor-class'
 
 import type { EditModalMeta } from '../-types'
 
@@ -72,7 +66,11 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={treeData}
-              fieldNames={vendorClassTreeSelectFieldNames}
+              fieldNames={{
+                label: 'cVendorClassName',
+                value: 'cVendorClassCode',
+                children: 'Child'
+              }}
               allowClear
             />
           </Form.Item>

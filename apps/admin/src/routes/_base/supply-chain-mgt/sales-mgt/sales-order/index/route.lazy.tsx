@@ -64,7 +64,7 @@ function RouteComponent() {
             <PermCodeProvider code="sales-order:delete">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                   }
                   deleteMutation.mutate(selectedRows.map((i) => i.UID))

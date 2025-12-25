@@ -2,9 +2,9 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { type CustomerAddDto, useAddMutation } from '@/features/customer'
-import { customerClassTreeSelectFieldNames, treeQO } from '@/features/customer-class'
-import { departmentSelectFieldNames, listQO as departmentListQO } from '@/features/department'
-import { employeeSelectFieldNames, listQO as employeeListQO } from '@/features/employee'
+import { treeQO } from '@/features/customer-class'
+import { listQO as departmentListQO } from '@/features/department'
+import { listQO as employeeListQO } from '@/features/employee'
 
 interface AddModalProps {
   open?: boolean
@@ -100,7 +100,11 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <TreeSelect
                         treeData={data}
-                        fieldNames={customerClassTreeSelectFieldNames}
+                        fieldNames={{
+                          value: 'cCustomerClassCode',
+                          label: 'cCustomerClassName',
+                          children: 'Child'
+                        }}
                         allowClear
                       />
                     </Form.Item>
@@ -160,7 +164,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={departmentData?.data}
-                        fieldNames={departmentSelectFieldNames}
+                        fieldNames={{
+                          label: 'cDepName',
+                          value: 'cDepCode'
+                        }}
                         showSearch
                         allowClear
                         onSearch={(value) => form.setFieldValue('cDepName', value)}
@@ -174,7 +181,10 @@ export default function AddModal(props: AddModalProps) {
                     >
                       <Select
                         options={employeeData?.data}
-                        fieldNames={employeeSelectFieldNames}
+                        fieldNames={{
+                          label: 'cEmployeeName',
+                          value: 'cEmployeeCode'
+                        }}
                         showSearch
                         allowClear
                         onSearch={(value) => form.setFieldValue('cEmployeeName', value)}

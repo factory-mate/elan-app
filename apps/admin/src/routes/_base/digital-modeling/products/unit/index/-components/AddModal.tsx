@@ -2,7 +2,7 @@ import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { type UnitAddDto, useAddMutation } from '@/features/unit'
-import { fullListQO, unitClassSelectFieldNames } from '@/features/unit-class'
+import { fullListQO } from '@/features/unit-class'
 
 interface AddModalProps {
   open?: boolean
@@ -55,7 +55,10 @@ export default function AddModal(props: AddModalProps) {
         >
           <Select
             options={data}
-            fieldNames={unitClassSelectFieldNames}
+            fieldNames={{
+              value: 'cUnitClassCode',
+              label: 'cUnitClassName'
+            }}
           />
         </Form.Item>
         <Form.Item<UnitAddDto>

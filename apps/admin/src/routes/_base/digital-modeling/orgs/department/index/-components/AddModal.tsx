@@ -1,12 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type DepartmentAddDto,
-  departmentTreeSelectFieldNames,
-  treeQO,
-  useAddMutation
-} from '@/features/department'
+import { type DepartmentAddDto, treeQO, useAddMutation } from '@/features/department'
 
 interface AddModalProps {
   open?: boolean
@@ -18,7 +13,7 @@ export default function AddModal(props: AddModalProps) {
 
   const [form] = Form.useForm<DepartmentAddDto>()
 
-  const { data } = useSuspenseQuery(treeQO())
+  const { data } = useQuery(treeQO())
 
   const addMutation = useAddMutation()
 
@@ -60,7 +55,11 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={departmentTreeSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode',
+              children: 'Child'
+            }}
             allowClear
           />
         </Form.Item>

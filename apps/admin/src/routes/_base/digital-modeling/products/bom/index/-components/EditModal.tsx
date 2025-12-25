@@ -228,7 +228,10 @@ export default function EditModal(props: EditModalProps) {
             variant="borderless"
             value={params.data?.cDepCode}
             options={departmentCandidates}
-            fieldNames={Department.departmentSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode'
+            }}
             onSelect={(value, option) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -394,7 +397,10 @@ export default function EditModal(props: EditModalProps) {
                 >
                   <Select
                     options={bomCandidates}
-                    fieldNames={Dicts.dictSelectFieldNames}
+                    fieldNames={{
+                      label: 'cDictonaryName',
+                      value: 'cDictonaryCode'
+                    }}
                   />
                 </Form.Item>
               </Col>

@@ -59,7 +59,11 @@ function RouteComponent() {
         >
           <TreeSelect
             treeData={deptTreeData ?? []}
-            fieldNames={Department.departmentTreeSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode',
+              children: 'Child'
+            }}
             allowClear
             placeholder="请选择部门"
           />
@@ -72,7 +76,10 @@ function RouteComponent() {
         >
           <Select
             options={positionCandidates ?? []}
-            fieldNames={Dicts.dictSelectFieldNames}
+            fieldNames={{
+              label: 'cDictonaryName',
+              value: 'cDictonaryCode'
+            }}
             allowClear
             placeholder="请选择职务"
           />

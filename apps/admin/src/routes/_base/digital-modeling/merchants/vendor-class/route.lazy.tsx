@@ -87,7 +87,7 @@ function RouteComponent() {
         </Splitter.Panel>
         <Splitter.Panel
           defaultSize="80%"
-          min="70%"
+          min="50%"
         >
           <Space
             orientation="vertical"
@@ -102,7 +102,7 @@ function RouteComponent() {
                 <PermCodeProvider code="vendor-class:delete">
                   <Button
                     onClick={() => {
-                      if (selectedRows.length === 0) {
+                      if (!selectedRows.length) {
                         showMessage('select-data')
                         return
                       }

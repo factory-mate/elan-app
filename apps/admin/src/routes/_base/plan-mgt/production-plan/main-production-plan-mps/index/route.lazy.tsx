@@ -129,7 +129,7 @@ function RouteComponent() {
             <PermCodeProvider code="main-production-plan-mps:push">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -142,7 +142,7 @@ function RouteComponent() {
             <PermCodeProvider code="main-production-plan-mps:cancel-push">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -154,7 +154,7 @@ function RouteComponent() {
             </PermCodeProvider>
             <Button
               onClick={() => {
-                if (selectedRows.length === 0) {
+                if (!selectedRows.length) {
                   showMessage('select-data')
                   return
                 }

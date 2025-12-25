@@ -1,13 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type DepartmentEditDto,
-  departmentTreeSelectFieldNames,
-  detailQO,
-  treeQO,
-  useEditMutation
-} from '@/features/department'
+import { type DepartmentEditDto, detailQO, treeQO, useEditMutation } from '@/features/department'
 
 import type { EditModalMeta } from '../-types'
 
@@ -23,7 +17,7 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<DepartmentEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: treeData } = useSuspenseQuery(treeQO())
+  const { data: treeData } = useQuery(treeQO())
 
   const editMutation = useEditMutation()
 
@@ -43,9 +37,7 @@ export default function EditModal(props: EditModalProps) {
         bodys: []
       },
       {
-        onSuccess: () => {
-          setOpen?.(false)
-        }
+        onSuccess: () => setOpen?.(false)
       }
     )
 
@@ -74,7 +66,11 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={treeData}
-              fieldNames={departmentTreeSelectFieldNames}
+              fieldNames={{
+                label: 'cDepName',
+                value: 'cDepCode',
+                children: 'Child'
+              }}
               allowClear
             />
           </Form.Item>

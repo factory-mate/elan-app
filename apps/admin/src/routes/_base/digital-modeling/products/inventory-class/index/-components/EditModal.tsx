@@ -4,7 +4,6 @@ import type { Dispatch, SetStateAction } from 'react'
 import {
   detailQO,
   type InventoryClassEditDto,
-  inventoryClassTreeSelectFieldNames,
   treeQO,
   useEditMutation
 } from '@/features/inventory-class'
@@ -70,7 +69,11 @@ export default function EditModal(props: EditModalProps) {
           >
             <TreeSelect
               treeData={data}
-              fieldNames={inventoryClassTreeSelectFieldNames}
+              fieldNames={{
+                label: 'cInvClassName',
+                value: 'cInvClassCode',
+                children: 'Child'
+              }}
               allowClear
             />
           </Form.Item>

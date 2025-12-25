@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
+import { fullListQO } from '@/features/dicts'
 import { detailQO, type UnitClassEditDto, useEditMutation } from '@/features/unit-class'
 
 import type { EditModalMeta } from '../-types'
@@ -79,7 +79,10 @@ export default function EditModal(props: EditModalProps) {
           >
             <Select
               options={data}
-              fieldNames={dictSelectFieldNames}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
             />
           </Form.Item>
           <Form.Item<UnitClassEditDto>

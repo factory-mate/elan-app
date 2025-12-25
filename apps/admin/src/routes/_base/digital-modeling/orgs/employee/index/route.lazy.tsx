@@ -1,16 +1,16 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
-import type { Key } from 'react'
 
 import {
+  type EmployeeVo,
+  listQO,
   useDeleteMutation,
   useFreezeMutation,
   useStartMutation,
   useStopMutation,
   useUnfreezeMutation
 } from '@/features/employee'
-import { type EmployeeVo, listQO } from '@/features/employee'
 import * as Users from '@/features/users'
 
 import { EditDeptModal, EditPositionModal, EditRoleModal } from './-components'
@@ -28,17 +28,13 @@ function RouteComponent() {
   const editRoleModal = useModal<EditRoleModalMeta>()
 
   const gridRef = useRef<AgGridReact>(null)
-  const [pageParams, setPageParams] = useState(defaultPageDto)
+
+  const { pageParams, setPageParams } = usePagination()
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
-      ...pageParams,
-      conditions:
-        selectedTreeKeys.length > 0
-          ? `cDepCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
-          : undefined
+      ...pageParams
     })
   )
   const startMutation = useStartMutation()
@@ -61,26 +57,20 @@ function RouteComponent() {
         headerName: '是否启用',
         editable: true,
         cellDataType: 'boolean',
-        onCellValueChanged: (event) => {
-          if (event.newValue) {
-            startMutation.mutate([event.data.UID])
-          } else {
-            stopMutation.mutate([event.data.UID])
-          }
-        }
+        onCellValueChanged: (event) =>
+          event.newValue
+            ? startMutation.mutate([event.data.UID])
+            : stopMutation.mutate([event.data.UID])
       },
       {
         field: 'bFreeze',
         headerName: '是否冻结',
         editable: true,
         cellDataType: 'boolean',
-        onCellValueChanged: (event) => {
-          if (event.newValue) {
-            freezeMutation.mutate([event.data.UID])
-          } else {
-            unfreezeMutation.mutate([event.data.UID])
-          }
-        }
+        onCellValueChanged: (event) =>
+          event.newValue
+            ? freezeMutation.mutate([event.data.UID])
+            : unfreezeMutation.mutate([event.data.UID])
       },
       { field: 'dEndLoginTime', headerName: '最后登录' },
       {
@@ -105,15 +95,23 @@ function RouteComponent() {
               </Link>
             </PermCodeProvider>
             <PermCodeProvider code="employee:delete">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data.UID])}
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => deleteMutation.mutate([params.data!.UID])}
               >
-                删除
-              </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  disabled={deleteMutation.isPending}
+                >
+                  删除
+                </Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
         )
@@ -135,17 +133,22 @@ function RouteComponent() {
         >
           <Space>
             <PermCodeProvider code="employee:delete">
-              <Button
-                onClick={() => {
-                  if (selectedRows.length === 0) {
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
                   deleteMutation.mutate(selectedRows.map((i) => i.UID))
                 }}
               >
-                删除
-              </Button>
+                <Button disabled={deleteMutation.isPending}>删除</Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
           <Space>
@@ -182,7 +185,7 @@ function RouteComponent() {
             <PermCodeProvider code="employee:edit">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -195,7 +198,7 @@ function RouteComponent() {
             <PermCodeProvider code="employee:edit">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -208,7 +211,7 @@ function RouteComponent() {
             <PermCodeProvider code="employee:freeze">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -221,7 +224,7 @@ function RouteComponent() {
             <PermCodeProvider code="employee:unfreeze">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
@@ -232,17 +235,22 @@ function RouteComponent() {
               </Button>
             </PermCodeProvider>
             <PermCodeProvider code="employee:reset-password">
-              <Button
-                onClick={() => {
-                  if (selectedRows.length === 0) {
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }
                   resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
                 }}
               >
-                重置密码
-              </Button>
+                <Button disabled={resetPasswordMutation.isPending}>重置密码</Button>
+              </Popconfirm>
             </PermCodeProvider>
             <PermCodeProvider code="employee:add">
               <Link to="/digital-modeling/orgs/employee/add">

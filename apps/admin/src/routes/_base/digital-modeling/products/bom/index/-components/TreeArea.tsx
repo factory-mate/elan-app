@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
 
-import { bomClassTreeFieldNames, type BOMVo, treeQO } from '@/features/bom'
+import { type BOMVo, treeQO } from '@/features/bom'
 
 interface TreeAreaProps {
   setSelectedTreeData: Dispatch<SetStateAction<BOMVo | null>>
@@ -34,7 +34,11 @@ export default function TreeArea(props: TreeAreaProps) {
           setSelectedTreeKeys([...selectedKeys.map((i) => i.toString())])
           setSelectedTreeData(info.node ?? null)
         }}
-        fieldNames={bomClassTreeFieldNames}
+        fieldNames={{
+          key: 'Id',
+          title: 'cInvName',
+          children: 'Child'
+        }}
         titleRender={(node) => (
           <Space size="large">
             <span>{node.cInvCode}</span>

@@ -50,7 +50,10 @@ export default function FilterArea(props: FilterAreaProps) {
             >
               <Select
                 options={departmentCandidates}
-                fieldNames={Department.departmentSelectFieldNames}
+                fieldNames={{
+                  label: 'cDepName',
+                  value: 'cDepCode'
+                }}
               />
             </Form.Item>
           </Col>

@@ -22,8 +22,7 @@ function RouteComponent() {
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
-      ...pageParams,
-      conditions: undefined
+      ...pageParams
     })
   )
 
@@ -68,15 +67,23 @@ function RouteComponent() {
               </Button>
             </PermCodeProvider>
             <PermCodeProvider code="coding-scheme:delete">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data!.UID])}
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => deleteMutation.mutate([params.data!.UID])}
               >
-                删除
-              </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  disabled={deleteMutation.isPending}
+                >
+                  删除
+                </Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
         )
@@ -100,7 +107,7 @@ function RouteComponent() {
             <PermCodeProvider code="coding-scheme:delete">
               <Button
                 onClick={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }

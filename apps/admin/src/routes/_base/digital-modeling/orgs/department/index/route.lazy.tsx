@@ -1,10 +1,15 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
-import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
+import { AgGridReact } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import { type DepartmentVo, listQO } from '@/features/department'
-import { useDeleteMutation, useStartMutation, useStopMutation } from '@/features/department'
+import {
+  type DepartmentVo,
+  listQO,
+  useDeleteMutation,
+  useStartMutation,
+  useStopMutation
+} from '@/features/department'
 
 import { AddModal, EditModal, TreeArea } from './-components'
 import type { EditModalMeta } from './-types'
@@ -16,20 +21,20 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/departmen
 function RouteComponent() {
   const { showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
-  const [pageParams, setPageParams] = useState(defaultPageDto)
-  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
 
+  const { pageParams, setPageParams } = usePagination()
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
+
+  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
+  const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
-      conditions:
-        selectedTreeKeys.length > 0
-          ? `cDepCode in (${selectedTreeKeys.map((k) => `${k}`).join(',')})`
-          : undefined
+      conditions: queryBuilder<{ cDepCode: string }>([
+        { key: 'cDepCode', type: 'in', val: selectedTreeKeys }
+      ])
     })
   )
   const startMutation = useStartMutation()
@@ -49,18 +54,12 @@ function RouteComponent() {
       {
         field: 'IsValid',
         headerName: '启用',
-        cellRenderer: (params: CustomCellRendererProps) => (
-          <Switch
-            value={params.value}
-            onClick={(checked) => {
-              if (checked) {
-                startMutation.mutate([params.data.UID])
-              } else {
-                stopMutation.mutate([params.data.UID])
-              }
-            }}
-          />
-        )
+        editable: true,
+        cellDataType: 'boolean',
+        onCellValueChanged: (event) =>
+          event.newValue
+            ? startMutation.mutate([event.data.UID])
+            : stopMutation.mutate([event.data.UID])
       },
       { field: 'dModifyTime', headerName: '更新时间' },
       {
@@ -84,15 +83,23 @@ function RouteComponent() {
               </Button>
             </PermCodeProvider>
             <PermCodeProvider code="department:delete">
-              <Button
-                size="small"
-                color="primary"
-                variant="text"
-                disabled={deleteMutation.isPending}
-                onClick={() => deleteMutation.mutate([params.data.UID])}
+              <Popconfirm
+                title="确认执行该操作？"
+                okButtonProps={{
+                  disabled: deleteMutation.isPending,
+                  loading: deleteMutation.isPending
+                }}
+                onConfirm={() => deleteMutation.mutate([params.data!.UID])}
               >
-                删除
-              </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  variant="text"
+                  disabled={deleteMutation.isPending}
+                >
+                  删除
+                </Button>
+              </Popconfirm>
             </PermCodeProvider>
           </Space>
         )
@@ -112,7 +119,7 @@ function RouteComponent() {
         </Splitter.Panel>
         <Splitter.Panel
           defaultSize="80%"
-          min="70%"
+          min="50%"
         >
           <Space
             orientation="vertical"
@@ -125,17 +132,22 @@ function RouteComponent() {
             >
               <Space>
                 <PermCodeProvider code="department:delete">
-                  <Button
-                    onClick={() => {
-                      if (selectedRows.length === 0) {
+                  <Popconfirm
+                    title="确认执行该操作？"
+                    okButtonProps={{
+                      disabled: deleteMutation.isPending,
+                      loading: deleteMutation.isPending
+                    }}
+                    onConfirm={() => {
+                      if (!selectedRows.length) {
                         showMessage('select-data')
                         return
                       }
                       deleteMutation.mutate(selectedRows.map((i) => i.UID))
                     }}
                   >
-                    删除
-                  </Button>
+                    <Button disabled={deleteMutation.isPending}>删除</Button>
+                  </Popconfirm>
                 </PermCodeProvider>
               </Space>
               <Space>

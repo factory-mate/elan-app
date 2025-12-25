@@ -107,7 +107,7 @@ function RouteComponent() {
                   loading: deleteMutation.isPending
                 }}
                 onConfirm={() => {
-                  if (selectedRows.length === 0) {
+                  if (!selectedRows.length) {
                     showMessage('select-data')
                     return
                   }

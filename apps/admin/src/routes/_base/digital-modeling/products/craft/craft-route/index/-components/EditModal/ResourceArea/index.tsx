@@ -101,7 +101,7 @@ export default function ResourceArea(props: ResourceAreaProps) {
       <Flex justify="space-between">
         <Button
           onClick={() => {
-            if (selectedRows.length === 0) {
+            if (!selectedRows.length) {
               showMessage('select-data')
               return
             }

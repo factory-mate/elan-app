@@ -39,7 +39,7 @@ export default function EditDeptModal(props: EditDeptModalProps) {
     } else {
       form.setFieldsValue({ KeyVal: [], cDepCode: undefined })
     }
-  }, [meta?.ids, open])
+  }, [form, meta?.ids, open])
 
   return (
     <Modal
@@ -87,7 +87,11 @@ export default function EditDeptModal(props: EditDeptModalProps) {
         >
           <TreeSelect
             treeData={deptTreeData ?? []}
-            fieldNames={Department.departmentTreeSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode',
+              children: 'Child'
+            }}
             allowClear
             placeholder="请选择部门"
           />

@@ -1,12 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  type InventoryClassAddDto,
-  inventoryClassTreeSelectFieldNames,
-  treeQO,
-  useAddMutation
-} from '@/features/inventory-class'
+import { type InventoryClassAddDto, treeQO, useAddMutation } from '@/features/inventory-class'
 
 interface AddModalProps {
   open?: boolean
@@ -58,7 +53,11 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={inventoryClassTreeSelectFieldNames}
+            fieldNames={{
+              label: 'cInvClassName',
+              value: 'cInvClassCode',
+              children: 'Child'
+            }}
             allowClear
           />
         </Form.Item>

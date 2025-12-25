@@ -1,12 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import {
-  treeQO,
-  useAddMutation,
-  type VendorClassAddDto,
-  vendorClassTreeSelectFieldNames
-} from '@/features/vendor-class'
+import { treeQO, useAddMutation, type VendorClassAddDto } from '@/features/vendor-class'
 
 interface AddModalProps {
   open?: boolean
@@ -58,7 +53,11 @@ export default function AddModal(props: AddModalProps) {
         >
           <TreeSelect
             treeData={data}
-            fieldNames={vendorClassTreeSelectFieldNames}
+            fieldNames={{
+              label: 'cVendorClassName',
+              value: 'cVendorClassCode',
+              children: 'Child'
+            }}
             allowClear
           />
         </Form.Item>

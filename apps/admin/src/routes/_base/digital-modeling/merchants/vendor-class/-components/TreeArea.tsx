@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { treeQO, vendorClassTreeFieldNames } from '@/features/vendor-class'
+import { treeQO } from '@/features/vendor-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]
@@ -19,7 +19,11 @@ export default function TreeArea(props: TreeAreaProps) {
       checkable
       checkedKeys={selectedTreeKeys}
       onCheck={(checked) => setSelectedTreeKeys([...(checked as Key[])])}
-      fieldNames={vendorClassTreeFieldNames}
+      fieldNames={{
+        key: 'cVendorClassCode',
+        title: 'cVendorClassName',
+        children: 'Child'
+      }}
     />
   )
 }

@@ -39,7 +39,7 @@ export default function EditPositionModal(props: EditPositionModalProps) {
     } else {
       form.setFieldsValue({ KeyVal: [], cProfessionalTypeCode: undefined })
     }
-  }, [meta?.ids, open])
+  }, [form, meta?.ids, open])
 
   return (
     <Modal
@@ -87,7 +87,10 @@ export default function EditPositionModal(props: EditPositionModalProps) {
         >
           <Select
             options={positionCandidates ?? []}
-            fieldNames={Dicts.dictSelectFieldNames}
+            fieldNames={{
+              label: 'cDictonaryName',
+              value: 'cDictonaryCode'
+            }}
             allowClear
             placeholder="请选择职务"
           />

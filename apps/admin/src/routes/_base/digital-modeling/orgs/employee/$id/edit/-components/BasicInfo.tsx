@@ -61,7 +61,11 @@ export default function BasicInfo() {
       >
         <TreeSelect
           treeData={deptTreeData ?? []}
-          fieldNames={Department.departmentTreeSelectFieldNames}
+          fieldNames={{
+            label: 'cDepName',
+            value: 'cDepCode',
+            children: 'Child'
+          }}
           allowClear
           placeholder="请选择部门"
         />
@@ -73,7 +77,10 @@ export default function BasicInfo() {
       >
         <Select
           options={positionCandidates ?? []}
-          fieldNames={Dicts.dictSelectFieldNames}
+          fieldNames={{
+            label: 'cDictonaryName',
+            value: 'cDictonaryCode'
+          }}
           placeholder="请选择职务"
         />
       </Form.Item>

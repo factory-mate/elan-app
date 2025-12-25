@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dictSelectFieldNames, fullListQO } from '@/features/dicts'
+import { fullListQO } from '@/features/dicts'
 import { detailQO, type InventoryEditDto, useEditMutation } from '@/features/inventory'
 import * as InventoryClass from '@/features/inventory-class'
 import * as Unit from '@/features/unit'
@@ -126,7 +126,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={inventoryClassCandidates}
-                          fieldNames={InventoryClass.inventoryClassSelectFieldNames}
+                          fieldNames={{
+                            label: 'cInvClassName',
+                            value: 'cInvClassCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -138,7 +141,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={unitClassCandidates}
-                          fieldNames={UnitClass.unitClassSelectFieldNames}
+                          fieldNames={{
+                            value: 'cUnitClassCode',
+                            label: 'cUnitClassName'
+                          }}
                           onSelect={async (value) => {
                             const mainUnit = await queryClient.ensureQueryData(
                               Unit.fullListQO({
@@ -174,7 +180,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={unitCandidates}
-                          fieldNames={Unit.unitSelectFieldNames}
+                          fieldNames={{
+                            label: 'cUnitName',
+                            value: 'cUnitCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -186,7 +195,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={unitCandidates}
-                          fieldNames={Unit.unitSelectFieldNames}
+                          fieldNames={{
+                            label: 'cUnitName',
+                            value: 'cUnitCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -199,7 +211,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={unitCandidates}
-                          fieldNames={Unit.unitSelectFieldNames}
+                          fieldNames={{
+                            label: 'cUnitName',
+                            value: 'cUnitCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -211,7 +226,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={unitCandidates}
-                          fieldNames={Unit.unitSelectFieldNames}
+                          fieldNames={{
+                            label: 'cUnitName',
+                            value: 'cUnitCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>
@@ -251,7 +269,10 @@ export default function EditModal(props: EditModalProps) {
                       >
                         <Select
                           options={periodUnitCandidates}
-                          fieldNames={dictSelectFieldNames}
+                          fieldNames={{
+                            label: 'cDictonaryName',
+                            value: 'cDictonaryCode'
+                          }}
                         />
                       </Form.Item>
                     </Col>

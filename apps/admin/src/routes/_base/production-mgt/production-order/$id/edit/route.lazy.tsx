@@ -71,7 +71,10 @@ function RouteComponent() {
             variant="borderless"
             value={params.data?.cDefindParm04}
             options={departmentCandidates}
-            fieldNames={Department.departmentSelectFieldNames}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode'
+            }}
             onSelect={(value) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -161,7 +164,10 @@ function RouteComponent() {
             variant="borderless"
             value={params.data?.cBomType}
             options={bomCandidates}
-            fieldNames={Dicts.dictSelectFieldNames}
+            fieldNames={{
+              label: 'cDictonaryName',
+              value: 'cDictonaryCode'
+            }}
             onSelect={(value) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
@@ -331,7 +337,10 @@ function RouteComponent() {
               >
                 <Select
                   options={vouchCandidates}
-                  fieldNames={Dicts.dictSelectFieldNames}
+                  fieldNames={{
+                    label: 'cDictonaryName',
+                    value: 'cDictonaryCode'
+                  }}
                 />
               </Form.Item>
             </Col>

@@ -1,6 +1,6 @@
 import type { Dispatch, Key, SetStateAction } from 'react'
 
-import { inventoryClassTreeFieldNames, treeQO } from '@/features/inventory-class'
+import { treeQO } from '@/features/inventory-class'
 
 interface TreeAreaProps {
   selectedTreeKeys: Key[]
@@ -19,7 +19,11 @@ export default function TreeArea(props: TreeAreaProps) {
       checkable
       checkedKeys={selectedTreeKeys}
       onCheck={(checked) => setSelectedTreeKeys([...(checked as Key[])])}
-      fieldNames={inventoryClassTreeFieldNames}
+      fieldNames={{
+        key: 'cInvClassCode',
+        title: 'cInvClassName',
+        children: 'Child'
+      }}
     />
   )
 }

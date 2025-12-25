@@ -161,6 +161,7 @@ declare global {
   const useMutationState: typeof import('@tanstack/react-query').useMutationState
   const useNavigate: typeof import('@tanstack/react-router').useNavigate
   const useOptimistic: typeof import('react').useOptimistic
+  const usePagination: typeof import('../src/shared/hooks/usePagination').usePagination
   const useParams: typeof import('@tanstack/react-router').useParams
   const useParentMatches: typeof import('@tanstack/react-router').useParentMatches
   const usePermCode: typeof import('../src/shared/hooks/usePermCode').usePermCode
