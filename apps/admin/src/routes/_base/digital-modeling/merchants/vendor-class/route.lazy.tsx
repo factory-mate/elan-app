@@ -35,9 +35,9 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<VendorClassVo>[]>(
     () => [
-      { field: 'cVendorClassCode', headerName: '供应商分类编码' },
-      { field: 'cVendorClassName', headerName: '供应商分类名称' },
-      { field: 'iGrade', headerName: '级次' },
+      { field: 'cVendorClassCode', headerName: '供应商分类编码', flex: 1 },
+      { field: 'cVendorClassName', headerName: '供应商分类名称', flex: 1 },
+      { field: 'iGrade', headerName: '级次', flex: 1 },
       {
         headerName: '操作',
         sortable: false,
@@ -139,9 +139,6 @@ function RouteComponent() {
                   suppressHeaderMenuButton: true,
                   pinned: 'left',
                   lockPinned: true
-                }}
-                autoSizeStrategy={{
-                  type: 'fitGridWidth'
                 }}
                 loading={isFetching}
                 onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}

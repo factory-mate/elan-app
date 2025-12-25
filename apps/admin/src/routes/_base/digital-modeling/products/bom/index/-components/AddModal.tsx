@@ -18,7 +18,6 @@ import {
 import * as Department from '@/features/department'
 import * as Dicts from '@/features/dicts'
 import * as Inventory from '@/features/inventory'
-import { ProductCodeRemoteSelect } from '@/features/inventory'
 import * as Warehouse from '@/features/warehouse'
 import { BooleanValue } from '@/shared/enums'
 
@@ -382,7 +381,7 @@ export default function AddModal(props: AddModalProps) {
                 label="产品编码"
                 rules={[{ required: true }]}
               >
-                <ProductCodeRemoteSelect
+                <Inventory.ProductCodeRemoteSelect
                   onConfirm={(v) => {
                     form.setFieldsValue({
                       cInvCode: v.cInvCode,

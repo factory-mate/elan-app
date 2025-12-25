@@ -15,10 +15,14 @@ export default function ProductNameRemoteSelect(props: ProductNameRemoteSelectPr
       }}
       optionRender={(option) => (
         <Flex justify="space-between">
-          <span>{option.data.label}</span>
-          <span>{option.data.value}</span>
+          <span>{option.data.cInvCode}</span>
+          <span>{option.data.cInvName}</span>
         </Flex>
       )}
+      fieldNames={{
+        label: 'cInvCode',
+        value: 'cInvName'
+      }}
       labelRender={(v) => v.value}
       fetchOptions={(search) =>
         queryClient
@@ -33,9 +37,7 @@ export default function ProductNameRemoteSelect(props: ProductNameRemoteSelectPr
           )
           .then((res) =>
             res.data.map((i) => ({
-              label: i.cInvCode,
-              value: i.cInvName,
-              data: i,
+              ...i,
               key: i.cInvCode
             }))
           )

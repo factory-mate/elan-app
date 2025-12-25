@@ -2,7 +2,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColGroupDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { type InventoryVo, ProductCodeRemoteSelect } from '@/features/inventory'
+import { ProductCodeRemoteSelect } from '@/features/inventory'
 import { LIST_QK, listQO, type NormalMaterialVo } from '@/features/normal-material'
 
 interface FilterForm {
@@ -39,21 +39,24 @@ function RouteComponent() {
     })
   )
 
-  const filterDefs: FilterDef<InventoryVo>[] = [
-    {
-      name: 'cInvCode',
-      label: '产品编码',
-      type: 'custom',
-      render: () => (
-        <ProductCodeRemoteSelect
-          onConfirm={(v) => {
-            form.setFieldValue('cInvCode', v.cInvCode)
-            form.setFieldValue('cInvName', v.cInvName)
-          }}
-        />
-      )
-    }
-  ]
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      {
+        name: 'cInvCode',
+        label: '产品编码',
+        type: 'custom',
+        render: () => (
+          <ProductCodeRemoteSelect
+            onConfirm={(v) => {
+              form.setFieldValue('cInvCode', v.cInvCode)
+              form.setFieldValue('cInvName', v.cInvName)
+            }}
+          />
+        )
+      }
+    ],
+    [form]
+  )
 
   const columnDefs = useMemo<ColGroupDef<NormalMaterialVo>[]>(
     () => [

@@ -1,4 +1,11 @@
-import type { ColProps, FormItemProps, FormProps, InputProps, SelectProps } from 'antd'
+import type {
+  ColProps,
+  FormItemProps,
+  FormProps,
+  InputProps,
+  SelectProps,
+  TimeRangePickerProps
+} from 'antd'
 
 export interface FilterAreaProps<T = any> {
   filterDefs?: FilterDef<T>[]
@@ -10,9 +17,10 @@ export interface FilterAreaProps<T = any> {
 
 export interface FilterDef<T = any> extends FormItemProps<T> {
   col?: ColProps
-  type?: 'input' | 'select' | 'custom'
+  type?: 'input' | 'select' | 'date-range-picker' | 'custom'
   input?: InputProps
   select?: SelectProps
+  rangePicker?: TimeRangePickerProps
   render?: () => React.ReactNode
 }
 
@@ -32,7 +40,6 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
   return (
     <Form
       className="pt-3"
-      name="modal-filter-form"
       labelCol={{ span: 6 }}
       {...form}
     >
@@ -41,7 +48,7 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
           {filterDefs
             ?.filter((f) => !f.hidden)
             ?.map((def, index) => {
-              const { col, type, render, input, select, ...formItem } = def
+              const { col, type, render, input, select, rangePicker, ...formItem } = def
               const activeFilterLength = filterDefs?.filter((f) => !f.hidden).length ?? 0
               if (activeFilterLength > 3 && !expand && index > 1) {
                 return null
@@ -65,6 +72,7 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
                           {...select}
                         />
                       )}
+                      {type === 'date-range-picker' && <DatePicker.RangePicker {...rangePicker} />}
                       {type === 'custom' && render?.()}
                     </Form.Item>
                   </Col>

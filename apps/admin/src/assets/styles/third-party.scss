@@ -9,3 +9,11 @@
 .ant-tree .ant-tree-title {
   white-space: nowrap;
 }
+
+// Button Icon 位置偏移问题
+.ant-btn [class^='ant-btn'],
+.ant-btn [class*=' ant-btn'] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

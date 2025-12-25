@@ -21,12 +21,6 @@ export default function BOMListModal(props: BOMListModalProps) {
   const gridRef = useRef<AgGridReact>(null)
 
   const { data: bomListData } = useQuery(ProductionOrder.bomListQO(currentOperateRow?.current?.UID))
-  const { data: { data: inventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsMaterial = true'
-    })
-  )
   const { data: { data: warehouseCandidates } = {} } = useQuery(Warehouse.listQO(defaultMaxPageDto))
 
   const editMutation = ProductionOrder.useEditBOMListMutation()
@@ -42,38 +36,24 @@ export default function BOMListModal(props: BOMListModalProps) {
         headerName: '子件编码',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.BOMItemVo>) => (
-          <Select
+          <Inventory.MaterialCodeRemoteSelect
             className="size-full"
             variant="borderless"
+            allowClear={false}
+            button={{ type: 'link' }}
             value={params.data?.cMaterialCode}
-            options={inventoryCandidates}
-            fieldNames={{
-              value: 'cInvCode',
-              label: 'cInvCode'
-            }}
-            showSearch={{
-              filterOption: (input, option) =>
-                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }}
-            onSelect={(value, option) => {
+            onConfirm={async (v) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cMaterialCode: value,
-                  cMaterialName: option.cInvName,
-                  cMaterialStd: option.cInvstd,
-                  cUnitCode: option.cSaleUnitCode,
-                  cUnitName: option.cSaleUnitName
+                  cMaterialCode: v.cInvCode,
+                  cMaterialName: v.cInvName,
+                  cMaterialStd: v.cInvstd,
+                  cUnitCode: v.cSaleUnitCode,
+                  cUnitName: v.cSaleUnitName
                 }
               })
             }}
-            optionRender={(option) => (
-              <Flex justify="space-between">
-                <span>{option.data.cInvCode}</span>
-                <span> {option.data.cInvName}</span>
-              </Flex>
-            )}
           />
         )
       },
@@ -174,7 +154,7 @@ export default function BOMListModal(props: BOMListModalProps) {
         )
       }
     ],
-    [inventoryCandidates, message, setTableData, tableData, warehouseCandidates]
+    [message, setTableData, tableData, warehouseCandidates]
   )
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import * as Dicts from '@/features/dicts'
 import * as Inventory from '@/features/inventory'
 import * as ProductionOrder from '@/features/production-order'
 
-import { BOMListModal, FilterArea } from './-components'
+import { BOMListModal } from './-components'
 import styles from './-styles/print.module.scss'
 import type { FilterForm } from './-types'
 
@@ -18,8 +18,10 @@ export const Route = createLazyFileRoute('/_base/production-mgt/production-order
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
   const bomListModal = useModal()
+  const queryClient = useQueryClient()
 
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -46,20 +48,12 @@ function RouteComponent() {
       ])
     })
   )
-  const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
+  const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
-  const { data: { data: inventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
-  const { data: standardTypeCandidates } = useSuspenseQuery(
-    Dicts.fullListQO('ProductVouchStandardType')
-  )
-  const { data: vouchTypeCandidates } = useSuspenseQuery(Dicts.fullListQO('ProductVouchType'))
+  const { data: standardTypeCandidates } = useQuery(Dicts.fullListQO('ProductVouchStandardType'))
+  const { data: vouchTypeCandidates } = useQuery(Dicts.fullListQO('ProductVouchType'))
 
   const auditMutation = ProductionOrder.useAuditMutation()
   const abandonMutation = ProductionOrder.useAbandonMutation()
@@ -67,6 +61,50 @@ function RouteComponent() {
   const closeMutation = ProductionOrder.useCloseMutation()
   const deleteMutation = ProductionOrder.useDeleteMutation()
   const editMutation = ProductionOrder.useEditMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      {
+        name: 'cStandardType',
+        label: '生产订单类型',
+        type: 'select',
+        select: {
+          options: standardTypeCandidates,
+          fieldNames: {
+            label: 'cDictonaryName',
+            value: 'cDictonaryCode'
+          }
+        }
+      },
+      {
+        name: 'cVouchType',
+        label: '生产订单类别',
+        type: 'select',
+        select: {
+          options: vouchTypeCandidates,
+          fieldNames: {
+            label: 'cDictonaryName',
+            value: 'cDictonaryCode'
+          }
+        }
+      },
+      {
+        name: 'iStatus',
+        label: '生产订单状态',
+        type: 'select',
+        select: {
+          options: [
+            { label: '保存', value: ProductionOrder.TaskStatus.AUDIT },
+            { label: '弃审', value: ProductionOrder.TaskStatus.ABANDON }
+          ]
+        }
+      },
+      { name: 'cCode', label: '生产订单编号', type: 'input' },
+      { name: 'dBeginTime', label: '订单日期', type: 'date-range-picker' },
+      { name: 'cInvCode', label: '料品编码', type: 'input' }
+    ],
+    [standardTypeCandidates, vouchTypeCandidates]
+  )
 
   const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderVo>[]>(
     () => [
@@ -173,25 +211,30 @@ function RouteComponent() {
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
           currentOperateUID === params.data?.UID ? (
-            <Select
+            <Inventory.ProductCodeRemoteSelect
               className="size-full"
               variant="borderless"
+              allowClear={false}
+              button={{ type: 'link' }}
               value={params.data?.cInvCode}
-              options={inventoryCandidates}
-              fieldNames={{
-                value: 'cInvCode',
-                label: 'cInvCode'
-              }}
-              showSearch={{
-                filterOption: (input, option) =>
-                  (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                  (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-              }}
-              onSelect={async (value, option) => {
-                const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
+              onConfirm={async (v) => {
+                const { data: versionCandidates = [] } = await queryClient.fetchQuery(
                   BOM.listQO({
                     ...defaultMaxPageDto,
-                    conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`,
+                    conditions: queryBuilder([
+                      { key: 'cInvCode', type: 'eq', val: v.cInvCode },
+                      { key: 'iStatus', type: 'eq', val: 1 },
+                      {
+                        key: 'dEffectiveDate',
+                        type: 'lte',
+                        val: DateUtils.formatTime(new Date(), 'YYYY-MM-DD')
+                      },
+                      {
+                        key: 'dExpirationDate',
+                        type: 'gte',
+                        val: DateUtils.formatTime(new Date(), 'YYYY-MM-DD')
+                      }
+                    ]),
                     orderByFileds: 'dCreateTime desc'
                   })
                 )
@@ -200,11 +243,11 @@ function RouteComponent() {
                   update: [
                     {
                       ...params.api.getRowNode(params.data!.UID!)!.data,
-                      cInvCode: value,
-                      cInvName: option.cInvName,
-                      cInvStd: option.cInvstd,
-                      cUnitCode: option.cProductUnitCode,
-                      cUnitName: option.cProductUnitName,
+                      cInvCode: v.cInvCode,
+                      cInvName: v.cInvName,
+                      cInvStd: v.cInvstd,
+                      cUnitCode: v.cProductUnitCode,
+                      cUnitName: v.cProductUnitName,
                       cBomUID: matchedBom?.UID ?? undefined,
                       cBomVersion: matchedBom?.cVersion ?? undefined,
                       cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
@@ -213,12 +256,6 @@ function RouteComponent() {
                   ]
                 })
               }}
-              optionRender={(option) => (
-                <Flex justify="space-between">
-                  <span>{option.data.cInvCode}</span>
-                  <span> {option.data.cInvName}</span>
-                </Flex>
-              )}
             />
           ) : (
             params.data?.cInvCode
@@ -241,18 +278,10 @@ function RouteComponent() {
       {
         field: 'dBeginTime',
         headerName: '开工时间'
-        // cellDataType: 'dateString'
-        // valueFormatter: (params: ValueFormatterParams) =>
-        //   params.value ? DateUtils.formatTime(params.value) : '',
-        // editable: (params) => currentOperateUID === params.data?.UID
       },
       {
         field: 'dEndTime',
         headerName: '完工时间'
-        // cellDataType: 'dateString'
-        // valueFormatter: (params: ValueFormatterParams) =>
-        //   params.value ? DateUtils.formatTime(params.value) : '',
-        // editable: (params) => currentOperateUID === params.data?.UID
       },
       { field: 'cAssQuantity', headerName: '已完工数量' },
       { field: 'RestQuantity', headerName: '未完工数量' },
@@ -399,7 +428,7 @@ function RouteComponent() {
       currentOperateUID,
       departmentCandidates,
       editMutation,
-      inventoryCandidates,
+      queryClient,
       refetch,
       standardTypeCandidates,
       vouchTypeCandidates
@@ -412,7 +441,15 @@ function RouteComponent() {
         orientation="vertical"
         className="w-full"
       >
-        <FilterArea setFilterData={setFilterData} />
+        <FilterArea
+          form={{
+            form,
+            onFinish: (values) => setFilterData?.({ ...values })
+          }}
+          filterDefs={filterDefs}
+          onReset={() => setFilterData?.({})}
+          queryKey={ProductionOrder.LIST_QK}
+        />
         <Flex
           className="h-8"
           justify="space-between"
@@ -517,7 +554,6 @@ function RouteComponent() {
             </PermCodeProvider>
           </Space>
         </Flex>
-
         <div className="ag-theme-quartz h-[calc(100vh-210px)]">
           <AgGridReact<ProductionOrder.ProductionOrderVo>
             ref={gridRef}
@@ -546,7 +582,6 @@ function RouteComponent() {
             }}
           />
         </div>
-
         <Flex
           justify="end"
           align="center"

@@ -14,7 +14,7 @@ interface ProductCodeRemoteSelectProps extends RemoteSelectProps {
 interface FilterForm {
   cInvCode?: string
   cInvName?: string
-  IsProduct?: boolean
+  IsMaterial?: boolean
 }
 
 export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectProps) {
@@ -33,16 +33,16 @@ export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectPr
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
-      { name: 'cInvCode', label: '产品编码', type: 'input' },
-      { name: 'cInvName', label: '产品名称', type: 'input' }
+      { name: 'cInvCode', label: '子件编码', type: 'input' },
+      { name: 'cInvName', label: '子件名称', type: 'input' }
     ],
     []
   )
 
   const columnDefs = useMemo<ColDef<InventoryVo>[]>(
     () => [
-      { field: 'cInvName', headerName: '产品编码', flex: 1 },
-      { field: 'cInvCode', headerName: '产品名称', flex: 1 }
+      { field: 'cInvName', headerName: '子件编码', flex: 1 },
+      { field: 'cInvCode', headerName: '子件名称', flex: 1 }
     ],
     []
   )
@@ -55,7 +55,7 @@ export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectPr
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'IsProduct', type: 'eq', val: true },
+        { key: 'IsMaterial', type: 'eq', val: true },
         { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
         { key: 'cInvName', type: 'like', val: filterData.cInvName }
       ])
@@ -141,7 +141,7 @@ export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectPr
           onReset: () => setFilterData?.({}),
           queryKey: LIST_QK
         }}
-        title="选择产品"
+        title="选择子件"
         onOk={() => handleSelect()}
       >
         <div className="ag-theme-quartz h-[600px]">

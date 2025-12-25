@@ -2,9 +2,8 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import * as ProductionMaterial from '@/features/production-material'
+import { LIST_QK, listQO, type ListVo, useExportMutation } from '@/features/production-material'
 
-import { FilterArea } from './-components'
 import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/report/production/production-material/')({
@@ -12,6 +11,8 @@ export const Route = createLazyFileRoute('/_base/report/production/production-ma
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
+
   const gridRef = useRef<AgGridReact>(null)
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
@@ -22,7 +23,7 @@ function RouteComponent() {
     isFetching,
     isPlaceholderData
   } = useQuery(
-    ProductionMaterial.listQO({
+    listQO({
       ...pageParams,
       orderByFileds: 'cCode desc,iMaterialRow',
       conditions: queryBuilder<FilterForm>([
@@ -32,7 +33,7 @@ function RouteComponent() {
       ])
     })
   )
-  const exportMutation = ProductionMaterial.useExportMutation({
+  const exportMutation = useExportMutation({
     ...pageParams,
     orderByFileds: 'cCode desc,iMaterialRow',
     conditions: queryBuilder<FilterForm>([
@@ -41,7 +42,16 @@ function RouteComponent() {
     ])
   })
 
-  const columnDefs = useMemo<ColDef<ProductionMaterial.ListVo>[]>(
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'dBeginTime', label: '开工日期', type: 'date-range-picker' },
+      { name: 'cCode', label: '生产订单号', type: 'input' },
+      { name: 'cInvCode', label: '料品编码', type: 'input' }
+    ],
+    []
+  )
+
+  const columnDefs = useMemo<ColDef<ListVo>[]>(
     () => [
       { field: 'cCode', headerName: '生产订单号码' },
       { field: 'iRow', headerName: '行号' },
@@ -70,7 +80,15 @@ function RouteComponent() {
         orientation="vertical"
         className="w-full"
       >
-        <FilterArea setFilterData={setFilterData} />
+        <FilterArea
+          form={{
+            form,
+            onFinish: (values) => setFilterData?.({ ...values })
+          }}
+          filterDefs={filterDefs}
+          onReset={() => setFilterData?.({})}
+          queryKey={LIST_QK}
+        />
         <Flex
           className="h-8"
           justify="flex-end"
@@ -90,7 +108,7 @@ function RouteComponent() {
           </Space>
         </Flex>
         <div className="ag-theme-quartz h-[calc(100vh-355px)]">
-          <AgGridReact<ProductionMaterial.ListVo>
+          <AgGridReact<ListVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID!}
             columnDefs={columnDefs}
