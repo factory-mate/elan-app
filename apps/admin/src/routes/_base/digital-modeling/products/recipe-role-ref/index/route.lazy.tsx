@@ -136,7 +136,7 @@ function RouteComponent() {
           </Space>
         </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-251px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-371px)]">
           <AgGridReact<RecipeRoleRefVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}

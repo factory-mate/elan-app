@@ -554,7 +554,7 @@ function RouteComponent() {
             </PermCodeProvider>
           </Space>
         </Flex>
-        <div className="ag-theme-quartz h-[calc(100vh-210px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-351px)]">
           <AgGridReact<ProductionOrder.ProductionOrderVo>
             ref={gridRef}
             getRowId={(params) => params.data.UID}

@@ -162,7 +162,7 @@ function RouteComponent() {
           </Space>
         </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-300px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-311px)]">
           <AgGridReact<NormalMaterialVo>
             ref={gridRef}
             columnDefs={columnDefs}

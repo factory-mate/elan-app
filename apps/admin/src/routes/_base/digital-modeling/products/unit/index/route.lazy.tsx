@@ -35,14 +35,10 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<UnitVo>[]>(
     () => [
-      { field: 'cUnitCode', headerName: '计量单位组编码' },
-      { field: 'cUnitName', headerName: '计量单位组名称' },
-      { field: 'iRate', headerName: '换算率' },
-      {
-        field: 'bMainUnit',
-        headerName: '是否主计量',
-        cellDataType: 'boolean'
-      },
+      { field: 'cUnitCode', headerName: '计量单位组编码', flex: 1 },
+      { field: 'cUnitName', headerName: '计量单位组名称', flex: 1 },
+      { field: 'iRate', headerName: '换算率', flex: 1 },
+      { field: 'bMainUnit', headerName: '是否主计量', cellDataType: 'boolean', flex: 1 },
       {
         headerName: '操作',
         sortable: false,
@@ -144,9 +140,6 @@ function RouteComponent() {
                   suppressHeaderMenuButton: true,
                   pinned: 'left',
                   lockPinned: true
-                }}
-                autoSizeStrategy={{
-                  type: 'fitGridWidth'
                 }}
                 loading={isFetching}
                 onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}

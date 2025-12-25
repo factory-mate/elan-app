@@ -354,7 +354,7 @@ function RouteComponent() {
           </Button>
         </Space>
 
-        <div className="ag-theme-quartz h-[calc(100vh-210px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-381px)]">
           <AgGridReact<ProductionOrder.ProductionOrderBody>
             ref={gridRef}
             columnDefs={columnDefs}
