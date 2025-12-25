@@ -93,7 +93,6 @@ declare global {
   const TreeSelect: typeof import('antd').TreeSelect
   const VisibleProvider: typeof import('../src/shared/providers/VisibleProvider/index').VisibleProvider
   const appConfig: typeof import('@elan/config').appConfig
-  const booleanLabelValueGetter: typeof import('../src/shared/ag-grid/utils').booleanLabelValueGetter
   const buildIndexColDef: typeof import('../src/shared/ag-grid/utils').buildIndexColDef
   const cache: typeof import('react').cache
   const cacheSignal: typeof import('react').cacheSignal

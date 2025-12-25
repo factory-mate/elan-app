@@ -41,7 +41,7 @@ function RouteComponent() {
       {
         field: 'bMainUnit',
         headerName: '是否主计量',
-        valueGetter: (params) => booleanLabelValueGetter(params.data?.bMainUnit)
+        cellDataType: 'boolean'
       },
       {
         headerName: '操作',

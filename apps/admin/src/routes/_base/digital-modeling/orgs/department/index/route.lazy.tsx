@@ -49,7 +49,7 @@ function RouteComponent() {
       {
         field: 'bProduct',
         headerName: '是否生产部门',
-        valueGetter: (params) => booleanLabelValueGetter(params.data?.bProduct)
+        cellDataType: 'boolean'
       },
       {
         field: 'IsValid',

@@ -31,7 +31,7 @@ function RouteComponent() {
       {
         field: 'bDefault',
         headerName: '是否默认',
-        valueGetter: (params) => booleanLabelValueGetter(params.data?.bDefault)
+        cellDataType: 'boolean'
       },
       {
         headerName: '操作',
