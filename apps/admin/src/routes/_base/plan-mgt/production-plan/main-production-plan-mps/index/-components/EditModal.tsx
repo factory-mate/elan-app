@@ -23,12 +23,6 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<MainProductionPlanMpsEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
-  const { data: { data: parentInventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
@@ -76,29 +70,14 @@ export default function EditModal(props: EditModalProps) {
             name="cInvCode"
             label="产品编码"
           >
-            <Select
-              options={parentInventoryCandidates}
-              fieldNames={{
-                value: 'cInvCode',
-                label: 'cInvCode'
-              }}
-              showSearch={{
-                filterOption: (input, option) =>
-                  (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                  (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-              }}
-              onSelect={(_value, option) => {
+            <Inventory.ProductCodeRemoteSelect
+              onConfirm={(v) => {
                 form.setFieldsValue({
-                  cInvName: option.cInvName,
-                  cInvStd: option.cInvstd
+                  cInvCode: v.cInvCode,
+                  cInvName: v.cInvName,
+                  cInvStd: v.cInvstd
                 })
               }}
-              optionRender={(option) => (
-                <Flex justify="space-between">
-                  <span>{option.data.cInvCode}</span>
-                  <span> {option.data.cInvName}</span>
-                </Flex>
-              )}
             />
           </Form.Item>
           <Form.Item<MainProductionPlanMpsEditDto>

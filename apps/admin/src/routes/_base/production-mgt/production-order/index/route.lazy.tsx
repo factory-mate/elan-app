@@ -129,7 +129,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cStandardType: value
                     }
                   ]
@@ -159,7 +159,7 @@ function RouteComponent() {
                 params.api.applyTransactionAsync({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cVouchType: value
                     }
                   ]
@@ -189,7 +189,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cDefindParm04: value,
                       cDefindParm05: option.cDepName
                     }
@@ -242,7 +242,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cInvCode: v.cInvCode,
                       cInvName: v.cInvName,
                       cInvStd: v.cInvstd,
@@ -304,7 +304,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cBomType: value
                     }
                   ]
@@ -334,7 +334,7 @@ function RouteComponent() {
                 params.api.applyTransaction({
                   update: [
                     {
-                      ...params.api.getRowNode(params.data!.UID!)!.data,
+                      ...params.data,
                       cBomVersion: value,
                       cBomUID: option.UID,
                       cVerisionMemo: option.cVerisionMemo

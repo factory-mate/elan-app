@@ -29,22 +29,11 @@ function RouteComponent() {
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
-  const { data: { data: inventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
 
   const addMutation = ProductionOrder.useAddMutation()
 
   const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderBody>[]>(
     () => [
-      // {
-      //   field: 'cSourceCode',
-      //   headerName: '行号',
-      //   valueGetter: (params) => (params.node!.rowIndex ?? 0) + 1
-      // },
       {
         field: 'cDefindParm04',
         headerName: '生产部门',
@@ -76,50 +65,51 @@ function RouteComponent() {
         headerName: '料品编码',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
-          <Select
+          <Inventory.ProductCodeRemoteSelect
             className="size-full"
             variant="borderless"
+            allowClear={false}
+            button={{ type: 'link' }}
             value={params.data?.cInvCode}
-            options={inventoryCandidates}
-            fieldNames={{
-              value: 'cInvCode',
-              label: 'cInvCode'
-            }}
-            showSearch={{
-              filterOption: (input, option) =>
-                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }}
-            onSelect={async (value, option) => {
-              const { data: versionCandidates = [] } = await queryClient.ensureQueryData(
+            onConfirm={async (v) => {
+              const { data: versionCandidates = [] } = await queryClient.fetchQuery(
                 BOM.listQO({
                   ...defaultMaxPageDto,
-                  conditions: `cInvCode=${value} && iStatus=1 && dEffectiveDate<=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')} && dExpirationDate>=${DateUtils.formatTime(new Date(), 'YYYY-MM-DD')}`,
+                  conditions: queryBuilder([
+                    { key: 'cInvCode', type: 'eq', val: v.cInvCode },
+                    { key: 'iStatus', type: 'eq', val: 1 },
+                    {
+                      key: 'dEffectiveDate',
+                      type: 'lte',
+                      val: DateUtils.formatTime(new Date(), 'YYYY-MM-DD')
+                    },
+                    {
+                      key: 'dExpirationDate',
+                      type: 'gte',
+                      val: DateUtils.formatTime(new Date(), 'YYYY-MM-DD')
+                    }
+                  ]),
                   orderByFileds: 'dCreateTime desc'
                 })
               )
               const matchedBom = versionCandidates.at(0)
-              setTableData((draft) => {
-                draft[params.node.rowIndex!] = {
-                  ...params.data,
-                  cInvCode: value,
-                  cInvName: option.cInvName,
-                  cInvStd: option.cInvstd,
-                  cUnitCode: option.cProductUnitCode,
-                  cUnitName: option.cProductUnitName,
-                  cBomUID: matchedBom?.UID ?? undefined,
-                  cBomVersion: matchedBom?.cVersion ?? undefined,
-                  cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
-                  versionCandidates
-                }
+              params.api.applyTransaction({
+                update: [
+                  {
+                    ...params.data,
+                    cInvCode: v.cInvCode,
+                    cInvName: v.cInvName,
+                    cInvStd: v.cInvstd,
+                    cUnitCode: v.cProductUnitCode,
+                    cUnitName: v.cProductUnitName,
+                    cBomUID: matchedBom?.UID ?? undefined,
+                    cBomVersion: matchedBom?.cVersion ?? undefined,
+                    cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
+                    versionCandidates
+                  }
+                ]
               })
             }}
-            optionRender={(option) => (
-              <Flex justify="space-between">
-                <span>{option.data.cInvCode}</span>
-                <span> {option.data.cInvName}</span>
-              </Flex>
-            )}
           />
         )
       },
@@ -235,7 +225,7 @@ function RouteComponent() {
         )
       }
     ],
-    [departmentCandidates, setTableData, inventoryCandidates, bomCandidates, form]
+    [departmentCandidates, setTableData, bomCandidates, form]
   )
 
   const onFinish: FormProps<ProductionOrder.ProductionOrderHead>['onFinish'] = (values) =>

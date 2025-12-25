@@ -41,8 +41,8 @@ export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectPr
 
   const columnDefs = useMemo<ColDef<InventoryVo>[]>(
     () => [
-      { field: 'cInvName', headerName: '子件编码', flex: 1 },
-      { field: 'cInvCode', headerName: '子件名称', flex: 1 }
+      { field: 'cInvCode', headerName: '子件编码', flex: 1 },
+      { field: 'cInvName', headerName: '子件名称', flex: 1 }
     ],
     []
   )

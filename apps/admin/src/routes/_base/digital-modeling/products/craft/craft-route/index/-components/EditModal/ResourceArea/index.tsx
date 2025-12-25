@@ -16,13 +16,6 @@ export default function ResourceArea(props: ResourceAreaProps) {
   const { showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
 
-  const { data: { data: inventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMinPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
-
   const [selectedRows, setSelectedRows] = useState<number[]>([])
 
   const columnDefs = useMemo<ColDef<CraftRouteResourceVo>[]>(
@@ -33,36 +26,22 @@ export default function ResourceArea(props: ResourceAreaProps) {
         flex: 1,
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<CraftRouteResourceVo>) => (
-          <Select
+          <Inventory.ProductCodeRemoteSelect
             className="size-full"
             variant="borderless"
+            allowClear={false}
+            button={{ type: 'link' }}
             value={params.data?.cResourceCode}
-            options={inventoryCandidates}
-            fieldNames={{
-              value: 'cInvCode',
-              label: 'cInvCode'
-            }}
-            showSearch={{
-              filterOption: (input, option) =>
-                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }}
-            onSelect={(value, option) => {
+            onConfirm={async (v) => {
               setData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cResourceCode: value,
-                  cResourceName: option.cInvName,
-                  cInvStd: option.cInvstd
+                  cResourceCode: v.cInvCode,
+                  cResourceName: v.cInvName,
+                  cInvStd: v.cInvstd
                 }
               })
             }}
-            optionRender={(option) => (
-              <Flex justify="space-between">
-                <span>{option.data.cInvCode}</span>
-                <span> {option.data.cInvName}</span>
-              </Flex>
-            )}
           />
         )
       },
@@ -90,7 +69,7 @@ export default function ResourceArea(props: ResourceAreaProps) {
         )
       }
     ],
-    [inventoryCandidates, setData]
+    [setData]
   )
 
   return (

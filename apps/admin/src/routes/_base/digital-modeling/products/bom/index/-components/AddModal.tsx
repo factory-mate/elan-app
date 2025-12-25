@@ -38,12 +38,6 @@ export default function AddModal(props: AddModalProps) {
   const parentQuantity = Form.useWatch('nQuantity', form)
 
   const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
-  const { data: { data: childInventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsMaterial = true'
-    })
-  )
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
   )
@@ -63,38 +57,24 @@ export default function AddModal(props: AddModalProps) {
         headerName: '子件编码',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<BOMChildItemVo>) => (
-          <Select
+          <Inventory.MaterialCodeRemoteSelect
             className="size-full"
             variant="borderless"
+            allowClear={false}
+            button={{ type: 'link' }}
             value={params.data?.cInvCode}
-            options={childInventoryCandidates}
-            fieldNames={{
-              value: 'cInvCode',
-              label: 'cInvCode'
-            }}
-            showSearch={{
-              filterOption: (input, option) =>
-                (option?.cInvCode ?? '').toLowerCase().includes(input.toLowerCase()) ||
-                (option?.cInvName ?? '').toLowerCase().includes(input.toLowerCase())
-            }}
-            onSelect={(value, option) => {
+            onConfirm={async (v) => {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cInvCode: value,
-                  cInvName: option.cInvName,
-                  cInvstd: option.cInvstd,
-                  cUnitCode: option.cSaleUnitCode,
-                  cUnitName: option.cSaleUnitName
+                  cInvCode: v.cInvCode,
+                  cInvName: v.cInvName,
+                  cInvstd: v.cInvstd,
+                  cUnitCode: v.cSaleUnitCode,
+                  cUnitName: v.cSaleUnitName
                 }
               })
             }}
-            optionRender={(option) => (
-              <Flex justify="space-between">
-                <span>{option.data.cInvCode}</span>
-                <span> {option.data.cInvName}</span>
-              </Flex>
-            )}
           />
         )
       },
@@ -291,15 +271,7 @@ export default function AddModal(props: AddModalProps) {
         )
       }
     ],
-    [
-      childInventoryCandidates,
-      departmentCandidates,
-      message,
-      parentQuantity,
-      setTableData,
-      tableData,
-      warehouseCandidates
-    ]
+    [departmentCandidates, message, parentQuantity, setTableData, tableData, warehouseCandidates]
   )
 
   useAsyncEffect(async () => {
