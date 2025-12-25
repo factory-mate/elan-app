@@ -20,6 +20,7 @@ import * as Dicts from '@/features/dicts'
 import * as Inventory from '@/features/inventory'
 import { ProductCodeRemoteSelect } from '@/features/inventory'
 import * as Warehouse from '@/features/warehouse'
+import { BooleanValue } from '@/shared/enums'
 
 interface AddModalProps {
   open?: boolean
@@ -38,12 +39,6 @@ export default function AddModal(props: AddModalProps) {
   const parentQuantity = Form.useWatch('nQuantity', form)
 
   const { data: bomCandidates } = useSuspenseQuery(Dicts.fullListQO('BOMType'))
-  const { data: { data: parentInventoryCandidates } = {} } = useQuery(
-    Inventory.listQO({
-      ...defaultMaxPageDto,
-      conditions: 'IsProduct = true'
-    })
-  )
   const { data: { data: childInventoryCandidates } = {} } = useQuery(
     Inventory.listQO({
       ...defaultMaxPageDto,
@@ -155,24 +150,9 @@ export default function AddModal(props: AddModalProps) {
       {
         field: 'iFixedQty',
         headerName: '固定用量',
-        cellRenderer: (params: CustomCellRendererProps) => (
-          <Switch
-            value={params.value === BooleanValue.TRUE}
-            onClick={(value) => {
-              const itemsToUpdate: BOMChildItemVo[] = []
-              gridRef.current!.api.forEachNodeAfterFilterAndSort((rowNode, index) => {
-                if (index === params.node.rowIndex) {
-                  const { data = {} } = rowNode
-                  data.iFixedQty = value ? BooleanValue.TRUE : BooleanValue.FALSE
-                  itemsToUpdate.push(data)
-                }
-              })
-              gridRef.current!.api.applyTransaction({
-                update: itemsToUpdate
-              })
-            }}
-          />
-        )
+        editable: true,
+        cellDataType: 'boolean',
+        valueGetter: (params) => !!params.data?.iFixedQty
       },
       {
         field: 'cSupplyTypeName',
@@ -343,6 +323,7 @@ export default function AddModal(props: AddModalProps) {
         ...values,
         Bodys: tableData.map((i) => ({
           ...i,
+          iFixedQty: i.iFixedQty ? BooleanValue.TRUE : BooleanValue.FALSE,
           iUseQty: i.iBaseQty! / (i.iBasicQty! * values.nQuantity)
         }))
       },

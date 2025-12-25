@@ -161,24 +161,9 @@ export default function EditModal(props: EditModalProps) {
       {
         field: 'iFixedQty',
         headerName: '固定用量',
-        cellRenderer: (params: CustomCellRendererProps) => (
-          <Switch
-            value={params.value === BooleanValue.TRUE}
-            onClick={(value) => {
-              const itemsToUpdate: BOMChildItemVo[] = []
-              gridRef.current!.api.forEachNodeAfterFilterAndSort((rowNode, index) => {
-                if (index === params.node.rowIndex) {
-                  const { data = {} } = rowNode
-                  data.iFixedQty = value ? BooleanValue.TRUE : BooleanValue.FALSE
-                  itemsToUpdate.push(data)
-                }
-              })
-              gridRef.current!.api.applyTransaction({
-                update: itemsToUpdate
-              })
-            }}
-          />
-        )
+        editable: true,
+        cellDataType: 'boolean',
+        valueGetter: (params) => !!params.data?.iFixedQty
       },
       {
         field: 'cSupplyTypeName',
@@ -351,6 +336,7 @@ export default function EditModal(props: EditModalProps) {
         ...values,
         Bodys: tableData.map((i) => ({
           ...i,
+          iFixedQty: i.iFixedQty ? BooleanValue.TRUE : BooleanValue.FALSE,
           iUseQty: i.iBaseQty! / (i.iBasicQty! * values.nQuantity)
         }))
       },

@@ -67,7 +67,8 @@ function RouteComponent() {
       {
         field: 'iFixedQty',
         headerName: '固定用量',
-        cellRenderer: (p: CustomCellRendererProps) => booleanLabelValueGetter(p.value),
+        cellDataType: 'boolean',
+        valueGetter: (params) => !!params.data?.iFixedQty,
         width: 120
       },
       {
@@ -116,10 +117,10 @@ function RouteComponent() {
                 showMessage('select-data')
                 return
               }
-              if (detailData?.iStatus === 1) {
-                message.warning('已审核的 BOM 不允许编辑')
-                return
-              }
+              // if (detailData?.iStatus === 1) {
+              //   message.warning('已审核的 BOM 不允许编辑')
+              //   return
+              // }
               if (!selectedTreeData.IsProduct) {
                 message.warning('非自制件，无法维护 BOM')
                 return

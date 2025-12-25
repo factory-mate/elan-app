@@ -167,9 +167,6 @@ function RouteComponent() {
               pinned: 'left',
               lockPinned: true
             }}
-            autoSizeStrategy={{
-              type: 'fitGridWidth'
-            }}
             loading={isFetching}
             onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
           />
