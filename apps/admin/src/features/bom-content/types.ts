@@ -1,6 +1,7 @@
 export interface BomContentVo {
   cInvCode?: string
   cInvName?: string
+  nQuantity?: number
   UID?: string
 }
 

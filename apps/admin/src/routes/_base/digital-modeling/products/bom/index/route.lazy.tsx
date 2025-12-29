@@ -117,7 +117,7 @@ function RouteComponent() {
                 showMessage('select-data')
                 return
               }
-              if (detailData?.iStatus === 1) {
+              if (selectedTreeData.iStatus === 1) {
                 message.warning('已审核的 BOM 不允许编辑')
                 return
               }

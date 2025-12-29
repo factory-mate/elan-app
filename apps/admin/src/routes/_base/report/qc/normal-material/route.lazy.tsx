@@ -114,11 +114,11 @@ function RouteComponent() {
       }
 
       gridRef.current!.api.exportDataAsExcel({
-        fileName: '质控常规报表.xlsx',
+        fileName: `${filterData.cInvCode}_质控常规报表_${DateUtils.formatTime(new Date(), 'YYYY-MM-DD HH:mm:ss')}.xlsx`,
         sheetName: '导出数据'
       })
     }
-  }, [data, isFetching, isSuccess, message, shouldExport])
+  }, [data, filterData.cInvCode, isFetching, isSuccess, message, shouldExport])
 
   return (
     <PageContainer>

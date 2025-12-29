@@ -31,7 +31,7 @@ function RouteComponent() {
     () => [
       { field: 'cInvCode', headerName: '原料编码' },
       { field: 'cInvName', headerName: '原料名称' },
-      { field: 'cInvName', headerName: '用量' }
+      { field: 'nQuantity', headerName: '用量' }
     ],
     []
   )

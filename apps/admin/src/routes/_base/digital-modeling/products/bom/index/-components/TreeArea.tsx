@@ -32,13 +32,15 @@ export default function TreeArea(props: TreeAreaProps) {
           children: 'Child'
         }}
         titleRender={(node) => (
-          <Space size="large">
+          <Space>
+            {node.iStatus < 1 && <Tag color="processing">待审核</Tag>}
             <span>{node.cInvCode}</span>
             <span>{node.cInvName}</span>
             <span>{node.cInvstd}</span>
             <span>{node.cVersion}</span>
           </Space>
         )}
+        showIcon
       />
     </Space>
   )
