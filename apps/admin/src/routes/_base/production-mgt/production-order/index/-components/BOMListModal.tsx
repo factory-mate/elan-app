@@ -163,7 +163,7 @@ export default function BOMListModal(props: BOMListModalProps) {
 
   const handleSubmit = () => {
     // if (tableData.some((i) => !i.iBaseQty || !i.iBasicQty)) {
-    //   message.warning('子件基础用量和基本用量必填且大于0')
+    //   message.warning('子件基础数量（分母）和基本用量（分子）必填且大于0')
     //   return
     // }
     editMutation.mutate(

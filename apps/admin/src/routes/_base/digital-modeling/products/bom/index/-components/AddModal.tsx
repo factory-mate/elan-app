@@ -84,7 +84,7 @@ export default function AddModal(props: AddModalProps) {
       { field: 'cUnitName', headerName: '计量单位' },
       {
         field: 'iBasicQty',
-        headerName: '基本用量',
+        headerName: '基本用量（分子）',
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
@@ -93,7 +93,7 @@ export default function AddModal(props: AddModalProps) {
       },
       {
         field: 'iBaseQty',
-        headerName: '基础用量',
+        headerName: '基础数量（分母）',
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
@@ -113,7 +113,7 @@ export default function AddModal(props: AddModalProps) {
       },
       {
         field: 'iUseQty',
-        headerName: '单位用量',
+        headerName: '使用数量',
         valueGetter: (params) => {
           if (params.data?.iBaseQty && params.data?.iBasicQty && parentQuantity) {
             const iBaseQty = new Decimal(params.data?.iBaseQty)
@@ -240,8 +240,8 @@ export default function AddModal(props: AddModalProps) {
                     draft.splice(params.node.rowIndex! + 1, 0, {
                       iRowNumber,
                       iProcessNumber: DEFAULT_PROCESS_NUMBER,
-                      iBasicQty: 100,
-                      iBaseQty: 1,
+                      iBasicQty: 0,
+                      iBaseQty: 100,
                       iUseQty: 1,
                       iLossRate: 0,
                       iFixedQty: 0,
@@ -286,7 +286,7 @@ export default function AddModal(props: AddModalProps) {
 
   const onFinish: FormProps<BOMAddDto>['onFinish'] = (values) => {
     if (tableData.some((i) => !i.iBaseQty || !i.iBasicQty)) {
-      message.warning('子件基础用量和基本用量必填且大于0')
+      message.warning('子件基础数量（分母）和基本用量（分子）必填且大于0')
       return
     }
     addMutation.mutate(
@@ -328,7 +328,8 @@ export default function AddModal(props: AddModalProps) {
           labelCol={{ span: 6 }}
           initialValues={{
             dVersionDate: dayjs(new Date()),
-            dEffectiveDate: dayjs(new Date())
+            dEffectiveDate: dayjs(new Date()),
+            nQuantity: 1
           }}
           onFinish={onFinish}
         >
@@ -403,9 +404,8 @@ export default function AddModal(props: AddModalProps) {
               <Form.Item<BOMVo>
                 name="nQuantity"
                 label="产品数量"
-                rules={[{ required: true }]}
               >
-                <Input />
+                <Input disabled />
               </Form.Item>
             </Col>
             <Col span={8}>
@@ -482,8 +482,8 @@ export default function AddModal(props: AddModalProps) {
                 draft.push({
                   iRowNumber: `${draft.length === 0 ? 10 : +draft.at(-1)!.iRowNumber! + 10}`,
                   iProcessNumber: DEFAULT_PROCESS_NUMBER,
-                  iBasicQty: 100,
-                  iBaseQty: 1,
+                  iBasicQty: 0,
+                  iBaseQty: 100,
                   iUseQty: 1,
                   iLossRate: 0,
                   iFixedQty: 0,

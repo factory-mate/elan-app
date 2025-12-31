@@ -60,10 +60,10 @@ function RouteComponent() {
       { field: 'cEnglishName', headerName: '英文名称' },
       { field: 'cInvstd', headerName: '子件规格' },
       { field: 'cUnitName', headerName: '计量单位', width: 120 },
-      { field: 'iBasicQty', headerName: '基本用量', width: 120 },
-      { field: 'iBaseQty', headerName: '基础用量', width: 120 },
+      { field: 'iBasicQty', headerName: '基本用量（分子）', width: 120 },
+      { field: 'iBaseQty', headerName: '基础用量（分母）', width: 120 },
       { field: 'iLossRate', headerName: '损耗率', width: 120 },
-      { field: 'iUseQty', headerName: '单位用量', width: 120 },
+      { field: 'iUseQty', headerName: '使用数量', width: 120 },
       {
         field: 'iFixedQty',
         headerName: '固定用量',
