@@ -3,28 +3,51 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
 import {
+  LIST_QK,
   listQO,
   type SalesOrderVo,
   useDeleteMutation,
   useSyncMutation
 } from '@/features/sales-order'
 
+import type { FilterForm } from './-types'
+
 export const Route = createLazyFileRoute('/_base/supply-chain-mgt/sales-mgt/sales-order/')({
   component: RouteComponent
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
+  const [filterData, setFilterData] = useState<FilterForm>({})
 
   const { data, isFetching, isPlaceholderData } = useQuery(
-    listQO({ ...pageParams, conditions: undefined })
+    listQO({
+      ...pageParams,
+      conditions: queryBuilder<FilterForm>([
+        { key: 'cCode', type: 'like', val: filterData.cCode },
+        { key: 'dDate', type: 'date-range', val: filterData.dDate },
+        { key: 'cCusCode', type: 'like', val: filterData.cCusCode },
+        { key: 'cCusName', type: 'like', val: filterData.cCusName }
+      ])
+    })
   )
 
   const deleteMutation = useDeleteMutation()
   const syncMutation = useSyncMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cCode', label: '销售订单号', type: 'input' },
+      { name: 'dDate', label: '单据日期', type: 'date-range-picker' },
+      { name: 'cCusCode', label: '客户编码', type: 'input' },
+      { name: 'cCusName', label: '客户名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<SalesOrderVo>[]>(
     () => [
@@ -55,6 +78,15 @@ function RouteComponent() {
         orientation="vertical"
         className="w-full"
       >
+        <FilterArea
+          form={{
+            form,
+            onFinish: (values) => setFilterData?.({ ...values })
+          }}
+          filterDefs={filterDefs}
+          onReset={() => setFilterData?.({})}
+          queryKey={LIST_QK}
+        />
         <Flex
           className="h-8"
           justify="space-between"
@@ -86,7 +118,7 @@ function RouteComponent() {
           </Space>
         </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-251px)]">
+        <div className="ag-theme-quartz h-[calc(100vh-351px)]">
           <AgGridReact<SalesOrderVo>
             getRowId={(params) => params.data.UID!}
             columnDefs={columnDefs}

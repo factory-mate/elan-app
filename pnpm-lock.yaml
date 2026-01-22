@@ -189,6 +189,9 @@ importers:
       '@iconify/json':
         specifier: ^2.2.421
         version: 2.2.421
+      '@plugin-web-update-notification/vite':
+        specifier: ^2.0.2
+        version: 2.0.2(vite@7.3.0(@types/node@22.5.3)(jiti@1.21.7)(sass@1.97.1)(tsx@4.19.2)(yaml@2.8.2))
       '@svgr/core':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.9.3)
@@ -1837,6 +1840,14 @@ packages:
   '@pkgr/core@0.1.1':
     resolution: {integrity: sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@plugin-web-update-notification/core@2.0.2':
+    resolution: {integrity: sha512-i3REg6H/3cSImf5fyUj4xYA4OTndnwQ9qLkl3dckZEkER0Tpky9RulUn4ZcMw+BL+oWCa63ldFTtZHW6DuI6GQ==}
+
+  '@plugin-web-update-notification/vite@2.0.2':
+    resolution: {integrity: sha512-DHqUOC78+SWwT/xILoY07HoMFHfFNtdTAJZOK22YW7R7+cUyS1IGgkfSKsuLHXzu1n3S3mlg0nEEuhczXC3J4g==}
+    peerDependencies:
+      vite: ^7.0.0 || ^6.0.0 || ^5.0.0 || >4.0.0 || ^3.0.0
 
   '@rc-component/async-validator@5.0.4':
     resolution: {integrity: sha512-qgGdcVIF604M9EqjNF0hbUTz42bz/RDtxWdWuU5EQe3hi7M8ob54B6B35rOsvX5eSvIHIzT9iH1R3n+hk3CGfg==}
@@ -5799,10 +5810,6 @@ packages:
     peerDependencies:
       seroval: ^1.0
 
-  seroval@1.4.0:
-    resolution: {integrity: sha512-BdrNXdzlofomLTiRnwJTSEAaGKyHHZkbMXIywOh7zlzp4uZnXErEwl9XZ+N1hJSNpeTtNxWvVwN0wUzAIQ4Hpg==}
-    engines: {node: '>=10'}
-
   seroval@1.4.1:
     resolution: {integrity: sha512-9GOc+8T6LN4aByLN75uRvMbrwY5RDBW6lSlknsY4LEa9ZmWcxKcRe1G/Q3HZXjltxMHTrStnvrwAICxZrhldtg==}
     engines: {node: '>=10'}
@@ -8122,6 +8129,13 @@ snapshots:
     optional: true
 
   '@pkgr/core@0.1.1': {}
+
+  '@plugin-web-update-notification/core@2.0.2': {}
+
+  '@plugin-web-update-notification/vite@2.0.2(vite@7.3.0(@types/node@22.5.3)(jiti@1.21.7)(sass@1.97.1)(tsx@4.19.2)(yaml@2.8.2))':
+    dependencies:
+      '@plugin-web-update-notification/core': 2.0.2
+      vite: 7.3.0(@types/node@22.5.3)(jiti@1.21.7)(sass@1.97.1)(tsx@4.19.2)(yaml@2.8.2)
 
   '@rc-component/async-validator@5.0.4':
     dependencies:
@@ -12774,15 +12788,9 @@ snapshots:
 
   semver@7.7.3: {}
 
-  seroval-plugins@1.4.0(seroval@1.4.0):
-    dependencies:
-      seroval: 1.4.0
-
   seroval-plugins@1.4.0(seroval@1.4.1):
     dependencies:
       seroval: 1.4.1
-
-  seroval@1.4.0: {}
 
   seroval@1.4.1: {}
 
@@ -12848,8 +12856,8 @@ snapshots:
   solid-js@1.9.5:
     dependencies:
       csstype: 3.2.3
-      seroval: 1.4.0
-      seroval-plugins: 1.4.0(seroval@1.4.0)
+      seroval: 1.4.1
+      seroval-plugins: 1.4.0(seroval@1.4.1)
 
   source-map-js@1.2.1: {}
 

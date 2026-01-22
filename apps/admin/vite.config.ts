@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { antdResolver, reactPresets } from '@bit-ocean/auto-import'
 import { BootstrapAnimation } from '@bit-ocean/bootstrap-animation'
+import { webUpdateNotice as WebUpdateNotice } from '@plugin-web-update-notification/vite'
 import { tanstackRouter as TanStackRouter } from '@tanstack/router-plugin/vite'
 import ReactSWC from '@vitejs/plugin-react-swc'
 import { visualizer as Visualizer } from 'rollup-plugin-visualizer'
@@ -50,6 +51,15 @@ export default defineConfig(({ mode }) => {
         autoCodeSplitting: true
       }),
       ReactSWC(),
+      WebUpdateNotice({
+        logVersion: true,
+        notificationProps: {
+          title: '更新通知',
+          description: '网站内容有更新，请刷新页面，获取最新内容',
+          buttonText: '刷新',
+          dismissButtonText: '忽略'
+        }
+      }),
       AutoImport({
         dts: '@types/auto-imports.d.ts',
         include: [/\.[tj]sx?$/, /\.md$/, /tsr-split/],

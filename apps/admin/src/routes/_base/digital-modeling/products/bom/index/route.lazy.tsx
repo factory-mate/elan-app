@@ -268,6 +268,9 @@ function RouteComponent() {
                         {DateUtils.formatTime(detailData?.dEffectiveDate, 'YYYY-MM-DD')}
                       </Form.Item>
                     </Col>
+                    <Col span={8}>
+                      <Form.Item<BOMVo> label="创建人">{detailData?.cCreateUserName}</Form.Item>
+                    </Col>
                   </Row>
                 </Skeleton>
               </Form>

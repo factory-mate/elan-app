@@ -55,6 +55,7 @@
     "@bit-ocean/auto-import": "^0.0.54",
     "@bit-ocean/bootstrap-animation": "0.0.54",
     "@iconify/json": "^2.2.421",
+    "@plugin-web-update-notification/vite": "^2.0.2",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.91.1",

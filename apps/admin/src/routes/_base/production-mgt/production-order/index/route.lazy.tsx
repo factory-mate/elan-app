@@ -202,8 +202,6 @@ function RouteComponent() {
           )
       },
       { field: 'cCreateUserName', headerName: '制单人' },
-      { field: 'cModifyUserName', headerName: '审核人' },
-      { field: 'cModifyUserName', headerName: '关闭人' },
       { field: 'dBeginTime', headerName: '订单时间' },
       {
         field: 'cInvCode',
@@ -354,6 +352,8 @@ function RouteComponent() {
       },
       { field: 'dVerifyTime', headerName: '审核时间' },
       { field: 'dCloseTime', headerName: '关闭时间' },
+      { field: 'cModifyUserName', headerName: '审核人' },
+      { field: 'cModifyUserName', headerName: '关闭人' },
       {
         headerName: '操作',
         sortable: false,
