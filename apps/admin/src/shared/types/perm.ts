@@ -67,6 +67,10 @@ export type PermCode =
   | 'bom:quit-audit'
   | 'bom:import'
   | 'bom:export'
+  // 数字化建模 - 产品建模 - 物料清单整批修改
+  | 'bom-change'
+  | 'bom-change:view'
+  | 'bom-change:replace'
   // 数字化建模 - 配方角色对照
   | 'recipe-role-ref'
   | 'recipe-role-ref:view'

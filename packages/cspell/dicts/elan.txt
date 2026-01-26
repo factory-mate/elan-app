@@ -2,6 +2,9 @@ Adress
 bodys
 Bodyss
 cfile
+cParentdEffectiveDate
+cParentdExpirationDate
+cParentiStatusName
 CPZS
 dictonary
 EINECS

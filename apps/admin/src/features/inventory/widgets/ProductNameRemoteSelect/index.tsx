@@ -28,7 +28,7 @@ export default function ProductNameRemoteSelect(props: ProductNameRemoteSelectPr
         queryClient
           .fetchQuery(
             listQO({
-              ...defaultMinPageDto,
+              ...defaultPageDto,
               conditions: queryBuilder([
                 { key: 'IsProduct', type: 'eq', val: true },
                 { key: 'cInvName', type: 'like', val: search }

@@ -110,9 +110,9 @@ export default function ProductCodeRemoteSelect(props: ProductCodeRemoteSelectPr
             queryClient
               .fetchQuery(
                 listQO({
-                  ...defaultMinPageDto,
-                  conditions: queryBuilder([
-                    { key: 'IsProduct', type: 'eq', val: true },
+                  ...defaultPageDto,
+                  conditions: queryBuilder<FilterForm>([
+                    { key: 'IsMaterial', type: 'eq', val: true },
                     { key: 'cInvCode', type: 'like', val: search }
                   ])
                 })

@@ -23,6 +23,7 @@ import { Route as BaseReportQcNormalMaterialRouteRouteImport } from './../../rou
 import { Route as BaseReportQcBomContentRouteRouteImport } from './../../routes/_base/report/qc/bom-content/route'
 import { Route as BaseReportQcAllMaterialRouteRouteImport } from './../../routes/_base/report/qc/all-material/route'
 import { Route as BaseProductionMgtProductionOrderAddRouteRouteImport } from './../../routes/_base/production-mgt/production-order/add/route'
+import { Route as BaseDigitalModelingProductsBomChangeRouteRouteImport } from './../../routes/_base/digital-modeling/products/bom-change/route'
 import { Route as BaseDigitalModelingMerchantsVendorClassRouteRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor-class/route'
 import { Route as BaseDigitalModelingMerchantsVendorRouteRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor/route'
 import { Route as BaseProductionMgtProductionOrderIndexRouteRouteImport } from './../../routes/_base/production-mgt/production-order/index/route'
@@ -151,6 +152,16 @@ const BaseProductionMgtProductionOrderAddRouteRoute =
     getParentRoute: () => BaseRoute,
   } as any).lazy(() =>
     import('./../../routes/_base/production-mgt/production-order/add/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const BaseDigitalModelingProductsBomChangeRouteRoute =
+  BaseDigitalModelingProductsBomChangeRouteRouteImport.update({
+    id: '/digital-modeling/products/bom-change',
+    path: '/digital-modeling/products/bom-change',
+    getParentRoute: () => BaseRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/digital-modeling/products/bom-change/route.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -427,6 +438,7 @@ export interface FileRoutesByFullPath {
   '/production-mgt/production-order': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
+  '/digital-modeling/products/bom-change': typeof BaseDigitalModelingProductsBomChangeRouteRoute
   '/production-mgt/production-order/add': typeof BaseProductionMgtProductionOrderAddRouteRoute
   '/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
   '/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
@@ -466,6 +478,7 @@ export interface FileRoutesByTo {
   '/production-mgt/production-order': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
+  '/digital-modeling/products/bom-change': typeof BaseDigitalModelingProductsBomChangeRouteRoute
   '/production-mgt/production-order/add': typeof BaseProductionMgtProductionOrderAddRouteRoute
   '/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
   '/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
@@ -509,6 +522,7 @@ export interface FileRoutesById {
   '/_base/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/_base/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/_base/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
+  '/_base/digital-modeling/products/bom-change': typeof BaseDigitalModelingProductsBomChangeRouteRoute
   '/_base/production-mgt/production-order/add': typeof BaseProductionMgtProductionOrderAddRouteRoute
   '/_base/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
   '/_base/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
@@ -550,6 +564,7 @@ export interface FileRouteTypes {
     | '/production-mgt/production-order'
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
+    | '/digital-modeling/products/bom-change'
     | '/production-mgt/production-order/add'
     | '/report/qc/all-material'
     | '/report/qc/bom-content'
@@ -589,6 +604,7 @@ export interface FileRouteTypes {
     | '/production-mgt/production-order'
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
+    | '/digital-modeling/products/bom-change'
     | '/production-mgt/production-order/add'
     | '/report/qc/all-material'
     | '/report/qc/bom-content'
@@ -631,6 +647,7 @@ export interface FileRouteTypes {
     | '/_base/production-mgt/production-order/'
     | '/_base/digital-modeling/merchants/vendor'
     | '/_base/digital-modeling/merchants/vendor-class'
+    | '/_base/digital-modeling/products/bom-change'
     | '/_base/production-mgt/production-order/add'
     | '/_base/report/qc/all-material'
     | '/_base/report/qc/bom-content'
@@ -763,6 +780,13 @@ declare module '@tanstack/react-router' {
       path: '/production-mgt/production-order/add'
       fullPath: '/production-mgt/production-order/add'
       preLoaderRoute: typeof BaseProductionMgtProductionOrderAddRouteRouteImport
+      parentRoute: typeof BaseRoute
+    }
+    '/_base/digital-modeling/products/bom-change': {
+      id: '/_base/digital-modeling/products/bom-change'
+      path: '/digital-modeling/products/bom-change'
+      fullPath: '/digital-modeling/products/bom-change'
+      preLoaderRoute: typeof BaseDigitalModelingProductsBomChangeRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/merchants/vendor-class': {
@@ -961,6 +985,7 @@ interface BaseRouteChildren {
   BaseProductionMgtProductionOrderIndexRouteRoute: typeof BaseProductionMgtProductionOrderIndexRouteRoute
   BaseDigitalModelingMerchantsVendorRouteRoute: typeof BaseDigitalModelingMerchantsVendorRouteRoute
   BaseDigitalModelingMerchantsVendorClassRouteRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
+  BaseDigitalModelingProductsBomChangeRouteRoute: typeof BaseDigitalModelingProductsBomChangeRouteRoute
   BaseProductionMgtProductionOrderAddRouteRoute: typeof BaseProductionMgtProductionOrderAddRouteRoute
   BaseReportQcAllMaterialRouteRoute: typeof BaseReportQcAllMaterialRouteRoute
   BaseReportQcBomContentRouteRoute: typeof BaseReportQcBomContentRouteRoute
@@ -1003,6 +1028,8 @@ const BaseRouteChildren: BaseRouteChildren = {
     BaseDigitalModelingMerchantsVendorRouteRoute,
   BaseDigitalModelingMerchantsVendorClassRouteRoute:
     BaseDigitalModelingMerchantsVendorClassRouteRoute,
+  BaseDigitalModelingProductsBomChangeRouteRoute:
+    BaseDigitalModelingProductsBomChangeRouteRoute,
   BaseProductionMgtProductionOrderAddRouteRoute:
     BaseProductionMgtProductionOrderAddRouteRoute,
   BaseReportQcAllMaterialRouteRoute: BaseReportQcAllMaterialRouteRoute,

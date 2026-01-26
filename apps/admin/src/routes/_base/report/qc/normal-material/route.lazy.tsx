@@ -2,7 +2,7 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColGroupDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { ProductCodeRemoteSelect } from '@/features/inventory'
+import * as Inventory from '@/features/inventory'
 import { LIST_QK, listQO, type NormalMaterialVo } from '@/features/normal-material'
 
 interface FilterForm {
@@ -46,7 +46,7 @@ function RouteComponent() {
         label: '产品编码',
         type: 'custom',
         render: () => (
-          <ProductCodeRemoteSelect
+          <Inventory.ProductCodeRemoteSelect
             onConfirm={(v) => {
               form.setFieldValue('cInvCode', v.cInvCode)
               form.setFieldValue('cInvName', v.cInvName)

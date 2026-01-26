@@ -4,6 +4,7 @@ import type { TreeDataNode } from 'antd'
 export const Route = createLazyFileRoute('/_base/menus/')({
   component: RouteComponent
 })
+const highlightStyle: React.CSSProperties = { color: 'red' }
 
 const treeData: TreeDataNode[] = [
   {
@@ -114,6 +115,15 @@ const treeData: TreeDataNode[] = [
               { key: 'bom:quit-audit', title: '弃审 bom:quit-audit' },
               { key: 'bom:import', title: '导入 bom:import' },
               { key: 'bom:export', title: '导出 bom:export' }
+            ]
+          },
+          {
+            key: 'bom-change',
+            title: '物料清单整批修改 bom-change',
+            style: highlightStyle,
+            children: [
+              { key: 'bom-change:view', title: '查看 bom-change:view', style: highlightStyle },
+              { key: 'bom-change:replace', title: '替代 bom-change:replace', style: highlightStyle }
             ]
           },
           {
@@ -407,7 +417,7 @@ function RouteComponent() {
         treeData={treeData}
         showLine
         checkStrictly
-        defaultExpandAll
+        defaultExpandedKeys={['digital-modeling', 'products', 'bom-change']}
       />
     </PageContainer>
   )

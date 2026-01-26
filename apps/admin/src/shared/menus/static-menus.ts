@@ -35,6 +35,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
           { label: '料品分类', key: '/inventory-class', permCode: 'inventory-class' },
           { label: '料品档案', key: '/inventory', permCode: 'inventory' },
           { label: '物料清单/配方', key: '/bom', permCode: 'bom' },
+          { label: '物料清单整批修改', key: '/bom-change', permCode: 'bom-change' },
           { label: '配方角色对照', key: '/recipe-role-ref', permCode: 'recipe-role-ref' },
           {
             label: '工艺',
