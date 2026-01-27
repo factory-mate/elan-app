@@ -38,41 +38,34 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<ProductionDateDiff.ListVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.批号!}
+          columnDefs={columnDefs}
+          rowData={data}
+          autoSizeStrategy={{
+            type: 'fitGridWidth',
+            defaultMinWidth: 200
+          }}
+          loading={isFetching}
+        />
+      </div>
+      <Flex
+        justify="end"
+        align="center"
       >
-        <div className="ag-theme-quartz h-[calc(100vh-211px)]">
-          <AgGridReact<ProductionDateDiff.ListVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.批号!}
-            columnDefs={columnDefs}
-            rowData={data}
-            autoSizeStrategy={{
-              type: 'fitGridWidth',
-              defaultMinWidth: 200
-            }}
-            loading={isFetching}
-          />
-        </div>
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `共计 ${total} 条`}
-            total={dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) =>
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }
-          />
-        </Flex>
-      </Space>
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) => `共计 ${total} 条`}
+          total={dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => setPageParams({ ...pageParams, pageIndex, pageSize })}
+        />
+      </Flex>
     </PageContainer>
   )
 }

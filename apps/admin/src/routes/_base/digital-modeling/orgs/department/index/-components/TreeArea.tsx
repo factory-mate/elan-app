@@ -14,7 +14,6 @@ export default function TreeArea(props: TreeAreaProps) {
 
   return (
     <Tree
-      className="h-[calc(100vh-170px)]"
       treeData={data}
       checkable
       checkedKeys={selectedTreeKeys}

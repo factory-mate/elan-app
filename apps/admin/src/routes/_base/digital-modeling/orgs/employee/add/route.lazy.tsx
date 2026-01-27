@@ -22,103 +22,106 @@ function RouteComponent() {
   const addMutation = Employee.useAddMutation()
 
   return (
-    <Card>
-      <Form
-        style={{ width: '500px', margin: '0 auto' }}
-        layout="vertical"
-        form={form}
-        onFinish={(values) =>
-          addMutation.mutate(values, {
-            onSuccess: () => {
-              navigate({ to: '/digital-modeling/orgs/employee' })
-              tabbarStore.removeItem(match.fullPath)
-            }
-          })
-        }
-      >
-        <Form.Item<EmployeeVo>
-          name="cEmployeeCode"
-          label="账号"
-          rules={[{ required: true, message: '请输入账号' }]}
+    <PageContainer>
+      <Card>
+        <Form
+          rootClassName="m-auto"
+          style={{ width: '500px' }}
+          layout="vertical"
+          form={form}
+          onFinish={(values) =>
+            addMutation.mutate(values, {
+              onSuccess: () => {
+                navigate({ to: '/digital-modeling/orgs/employee' })
+                tabbarStore.removeItem(match.fullPath)
+              }
+            })
+          }
         >
-          <Input placeholder="请输入账号" />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cEmployeeName"
-          label="姓名"
-          rules={[{ required: true, message: '请输入姓名' }]}
-        >
-          <Input placeholder="请输入姓名" />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cDepCode"
-          label="部门"
-          rules={[{ required: true, message: '请选择部门' }]}
-        >
-          <TreeSelect
-            treeData={deptTreeData ?? []}
-            fieldNames={{
-              label: 'cDepName',
-              value: 'cDepCode',
-              children: 'Child'
-            }}
-            allowClear
-            placeholder="请选择部门"
-          />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cProfessionalTypeCode"
-          label="职务"
-          rules={[{ required: true, message: '请选择职务' }]}
-        >
-          <Select
-            options={positionCandidates ?? []}
-            fieldNames={{
-              label: 'cDictonaryName',
-              value: 'cDictonaryCode'
-            }}
-            allowClear
-            placeholder="请选择职务"
-          />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cMobile"
-          label="手机"
-          rules={[{ required: true, message: '请输入手机' }]}
-        >
-          <Input placeholder="请输入手机" />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cMeil"
-          label="邮箱"
-        >
-          <Input placeholder="请输入邮箱" />
-        </Form.Item>
-
-        <Form.Item<EmployeeVo>
-          name="cWeChat"
-          label="微信"
-        >
-          <Input placeholder="请输入微信" />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            className="w-full"
-            type="primary"
-            htmlType="submit"
-            loading={addMutation.isPending}
-            disabled={addMutation.isPending}
+          <Form.Item<EmployeeVo>
+            name="cEmployeeCode"
+            label="账号"
+            rules={[{ required: true, message: '请输入账号' }]}
           >
-            提交
-          </Button>
-        </Form.Item>
-      </Form>
-    </Card>
+            <Input placeholder="请输入账号" />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cEmployeeName"
+            label="姓名"
+            rules={[{ required: true, message: '请输入姓名' }]}
+          >
+            <Input placeholder="请输入姓名" />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cDepCode"
+            label="部门"
+            rules={[{ required: true, message: '请选择部门' }]}
+          >
+            <TreeSelect
+              treeData={deptTreeData ?? []}
+              fieldNames={{
+                label: 'cDepName',
+                value: 'cDepCode',
+                children: 'Child'
+              }}
+              allowClear
+              placeholder="请选择部门"
+            />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cProfessionalTypeCode"
+            label="职务"
+            rules={[{ required: true, message: '请选择职务' }]}
+          >
+            <Select
+              options={positionCandidates ?? []}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
+              allowClear
+              placeholder="请选择职务"
+            />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cMobile"
+            label="手机"
+            rules={[{ required: true, message: '请输入手机' }]}
+          >
+            <Input placeholder="请输入手机" />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cMeil"
+            label="邮箱"
+          >
+            <Input placeholder="请输入邮箱" />
+          </Form.Item>
+
+          <Form.Item<EmployeeVo>
+            name="cWeChat"
+            label="微信"
+          >
+            <Input placeholder="请输入微信" />
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              className="w-full"
+              type="primary"
+              htmlType="submit"
+              loading={addMutation.isPending}
+              disabled={addMutation.isPending}
+            >
+              提交
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </PageContainer>
   )
 }

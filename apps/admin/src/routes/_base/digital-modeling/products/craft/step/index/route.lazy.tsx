@@ -90,94 +90,89 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea setFilterData={setFilterData} />
+      <Flex
+        className="h-8"
+        justify="space-between"
+        align="center"
       >
-        <FilterArea setFilterData={setFilterData} />
-        <Flex
-          className="h-8"
-          justify="space-between"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="step:delete">
-              <Popconfirm
-                title="确认执行该操作？"
-                okButtonProps={{
-                  disabled: deleteMutation.isPending,
-                  loading: deleteMutation.isPending
-                }}
-                onConfirm={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                <Button disabled={deleteMutation.isPending}>删除</Button>
-              </Popconfirm>
-            </PermCodeProvider>
-          </Space>
-          <Space>
-            <PermCodeProvider code="step:add">
-              <Button
-                type="primary"
-                onClick={() => addModal.toggle()}
-              >
-                新增
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="step:delete">
+            <Popconfirm
+              title="确认执行该操作？"
+              okButtonProps={{
+                disabled: deleteMutation.isPending,
+                loading: deleteMutation.isPending
+              }}
+              onConfirm={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              <Button disabled={deleteMutation.isPending}>删除</Button>
+            </Popconfirm>
+          </PermCodeProvider>
+        </Space>
+        <Space>
+          <PermCodeProvider code="step:add">
+            <Button
+              type="primary"
+              onClick={() => addModal.toggle()}
+            >
+              新增
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-339px)]">
-          <AgGridReact<StepVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID}
-            columnDefs={columnDefs}
-            rowData={data?.data}
-            rowSelection={{
-              mode: 'multiRow'
-            }}
-            selectionColumnDef={{
-              sortable: true,
-              suppressHeaderMenuButton: true,
-              pinned: 'left',
-              lockPinned: true
-            }}
-            autoSizeStrategy={{
-              type: 'fitGridWidth'
-            }}
-            loading={isFetching}
-            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
-          />
-        </div>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<StepVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow'
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          autoSizeStrategy={{
+            type: 'fitGridWidth'
+          }}
+          loading={isFetching}
+          onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+        />
+      </div>
 
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) =>
-              selectedRows.length > 0
-                ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
-                : `共计 ${total} 条`
-            }
-            total={data?.dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) => {
-              setSelectedRows(gridRef.current!.api.getSelectedRows())
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }}
-          />
-        </Flex>
-      </Space>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) =>
+            selectedRows.length > 0
+              ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
+              : `共计 ${total} 条`
+          }
+          total={data?.dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => {
+            setSelectedRows(gridRef.current!.api.getSelectedRows())
+            setPageParams({ ...pageParams, pageIndex, pageSize })
+          }}
+        />
+      </Flex>
 
       <AddModal
         open={addModal.open}

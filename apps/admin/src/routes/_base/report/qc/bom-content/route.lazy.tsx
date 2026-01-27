@@ -38,57 +38,52 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={form}
+        setFilterData={setFilterData}
+      />
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <FilterArea
-          form={form}
-          setFilterData={setFilterData}
-        />
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="bom-content:export">
-              <Button
-                type="primary"
-                onClick={() => {
-                  const formData = form.getFieldsValue()
-                  if (!formData.cParentInvCode) {
-                    message.warning('请输入产品编码')
-                    return
-                  }
-                  exportMutation.mutate({
-                    cInvCode: formData.cInvCode,
-                    cParentInvCode: formData.cParentInvCode
-                  })
-                }}
-                loading={exportMutation.isPending}
-                disabled={exportMutation.isPending}
-              >
-                导出
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="bom-content:export">
+            <Button
+              type="primary"
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                if (!formData.cParentInvCode) {
+                  message.warning('请输入产品编码')
+                  return
+                }
+                exportMutation.mutate({
+                  cInvCode: formData.cInvCode,
+                  cParentInvCode: formData.cParentInvCode
+                })
+              }}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-300px)]">
-          <AgGridReact<BomContentVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.cInvCode!}
-            columnDefs={columnDefs}
-            rowData={data}
-            autoSizeStrategy={{
-              type: 'fitGridWidth',
-              defaultMinWidth: 200
-            }}
-            loading={isFetching}
-          />
-        </div>
-      </Space>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<BomContentVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.cInvCode!}
+          columnDefs={columnDefs}
+          rowData={data}
+          autoSizeStrategy={{
+            type: 'fitGridWidth',
+            defaultMinWidth: 200
+          }}
+          loading={isFetching}
+        />
+      </div>
     </PageContainer>
   )
 }

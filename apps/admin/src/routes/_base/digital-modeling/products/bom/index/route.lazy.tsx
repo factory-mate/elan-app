@@ -209,12 +209,12 @@ function RouteComponent() {
           min="50%"
         >
           {selectedTreeData?.UID && selectedTreeData.UID !== NOT_FOUND_UID && (
-            <Space
-              className="w-full pl-2"
-              orientation="vertical"
+            <Flex
+              className="h-[calc(100vh-174px)] pl-2"
+              vertical
             >
               <Form
-                layout="horizontal"
+                layout="inline"
                 name="detail-form"
                 form={form}
                 labelCol={{ span: 8 }}
@@ -275,7 +275,7 @@ function RouteComponent() {
                 </Skeleton>
               </Form>
 
-              <div className="ag-theme-quartz h-[calc(100vh-499px)]">
+              <div className="ag-theme-quartz flex-1">
                 <AgGridReact<BOMChildItemVo>
                   ref={gridRef}
                   getRowId={(params) => params.data.UID!}
@@ -284,7 +284,7 @@ function RouteComponent() {
                   loading={isChildListFetching}
                 />
               </div>
-            </Space>
+            </Flex>
           )}
         </Splitter.Panel>
       </Splitter>

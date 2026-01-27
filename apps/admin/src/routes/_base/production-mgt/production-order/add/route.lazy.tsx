@@ -244,125 +244,120 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="production-order:add">
-              <Button
-                type="primary"
-                disabled={addMutation.isPending}
-                loading={addMutation.isPending}
-                onClick={() => form.submit()}
-              >
-                保存
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
-
-        <Form
-          className="pt-3"
-          name="add-form"
-          form={form}
-          labelCol={{ span: 6 }}
-          initialValues={{
-            dDate: dayjs(new Date())
-          }}
-          onFinish={onFinish}
-        >
-          <Row>
-            <Col span={8}>
-              <Form.Item<ProductionOrder.ProductionOrderHead>
-                name="cCode"
-                label="生产订单号"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item<ProductionOrder.ProductionOrderHead>
-                name="cStandardType"
-                label="生产订单类型"
-              >
-                <Select
-                  options={standardTypeCandidates}
-                  fieldNames={{
-                    label: 'cDictonaryName',
-                    value: 'cDictonaryCode'
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item<ProductionOrder.ProductionOrderHead>
-                name="cVouchType"
-                label="生产订单类别"
-              >
-                <Select
-                  options={vouchTypeCandidates}
-                  fieldNames={{
-                    label: 'cDictonaryName',
-                    value: 'cDictonaryCode'
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item<ProductionOrder.ProductionOrderHead>
-                name="cDefindParm01"
-                label="生产工厂"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item<ProductionOrder.ProductionOrderHead>
-                name="dDate"
-                label="订单日期"
-              >
-                <DatePicker />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-
         <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              setTableData((draft) => {
-                draft.push({
-                  dBeginTime: DateUtils.formatTime(form.getFieldValue('dDate'), 'YYYY-MM-DD'),
-                  dEndTime: DateUtils.formatTime(
-                    DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
-                    'YYYY-MM-DD'
-                  ),
-                  cBomType: ProductionOrder.BOMType.STANDARD,
-                  bodyss: []
-                })
-              })
-            }
-          >
-            增行
-          </Button>
+          <PermCodeProvider code="production-order:add">
+            <Button
+              type="primary"
+              disabled={addMutation.isPending}
+              loading={addMutation.isPending}
+              onClick={() => form.submit()}
+            >
+              保存
+            </Button>
+          </PermCodeProvider>
         </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-381px)]">
-          <AgGridReact<ProductionOrder.ProductionOrderBody>
-            ref={gridRef}
-            columnDefs={columnDefs}
-            rowData={tableData}
-            editType="fullRow"
-          />
-        </div>
+      <Form
+        className="pt-3"
+        name="add-form"
+        form={form}
+        labelCol={{ span: 6 }}
+        initialValues={{
+          dDate: dayjs(new Date())
+        }}
+        onFinish={onFinish}
+      >
+        <Row>
+          <Col span={8}>
+            <Form.Item<ProductionOrder.ProductionOrderHead>
+              name="cCode"
+              label="生产订单号"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<ProductionOrder.ProductionOrderHead>
+              name="cStandardType"
+              label="生产订单类型"
+            >
+              <Select
+                options={standardTypeCandidates}
+                fieldNames={{
+                  label: 'cDictonaryName',
+                  value: 'cDictonaryCode'
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<ProductionOrder.ProductionOrderHead>
+              name="cVouchType"
+              label="生产订单类别"
+            >
+              <Select
+                options={vouchTypeCandidates}
+                fieldNames={{
+                  label: 'cDictonaryName',
+                  value: 'cDictonaryCode'
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<ProductionOrder.ProductionOrderHead>
+              name="cDefindParm01"
+              label="生产工厂"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item<ProductionOrder.ProductionOrderHead>
+              name="dDate"
+              label="订单日期"
+            >
+              <DatePicker />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+
+      <Space>
+        <Button
+          type="primary"
+          onClick={() =>
+            setTableData((draft) => {
+              draft.push({
+                dBeginTime: DateUtils.formatTime(form.getFieldValue('dDate'), 'YYYY-MM-DD'),
+                dEndTime: DateUtils.formatTime(
+                  DateUtils.dayjs(form.getFieldValue('dDate')).add(1, 'day'),
+                  'YYYY-MM-DD'
+                ),
+                cBomType: ProductionOrder.BOMType.STANDARD,
+                bodyss: []
+              })
+            })
+          }
+        >
+          增行
+        </Button>
       </Space>
+
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<ProductionOrder.ProductionOrderBody>
+          ref={gridRef}
+          columnDefs={columnDefs}
+          rowData={tableData}
+          editType="fullRow"
+        />
+      </div>
     </PageContainer>
   )
 }

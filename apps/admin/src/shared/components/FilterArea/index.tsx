@@ -39,7 +39,6 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
 
   return (
     <Form
-      className="pt-3"
       labelCol={{ span: 6 }}
       {...form}
     >

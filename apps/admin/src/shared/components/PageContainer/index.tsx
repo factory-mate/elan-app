@@ -7,6 +7,7 @@ export default function PageContainer(props: PageContainerProps) {
 
   return (
     <Flex
+      className="h-[calc(100vh-133px)]"
       vertical
       gap={8}
     >

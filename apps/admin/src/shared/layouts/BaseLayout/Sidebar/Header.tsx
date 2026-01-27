@@ -16,7 +16,7 @@ export default function Header() {
       className="!text-inherit"
     >
       <div
-        className="flex h-14 w-full select-none items-center justify-center space-x-2.5"
+        className="flex h-10 w-full select-none items-center justify-center space-x-2"
         onMouseEnter={() => router.preloadRoute({ to: '/$' })}
         onClick={navToHome}
       >
@@ -24,7 +24,7 @@ export default function Header() {
           className="cursor-pointer rounded-md shadow-sm"
           src={logo}
           alt="Logo"
-          width={32}
+          width={28}
           loading="eager"
           preview={false}
           draggable={false}

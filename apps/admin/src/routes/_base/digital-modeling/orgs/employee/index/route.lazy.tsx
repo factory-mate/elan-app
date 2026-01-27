@@ -122,187 +122,183 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <Flex
+        className="h-8"
+        justify="space-between"
+        align="center"
       >
-        <Flex
-          className="h-8"
-          justify="space-between"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="employee:delete">
-              <Popconfirm
-                title="确认执行该操作？"
-                okButtonProps={{
-                  disabled: deleteMutation.isPending,
-                  loading: deleteMutation.isPending
-                }}
-                onConfirm={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                <Button disabled={deleteMutation.isPending}>删除</Button>
-              </Popconfirm>
-            </PermCodeProvider>
-          </Space>
-          <Space>
-            <PermCodeProvider code="employee:edit-role">
-              <Button
-                onClick={() => {
-                  editRoleModal.setMeta({ ids: selectedRows.map((i) => i.cEmployeeCode) })
-                  editRoleModal.toggle()
-                }}
-              >
-                修改角色
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:edit-dept">
-              <Button
-                onClick={() => {
-                  editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
-                  editDeptModal.toggle()
-                }}
-              >
-                修改部门
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:edit-position">
-              <Button
-                onClick={() => {
-                  editPositionModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
-                  editPositionModal.toggle()
-                }}
-              >
-                修改职务
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:edit">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  startMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                启用员工
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:edit">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  stopMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                停用员工
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:freeze">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  freezeMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                冻结员工
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:unfreeze">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  unfreezeMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                解冻员工
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:reset-password">
-              <Popconfirm
-                title="确认执行该操作？"
-                okButtonProps={{
-                  disabled: deleteMutation.isPending,
-                  loading: deleteMutation.isPending
-                }}
-                onConfirm={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                <Button disabled={resetPasswordMutation.isPending}>重置密码</Button>
-              </Popconfirm>
-            </PermCodeProvider>
-            <PermCodeProvider code="employee:add">
-              <Link to="/digital-modeling/orgs/employee/add">
-                <Button type="primary">新增职员</Button>
-              </Link>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="employee:delete">
+            <Popconfirm
+              title="确认执行该操作？"
+              okButtonProps={{
+                disabled: deleteMutation.isPending,
+                loading: deleteMutation.isPending
+              }}
+              onConfirm={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              <Button disabled={deleteMutation.isPending}>删除</Button>
+            </Popconfirm>
+          </PermCodeProvider>
+        </Space>
+        <Space>
+          <PermCodeProvider code="employee:edit-role">
+            <Button
+              onClick={() => {
+                editRoleModal.setMeta({ ids: selectedRows.map((i) => i.cEmployeeCode) })
+                editRoleModal.toggle()
+              }}
+            >
+              修改角色
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:edit-dept">
+            <Button
+              onClick={() => {
+                editDeptModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                editDeptModal.toggle()
+              }}
+            >
+              修改部门
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:edit-position">
+            <Button
+              onClick={() => {
+                editPositionModal.setMeta({ ids: selectedRows.map((i) => i.UID) })
+                editPositionModal.toggle()
+              }}
+            >
+              修改职务
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:edit">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                startMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              启用员工
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:edit">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                stopMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              停用员工
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:freeze">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                freezeMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              冻结员工
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:unfreeze">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                unfreezeMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              解冻员工
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:reset-password">
+            <Popconfirm
+              title="确认执行该操作？"
+              okButtonProps={{
+                disabled: deleteMutation.isPending,
+                loading: deleteMutation.isPending
+              }}
+              onConfirm={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                resetPasswordMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              <Button disabled={resetPasswordMutation.isPending}>重置密码</Button>
+            </Popconfirm>
+          </PermCodeProvider>
+          <PermCodeProvider code="employee:add">
+            <Link to="/digital-modeling/orgs/employee/add">
+              <Button type="primary">新增职员</Button>
+            </Link>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-251px)]">
-          <AgGridReact<EmployeeVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID}
-            columnDefs={columnDefs}
-            rowData={data?.data}
-            rowSelection={{
-              mode: 'multiRow'
-            }}
-            selectionColumnDef={{
-              sortable: true,
-              suppressHeaderMenuButton: true,
-              pinned: 'left',
-              lockPinned: true
-            }}
-            loading={isFetching}
-            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
-          />
-        </div>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<EmployeeVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow'
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          loading={isFetching}
+          onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+        />
+      </div>
 
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) =>
-              selectedRows.length > 0
-                ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
-                : `共计 ${total} 条`
-            }
-            total={data?.dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) => {
-              setSelectedRows(gridRef.current!.api.getSelectedRows())
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }}
-          />
-        </Flex>
-      </Space>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) =>
+            selectedRows.length > 0
+              ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
+              : `共计 ${total} 条`
+          }
+          total={data?.dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => {
+            setSelectedRows(gridRef.current!.api.getSelectedRows())
+            setPageParams({ ...pageParams, pageIndex, pageSize })
+          }}
+        />
+      </Flex>
+
       <EditDeptModal
         meta={editDeptModal.meta}
         open={editDeptModal.open}

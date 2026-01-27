@@ -39,6 +39,7 @@ export const staticMenus: ExtendedMenuItemType[] = [
           { label: '配方角色对照', key: '/recipe-role-ref', permCode: 'recipe-role-ref' },
           {
             label: '工艺',
+            type: 'submenu',
             key: '/craft',
             permCode: 'craft',
             children: [
@@ -158,7 +159,8 @@ export const staticMenus: ExtendedMenuItemType[] = [
 
 type BaseMenuItemType = NonNullable<MenuProps['items']>[number]
 
-type ExtendedMenuItemType = BaseMenuItemType & {
+export type ExtendedMenuItemType = BaseMenuItemType & {
+  label?: string
   permCode?: PermCode | PermCode[]
   children?: ExtendedMenuItemType[]
 }

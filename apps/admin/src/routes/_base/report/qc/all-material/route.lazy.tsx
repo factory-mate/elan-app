@@ -44,73 +44,66 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={form}
+        setFilterData={setFilterData}
+      />
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <FilterArea
-          form={form}
-          setFilterData={setFilterData}
-        />
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="all-material:export">
-              <Button
-                type="primary"
-                onClick={() => {
-                  const formData = form.getFieldsValue()
-                  exportMutation.mutate({
-                    ...pageParams,
-                    conditions: queryBuilder<FilterForm>([
-                      { key: 'cInvCode', type: 'like', val: formData.cInvCode },
-                      { key: 'cInvName', type: 'like', val: formData.cInvName }
-                    ])
-                  })
-                }}
-                loading={exportMutation.isPending}
-                disabled={exportMutation.isPending}
-              >
-                导出
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="all-material:export">
+            <Button
+              type="primary"
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                exportMutation.mutate({
+                  ...pageParams,
+                  conditions: queryBuilder<FilterForm>([
+                    { key: 'cInvCode', type: 'like', val: formData.cInvCode },
+                    { key: 'cInvName', type: 'like', val: formData.cInvName }
+                  ])
+                })
+              }}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-340px)]">
-          <AgGridReact<AllMaterialVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID!}
-            columnDefs={columnDefs}
-            rowData={data}
-            autoSizeStrategy={{
-              type: 'fitGridWidth',
-              defaultMinWidth: 200
-            }}
-            loading={isFetching}
-          />
-        </div>
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `共计 ${total} 条`}
-            total={dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) =>
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }
-          />
-        </Flex>
-      </Space>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<AllMaterialVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID!}
+          columnDefs={columnDefs}
+          rowData={data}
+          autoSizeStrategy={{
+            type: 'fitGridWidth',
+            defaultMinWidth: 200
+          }}
+          loading={isFetching}
+        />
+      </div>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) => `共计 ${total} 条`}
+          total={dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => setPageParams({ ...pageParams, pageIndex, pageSize })}
+        />
+      </Flex>
     </PageContainer>
   )
 }

@@ -74,86 +74,79 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={{
+          form,
+          onFinish: (values) => setFilterData?.({ ...values })
+        }}
+        filterDefs={filterDefs}
+        onReset={() => setFilterData?.({})}
+        queryKey={LIST_QK}
+      />
+      <Flex
+        className="h-8"
+        justify="space-between"
+        align="center"
       >
-        <FilterArea
-          form={{
-            form,
-            onFinish: (values) => setFilterData?.({ ...values })
-          }}
-          filterDefs={filterDefs}
-          onReset={() => setFilterData?.({})}
-          queryKey={LIST_QK}
-        />
-        <Flex
-          className="h-8"
-          justify="space-between"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="sales-order:delete">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                  }
-                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                删除
-              </Button>
-            </PermCodeProvider>
-          </Space>
-          <Space>
-            <PermCodeProvider code="sales-order:sync">
-              <Button
-                type="primary"
-                onClick={() => syncMutation.mutate()}
-              >
-                同步
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="sales-order:delete">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              删除
+            </Button>
+          </PermCodeProvider>
+        </Space>
+        <Space>
+          <PermCodeProvider code="sales-order:sync">
+            <Button
+              type="primary"
+              onClick={() => syncMutation.mutate()}
+            >
+              同步
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-351px)]">
-          <AgGridReact<SalesOrderVo>
-            getRowId={(params) => params.data.UID!}
-            columnDefs={columnDefs}
-            rowData={data?.data}
-            rowSelection={{
-              mode: 'multiRow'
-            }}
-            selectionColumnDef={{
-              sortable: true,
-              suppressHeaderMenuButton: true,
-              pinned: 'left',
-              lockPinned: true
-            }}
-            loading={isFetching}
-            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
-          />
-        </div>
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `共计 ${total} 条`}
-            total={data?.dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) =>
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }
-          />
-        </Flex>
-      </Space>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<SalesOrderVo>
+          getRowId={(params) => params.data.UID!}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow'
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          loading={isFetching}
+          onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+        />
+      </div>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) => `共计 ${total} 条`}
+          total={data?.dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => setPageParams({ ...pageParams, pageIndex, pageSize })}
+        />
+      </Flex>
     </PageContainer>
   )
 }

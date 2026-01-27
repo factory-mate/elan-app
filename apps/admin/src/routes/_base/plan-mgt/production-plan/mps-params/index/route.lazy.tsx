@@ -91,15 +91,19 @@ function RouteComponent() {
             />
           </Form.Item>
           <PermCodeProvider code="mps-params:edit">
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="float-right"
-              disabled={editMutation.isPending}
-              loading={editMutation.isPending}
+            <Form.Item
+              wrapperCol={{ offset: 10 }}
+              style={{ marginBottom: 0 }}
             >
-              提交
-            </Button>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={editMutation.isPending}
+                loading={editMutation.isPending}
+              >
+                提交
+              </Button>
+            </Form.Item>
           </PermCodeProvider>
         </Form>
       </Card>

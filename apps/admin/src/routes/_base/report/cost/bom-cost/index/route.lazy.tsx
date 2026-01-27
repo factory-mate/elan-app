@@ -47,71 +47,66 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={form}
+        setFilterData={setFilterData}
+      />
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <FilterArea
-          form={form}
-          setFilterData={setFilterData}
-        />
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="bom-cost:print">
-              <Button
-                type="primary"
-                onClick={() => setTimeout(() => reactToPrintFn(), 16)}
-              >
-                打印
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="bom-cost:export">
-              <Button
-                type="primary"
-                onClick={() => {
-                  const formData = form.getFieldsValue()
-                  exportMutation.mutate({
-                    ...formData,
-                    iQty: formData.iQty ? formData.iQty : 1
-                  })
-                }}
-                loading={exportMutation.isPending}
-                disabled={exportMutation.isPending}
-              >
-                导出
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="bom-cost:print">
+            <Button
+              type="primary"
+              onClick={() => setTimeout(() => reactToPrintFn(), 16)}
+            >
+              打印
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="bom-cost:export">
+            <Button
+              type="primary"
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                exportMutation.mutate({
+                  ...formData,
+                  iQty: formData.iQty ? formData.iQty : 1
+                })
+              }}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-391px)]">
-          <AgGridReact<BOMCostVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.Id!}
-            columnDefs={columnDefs}
-            rowData={data}
-            treeData
-            autoGroupColumnDef={{
-              headerName: '产品编码',
-              minWidth: 250,
-              field: 'cInvCode',
-              cellRendererParams: {
-                suppressCount: true
-              }
-            }}
-            autoSizeStrategy={{
-              type: 'fitGridWidth'
-            }}
-            treeDataChildrenField="Child"
-            groupDefaultExpanded={filterData.isExpand ? -1 : 0}
-            loading={isFetching}
-          />
-        </div>
-      </Space>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<BOMCostVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.Id!}
+          columnDefs={columnDefs}
+          rowData={data}
+          treeData
+          autoGroupColumnDef={{
+            headerName: '产品编码',
+            minWidth: 250,
+            field: 'cInvCode',
+            cellRendererParams: {
+              suppressCount: true
+            }
+          }}
+          autoSizeStrategy={{
+            type: 'fitGridWidth'
+          }}
+          treeDataChildrenField="Child"
+          groupDefaultExpanded={filterData.isExpand ? -1 : 0}
+          loading={isFetching}
+        />
+      </div>
 
       <div
         ref={contentRef}

@@ -437,169 +437,162 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={{
+          form,
+          onFinish: (values) => setFilterData?.({ ...values })
+        }}
+        filterDefs={filterDefs}
+        onReset={() => setFilterData?.({})}
+        queryKey={ProductionOrder.LIST_QK}
+      />
+      <Flex
+        className="h-8"
+        justify="space-between"
+        align="center"
       >
-        <FilterArea
-          form={{
-            form,
-            onFinish: (values) => setFilterData?.({ ...values })
-          }}
-          filterDefs={filterDefs}
-          onReset={() => setFilterData?.({})}
-          queryKey={ProductionOrder.LIST_QK}
-        />
-        <Flex
-          className="h-8"
-          justify="space-between"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="production-order:print">
-              <Button
-                onClick={async () => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  if (selectedRows.length > 1) {
-                    showMessage('select-only-one')
-                    return
-                  }
-                  setPrintData(
-                    (
-                      await queryClient.ensureQueryData(
-                        ProductionOrder.printDetailQO(selectedRows[0].UID)
-                      )
-                    ).at(0) ?? {}
-                  )
-                  setTimeout(() => reactToPrintFn(), 16)
-                }}
-              >
-                打印
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="production-order:audit">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  auditMutation.mutate(selectedRows.map((i) => i.MID))
-                }}
-              >
-                审核
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="production-order:quit-audit">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  abandonMutation.mutate(selectedRows.map((i) => i.MID))
-                }}
-              >
-                弃审
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="production-order:open">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  openMutation.mutate(selectedRows.map((i) => i.MID))
-                }}
-              >
-                打开
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="production-order:close">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  closeMutation.mutate(selectedRows.map((i) => i.MID))
-                }}
-              >
-                关闭
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="production-order:delete">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  deleteMutation.mutate(selectedRows.map((i) => i.MID))
-                }}
-              >
-                删除
-              </Button>
-            </PermCodeProvider>
-          </Space>
-          <Space>
-            <PermCodeProvider code="production-order:add">
-              <Link to="/production-mgt/production-order/add">
-                <Button type="primary">新增</Button>
-              </Link>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
-        <div className="ag-theme-quartz h-[calc(100vh-351px)]">
-          <AgGridReact<ProductionOrder.ProductionOrderVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID}
-            columnDefs={columnDefs}
-            rowData={data?.data}
-            rowSelection={{
-              mode: 'multiRow'
-            }}
-            selectionColumnDef={{
-              sortable: true,
-              suppressHeaderMenuButton: true,
-              pinned: 'left',
-              lockPinned: true
-            }}
-            editType="fullRow"
-            loading={isFetching}
-            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
-            getRowStyle={(params) => {
-              if (params.data?.UID === currentOperateUID) {
-                return {
-                  backgroundColor: '#fff7e6'
+        <Space>
+          <PermCodeProvider code="production-order:print">
+            <Button
+              onClick={async () => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
                 }
+                if (selectedRows.length > 1) {
+                  showMessage('select-only-one')
+                  return
+                }
+                setPrintData(
+                  (
+                    await queryClient.ensureQueryData(
+                      ProductionOrder.printDetailQO(selectedRows[0].UID)
+                    )
+                  ).at(0) ?? {}
+                )
+                setTimeout(() => reactToPrintFn(), 16)
+              }}
+            >
+              打印
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="production-order:audit">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                auditMutation.mutate(selectedRows.map((i) => i.MID))
+              }}
+            >
+              审核
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="production-order:quit-audit">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                abandonMutation.mutate(selectedRows.map((i) => i.MID))
+              }}
+            >
+              弃审
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="production-order:open">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                openMutation.mutate(selectedRows.map((i) => i.MID))
+              }}
+            >
+              打开
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="production-order:close">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                closeMutation.mutate(selectedRows.map((i) => i.MID))
+              }}
+            >
+              关闭
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="production-order:delete">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.MID))
+              }}
+            >
+              删除
+            </Button>
+          </PermCodeProvider>
+        </Space>
+        <Space>
+          <PermCodeProvider code="production-order:add">
+            <Link to="/production-mgt/production-order/add">
+              <Button type="primary">新增</Button>
+            </Link>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<ProductionOrder.ProductionOrderVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow'
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          editType="fullRow"
+          loading={isFetching}
+          onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          getRowStyle={(params) => {
+            if (params.data?.UID === currentOperateUID) {
+              return {
+                backgroundColor: '#fff7e6'
               }
-              return undefined
-            }}
-          />
-        </div>
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `共计 ${total} 条`}
-            total={data?.dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) =>
-              setPageParams({ ...pageParams, pageIndex, pageSize })
             }
-          />
-        </Flex>
-      </Space>
+            return undefined
+          }}
+        />
+      </div>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) => `共计 ${total} 条`}
+          total={data?.dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => setPageParams({ ...pageParams, pageIndex, pageSize })}
+        />
+      </Flex>
 
       <BOMListModal
         open={bomListModal.open}

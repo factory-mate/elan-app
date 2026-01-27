@@ -428,14 +428,15 @@ const BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute =
 
 export interface FileRoutesByFullPath {
   '/$': typeof SplatRouteRoute
+  '/': typeof BaseIndexRouteRoute
   '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
   '/print': typeof BasePrintRouteRoute
   '/login': typeof PublicLoginRouteRoute
-  '/menus': typeof BaseMenusIndexRouteRoute
-  '/perm-mgt/roles': typeof BasePermMgtRolesIndexRouteRoute
-  '/production-mgt/production-order': typeof BaseProductionMgtProductionOrderIndexRouteRoute
+  '/menus/': typeof BaseMenusIndexRouteRoute
+  '/perm-mgt/roles/': typeof BasePermMgtRolesIndexRouteRoute
+  '/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
   '/digital-modeling/products/bom-change': typeof BaseDigitalModelingProductsBomChangeRouteRoute
@@ -443,31 +444,32 @@ export interface FileRoutesByFullPath {
   '/report/qc/all-material': typeof BaseReportQcAllMaterialRouteRoute
   '/report/qc/bom-content': typeof BaseReportQcBomContentRouteRoute
   '/report/qc/normal-material': typeof BaseReportQcNormalMaterialRouteRoute
-  '/digital-modeling/basic-settings/coding-scheme': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
-  '/digital-modeling/merchants/customer-class': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
-  '/digital-modeling/merchants/customer': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
-  '/digital-modeling/orgs/department': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
-  '/digital-modeling/orgs/employee': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
-  '/digital-modeling/products/bom': typeof BaseDigitalModelingProductsBomIndexRouteRoute
-  '/digital-modeling/products/inventory-class': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
-  '/digital-modeling/products/inventory': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
-  '/digital-modeling/products/recipe-role-ref': typeof BaseDigitalModelingProductsRecipeRoleRefIndexRouteRoute
-  '/digital-modeling/products/unit-class': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
-  '/digital-modeling/products/unit': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
-  '/plan-mgt/production-plan/main-production-plan-mps': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
-  '/plan-mgt/production-plan/mps-params': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
-  '/report/cost/bom-cost': typeof BaseReportCostBomCostIndexRouteRoute
-  '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
-  '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
-  '/supply-chain-mgt/sales-mgt/sales-order': typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
+  '/digital-modeling/basic-settings/coding-scheme/': typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRoute
+  '/digital-modeling/merchants/customer-class/': typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRoute
+  '/digital-modeling/merchants/customer/': typeof BaseDigitalModelingMerchantsCustomerIndexRouteRoute
+  '/digital-modeling/orgs/department/': typeof BaseDigitalModelingOrgsDepartmentIndexRouteRoute
+  '/digital-modeling/orgs/employee/': typeof BaseDigitalModelingOrgsEmployeeIndexRouteRoute
+  '/digital-modeling/products/bom/': typeof BaseDigitalModelingProductsBomIndexRouteRoute
+  '/digital-modeling/products/inventory-class/': typeof BaseDigitalModelingProductsInventoryClassIndexRouteRoute
+  '/digital-modeling/products/inventory/': typeof BaseDigitalModelingProductsInventoryIndexRouteRoute
+  '/digital-modeling/products/recipe-role-ref/': typeof BaseDigitalModelingProductsRecipeRoleRefIndexRouteRoute
+  '/digital-modeling/products/unit-class/': typeof BaseDigitalModelingProductsUnitClassIndexRouteRoute
+  '/digital-modeling/products/unit/': typeof BaseDigitalModelingProductsUnitIndexRouteRoute
+  '/plan-mgt/production-plan/main-production-plan-mps/': typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRoute
+  '/plan-mgt/production-plan/mps-params/': typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRoute
+  '/report/cost/bom-cost/': typeof BaseReportCostBomCostIndexRouteRoute
+  '/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
+  '/report/trace/production-date-diff/': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
+  '/supply-chain-mgt/sales-mgt/sales-order/': typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
-  '/digital-modeling/products/craft/craft-route': typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
-  '/digital-modeling/products/craft/process': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
-  '/digital-modeling/products/craft/step': typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
+  '/digital-modeling/products/craft/craft-route/': typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
+  '/digital-modeling/products/craft/process/': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
+  '/digital-modeling/products/craft/step/': typeof BaseDigitalModelingProductsCraftStepIndexRouteRoute
   '/digital-modeling/orgs/employee/$id/edit': typeof BaseDigitalModelingOrgsEmployeeIdEditRouteRoute
 }
 export interface FileRoutesByTo {
   '/$': typeof SplatRouteRoute
+  '/': typeof BaseIndexRouteRoute
   '/403': typeof Base403RouteRoute
   '/404': typeof Base404RouteRoute
   '/change-password': typeof BaseChangePasswordRouteRoute
@@ -554,14 +556,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/$'
+    | '/'
     | '/403'
     | '/404'
     | '/change-password'
     | '/print'
     | '/login'
-    | '/menus'
-    | '/perm-mgt/roles'
-    | '/production-mgt/production-order'
+    | '/menus/'
+    | '/perm-mgt/roles/'
+    | '/production-mgt/production-order/'
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
     | '/digital-modeling/products/bom-change'
@@ -569,31 +572,32 @@ export interface FileRouteTypes {
     | '/report/qc/all-material'
     | '/report/qc/bom-content'
     | '/report/qc/normal-material'
-    | '/digital-modeling/basic-settings/coding-scheme'
-    | '/digital-modeling/merchants/customer-class'
-    | '/digital-modeling/merchants/customer'
-    | '/digital-modeling/orgs/department'
-    | '/digital-modeling/orgs/employee'
-    | '/digital-modeling/products/bom'
-    | '/digital-modeling/products/inventory-class'
-    | '/digital-modeling/products/inventory'
-    | '/digital-modeling/products/recipe-role-ref'
-    | '/digital-modeling/products/unit-class'
-    | '/digital-modeling/products/unit'
-    | '/plan-mgt/production-plan/main-production-plan-mps'
-    | '/plan-mgt/production-plan/mps-params'
-    | '/report/cost/bom-cost'
-    | '/report/production/production-material'
-    | '/report/trace/production-date-diff'
-    | '/supply-chain-mgt/sales-mgt/sales-order'
+    | '/digital-modeling/basic-settings/coding-scheme/'
+    | '/digital-modeling/merchants/customer-class/'
+    | '/digital-modeling/merchants/customer/'
+    | '/digital-modeling/orgs/department/'
+    | '/digital-modeling/orgs/employee/'
+    | '/digital-modeling/products/bom/'
+    | '/digital-modeling/products/inventory-class/'
+    | '/digital-modeling/products/inventory/'
+    | '/digital-modeling/products/recipe-role-ref/'
+    | '/digital-modeling/products/unit-class/'
+    | '/digital-modeling/products/unit/'
+    | '/plan-mgt/production-plan/main-production-plan-mps/'
+    | '/plan-mgt/production-plan/mps-params/'
+    | '/report/cost/bom-cost/'
+    | '/report/production/production-material/'
+    | '/report/trace/production-date-diff/'
+    | '/supply-chain-mgt/sales-mgt/sales-order/'
     | '/digital-modeling/orgs/employee/add'
-    | '/digital-modeling/products/craft/craft-route'
-    | '/digital-modeling/products/craft/process'
-    | '/digital-modeling/products/craft/step'
+    | '/digital-modeling/products/craft/craft-route/'
+    | '/digital-modeling/products/craft/process/'
+    | '/digital-modeling/products/craft/step/'
     | '/digital-modeling/orgs/employee/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/$'
+    | '/'
     | '/403'
     | '/404'
     | '/change-password'
@@ -687,14 +691,14 @@ declare module '@tanstack/react-router' {
     '/_public': {
       id: '/_public'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_base': {
       id: '/_base'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof BaseRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -743,14 +747,14 @@ declare module '@tanstack/react-router' {
     '/_base/': {
       id: '/_base/'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof BaseIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/menus/': {
       id: '/_base/menus/'
       path: '/menus'
-      fullPath: '/menus'
+      fullPath: '/menus/'
       preLoaderRoute: typeof BaseMenusIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
@@ -806,14 +810,14 @@ declare module '@tanstack/react-router' {
     '/_base/production-mgt/production-order/': {
       id: '/_base/production-mgt/production-order/'
       path: '/production-mgt/production-order'
-      fullPath: '/production-mgt/production-order'
+      fullPath: '/production-mgt/production-order/'
       preLoaderRoute: typeof BaseProductionMgtProductionOrderIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/perm-mgt/roles/': {
       id: '/_base/perm-mgt/roles/'
       path: '/perm-mgt/roles'
-      fullPath: '/perm-mgt/roles'
+      fullPath: '/perm-mgt/roles/'
       preLoaderRoute: typeof BasePermMgtRolesIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
@@ -827,119 +831,119 @@ declare module '@tanstack/react-router' {
     '/_base/supply-chain-mgt/sales-mgt/sales-order/': {
       id: '/_base/supply-chain-mgt/sales-mgt/sales-order/'
       path: '/supply-chain-mgt/sales-mgt/sales-order'
-      fullPath: '/supply-chain-mgt/sales-mgt/sales-order'
+      fullPath: '/supply-chain-mgt/sales-mgt/sales-order/'
       preLoaderRoute: typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/report/trace/production-date-diff/': {
       id: '/_base/report/trace/production-date-diff/'
       path: '/report/trace/production-date-diff'
-      fullPath: '/report/trace/production-date-diff'
+      fullPath: '/report/trace/production-date-diff/'
       preLoaderRoute: typeof BaseReportTraceProductionDateDiffIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/report/production/production-material/': {
       id: '/_base/report/production/production-material/'
       path: '/report/production/production-material'
-      fullPath: '/report/production/production-material'
+      fullPath: '/report/production/production-material/'
       preLoaderRoute: typeof BaseReportProductionProductionMaterialIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/report/cost/bom-cost/': {
       id: '/_base/report/cost/bom-cost/'
       path: '/report/cost/bom-cost'
-      fullPath: '/report/cost/bom-cost'
+      fullPath: '/report/cost/bom-cost/'
       preLoaderRoute: typeof BaseReportCostBomCostIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/plan-mgt/production-plan/mps-params/': {
       id: '/_base/plan-mgt/production-plan/mps-params/'
       path: '/plan-mgt/production-plan/mps-params'
-      fullPath: '/plan-mgt/production-plan/mps-params'
+      fullPath: '/plan-mgt/production-plan/mps-params/'
       preLoaderRoute: typeof BasePlanMgtProductionPlanMpsParamsIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/plan-mgt/production-plan/main-production-plan-mps/': {
       id: '/_base/plan-mgt/production-plan/main-production-plan-mps/'
       path: '/plan-mgt/production-plan/main-production-plan-mps'
-      fullPath: '/plan-mgt/production-plan/main-production-plan-mps'
+      fullPath: '/plan-mgt/production-plan/main-production-plan-mps/'
       preLoaderRoute: typeof BasePlanMgtProductionPlanMainProductionPlanMpsIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/unit/': {
       id: '/_base/digital-modeling/products/unit/'
       path: '/digital-modeling/products/unit'
-      fullPath: '/digital-modeling/products/unit'
+      fullPath: '/digital-modeling/products/unit/'
       preLoaderRoute: typeof BaseDigitalModelingProductsUnitIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/unit-class/': {
       id: '/_base/digital-modeling/products/unit-class/'
       path: '/digital-modeling/products/unit-class'
-      fullPath: '/digital-modeling/products/unit-class'
+      fullPath: '/digital-modeling/products/unit-class/'
       preLoaderRoute: typeof BaseDigitalModelingProductsUnitClassIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/recipe-role-ref/': {
       id: '/_base/digital-modeling/products/recipe-role-ref/'
       path: '/digital-modeling/products/recipe-role-ref'
-      fullPath: '/digital-modeling/products/recipe-role-ref'
+      fullPath: '/digital-modeling/products/recipe-role-ref/'
       preLoaderRoute: typeof BaseDigitalModelingProductsRecipeRoleRefIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/inventory/': {
       id: '/_base/digital-modeling/products/inventory/'
       path: '/digital-modeling/products/inventory'
-      fullPath: '/digital-modeling/products/inventory'
+      fullPath: '/digital-modeling/products/inventory/'
       preLoaderRoute: typeof BaseDigitalModelingProductsInventoryIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/inventory-class/': {
       id: '/_base/digital-modeling/products/inventory-class/'
       path: '/digital-modeling/products/inventory-class'
-      fullPath: '/digital-modeling/products/inventory-class'
+      fullPath: '/digital-modeling/products/inventory-class/'
       preLoaderRoute: typeof BaseDigitalModelingProductsInventoryClassIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/bom/': {
       id: '/_base/digital-modeling/products/bom/'
       path: '/digital-modeling/products/bom'
-      fullPath: '/digital-modeling/products/bom'
+      fullPath: '/digital-modeling/products/bom/'
       preLoaderRoute: typeof BaseDigitalModelingProductsBomIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/orgs/employee/': {
       id: '/_base/digital-modeling/orgs/employee/'
       path: '/digital-modeling/orgs/employee'
-      fullPath: '/digital-modeling/orgs/employee'
+      fullPath: '/digital-modeling/orgs/employee/'
       preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/orgs/department/': {
       id: '/_base/digital-modeling/orgs/department/'
       path: '/digital-modeling/orgs/department'
-      fullPath: '/digital-modeling/orgs/department'
+      fullPath: '/digital-modeling/orgs/department/'
       preLoaderRoute: typeof BaseDigitalModelingOrgsDepartmentIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/merchants/customer/': {
       id: '/_base/digital-modeling/merchants/customer/'
       path: '/digital-modeling/merchants/customer'
-      fullPath: '/digital-modeling/merchants/customer'
+      fullPath: '/digital-modeling/merchants/customer/'
       preLoaderRoute: typeof BaseDigitalModelingMerchantsCustomerIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/merchants/customer-class/': {
       id: '/_base/digital-modeling/merchants/customer-class/'
       path: '/digital-modeling/merchants/customer-class'
-      fullPath: '/digital-modeling/merchants/customer-class'
+      fullPath: '/digital-modeling/merchants/customer-class/'
       preLoaderRoute: typeof BaseDigitalModelingMerchantsCustomerClassIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/basic-settings/coding-scheme/': {
       id: '/_base/digital-modeling/basic-settings/coding-scheme/'
       path: '/digital-modeling/basic-settings/coding-scheme'
-      fullPath: '/digital-modeling/basic-settings/coding-scheme'
+      fullPath: '/digital-modeling/basic-settings/coding-scheme/'
       preLoaderRoute: typeof BaseDigitalModelingBasicSettingsCodingSchemeIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
@@ -953,21 +957,21 @@ declare module '@tanstack/react-router' {
     '/_base/digital-modeling/products/craft/step/': {
       id: '/_base/digital-modeling/products/craft/step/'
       path: '/digital-modeling/products/craft/step'
-      fullPath: '/digital-modeling/products/craft/step'
+      fullPath: '/digital-modeling/products/craft/step/'
       preLoaderRoute: typeof BaseDigitalModelingProductsCraftStepIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/craft/process/': {
       id: '/_base/digital-modeling/products/craft/process/'
       path: '/digital-modeling/products/craft/process'
-      fullPath: '/digital-modeling/products/craft/process'
+      fullPath: '/digital-modeling/products/craft/process/'
       preLoaderRoute: typeof BaseDigitalModelingProductsCraftProcessIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/products/craft/craft-route/': {
       id: '/_base/digital-modeling/products/craft/craft-route/'
       path: '/digital-modeling/products/craft/craft-route'
-      fullPath: '/digital-modeling/products/craft/craft-route'
+      fullPath: '/digital-modeling/products/craft/craft-route/'
       preLoaderRoute: typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }

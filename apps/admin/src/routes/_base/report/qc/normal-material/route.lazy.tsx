@@ -122,59 +122,54 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={{
+          form,
+          onFinish: (values) => setFilterData?.({ ...values })
+        }}
+        filterDefs={filterDefs}
+        onReset={() => setFilterData?.({})}
+        queryKey={LIST_QK}
+      />
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <FilterArea
-          form={{
-            form,
-            onFinish: (values) => setFilterData?.({ ...values })
-          }}
-          filterDefs={filterDefs}
-          onReset={() => setFilterData?.({})}
-          queryKey={LIST_QK}
-        />
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="normal-material:export">
-              <Button
-                type="primary"
-                onClick={() => {
-                  const formData = form.getFieldsValue()
-                  if (!formData.cInvCode) {
-                    message.warning('请选择产品')
-                    return
-                  }
-                  setFilterData(formData)
-                  setShouldExport(true)
-                }}
-                loading={isFetching && shouldExport}
-                disabled={isFetching && shouldExport}
-              >
-                导出
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="normal-material:export">
+            <Button
+              type="primary"
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                if (!formData.cInvCode) {
+                  message.warning('请选择产品')
+                  return
+                }
+                setFilterData(formData)
+                setShouldExport(true)
+              }}
+              loading={isFetching && shouldExport}
+              disabled={isFetching && shouldExport}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-311px)]">
-          <AgGridReact<NormalMaterialVo>
-            ref={gridRef}
-            columnDefs={columnDefs}
-            rowData={data}
-            autoSizeStrategy={{
-              type: 'fitGridWidth',
-              defaultMinWidth: 200
-            }}
-            loading={isFetching}
-          />
-        </div>
-      </Space>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<NormalMaterialVo>
+          ref={gridRef}
+          columnDefs={columnDefs}
+          rowData={data}
+          autoSizeStrategy={{
+            type: 'fitGridWidth',
+            defaultMinWidth: 200
+          }}
+          loading={isFetching}
+        />
+      </div>
     </PageContainer>
   )
 }

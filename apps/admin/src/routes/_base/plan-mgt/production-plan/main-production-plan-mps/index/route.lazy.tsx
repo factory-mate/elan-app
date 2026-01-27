@@ -123,119 +123,114 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea setFilterData={setFilterData} />
+      <Flex
+        className="h-8"
+        justify="space-between"
+        align="center"
       >
-        <FilterArea setFilterData={setFilterData} />
-        <Flex
-          className="h-8"
-          justify="space-between"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="main-production-plan-mps:push">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  pushMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                生单
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="main-production-plan-mps:cancel-push">
-              <Button
-                onClick={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  cancelMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                撤单
-              </Button>
-            </PermCodeProvider>
-            <PermCodeProvider code="main-production-plan-mps:delete">
-              <Popconfirm
-                title="确认执行该操作？"
-                okButtonProps={{
-                  disabled: deleteMutation.isPending,
-                  loading: deleteMutation.isPending
-                }}
-                onConfirm={() => {
-                  if (!selectedRows.length) {
-                    showMessage('select-data')
-                    return
-                  }
-                  if (selectedRows.some((i) => i.iStatus === 0)) {
-                    message.warning('勾选了已生单数据，不允许删除')
-                    return
-                  }
-                  deleteMutation.mutate(selectedRows.map((i) => i.UID))
-                }}
-              >
-                <Button disabled={deleteMutation.isPending}>删除</Button>
-              </Popconfirm>
-            </PermCodeProvider>
-          </Space>
-          <Space>
-            <PermCodeProvider code="main-production-plan-mps:compute">
-              <Button onClick={() => mpsModal.toggle()}>MPS运算</Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
+        <Space>
+          <PermCodeProvider code="main-production-plan-mps:push">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                pushMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              生单
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="main-production-plan-mps:cancel-push">
+            <Button
+              onClick={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                cancelMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              撤单
+            </Button>
+          </PermCodeProvider>
+          <PermCodeProvider code="main-production-plan-mps:delete">
+            <Popconfirm
+              title="确认执行该操作？"
+              okButtonProps={{
+                disabled: deleteMutation.isPending,
+                loading: deleteMutation.isPending
+              }}
+              onConfirm={() => {
+                if (!selectedRows.length) {
+                  showMessage('select-data')
+                  return
+                }
+                if (selectedRows.some((i) => i.iStatus === 0)) {
+                  message.warning('勾选了已生单数据，不允许删除')
+                  return
+                }
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
+              }}
+            >
+              <Button disabled={deleteMutation.isPending}>删除</Button>
+            </Popconfirm>
+          </PermCodeProvider>
+        </Space>
+        <Space>
+          <PermCodeProvider code="main-production-plan-mps:compute">
+            <Button onClick={() => mpsModal.toggle()}>MPS运算</Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
 
-        <div className="ag-theme-quartz h-[calc(100vh-395px)]">
-          <AgGridReact<MainProductionPlanMpsVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID}
-            columnDefs={columnDefs}
-            rowData={data?.data}
-            rowSelection={{
-              mode: 'multiRow'
-            }}
-            selectionColumnDef={{
-              sortable: true,
-              suppressHeaderMenuButton: true,
-              pinned: 'left',
-              lockPinned: true
-            }}
-            autoSizeStrategy={{
-              type: 'fitGridWidth'
-            }}
-            loading={isFetching}
-            onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
-          />
-        </div>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<MainProductionPlanMpsVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID}
+          columnDefs={columnDefs}
+          rowData={data?.data}
+          rowSelection={{
+            mode: 'multiRow'
+          }}
+          selectionColumnDef={{
+            sortable: true,
+            suppressHeaderMenuButton: true,
+            pinned: 'left',
+            lockPinned: true
+          }}
+          autoSizeStrategy={{
+            type: 'fitGridWidth'
+          }}
+          loading={isFetching}
+          onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+        />
+      </div>
 
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) =>
-              selectedRows.length > 0
-                ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
-                : `共计 ${total} 条`
-            }
-            total={data?.dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) => {
-              setSelectedRows(gridRef.current!.api.getSelectedRows())
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }}
-          />
-        </Flex>
-      </Space>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) =>
+            selectedRows.length > 0
+              ? `已选中 ${selectedRows.length} 条，共计 ${total} 条`
+              : `共计 ${total} 条`
+          }
+          total={data?.dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => {
+            setSelectedRows(gridRef.current!.api.getSelectedRows())
+            setPageParams({ ...pageParams, pageIndex, pageSize })
+          }}
+        />
+      </Flex>
 
       <EditModal
         meta={editModal.meta}

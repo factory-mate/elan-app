@@ -1,1 +1,2 @@
-export { default as LoginPage } from './LoginPage'
+export { default as BannerArea } from './BannerArea'
+export { default as LogoArea } from './LogoArea'

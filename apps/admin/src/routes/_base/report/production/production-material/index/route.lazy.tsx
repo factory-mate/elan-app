@@ -76,68 +76,61 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <Space
-        orientation="vertical"
-        className="w-full"
+      <FilterArea
+        form={{
+          form,
+          onFinish: (values) => setFilterData?.({ ...values })
+        }}
+        filterDefs={filterDefs}
+        onReset={() => setFilterData?.({})}
+        queryKey={LIST_QK}
+      />
+      <Flex
+        className="h-8"
+        justify="flex-end"
+        align="center"
       >
-        <FilterArea
-          form={{
-            form,
-            onFinish: (values) => setFilterData?.({ ...values })
+        <Space>
+          <PermCodeProvider code="production-material:export">
+            <Button
+              type="primary"
+              onClick={() => exportMutation.mutate()}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
+        </Space>
+      </Flex>
+      <div className="ag-theme-quartz flex-1">
+        <AgGridReact<ListVo>
+          ref={gridRef}
+          getRowId={(params) => params.data.UID!}
+          columnDefs={columnDefs}
+          rowData={data}
+          autoSizeStrategy={{
+            type: 'fitGridWidth',
+            defaultMinWidth: 200
           }}
-          filterDefs={filterDefs}
-          onReset={() => setFilterData?.({})}
-          queryKey={LIST_QK}
+          loading={isFetching}
         />
-        <Flex
-          className="h-8"
-          justify="flex-end"
-          align="center"
-        >
-          <Space>
-            <PermCodeProvider code="production-material:export">
-              <Button
-                type="primary"
-                onClick={() => exportMutation.mutate()}
-                loading={exportMutation.isPending}
-                disabled={exportMutation.isPending}
-              >
-                导出
-              </Button>
-            </PermCodeProvider>
-          </Space>
-        </Flex>
-        <div className="ag-theme-quartz h-[calc(100vh-385px)]">
-          <AgGridReact<ListVo>
-            ref={gridRef}
-            getRowId={(params) => params.data.UID!}
-            columnDefs={columnDefs}
-            rowData={data}
-            autoSizeStrategy={{
-              type: 'fitGridWidth',
-              defaultMinWidth: 200
-            }}
-            loading={isFetching}
-          />
-        </div>
-        <Flex
-          justify="end"
-          align="center"
-        >
-          <Pagination
-            disabled={isPlaceholderData}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `共计 ${total} 条`}
-            total={dataCount}
-            pageSize={pageParams.pageSize}
-            pageSizeOptions={defaultPageSizeOptions}
-            onChange={(pageIndex, pageSize) =>
-              setPageParams({ ...pageParams, pageIndex, pageSize })
-            }
-          />
-        </Flex>
-      </Space>
+      </div>
+      <Flex
+        justify="end"
+        align="center"
+      >
+        <Pagination
+          disabled={isPlaceholderData}
+          showSizeChanger
+          showQuickJumper
+          showTotal={(total) => `共计 ${total} 条`}
+          total={dataCount}
+          pageSize={pageParams.pageSize}
+          pageSizeOptions={defaultPageSizeOptions}
+          onChange={(pageIndex, pageSize) => setPageParams({ ...pageParams, pageIndex, pageSize })}
+        />
+      </Flex>
     </PageContainer>
   )
 }

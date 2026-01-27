@@ -26,7 +26,7 @@ export default function Tabbar() {
 
   return (
     <div
-      className="sticky top-14 z-50 h-10 w-full border-b border-gray-300 bg-white px-1 pt-1 shadow-sm dark:border-gray-950"
+      className="h-9 w-full bg-white pt-1 shadow-sm"
       style={{ backgroundColor: headerBg }}
     >
       <Tabs

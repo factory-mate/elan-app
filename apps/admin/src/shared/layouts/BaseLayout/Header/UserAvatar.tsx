@@ -62,7 +62,7 @@ export default function UserAvatar() {
     >
       <Avatar
         src={`https://api.dicebear.com/9.x/initials/svg?seed=${userStore.userInfo?.UserName}`}
-        size={36}
+        size={30}
         className="cursor-pointer hover:shadow"
       />
     </Dropdown>

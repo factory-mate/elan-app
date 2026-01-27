@@ -90,9 +90,10 @@ function RouteComponent() {
           defaultSize="80%"
           min="50%"
         >
-          <Space
-            orientation="vertical"
-            className="w-full"
+          <Flex
+            className="h-[calc(100vh-134px)]"
+            vertical
+            gap={8}
           >
             <Flex
               className="h-8"
@@ -126,7 +127,7 @@ function RouteComponent() {
               </Space>
             </Flex>
 
-            <div className="ag-theme-quartz h-[calc(100vh-251px)]">
+            <div className="ag-theme-quartz flex-1">
               <AgGridReact<CustomerClassVo>
                 ref={gridRef}
                 getRowId={(params) => params.data.UID}
@@ -171,7 +172,7 @@ function RouteComponent() {
                 }}
               />
             </Flex>
-          </Space>
+          </Flex>
         </Splitter.Panel>
       </Splitter>
 
