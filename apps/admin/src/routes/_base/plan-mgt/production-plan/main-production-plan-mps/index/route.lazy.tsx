@@ -2,7 +2,9 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
+import * as Department from '@/features/department'
 import {
+  LIST_QK,
   listQO,
   type MainProductionPlanMpsVo,
   useCancelMutation,
@@ -11,7 +13,6 @@ import {
 } from '@/features/main-production-plan-mps'
 
 import { EditModal, MpsModal } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute(
@@ -21,15 +22,26 @@ export const Route = createLazyFileRoute(
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { message, showMessage } = useMessage()
+
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const editModal = useModal<EditModalMeta>()
   const mpsModal = useModal()
 
+  const { data: departmentCandidates } = useQuery(
+    Department.fullListQO({ conditions: 'bProduct = true' })
+  )
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
@@ -57,6 +69,28 @@ function RouteComponent() {
   const deleteMutation = useDeleteMutation()
   const pushMutation = usePushMutation()
   const cancelMutation = useCancelMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cInvCodeStart', label: '料品编码（开始）', type: 'input' },
+      { name: 'cInvCodeEnd', label: '料品编码（结束）', type: 'input' },
+      {
+        name: 'cDepCode',
+        label: '部门',
+        type: 'select',
+        selectProps: {
+          options: departmentCandidates,
+          fieldNames: {
+            label: 'cDepName',
+            value: 'cDepCode'
+          }
+        }
+      },
+      { name: 'dStartDate', label: '开始日期', type: 'date-picker' },
+      { name: 'dEndDate', label: '结束日期', type: 'date-picker' }
+    ],
+    [departmentCandidates]
+  )
 
   const columnDefs = useMemo<ColDef<MainProductionPlanMpsVo>[]>(
     () => [
@@ -123,7 +157,13 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <FilterArea setFilterData={setFilterData} />
+      <FilterArea
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        queryKey={LIST_QK}
+      />
       <Flex
         className="h-8"
         justify="space-between"

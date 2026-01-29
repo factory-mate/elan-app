@@ -15,6 +15,10 @@ export const Route = createLazyFileRoute('/_base/report/qc/normal-material')({
 })
 
 function RouteComponent() {
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
 
   const [form] = Form.useForm()
@@ -23,7 +27,9 @@ function RouteComponent() {
   const hasToyPermCode = usePermCode('normal-material:toy')
 
   const [pageParams] = useState(defaultMinPageDto)
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
   const [shouldExport, setShouldExport] = useState(false)
 
   const {
@@ -123,12 +129,10 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={{
-          form,
-          onFinish: (values) => setFilterData?.({ ...values })
-        }}
+        form={{ form }}
         filterDefs={filterDefs}
-        onReset={() => setFilterData?.({})}
+        filterData={filterData}
+        setFilterData={setFilterData}
         queryKey={LIST_QK}
       />
       <Flex

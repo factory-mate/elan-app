@@ -4,8 +4,10 @@ export default function Tabbar() {
   const { headerBg } = theme.useToken().token.Layout!
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const tabbarStore = useTabbarStore()
+  const filterCacheStore = useFilterCacheStore()
 
   const onEdit = (
     targetKey: React.MouseEvent | React.KeyboardEvent | string,
@@ -19,6 +21,7 @@ export default function Tabbar() {
         navigate({ to: prevKey || nextKey || '/' })
       }
       tabbarStore.removeItem(targetKey as string)
+      filterCacheStore.removeItem(location.pathname)
     }
   }
 

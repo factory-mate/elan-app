@@ -77,12 +77,10 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={{
-          form,
-          onFinish: (values) => setFilterData?.({ ...values })
-        }}
+        form={{ form }}
         filterDefs={filterDefs}
-        onReset={() => setFilterData?.({})}
+        filterData={filterData}
+        setFilterData={setFilterData}
         queryKey={LIST_QK}
       />
       <Flex

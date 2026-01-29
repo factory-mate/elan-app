@@ -3,6 +3,7 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
 import {
+  LIST_QK,
   listQO,
   type RoleVo,
   useDeleteMutation,
@@ -11,7 +12,6 @@ import {
 } from '@/features/roles'
 
 import { AddModal, EditModal, SetPermsModal } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm, SetPermsModalMeta } from './-types'
 
 export const Route = createLazyFileRoute('/_base/perm-mgt/roles/')({
@@ -19,11 +19,19 @@ export const Route = createLazyFileRoute('/_base/perm-mgt/roles/')({
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
@@ -41,6 +49,14 @@ function RouteComponent() {
   const deleteMutation = useDeleteMutation()
   const startMutation = useStartMutation()
   const stopMutation = useStopMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cRoleCode', label: '角色编码', type: 'input' },
+      { name: 'cRoleName', label: '角色名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<RoleVo>[]>(
     () => [
@@ -115,7 +131,13 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <FilterArea setFilterData={setFilterData} />
+      <FilterArea
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        queryKey={LIST_QK}
+      />
       <Flex
         className="h-8"
         justify="space-between"

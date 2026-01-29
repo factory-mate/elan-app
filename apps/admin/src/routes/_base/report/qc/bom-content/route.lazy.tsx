@@ -2,9 +2,8 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { type BomContentVo, listQO, useExportMutation } from '@/features/bom-content'
+import { type BomContentVo, LIST_QK, listQO, useExportMutation } from '@/features/bom-content'
 
-import { FilterArea } from './-components'
 import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/report/qc/bom-content')({
@@ -12,12 +11,17 @@ export const Route = createLazyFileRoute('/_base/report/qc/bom-content')({
 })
 
 function RouteComponent() {
-  const gridRef = useRef<AgGridReact>(null)
-
   const [form] = Form.useForm()
   const { message } = App.useApp()
+  const location = useLocation()
 
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const filterCacheStore = useFilterCacheStore()
+
+  const gridRef = useRef<AgGridReact>(null)
+
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const { data: { data = [] } = {}, isFetching } = useQuery(
     listQO({
@@ -26,6 +30,14 @@ function RouteComponent() {
     })
   )
   const exportMutation = useExportMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cParentInvCode', label: '产品编码', type: 'input' },
+      { name: 'cInvCode', label: '原料编码', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<BomContentVo>[]>(
     () => [
@@ -39,8 +51,17 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={form}
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
         setFilterData={setFilterData}
+        queryKey={LIST_QK}
+        shouldResetClear
+        onSearch={() => {
+          if (!form.getFieldValue('cParentInvCode')) {
+            message.warning('请输入产品编码')
+          }
+        }}
       />
       <Flex
         className="h-8"

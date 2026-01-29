@@ -140,6 +140,7 @@ declare global {
   const useDeferredValue: typeof import('react').useDeferredValue
   const useEffect: typeof import('react').useEffect
   const useEffectEvent: typeof import('react').useEffectEvent
+  const useFilterCacheStore: typeof import('../src/shared/store/filter-cache').useFilterCacheStore
   const useId: typeof import('react').useId
   const useImmer: typeof import('use-immer').useImmer
   const useImperativeHandle: typeof import('react').useImperativeHandle

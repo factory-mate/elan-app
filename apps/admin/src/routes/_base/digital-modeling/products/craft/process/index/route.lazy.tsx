@@ -2,10 +2,9 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type ProcessVo, useDeleteMutation } from '@/features/process'
+import { LIST_QK, listQO, type ProcessVo, useDeleteMutation } from '@/features/process'
 
 import { AddModal, EditModal } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft/process/')({
@@ -13,12 +12,19 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
-
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
 
@@ -32,6 +38,14 @@ function RouteComponent() {
     })
   )
   const deleteMutation = useDeleteMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cProcessCode', label: '工序编码', type: 'input' },
+      { name: 'cProcessName', label: '工序名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<ProcessVo>[]>(
     () => [
@@ -88,7 +102,13 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <FilterArea setFilterData={setFilterData} />
+      <FilterArea
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        queryKey={LIST_QK}
+      />
       <Flex
         className="h-8"
         justify="space-between"

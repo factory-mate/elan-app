@@ -3,10 +3,9 @@ import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import type { Key } from 'react'
 
-import { type InventoryVo, listQO, useDeleteMutation } from '@/features/inventory'
+import { type InventoryVo, LIST_QK, listQO, useDeleteMutation } from '@/features/inventory'
 
 import { AddModal, EditModal, TreeArea } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/inventory/')({
@@ -14,12 +13,20 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/inven
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
@@ -35,6 +42,14 @@ function RouteComponent() {
     })
   )
   const deleteMutation = useDeleteMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cInvCode', label: '料品编码', type: 'input' },
+      { name: 'cInvName', label: '料品名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<InventoryVo>[]>(
     () => [
@@ -115,7 +130,13 @@ function RouteComponent() {
             vertical
             gap={8}
           >
-            <FilterArea setFilterData={setFilterData} />
+            <FilterArea
+              form={{ form }}
+              filterDefs={filterDefs}
+              filterData={filterData}
+              setFilterData={setFilterData}
+              queryKey={LIST_QK}
+            />
             <Flex
               className="h-8"
               justify="space-between"

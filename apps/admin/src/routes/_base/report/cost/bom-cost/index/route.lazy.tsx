@@ -3,9 +3,8 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
-import { type BOMCostVo, listQO, useExportMutation } from '@/features/bom-cost'
+import { type BOMCostVo, LIST_QK, listQO, useExportMutation } from '@/features/bom-cost'
 
-import { FilterArea } from './-components'
 import styles from './-styles/print.module.scss'
 import type { FilterForm } from './-types'
 
@@ -14,12 +13,16 @@ export const Route = createLazyFileRoute('/_base/report/cost/bom-cost/')({
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const [form] = Form.useForm()
-
   const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname),
     isExpand: true
   })
 
@@ -32,6 +35,25 @@ function RouteComponent() {
     })
   )
   const exportMutation = useExportMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cInvCodeStart', label: '产品编码（开始）', type: 'input' },
+      { name: 'cInvCodeEnd', label: '产品编码（结束）', type: 'input' },
+      { name: 'cInvNameStart', label: '产品名称（开始）', type: 'input' },
+      { name: 'cInvNameEnd', label: '产品名称（结束）', type: 'input' },
+      { name: 'iQty', label: '数量', type: 'input-number' },
+      {
+        name: 'isExpand',
+        label: '是否展开',
+        type: 'switch',
+        switchProps: {
+          onChange: () => form.submit()
+        }
+      }
+    ],
+    [form]
+  )
 
   const columnDefs = useMemo<ColDef<BOMCostVo>[]>(
     () => [
@@ -48,8 +70,11 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={form}
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
         setFilterData={setFilterData}
+        queryKey={LIST_QK}
       />
       <Flex
         className="h-8"

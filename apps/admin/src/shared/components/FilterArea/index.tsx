@@ -1,9 +1,12 @@
 import type {
   ColProps,
+  DatePickerProps,
   FormItemProps,
   FormProps,
+  InputNumberProps,
   InputProps,
   SelectProps,
+  SwitchProps,
   TimeRangePickerProps
 } from 'antd'
 
@@ -11,21 +14,47 @@ export interface FilterAreaProps<T = any> {
   filterDefs?: FilterDef<T>[]
   form?: FormProps
   queryKey?: string
+  shouldResetClear?: boolean
+  filterData?: Record<string, any>
+  setFilterData?: (data: Record<string, any>) => void
   onSearch?: () => void
   onReset?: () => void
 }
 
 export interface FilterDef<T = any> extends FormItemProps<T> {
   col?: ColProps
-  type?: 'input' | 'select' | 'date-range-picker' | 'custom'
-  input?: InputProps
-  select?: SelectProps
-  rangePicker?: TimeRangePickerProps
+  type?:
+    | 'input'
+    | 'input-number'
+    | 'select'
+    | 'switch'
+    | 'date-picker'
+    | 'date-range-picker'
+    | 'custom'
+  inputProps?: InputProps
+  inputNumberProps?: InputNumberProps
+  selectProps?: SelectProps
+  switchProps?: SwitchProps
+  datePickerProps?: DatePickerProps
+  rangePickerProps?: TimeRangePickerProps
   render?: () => React.ReactNode
 }
 
 export default function FilterArea<T>(props: FilterAreaProps<T>) {
-  const { form, filterDefs, queryKey, onSearch, onReset } = props
+  const {
+    form,
+    filterDefs,
+    queryKey,
+    shouldResetClear,
+    onSearch,
+    onReset,
+    filterData,
+    setFilterData
+  } = props
+
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
 
   const [expand, setExpand] = useState(false)
 
@@ -37,17 +66,38 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
     return expand ? 24 - (activeFilterLength % 3) * 8 : 8
   }, [expand, filterDefs])
 
+  useEffect(() => {
+    form?.form?.setFieldsValue?.({ ...filterData })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Form
       labelCol={{ span: 6 }}
       {...form}
+      onFinish={(values) => {
+        setFilterData?.({ ...values })
+        form?.onFinish?.(values)
+        filterCacheStore.setItem(location.pathname, { ...values })
+      }}
     >
       <Card size="small">
         <Row>
           {filterDefs
             ?.filter((f) => !f.hidden)
             ?.map((def, index) => {
-              const { col, type, render, input, select, rangePicker, ...formItem } = def
+              const {
+                col,
+                type,
+                render,
+                inputProps,
+                inputNumberProps,
+                selectProps,
+                switchProps,
+                datePickerProps,
+                rangePickerProps,
+                ...formItem
+              } = def
               const activeFilterLength = filterDefs?.filter((f) => !f.hidden).length ?? 0
               if (activeFilterLength > 3 && !expand && index > 1) {
                 return null
@@ -62,16 +112,37 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
                       {type === 'input' && (
                         <Input
                           allowClear
-                          {...input}
+                          {...inputProps}
+                        />
+                      )}
+                      {type === 'input-number' && (
+                        <InputNumber
+                          className="w-full"
+                          {...inputNumberProps}
                         />
                       )}
                       {type === 'select' && (
                         <Select
                           allowClear
-                          {...select}
+                          {...selectProps}
                         />
                       )}
-                      {type === 'date-range-picker' && <DatePicker.RangePicker {...rangePicker} />}
+                      {type === 'switch' && (
+                        <Switch
+                          checkedChildren="是"
+                          unCheckedChildren="否"
+                          {...switchProps}
+                        />
+                      )}
+                      {type === 'date-picker' && (
+                        <DatePicker
+                          className="w-full"
+                          {...datePickerProps}
+                        />
+                      )}
+                      {type === 'date-range-picker' && (
+                        <DatePicker.RangePicker {...rangePickerProps} />
+                      )}
                       {type === 'custom' && render?.()}
                     </Form.Item>
                   </Col>
@@ -102,10 +173,15 @@ export default function FilterArea<T>(props: FilterAreaProps<T>) {
                 <Button
                   htmlType="submit"
                   onClick={() => {
+                    setFilterData?.({})
                     form?.form?.resetFields()
                     if (queryKey) {
                       queryClient.invalidateQueries({ queryKey: [queryKey] })
+                      if (shouldResetClear) {
+                        queryClient.resetQueries({ queryKey: [queryKey] })
+                      }
                     }
+                    filterCacheStore.removeItem(location.pathname)
                     onReset?.()
                   }}
                 >

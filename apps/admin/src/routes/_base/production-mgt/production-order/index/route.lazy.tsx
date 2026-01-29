@@ -20,15 +20,20 @@ export const Route = createLazyFileRoute('/_base/production-mgt/production-order
 function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
   const bomListModal = useModal()
   const queryClient = useQueryClient()
+
+  const filterCacheStore = useFilterCacheStore()
 
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
   const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo>({})
   const currentOperateRow = useRef<ProductionOrder.ProductionOrderBody | null>(null)
   const [currentOperateUID, setCurrentOperateRowUID] = useState<string | null>(null)
@@ -68,7 +73,7 @@ function RouteComponent() {
         name: 'cStandardType',
         label: '生产订单类型',
         type: 'select',
-        select: {
+        selectProps: {
           options: standardTypeCandidates,
           fieldNames: {
             label: 'cDictonaryName',
@@ -80,7 +85,7 @@ function RouteComponent() {
         name: 'cVouchType',
         label: '生产订单类别',
         type: 'select',
-        select: {
+        selectProps: {
           options: vouchTypeCandidates,
           fieldNames: {
             label: 'cDictonaryName',
@@ -92,7 +97,7 @@ function RouteComponent() {
         name: 'iStatus',
         label: '生产订单状态',
         type: 'select',
-        select: {
+        selectProps: {
           options: [
             { label: '保存', value: ProductionOrder.TaskStatus.AUDIT },
             { label: '弃审', value: ProductionOrder.TaskStatus.ABANDON }
@@ -438,12 +443,10 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={{
-          form,
-          onFinish: (values) => setFilterData?.({ ...values })
-        }}
+        form={{ form }}
         filterDefs={filterDefs}
-        onReset={() => setFilterData?.({})}
+        filterData={filterData}
+        setFilterData={setFilterData}
         queryKey={ProductionOrder.LIST_QK}
       />
       <Flex

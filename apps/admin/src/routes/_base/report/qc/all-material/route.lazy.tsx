@@ -2,9 +2,8 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { type AllMaterialVo, listQO, useExportMutation } from '@/features/all-material'
+import { type AllMaterialVo, LIST_QK, listQO, useExportMutation } from '@/features/all-material'
 
-import { FilterArea } from './-components'
 import type { FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/report/qc/all-material')({
@@ -12,12 +11,17 @@ export const Route = createLazyFileRoute('/_base/report/qc/all-material')({
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
 
-  const [form] = Form.useForm()
-
   const [pageParams, setPageParams] = useState(defaultPageDto)
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const {
     data: { data = [], dataCount } = {},
@@ -34,6 +38,14 @@ function RouteComponent() {
   )
   const exportMutation = useExportMutation()
 
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cInvCode', label: '原料编码', type: 'input' },
+      { name: 'cInvName', label: '原料名称', type: 'input' }
+    ],
+    []
+  )
+
   const columnDefs = useMemo<ColDef<AllMaterialVo>[]>(
     () => [
       { field: 'cInvCode', headerName: '原料编码' },
@@ -45,8 +57,11 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={form}
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
         setFilterData={setFilterData}
+        queryKey={LIST_QK}
       />
       <Flex
         className="h-8"
@@ -79,7 +94,6 @@ function RouteComponent() {
       <div className="ag-theme-quartz flex-1">
         <AgGridReact<AllMaterialVo>
           ref={gridRef}
-          getRowId={(params) => params.data.UID!}
           columnDefs={columnDefs}
           rowData={data}
           autoSizeStrategy={{

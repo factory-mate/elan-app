@@ -2,10 +2,9 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type StepVo, useDeleteMutation } from '@/features/step'
+import { LIST_QK, listQO, type StepVo, useDeleteMutation } from '@/features/step'
 
 import { AddModal, EditModal } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft/step/')({
@@ -13,11 +12,19 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/craft
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
@@ -32,6 +39,14 @@ function RouteComponent() {
     })
   )
   const deleteMutation = useDeleteMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cStepCode', label: '工步编码', type: 'input' },
+      { name: 'cStepName', label: '工步名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<StepVo>[]>(
     () => [
@@ -90,7 +105,13 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <FilterArea setFilterData={setFilterData} />
+      <FilterArea
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        queryKey={LIST_QK}
+      />
       <Flex
         className="h-8"
         justify="space-between"

@@ -2,10 +2,14 @@ import { createLazyFileRoute } from '@tanstack/react-router'
 import type { ColDef, ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
-import { listQO, type RecipeRoleRefVo, useDeleteMutation } from '@/features/recipe-role-ref'
+import {
+  LIST_QK,
+  listQO,
+  type RecipeRoleRefVo,
+  useDeleteMutation
+} from '@/features/recipe-role-ref'
 
 import { AddModal, EditModal } from './-components'
-import FilterArea from './-components/FilterArea'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute('/_base/digital-modeling/products/recipe-role-ref/')({
@@ -13,11 +17,19 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/recip
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
@@ -32,6 +44,15 @@ function RouteComponent() {
     })
   )
   const deleteMutation = useDeleteMutation()
+
+  const filterDefs = useMemo<FilterDef<FilterForm>[]>(
+    () => [
+      { name: 'cRoleName', label: '角色名称', type: 'input' },
+      { name: 'cInvCode', label: '产品编码', type: 'input' },
+      { name: 'cInvName', label: '产品名称', type: 'input' }
+    ],
+    []
+  )
 
   const columnDefs = useMemo<ColDef<RecipeRoleRefVo>[]>(
     () => [
@@ -94,7 +115,13 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <FilterArea setFilterData={setFilterData} />
+      <FilterArea
+        form={{ form }}
+        filterDefs={filterDefs}
+        filterData={filterData}
+        setFilterData={setFilterData}
+        queryKey={LIST_QK}
+      />
       <Flex
         className="h-8"
         justify="space-between"
@@ -131,7 +158,6 @@ function RouteComponent() {
           </PermCodeProvider>
         </Space>
       </Flex>
-
       <div className="ag-theme-quartz flex-1">
         <AgGridReact<RecipeRoleRefVo>
           ref={gridRef}
@@ -154,7 +180,6 @@ function RouteComponent() {
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
         />
       </div>
-
       <Flex
         justify="end"
         align="center"
@@ -177,7 +202,6 @@ function RouteComponent() {
           }}
         />
       </Flex>
-
       <AddModal
         open={addModal.open}
         setOpen={addModal.setOpen}

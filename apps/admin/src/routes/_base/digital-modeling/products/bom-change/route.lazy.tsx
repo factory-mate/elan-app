@@ -15,10 +15,17 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/bom-c
 function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const location = useLocation()
+
+  const filterCacheStore = useFilterCacheStore()
+
   const gridRef = useRef<AgGridReact>(null)
+
   // const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({})
+  const [filterData, setFilterData] = useState<FilterForm>({
+    ...filterCacheStore.getItem(location.pathname)
+  })
 
   const replaceModal = useModal<ReplaceModalMeta>({
     meta: { UIDs: [] }
@@ -79,16 +86,12 @@ function RouteComponent() {
   return (
     <PageContainer>
       <FilterArea
-        form={{
-          form,
-          onFinish: (values) => setFilterData?.({ ...values })
-        }}
+        form={{ form }}
         filterDefs={filterDefs}
-        onReset={() => {
-          setFilterData?.({})
-          queryClient.resetQueries({ queryKey: [LIST_QK] })
-        }}
+        filterData={filterData}
+        setFilterData={setFilterData}
         queryKey={LIST_QK}
+        shouldResetClear
       />
       <Flex
         className="h-8"
