@@ -15,9 +15,7 @@ export class RecipeRoleRefAPI {
     return httpClient.post<Page<RecipeRoleRefVo>>(
       `${this.apiPrefix}/mes_bom_role/GetForPage`,
       params,
-      {
-        signal
-      }
+      { signal }
     )
   }
 

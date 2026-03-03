@@ -27,6 +27,7 @@ import { Route as BaseDigitalModelingProductsBomChangeRouteRouteImport } from '.
 import { Route as BaseDigitalModelingMerchantsVendorClassRouteRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor-class/route'
 import { Route as BaseDigitalModelingMerchantsVendorRouteRouteImport } from './../../routes/_base/digital-modeling/merchants/vendor/route'
 import { Route as BaseProductionMgtProductionOrderIndexRouteRouteImport } from './../../routes/_base/production-mgt/production-order/index/route'
+import { Route as BasePlanMgtPurPlanIndexRouteRouteImport } from './../../routes/_base/plan-mgt/pur-plan/index/route'
 import { Route as BasePermMgtRolesIndexRouteRouteImport } from './../../routes/_base/perm-mgt/roles/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
 import { Route as BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRouteImport } from './../../routes/_base/supply-chain-mgt/sales-mgt/sales-order/index/route'
@@ -192,6 +193,16 @@ const BaseProductionMgtProductionOrderIndexRouteRoute =
     getParentRoute: () => BaseRoute,
   } as any).lazy(() =>
     import('./../../routes/_base/production-mgt/production-order/index/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const BasePlanMgtPurPlanIndexRouteRoute =
+  BasePlanMgtPurPlanIndexRouteRouteImport.update({
+    id: '/plan-mgt/pur-plan/',
+    path: '/plan-mgt/pur-plan',
+    getParentRoute: () => BaseRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/plan-mgt/pur-plan/index/route.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -436,6 +447,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof PublicLoginRouteRoute
   '/menus/': typeof BaseMenusIndexRouteRoute
   '/perm-mgt/roles/': typeof BasePermMgtRolesIndexRouteRoute
+  '/plan-mgt/pur-plan/': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
@@ -477,6 +489,7 @@ export interface FileRoutesByTo {
   '/login': typeof PublicLoginRouteRoute
   '/menus': typeof BaseMenusIndexRouteRoute
   '/perm-mgt/roles': typeof BasePermMgtRolesIndexRouteRoute
+  '/plan-mgt/pur-plan': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/production-mgt/production-order': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
@@ -521,6 +534,7 @@ export interface FileRoutesById {
   '/_public/login': typeof PublicLoginRouteRoute
   '/_base/menus/': typeof BaseMenusIndexRouteRoute
   '/_base/perm-mgt/roles/': typeof BasePermMgtRolesIndexRouteRoute
+  '/_base/plan-mgt/pur-plan/': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/_base/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
   '/_base/digital-modeling/merchants/vendor': typeof BaseDigitalModelingMerchantsVendorRouteRoute
   '/_base/digital-modeling/merchants/vendor-class': typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
@@ -564,6 +578,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/menus/'
     | '/perm-mgt/roles/'
+    | '/plan-mgt/pur-plan/'
     | '/production-mgt/production-order/'
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
@@ -605,6 +620,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/menus'
     | '/perm-mgt/roles'
+    | '/plan-mgt/pur-plan'
     | '/production-mgt/production-order'
     | '/digital-modeling/merchants/vendor'
     | '/digital-modeling/merchants/vendor-class'
@@ -648,6 +664,7 @@ export interface FileRouteTypes {
     | '/_public/login'
     | '/_base/menus/'
     | '/_base/perm-mgt/roles/'
+    | '/_base/plan-mgt/pur-plan/'
     | '/_base/production-mgt/production-order/'
     | '/_base/digital-modeling/merchants/vendor'
     | '/_base/digital-modeling/merchants/vendor-class'
@@ -812,6 +829,13 @@ declare module '@tanstack/react-router' {
       path: '/production-mgt/production-order'
       fullPath: '/production-mgt/production-order/'
       preLoaderRoute: typeof BaseProductionMgtProductionOrderIndexRouteRouteImport
+      parentRoute: typeof BaseRoute
+    }
+    '/_base/plan-mgt/pur-plan/': {
+      id: '/_base/plan-mgt/pur-plan/'
+      path: '/plan-mgt/pur-plan'
+      fullPath: '/plan-mgt/pur-plan/'
+      preLoaderRoute: typeof BasePlanMgtPurPlanIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/perm-mgt/roles/': {
@@ -986,6 +1010,7 @@ interface BaseRouteChildren {
   BasePrintRouteRoute: typeof BasePrintRouteRoute
   BaseMenusIndexRouteRoute: typeof BaseMenusIndexRouteRoute
   BasePermMgtRolesIndexRouteRoute: typeof BasePermMgtRolesIndexRouteRoute
+  BasePlanMgtPurPlanIndexRouteRoute: typeof BasePlanMgtPurPlanIndexRouteRoute
   BaseProductionMgtProductionOrderIndexRouteRoute: typeof BaseProductionMgtProductionOrderIndexRouteRoute
   BaseDigitalModelingMerchantsVendorRouteRoute: typeof BaseDigitalModelingMerchantsVendorRouteRoute
   BaseDigitalModelingMerchantsVendorClassRouteRoute: typeof BaseDigitalModelingMerchantsVendorClassRouteRoute
@@ -1026,6 +1051,7 @@ const BaseRouteChildren: BaseRouteChildren = {
   BasePrintRouteRoute: BasePrintRouteRoute,
   BaseMenusIndexRouteRoute: BaseMenusIndexRouteRoute,
   BasePermMgtRolesIndexRouteRoute: BasePermMgtRolesIndexRouteRoute,
+  BasePlanMgtPurPlanIndexRouteRoute: BasePlanMgtPurPlanIndexRouteRoute,
   BaseProductionMgtProductionOrderIndexRouteRoute:
     BaseProductionMgtProductionOrderIndexRouteRoute,
   BaseDigitalModelingMerchantsVendorRouteRoute:

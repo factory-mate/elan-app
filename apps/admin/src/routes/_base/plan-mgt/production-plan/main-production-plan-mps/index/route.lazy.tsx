@@ -30,6 +30,7 @@ function RouteComponent() {
   const filterCacheStore = useFilterCacheStore()
 
   const gridRef = useRef<AgGridReact>(null)
+
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [filterData, setFilterData] = useState<FilterForm>({
@@ -179,6 +180,8 @@ function RouteComponent() {
                 }
                 pushMutation.mutate(selectedRows.map((i) => i.UID))
               }}
+              loading={pushMutation.isPending}
+              disabled={pushMutation.isPending}
             >
               生单
             </Button>
@@ -192,6 +195,8 @@ function RouteComponent() {
                 }
                 cancelMutation.mutate(selectedRows.map((i) => i.UID))
               }}
+              loading={cancelMutation.isPending}
+              disabled={cancelMutation.isPending}
             >
               撤单
             </Button>
@@ -215,7 +220,12 @@ function RouteComponent() {
                 deleteMutation.mutate(selectedRows.map((i) => i.UID))
               }}
             >
-              <Button disabled={deleteMutation.isPending}>删除</Button>
+              <Button
+                loading={deleteMutation.isPending}
+                disabled={deleteMutation.isPending}
+              >
+                删除
+              </Button>
             </Popconfirm>
           </PermCodeProvider>
         </Space>

@@ -148,6 +148,13 @@ export type PermCode =
   | 'main-production-plan-mps:compute'
   | 'main-production-plan-mps:push'
   | 'main-production-plan-mps:cancel-push'
+  // 计划管理 - 采购计划
+  | 'pur-plan'
+  | 'pur-plan:view'
+  | 'pur-plan:check'
+  | 'pur-plan:execute'
+  | 'pur-plan:lock'
+  | 'pur-plan:sync'
   // 生产管理
   | 'production-mgt'
   // 生产管理 - 生产订单

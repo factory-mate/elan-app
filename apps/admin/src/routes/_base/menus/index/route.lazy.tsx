@@ -120,10 +120,9 @@ const treeData: TreeDataNode[] = [
           {
             key: 'bom-change',
             title: '物料清单整批修改 bom-change',
-            style: highlightStyle,
             children: [
-              { key: 'bom-change:view', title: '查看 bom-change:view', style: highlightStyle },
-              { key: 'bom-change:replace', title: '替代 bom-change:replace', style: highlightStyle }
+              { key: 'bom-change:view', title: '查看 bom-change:view' },
+              { key: 'bom-change:replace', title: '替代 bom-change:replace' }
             ]
           },
           {
@@ -285,6 +284,18 @@ const treeData: TreeDataNode[] = [
             ]
           }
         ]
+      },
+      {
+        key: 'pur-plan',
+        title: '采购计划 pur-plan',
+        style: highlightStyle,
+        children: [
+          { key: 'pur-plan:view', title: '查看 pur-plan:view', style: highlightStyle },
+          { key: 'pur-plan:lock', title: '锁定 pur-plan:lock', style: highlightStyle },
+          { key: 'pur-plan:sync', title: '同步 pur-plan:sync', style: highlightStyle },
+          { key: 'pur-plan:check', title: '缺 BOM 物料 pur-plan:check', style: highlightStyle },
+          { key: 'pur-plan:execute', title: '运算 pur-plan:execute', style: highlightStyle }
+        ]
       }
     ]
   },
@@ -417,7 +428,7 @@ function RouteComponent() {
         treeData={treeData}
         showLine
         checkStrictly
-        defaultExpandedKeys={['digital-modeling', 'products', 'bom-change']}
+        defaultExpandedKeys={['pur-plan']}
       />
     </PageContainer>
   )

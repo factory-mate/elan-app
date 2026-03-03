@@ -93,7 +93,8 @@ export const staticMenus: ExtendedMenuItemType[] = [
             permCode: 'main-production-plan-mps'
           }
         ]
-      }
+      },
+      { label: '采购计划', key: '/pur-plan', permCode: 'pur-plan' }
     ]
   },
   {

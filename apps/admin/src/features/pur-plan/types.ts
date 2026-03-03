@@ -1,0 +1,31 @@
+export interface PurPlanVo {
+  iLockStatusName: string
+  iSyncStatusName: string
+  cInvCode: string
+  cInvName: string
+  cInvStd: string
+  nSaleQuantity: number
+  nProductQuantity: number
+  nAllQuantity: number
+  nStockQuantity: number
+  nPurQuantity: number
+  nLockQuantity: number
+  nQuantity: number
+  dNeedDate: string
+  dMadeDate: string
+  iLockStatus: number
+  iSyncStatus: number
+  dNeedDate_Product: string
+  UID: string
+  IsValid: boolean
+  IsDelete: boolean
+  cCreateUserCode: string
+  cCreateUserName: string
+  dCreateTime: string
+  cModifyUserCode: string
+  cModifyUserName: string
+  dModifyTime: string
+  cSourceAppType: string
+  iStatus: number
+  utfs: string
+}
