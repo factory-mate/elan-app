@@ -92,9 +92,9 @@ export class HttpClient {
         }
 
         // Handle by status code.
-        if (err?.status !== 500) {
-          await this.#handleStatusCode(response, options)
-        }
+        // if (err?.status !== 500) {
+        //   await this.#handleStatusCode(response, options)
+        // }
 
         throw response?.data
       }
