@@ -42,16 +42,19 @@ export default function EditModal(props: EditModalProps) {
     }
   }, [detailData, form, open])
 
-  const onFinish: FormProps<InventoryEditDto>['onFinish'] = (values) =>
+  const onFinish: FormProps<InventoryEditDto>['onFinish'] = (values) => {
+    const info = { ...(detailData?.info ?? {}), ...(values.info ?? {}) }
+    const qc = { ...(detailData?.qc ?? {}), ...(values.qc ?? {}) }
+    const control = { ...(detailData?.control ?? {}), ...(values.control ?? {}) }
+    const cost = { ...(detailData?.cost ?? {}), ...(values.cost ?? {}) }
+    const extend = { ...(detailData?.extend ?? {}), ...(values.extend ?? {}) }
     editMutation.mutate(
-      {
-        ...detailData,
-        ...values
-      },
+      { info, qc, control, cost, extend },
       {
         onSuccess: () => setOpen?.(false)
       }
     )
+  }
 
   return (
     <Modal
@@ -111,7 +114,6 @@ export default function EditModal(props: EditModalProps) {
                       <Form.Item<InventoryEditDto>
                         name={['info', 'cInvstd']}
                         label="规格型号"
-                        rules={[{ required: true }]}
                         labelCol={{ span: 3 }}
                       >
                         <Input />

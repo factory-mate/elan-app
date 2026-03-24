@@ -37,8 +37,7 @@ export interface InventoryVo {
 }
 
 export interface InventoryDetailVo {
-  UID: string
-  info?: InventoryInfoDto & { utfs: string }
+  info?: InventoryInfoDto
   qc?: InventoryQCDto
   control?: InventoryControlDto
   cost?: InventoryCostDto
@@ -54,87 +53,85 @@ export interface InventoryAddDto {
 }
 
 export interface InventoryInfoDto {
-  cInvClassCode: string
-  cVendorCode: string
-  cInvCode: string
-  cInvName: string
-  cInvstd: string
-  cMemo: string
-  cUnitClassCode: string
-  cSaleUnitCode: string
-  cBuyUnitCode: string
-  cStoreUnitCode: string
-  cProductUnitCode: string
-  cEnglishName: string
+  cInvClassCode?: string
+  cVendorCode?: string
+  cInvCode?: string
+  cInvName?: string
+  cInvstd?: string
+  cMemo?: string
+  cUnitClassCode?: string
+  cSaleUnitCode?: string
+  cBuyUnitCode?: string
+  cStoreUnitCode?: string
+  cProductUnitCode?: string
+  cEnglishName?: string
+  utfs?: string
 }
 
 export interface InventoryQCDto {
-  cInvCode: string
-  IsQC: boolean
-  cQCType: string
-  cQCRuleType: string
-  cQCUnitCode: string
-  iQCRate: number
-  iQCQuantity: number
-  cQCProject: string
+  cInvCode?: string
+  IsQC?: boolean
+  cQCType?: string
+  cQCRuleType?: string
+  cQCUnitCode?: string
+  iQCRate?: number
+  iQCQuantity?: number
+  cQCProject?: string
 }
 
 export interface InventoryControlDto {
-  cInvCode: string
-  IsBatch: boolean
-  IsPeriod: boolean
-  cPeriodUnitType: string
-  iPeriodValue: number
-  IsBuy: boolean
-  IsProduct: boolean
-  IsSale: boolean
-  IsMaterial: boolean
-  IsTax: boolean
-  IsDiscount: boolean
-  IsPart: boolean
-  IsOutsourcing: boolean
-  IsModel: boolean
-  IsATO: boolean
-  IsPTO: boolean
-  IsEquipment: boolean
-  IsSelect: boolean
-  cMemo: string
+  cInvCode?: string
+  IsBatch?: boolean
+  IsPeriod?: boolean
+  cPeriodUnitType?: string
+  iPeriodValue?: number
+  IsBuy?: boolean
+  IsProduct?: boolean
+  IsSale?: boolean
+  IsMaterial?: boolean
+  IsTax?: boolean
+  IsDiscount?: boolean
+  IsPart?: boolean
+  IsOutsourcing?: boolean
+  IsModel?: boolean
+  IsATO?: boolean
+  IsPTO?: boolean
+  IsEquipment?: boolean
+  IsSelect?: boolean
+  cMemo?: string
 }
 
 export interface InventoryCostDto {
-  cInvCode: string
-  iStandardCost: number
-  iReferenceCost: number
-  iNewestCost: number
-  iReferencePrice: number
+  cInvCode?: string
+  iStandardCost?: number
+  iReferenceCost?: number
+  iNewestCost?: number
+  iReferencePrice?: number
 }
 
 export interface InventoryExtendDto {
   // IFRA(R)
-  cDefindParm01: string
+  cDefindParm01?: string
   // CAS
-  cDefindParm02: string
+  cDefindParm02?: string
   // EINECS
-  cDefindParm03: string
+  cDefindParm03?: string
   // FEMA
-  cDefindParm04: string
+  cDefindParm04?: string
   // 天然过敏源
-  cDefindParm05: string
+  cDefindParm05?: string
   // 天然IFRA成分
-  cDefindParm06: string
+  cDefindParm06?: string
   // 26过敏源
-  cDefindParm07: string
+  cDefindParm07?: string
   // 玩具过敏源
-  cDefindParm08: string
+  cDefindParm08?: string
   // 食品过敏源
-  cDefindParm09: string
+  cDefindParm09?: string
   // 禁用原料
-  cDefindParm10: string
+  cDefindParm10?: string
   // 提前期
-  iDefindParm11: number
+  iDefindParm11?: number
 }
 
-export interface InventoryEditDto extends InventoryAddDto {
-  UID: string
-  utfs: string
-}
+export interface InventoryEditDto extends InventoryAddDto {}
