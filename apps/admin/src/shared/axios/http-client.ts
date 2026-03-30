@@ -78,7 +78,7 @@ export class HttpClient {
 
         if (!success) {
           await this.#handleStatusCode(res, options)
-          throw res.data
+          throw data
         }
 
         return data as any
