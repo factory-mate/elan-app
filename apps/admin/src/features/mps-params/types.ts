@@ -11,6 +11,8 @@ export interface MpsParamsVo {
   bStock: boolean
   // 是否考虑合并订单
   bMerge: boolean
+  // 是否跳过无配方数据
+  bSkipUnBOM: boolean
 }
 
 export interface MpsParamsAddDto extends MpsParamsVo {}

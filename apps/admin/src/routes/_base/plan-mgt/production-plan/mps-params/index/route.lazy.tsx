@@ -90,6 +90,15 @@ function RouteComponent() {
               unCheckedChildren="否"
             />
           </Form.Item>
+          <Form.Item<MpsParamsEditDto>
+            name="bSkipUnBOM"
+            label="是否跳过无配方数据"
+          >
+            <Switch
+              checkedChildren="是"
+              unCheckedChildren="否"
+            />
+          </Form.Item>
           <PermCodeProvider code="mps-params:edit">
             <Form.Item
               wrapperCol={{ offset: 10 }}
