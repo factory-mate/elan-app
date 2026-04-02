@@ -104,6 +104,19 @@ export const staticMenus: ExtendedMenuItemType[] = [
     children: [{ label: '生产订单', key: '/production-order', permCode: 'production-order' }]
   },
   {
+    label: '车间管理',
+    key: '/workshop-mgt',
+    permCode: 'workshop-mgt',
+    children: [
+      {
+        label: '车间配置',
+        key: '/workshop-config',
+        permCode: 'workshop-config',
+        children: [{ label: '电子秤误差配置', key: '/weight', permCode: 'weight' }]
+      }
+    ]
+  },
+  {
     label: '报表',
     key: '/report',
     permCode: 'report',

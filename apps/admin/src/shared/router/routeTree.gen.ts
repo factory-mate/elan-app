@@ -30,6 +30,7 @@ import { Route as BaseProductionMgtProductionOrderIndexRouteRouteImport } from '
 import { Route as BasePlanMgtPurPlanIndexRouteRouteImport } from './../../routes/_base/plan-mgt/pur-plan/index/route'
 import { Route as BasePermMgtRolesIndexRouteRouteImport } from './../../routes/_base/perm-mgt/roles/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
+import { Route as BaseWorkshopMgtWorkshopConfigWeightIndexRouteRouteImport } from './../../routes/_base/workshop-mgt/workshop-config/weight/index/route'
 import { Route as BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRouteImport } from './../../routes/_base/supply-chain-mgt/sales-mgt/sales-order/index/route'
 import { Route as BaseReportTraceProductionDateDiffIndexRouteRouteImport } from './../../routes/_base/report/trace/production-date-diff/index/route'
 import { Route as BaseReportProductionProductionMaterialIndexRouteRouteImport } from './../../routes/_base/report/production/production-material/index/route'
@@ -223,6 +224,16 @@ const BaseDigitalModelingOrgsEmployeeAddRouteRoute =
     getParentRoute: () => BaseRoute,
   } as any).lazy(() =>
     import('./../../routes/_base/digital-modeling/orgs/employee/add/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute =
+  BaseWorkshopMgtWorkshopConfigWeightIndexRouteRouteImport.update({
+    id: '/workshop-mgt/workshop-config/weight/',
+    path: '/workshop-mgt/workshop-config/weight',
+    getParentRoute: () => BaseRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/workshop-mgt/workshop-config/weight/index/route.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -473,6 +484,7 @@ export interface FileRoutesByFullPath {
   '/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/report/trace/production-date-diff/': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/supply-chain-mgt/sales-mgt/sales-order/': typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
+  '/workshop-mgt/workshop-config/weight/': typeof BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/digital-modeling/products/craft/craft-route/': typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
   '/digital-modeling/products/craft/process/': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
@@ -515,6 +527,7 @@ export interface FileRoutesByTo {
   '/report/production/production-material': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/report/trace/production-date-diff': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/supply-chain-mgt/sales-mgt/sales-order': typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
+  '/workshop-mgt/workshop-config/weight': typeof BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute
   '/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/digital-modeling/products/craft/craft-route': typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
   '/digital-modeling/products/craft/process': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
@@ -560,6 +573,7 @@ export interface FileRoutesById {
   '/_base/report/production/production-material/': typeof BaseReportProductionProductionMaterialIndexRouteRoute
   '/_base/report/trace/production-date-diff/': typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   '/_base/supply-chain-mgt/sales-mgt/sales-order/': typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
+  '/_base/workshop-mgt/workshop-config/weight/': typeof BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute
   '/_base/digital-modeling/orgs/employee/add': typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   '/_base/digital-modeling/products/craft/craft-route/': typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
   '/_base/digital-modeling/products/craft/process/': typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
@@ -604,6 +618,7 @@ export interface FileRouteTypes {
     | '/report/production/production-material/'
     | '/report/trace/production-date-diff/'
     | '/supply-chain-mgt/sales-mgt/sales-order/'
+    | '/workshop-mgt/workshop-config/weight/'
     | '/digital-modeling/orgs/employee/add'
     | '/digital-modeling/products/craft/craft-route/'
     | '/digital-modeling/products/craft/process/'
@@ -646,6 +661,7 @@ export interface FileRouteTypes {
     | '/report/production/production-material'
     | '/report/trace/production-date-diff'
     | '/supply-chain-mgt/sales-mgt/sales-order'
+    | '/workshop-mgt/workshop-config/weight'
     | '/digital-modeling/orgs/employee/add'
     | '/digital-modeling/products/craft/craft-route'
     | '/digital-modeling/products/craft/process'
@@ -690,6 +706,7 @@ export interface FileRouteTypes {
     | '/_base/report/production/production-material/'
     | '/_base/report/trace/production-date-diff/'
     | '/_base/supply-chain-mgt/sales-mgt/sales-order/'
+    | '/_base/workshop-mgt/workshop-config/weight/'
     | '/_base/digital-modeling/orgs/employee/add'
     | '/_base/digital-modeling/products/craft/craft-route/'
     | '/_base/digital-modeling/products/craft/process/'
@@ -850,6 +867,13 @@ declare module '@tanstack/react-router' {
       path: '/digital-modeling/orgs/employee/add'
       fullPath: '/digital-modeling/orgs/employee/add'
       preLoaderRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRouteImport
+      parentRoute: typeof BaseRoute
+    }
+    '/_base/workshop-mgt/workshop-config/weight/': {
+      id: '/_base/workshop-mgt/workshop-config/weight/'
+      path: '/workshop-mgt/workshop-config/weight'
+      fullPath: '/workshop-mgt/workshop-config/weight/'
+      preLoaderRoute: typeof BaseWorkshopMgtWorkshopConfigWeightIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/supply-chain-mgt/sales-mgt/sales-order/': {
@@ -1036,6 +1060,7 @@ interface BaseRouteChildren {
   BaseReportProductionProductionMaterialIndexRouteRoute: typeof BaseReportProductionProductionMaterialIndexRouteRoute
   BaseReportTraceProductionDateDiffIndexRouteRoute: typeof BaseReportTraceProductionDateDiffIndexRouteRoute
   BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute: typeof BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute
+  BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute: typeof BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute
   BaseDigitalModelingOrgsEmployeeAddRouteRoute: typeof BaseDigitalModelingOrgsEmployeeAddRouteRoute
   BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute: typeof BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute
   BaseDigitalModelingProductsCraftProcessIndexRouteRoute: typeof BaseDigitalModelingProductsCraftProcessIndexRouteRoute
@@ -1098,6 +1123,8 @@ const BaseRouteChildren: BaseRouteChildren = {
     BaseReportTraceProductionDateDiffIndexRouteRoute,
   BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute:
     BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRoute,
+  BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute:
+    BaseWorkshopMgtWorkshopConfigWeightIndexRouteRoute,
   BaseDigitalModelingOrgsEmployeeAddRouteRoute:
     BaseDigitalModelingOrgsEmployeeAddRouteRoute,
   BaseDigitalModelingProductsCraftCraftRouteIndexRouteRoute:

@@ -288,13 +288,12 @@ const treeData: TreeDataNode[] = [
       {
         key: 'pur-plan',
         title: '采购计划 pur-plan',
-        style: highlightStyle,
         children: [
-          { key: 'pur-plan:view', title: '查看 pur-plan:view', style: highlightStyle },
-          { key: 'pur-plan:lock', title: '锁定 pur-plan:lock', style: highlightStyle },
-          { key: 'pur-plan:sync', title: '同步 pur-plan:sync', style: highlightStyle },
-          { key: 'pur-plan:check', title: '缺 BOM 物料 pur-plan:check', style: highlightStyle },
-          { key: 'pur-plan:execute', title: '运算 pur-plan:execute', style: highlightStyle }
+          { key: 'pur-plan:view', title: '查看 pur-plan:view' },
+          { key: 'pur-plan:lock', title: '锁定 pur-plan:lock' },
+          { key: 'pur-plan:sync', title: '同步 pur-plan:sync' },
+          { key: 'pur-plan:check', title: '缺 BOM 物料 pur-plan:check' },
+          { key: 'pur-plan:execute', title: '运算 pur-plan:execute' }
         ]
       }
     ]
@@ -316,6 +315,31 @@ const treeData: TreeDataNode[] = [
           { key: 'production-order:quit-audit', title: '弃审 production-order:quit-audit' },
           { key: 'production-order:open', title: '打开 production-order:open' },
           { key: 'production-order:close', title: '关闭 production-order:close' }
+        ]
+      }
+    ]
+  },
+  {
+    key: 'workshop-mgt',
+    title: '车间管理 workshop-mgt',
+    style: highlightStyle,
+    children: [
+      {
+        key: 'workshop-config',
+        title: '车间配置 workshop-config',
+        style: highlightStyle,
+        children: [
+          {
+            key: 'weight',
+            title: '电子秤误差配置 weight',
+            style: highlightStyle,
+            children: [
+              { key: 'weight:add', title: '查看 weight:view', style: highlightStyle },
+              { key: 'weight:add', title: '新增 weight:add', style: highlightStyle },
+              { key: 'weight:edit', title: '编辑 weight:edit', style: highlightStyle },
+              { key: 'weight:delete', title: '删除 weight:delete', style: highlightStyle }
+            ]
+          }
         ]
       }
     ]

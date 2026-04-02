@@ -168,6 +168,16 @@ export type PermCode =
   | 'production-order:quit-audit'
   | 'production-order:open'
   | 'production-order:close'
+  // 车间管理
+  | 'workshop-mgt'
+  // 车间管理 - 车间配置
+  | 'workshop-config'
+  // 车间管理 - 车间配置 - 电子秤误差配置
+  | 'weight'
+  | 'weight:view'
+  | 'weight:add'
+  | 'weight:edit'
+  | 'weight:delete'
   // 报表
   | 'report'
   // 报表 - 成本
