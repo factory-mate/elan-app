@@ -452,7 +452,7 @@ function RouteComponent() {
         treeData={treeData}
         showLine
         checkStrictly
-        defaultExpandedKeys={['pur-plan']}
+        defaultExpandedKeys={['workshop-mgt', 'workshop-config', 'weight']}
       />
     </PageContainer>
   )
