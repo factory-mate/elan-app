@@ -52,9 +52,10 @@ export default function EditModal(props: EditModalProps) {
       {
         ...detailData?.[0],
         ...values,
-        list_S: processData.map((i) => ({
+        list_S: processData.map((i, idx) => ({
           ...i,
-          list_SS: i.list_step ?? []
+          iIndx: idx,
+          list_SS: (i.list_step ?? []).map((ci, index) => ({ ...ci, iIndx: index })) ?? []
         })),
         list_Resource: resourceData
       },
