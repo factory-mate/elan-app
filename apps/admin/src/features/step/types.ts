@@ -7,6 +7,7 @@ export interface StepVo {
   isDevice: boolean
   isBussiness: boolean
   utfs: string
+  cStepType: string
 }
 
 export interface StepAddDto extends StepVo {}

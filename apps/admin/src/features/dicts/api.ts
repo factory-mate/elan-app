@@ -1,4 +1,4 @@
-import type { DictVo } from './types'
+import type { DictTypeDto, DictVo } from './types'
 
 export class DictsClassAPI {
   private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/dictonary`
@@ -11,5 +11,9 @@ export class DictsClassAPI {
       },
       { signal }
     )
+  }
+
+  static async dictType(data: DictTypeDto, signal?: AbortSignal) {
+    return httpClient.get<DictVo[]>(`${this.apiPrefix}/GetDicType`, data, { signal })
   }
 }

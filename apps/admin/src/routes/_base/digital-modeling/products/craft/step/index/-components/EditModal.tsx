@@ -1,6 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import { dicTypeQO } from '@/features/dicts'
 import { detailQO, type StepEditDto, useEditMutation } from '@/features/step'
 
 import type { EditModalMeta } from '../-types'
@@ -17,6 +18,12 @@ export default function EditModal(props: EditModalProps) {
   const [form] = Form.useForm<StepEditDto>()
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
+  const { data: stepTypeCandidates } = useQuery(
+    dicTypeQO({
+      cTableCode: 'FM_MES_STEP',
+      cAttributeCode: 'cStepType'
+    })
+  )
 
   const editMutation = useEditMutation()
 
@@ -69,6 +76,22 @@ export default function EditModal(props: EditModalProps) {
             rules={[{ required: true }]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item<StepEditDto>
+            name="cStepType"
+            label="工步属性"
+          >
+            <Select
+              options={stepTypeCandidates}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
+              showSearch={{
+                onSearch: (value) => form.setFieldValue('cStepType', value)
+              }}
+              allowClear
+            />
           </Form.Item>
           {/* <Form.Item<StepEditDto>
             name="isDevice"
