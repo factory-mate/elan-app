@@ -2,10 +2,10 @@ import { BOMAPI } from './api'
 import { NOT_FOUND_UID } from './constants'
 import { childListQK, detailQK, fullListQK, listQK, treeQK } from './query-keys'
 
-export const treeQO = () =>
+export const treeQO = (where: string) =>
   queryOptions({
-    queryKey: treeQK(),
-    queryFn: ({ signal }) => BOMAPI.tree(signal)
+    queryKey: treeQK(where),
+    queryFn: ({ signal }) => BOMAPI.tree(where, signal)
   })
 
 export const fullListQO = (params: FullPageDto) =>

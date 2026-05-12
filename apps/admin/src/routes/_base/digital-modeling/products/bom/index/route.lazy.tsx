@@ -12,6 +12,7 @@ import {
   supplyTypeLabelMap,
   useAuditMutation,
   useCancelMutation,
+  useCheckMutation,
   useDeleteMutation,
   useExportMutation,
   useImportMutation
@@ -41,6 +42,7 @@ function RouteComponent() {
     childListQO(selectedTreeData?.UID)
   )
   const deleteMutation = useDeleteMutation()
+  const checkMutation = useCheckMutation()
   const auditMutation = useAuditMutation()
   const cancelMutation = useCancelMutation()
   const exportMutation = useExportMutation()
@@ -143,6 +145,19 @@ function RouteComponent() {
             }}
           >
             删除
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:check">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              checkMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            检查
           </Button>
         </PermCodeProvider>
         <PermCodeProvider code="bom:audit">

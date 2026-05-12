@@ -5,8 +5,14 @@ import type { BOMAddDto, BOMChildItemVo, BOMEditDto, BOMTreeItemVo, BOMVo } from
 export class BOMAPI {
   private static apiPrefix = `${MANAGE_CENTER_API_PREFIX}/mes_bom`
 
-  static async tree(signal?: AbortSignal) {
-    return httpClient.get<BOMTreeItemVo[]>(`${this.apiPrefix}/GetTree`, {}, { signal })
+  static async tree(where?: string, signal?: AbortSignal) {
+    return httpClient.get<BOMTreeItemVo[]>(
+      `${this.apiPrefix}/GetTree`,
+      {
+        where
+      },
+      { signal }
+    )
   }
 
   static async fullList(params: FullPageDto, signal?: AbortSignal) {

@@ -8,5 +8,5 @@ export enum TaskStatus {
   CANCEL = 0, // 弃审
   AUDIT = 1, // 审核
   STOP = 2, // 停用
-  RESTORE = 3 // 还原
+  CHECK = 3 // 检查
 }

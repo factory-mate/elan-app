@@ -36,9 +36,11 @@ export interface BOMTreeItemVo extends BOMVo {
   title: string
   key: string
   Child: BOMTreeItemVo[]
+  IsProduct: boolean
 }
 
 export interface BOMChildItemVo {
+  IsProduct?: boolean
   cDepName?: string
   cWareHouseName?: string | null
   cParentCode?: string
@@ -74,6 +76,7 @@ export interface BOMChildItemVo {
   dModifyTime?: string
   cSourceAppType?: string
   iStatus?: number
+  iStatusName?: string
   utfs?: string
   cEnglishName?: string
 }

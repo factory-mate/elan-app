@@ -8,7 +8,7 @@ export const DETAIL_QK = 'bom:detail'
 
 export const CHILD_LIST_QK = 'bom:child-list'
 
-export const treeQK = () => [TREE_QK] as const
+export const treeQK = (where: string) => [TREE_QK, where] as const
 
 export const fullListQK = (params: FullPageDto) => [FULL_LIST_QK, params] as const
 

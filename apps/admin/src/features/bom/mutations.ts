@@ -42,6 +42,14 @@ export const useEditMutation = () => {
   })
 }
 
+export const useCheckMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (ids: string[]) => BOMAPI.setStatus(ids, TaskStatus.CHECK),
+    onSuccess: () => showMessage('success')
+  })
+}
+
 export const useAuditMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({

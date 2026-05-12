@@ -111,6 +111,7 @@ const treeData: TreeDataNode[] = [
               { key: 'bom:add', title: '新增 bom:add' },
               { key: 'bom:edit', title: '编辑 bom:edit' },
               { key: 'bom:delete', title: '删除 bom:delete' },
+              { key: 'bom:check', title: '检查 bom:check' },
               { key: 'bom:audit', title: '审核 bom:audit' },
               { key: 'bom:quit-audit', title: '弃审 bom:quit-audit' },
               { key: 'bom:import', title: '导入 bom:import' },

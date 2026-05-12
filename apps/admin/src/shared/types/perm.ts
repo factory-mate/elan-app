@@ -63,6 +63,7 @@ export type PermCode =
   | 'bom:add'
   | 'bom:edit'
   | 'bom:delete'
+  | 'bom:check'
   | 'bom:audit'
   | 'bom:quit-audit'
   | 'bom:import'
