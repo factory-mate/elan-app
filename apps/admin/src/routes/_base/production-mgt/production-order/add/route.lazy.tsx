@@ -93,21 +93,19 @@ function RouteComponent() {
                 })
               )
               const matchedBom = versionCandidates.at(0)
-              params.api.applyTransaction({
-                update: [
-                  {
-                    ...params.data,
-                    cInvCode: v.cInvCode,
-                    cInvName: v.cInvName,
-                    cInvStd: v.cInvstd,
-                    cUnitCode: v.cProductUnitCode,
-                    cUnitName: v.cProductUnitName,
-                    cBomUID: matchedBom?.UID ?? undefined,
-                    cBomVersion: matchedBom?.cVersion ?? undefined,
-                    cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
-                    versionCandidates
-                  }
-                ]
+              setTableData((draft) => {
+                draft[params.node.rowIndex!] = {
+                  ...params.data,
+                  cInvCode: v.cInvCode,
+                  cInvName: v.cInvName,
+                  cInvStd: v.cInvstd,
+                  cUnitCode: v.cProductUnitCode,
+                  cUnitName: v.cProductUnitName,
+                  cBomUID: matchedBom?.UID ?? undefined,
+                  cBomVersion: matchedBom?.cVersion ?? undefined,
+                  cVerisionMemo: matchedBom?.cVerisionMemo ?? undefined,
+                  versionCandidates
+                }
               })
             }}
           />

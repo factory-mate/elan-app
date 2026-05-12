@@ -161,7 +161,7 @@ function RouteComponent() {
                 value: 'cDictonaryCode'
               }}
               onSelect={(value) =>
-                params.api.applyTransactionAsync({
+                params.api.applyTransaction({
                   update: [
                     {
                       ...params.data,
