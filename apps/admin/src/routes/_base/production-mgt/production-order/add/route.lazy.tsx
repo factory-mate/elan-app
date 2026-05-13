@@ -120,7 +120,7 @@ function RouteComponent() {
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
-          precision: 0,
+          precision: 4,
           step: 1,
           showStepperButtons: true
         }
