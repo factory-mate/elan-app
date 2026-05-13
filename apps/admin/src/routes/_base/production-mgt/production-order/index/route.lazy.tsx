@@ -623,10 +623,10 @@ function RouteComponent() {
           </div>
 
           <div className="mt-2 border-b border-black text-lg">
-            <div className="grid grid-cols-6">
+            <div className="grid grid-cols-5">
               <div>编号</div>
               <div>名称</div>
-              <div>配比</div>
+              {/* <div>配比</div> */}
               <div>用量（公斤）</div>
               <div>实际投料</div>
               <div>验单号</div>
@@ -638,10 +638,10 @@ function RouteComponent() {
               className="mt-2 border-b border-black text-lg"
               key={index}
             >
-              <div className="grid grid-cols-6">
+              <div className="grid grid-cols-5">
                 <div>{item?.cMaterialCode}</div>
                 <div>{item?.cMaterialName}</div>
-                <div>{item?.cDefindParm01}</div>
+                {/* <div>{item?.cDefindParm01}</div> */}
                 <div>{item?.nQuantity}</div>
                 <div />
                 <div />
