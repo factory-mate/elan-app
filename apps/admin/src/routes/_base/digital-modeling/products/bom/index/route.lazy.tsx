@@ -147,19 +147,6 @@ function RouteComponent() {
             删除
           </Button>
         </PermCodeProvider>
-        <PermCodeProvider code="bom:check">
-          <Button
-            onClick={() => {
-              if (!selectedTreeData) {
-                showMessage('select-data')
-                return
-              }
-              checkMutation.mutate([selectedTreeData.UID])
-            }}
-          >
-            检查
-          </Button>
-        </PermCodeProvider>
         <PermCodeProvider code="bom:audit">
           <Button
             onClick={() => {
@@ -184,6 +171,32 @@ function RouteComponent() {
             }}
           >
             弃审
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:check">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              checkMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            复核
+          </Button>
+        </PermCodeProvider>
+        <PermCodeProvider code="bom:uncheck">
+          <Button
+            onClick={() => {
+              if (!selectedTreeData) {
+                showMessage('select-data')
+                return
+              }
+              auditMutation.mutate([selectedTreeData.UID])
+            }}
+          >
+            取消复核
           </Button>
         </PermCodeProvider>
         <PermCodeProvider code="bom:import">

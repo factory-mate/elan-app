@@ -63,9 +63,10 @@ export type PermCode =
   | 'bom:add'
   | 'bom:edit'
   | 'bom:delete'
-  | 'bom:check'
   | 'bom:audit'
   | 'bom:quit-audit'
+  | 'bom:check'
+  | 'bom:uncheck'
   | 'bom:import'
   | 'bom:export'
   // 数字化建模 - 产品建模 - 物料清单整批修改
