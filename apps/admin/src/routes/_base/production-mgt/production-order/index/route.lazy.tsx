@@ -364,6 +364,7 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
+        width: 240,
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderVo>) => (
           <Space>
             <PermCodeProvider code="production-order:edit">
@@ -371,6 +372,7 @@ function RouteComponent() {
                 size="small"
                 color="primary"
                 variant="text"
+                disabled={editMutation.isPending && currentOperateUID === params.data?.UID}
                 onClick={() => {
                   if (currentOperateUID !== params.data?.UID) {
                     currentOperateRow.current = params.data ?? null
