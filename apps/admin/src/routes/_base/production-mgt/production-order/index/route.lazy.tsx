@@ -273,7 +273,6 @@ function RouteComponent() {
         cellDataType: 'number',
         cellEditorParams: {
           precision: 4,
-          step: 1,
           showStepperButtons: true
         },
         editable: (params) => currentOperateUID === params.data?.UID
