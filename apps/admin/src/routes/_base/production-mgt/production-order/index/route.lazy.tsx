@@ -67,6 +67,17 @@ function RouteComponent() {
   const deleteMutation = ProductionOrder.useDeleteMutation()
   const editMutation = ProductionOrder.useEditMutation()
 
+  const pages = useMemo(() => {
+    const itemsPerPage = 20
+    const result = []
+    if (printData.List_BOM?.length) {
+      for (let i = 0; i < printData.List_BOM.length; i += itemsPerPage) {
+        result.push(printData.List_BOM.slice(i, i + itemsPerPage))
+      }
+    }
+    return result
+  }, [printData.List_BOM])
+
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
       {
@@ -608,62 +619,121 @@ function RouteComponent() {
         ref={contentRef}
         className={styles.printContent}
       >
-        <div className="relative h-screen p-8">
-          <div className="flex items-center justify-between">
-            <div />
-            <div className="text-2xl">Elan 配方投产单</div>
-            <div className="right-0">批号：{printData?.cDefindParm06}</div>
-          </div>
-          <div className="mt-4 border-b-2 border-black text-lg">
-            <div className="grid grid-cols-4">
-              <div>编号：{printData?.cInvCode}</div>
-              <div>名称：{printData?.cInvName}</div>
-              <div>确认状态：{}</div>
-              <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+        <div>
+          <div className="relative h-screen p-8">
+            <div className="flex items-center justify-between">
+              <div />
+              <div className="text-2xl">Elan 配方投产单</div>
+              <div className="right-0">批号：{printData?.cDefindParm06}</div>
             </div>
-          </div>
-
-          <div className="mt-2 border-b border-black text-lg">
-            <div className="grid grid-cols-5">
-              <div>编号</div>
-              <div>名称</div>
-              {/* <div>配比</div> */}
-              <div>用量（公斤）</div>
-              <div>实际投料</div>
-              <div>验单号</div>
-            </div>
-          </div>
-
-          {printData.List_BOM?.map((item, index) => (
-            <div
-              className="mt-2 border-b border-black text-lg"
-              key={index}
-            >
-              <div className="grid grid-cols-5">
-                <div>{item?.cMaterialCode}</div>
-                <div>{item?.cMaterialName}</div>
-                {/* <div>{item?.cDefindParm01}</div> */}
-                <div>{item?.nQuantity}</div>
-                <div />
-                <div />
+            <div className="mt-4 border-b-2 border-black text-lg">
+              <div className="grid grid-cols-4">
+                <div>编号：{printData?.cInvCode}</div>
+                <div>名称：{printData?.cInvName}</div>
+                <div>确认状态：{}</div>
+                <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
               </div>
             </div>
-          ))}
 
-          <div className="mt-2 flex justify-end space-x-12">
-            <div>总配比（%）：{printData?.SumRate}</div>
-            <div>总用量（公斤）：{printData?.SumQuantity}</div>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
-            <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
-              <div className={styles.textUnderline}>签发：</div>
-              <div className={styles.textUnderline}>生产：</div>
-              <div className={styles.textUnderline}>核对：</div>
-              <div className={styles.textUnderline}>库存管理：</div>
-              <div className={styles.textUnderline}>生产日期：</div>
+            <div className="mt-2 border-b border-black text-lg">
+              <div className="grid grid-cols-5">
+                <div>编号</div>
+                <div>名称</div>
+                <div>用量（公斤）</div>
+                <div>实际投料</div>
+                <div>验单号</div>
+              </div>
             </div>
+            {pages[0]?.map((item, index) => (
+              <div
+                className="mt-2 border-b border-black text-lg"
+                key={index}
+              >
+                <div className="grid grid-cols-5">
+                  <div>{item?.cMaterialCode}</div>
+                  <div>{item?.cMaterialName}</div>
+                  <div>{item?.nQuantity}</div>
+                  <div />
+                  <div />
+                </div>
+              </div>
+            ))}
+            {pages.length === 1 && (
+              <>
+                <div className="mt-2 flex justify-end space-x-12">
+                  <div>总配比（%）：{printData?.SumRate}</div>
+                  <div>总用量（公斤）：{printData?.SumQuantity}</div>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+                  <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+                    <div className={styles.textUnderline}>签发：</div>
+                    <div className={styles.textUnderline}>生产：</div>
+                    <div className={styles.textUnderline}>核对：</div>
+                    <div className={styles.textUnderline}>库存管理：</div>
+                    <div className={styles.textUnderline}>生产日期：</div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
+
+          {pages.map((pageItems, pageIndex) => {
+            if (pageIndex === 0) {
+              return null
+            }
+            const isLastPage = pageIndex === pages.length - 1
+            return (
+              <div
+                key={pageIndex}
+                className={`${styles.pageBreak} relative h-screen p-8`}
+              >
+                <div className="border-b border-black text-lg">
+                  <div className="grid grid-cols-5">
+                    <div>编号</div>
+                    <div>名称</div>
+                    <div>用量（公斤）</div>
+                    <div>实际投料</div>
+                    <div>验单号</div>
+                  </div>
+                </div>
+
+                {pageItems.map((item, index) => (
+                  <div
+                    className="mt-2 border-b border-black text-lg"
+                    key={index}
+                  >
+                    <div className="grid grid-cols-5">
+                      <div>{item?.cMaterialCode}</div>
+                      <div>{item?.cMaterialName}</div>
+                      <div>{item?.nQuantity}</div>
+                      <div />
+                      <div />
+                    </div>
+                  </div>
+                ))}
+
+                {isLastPage && (
+                  <>
+                    <div className="mt-2 flex justify-end space-x-12">
+                      <div>总配比（%）：{printData?.SumRate}</div>
+                      <div>总用量（公斤）：{printData?.SumQuantity}</div>
+                    </div>
+
+                    <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+                      <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+                        <div className={styles.textUnderline}>签发：</div>
+                        <div className={styles.textUnderline}>生产：</div>
+                        <div className={styles.textUnderline}>核对：</div>
+                        <div className={styles.textUnderline}>库存管理：</div>
+                        <div className={styles.textUnderline}>生产日期：</div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </PageContainer>

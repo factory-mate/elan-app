@@ -14,6 +14,12 @@
   }
 }
 
+.pageBreak {
+  page-break-before: always;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
 .textUnderline {
   position: relative;
   width: 18%;
