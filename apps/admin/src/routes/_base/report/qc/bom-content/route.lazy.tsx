@@ -3,6 +3,7 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
 import { type BomContentVo, LIST_QK, listQO, useExportMutation } from '@/features/bom-content'
+import * as Inventory from '@/features/inventory'
 
 import type { FilterForm } from './-types'
 
@@ -25,18 +26,29 @@ function RouteComponent() {
 
   const { data: { data = [] } = {}, isFetching } = useQuery(
     listQO({
-      cInvCode: filterData.cInvCode,
-      cParentInvCode: filterData.cParentInvCode
+      cParentInvCode: filterData.cParentInvCode,
+      cInvCode: filterData.cInvCode
     })
   )
   const exportMutation = useExportMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
-      { name: 'cParentInvCode', label: '产品编码', type: 'input' },
+      {
+        name: 'cParentInvCode',
+        label: '产品编码',
+        type: 'custom',
+        render: () => (
+          <Inventory.ProductCodeRemoteSelect
+            onConfirm={(v) => {
+              form.setFieldValue('cParentInvCode', v.cInvCode)
+            }}
+          />
+        )
+      },
       { name: 'cInvCode', label: '原料编码', type: 'input' }
     ],
-    []
+    [form]
   )
 
   const columnDefs = useMemo<ColDef<BomContentVo>[]>(

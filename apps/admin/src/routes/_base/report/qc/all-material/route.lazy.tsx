@@ -3,6 +3,7 @@ import type { ColDef } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
 
 import { type AllMaterialVo, LIST_QK, listQO, useExportMutation } from '@/features/all-material'
+import * as Inventory from '@/features/inventory'
 
 import type { FilterForm } from './-types'
 
@@ -31,8 +32,8 @@ function RouteComponent() {
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
-        { key: 'cInvName', type: 'like', val: filterData.cInvName }
+        { key: 'cInvCode', type: 'eq', val: filterData.cInvCode },
+        { key: 'cInvName', type: 'eq', val: filterData.cInvName }
       ])
     })
   )
@@ -40,10 +41,21 @@ function RouteComponent() {
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
-      { name: 'cInvCode', label: '原料编码', type: 'input' },
-      { name: 'cInvName', label: '原料名称', type: 'input' }
+      {
+        name: 'cInvCode',
+        label: '成品编码',
+        type: 'custom',
+        render: () => (
+          <Inventory.ProductCodeRemoteSelect
+            onConfirm={(v) => {
+              form.setFieldValue('cInvCode', v.cInvCode)
+              form.setFieldValue('cInvName', v.cInvName)
+            }}
+          />
+        )
+      }
     ],
-    []
+    [form]
   )
 
   const columnDefs = useMemo<ColDef<AllMaterialVo>[]>(
