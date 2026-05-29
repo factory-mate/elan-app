@@ -11,7 +11,7 @@ import {
 
 import type { EditModalMeta } from '../../-types'
 import ProcessArea from './ProcessArea'
-import ResourceArea from './ResourceArea'
+import ResourceArea, { type ResourceAreaRef } from './ResourceArea'
 
 interface EditModalProps {
   meta?: EditModalMeta
@@ -23,6 +23,8 @@ export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
   const [form] = Form.useForm<CraftRouteEditDto>()
+
+  const resourceAreaRef = useRef<ResourceAreaRef>(null)
 
   const { data: detailData, isPending } = useQuery(listforTreeQO(meta?.UID))
   const [processData, setProcessData] = useImmer<CraftRouteProcessVo[]>([])
@@ -57,7 +59,7 @@ export default function EditModal(props: EditModalProps) {
           iIndx: idx,
           list_SS: (i.list_step ?? []).map((ci, index) => ({ ...ci, iIndx: index })) ?? []
         })),
-        list_Resource: resourceData
+        list_Resource: resourceAreaRef.current!.getRowData() ?? []
       },
       {
         onSuccess: () => setOpen?.(false)
@@ -126,7 +128,7 @@ export default function EditModal(props: EditModalProps) {
                 children: (
                   <ResourceArea
                     data={resourceData}
-                    setData={setResourceData}
+                    ref={resourceAreaRef}
                   />
                 )
               }

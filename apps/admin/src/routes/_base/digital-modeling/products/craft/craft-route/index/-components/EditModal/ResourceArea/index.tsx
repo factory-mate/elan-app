@@ -1,17 +1,21 @@
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import { type ColDef, type ICellRendererParams } from 'ag-grid-community'
 import { AgGridReact } from 'ag-grid-react'
-import type { Updater } from 'use-immer'
+import type { Ref } from 'react'
 
 import type { CraftRouteResourceVo } from '@/features/craft-route'
 import * as Inventory from '@/features/inventory'
 
 interface ResourceAreaProps {
   data: CraftRouteResourceVo[]
-  setData: Updater<CraftRouteResourceVo[]>
+  ref: Ref<ResourceAreaRef>
+}
+
+export interface ResourceAreaRef {
+  getRowData: () => CraftRouteResourceVo[]
 }
 
 export default function ResourceArea(props: ResourceAreaProps) {
-  const { data, setData } = props
+  const { data, ref } = props
 
   const { showMessage } = useMessage()
   const gridRef = useRef<AgGridReact>(null)
@@ -33,13 +37,11 @@ export default function ResourceArea(props: ResourceAreaProps) {
             button={{ type: 'link' }}
             value={params.data?.cResourceCode}
             onConfirm={async (v) => {
-              setData((draft) => {
-                draft[params.node.rowIndex!] = {
-                  ...params.data,
-                  cResourceCode: v.cInvCode,
-                  cResourceName: v.cInvName,
-                  cInvStd: v.cInvstd
-                }
+              params.node.setData({
+                ...params.node.data,
+                cResourceCode: v.cInvCode,
+                cResourceName: v.cInvName,
+                cInvStd: v.cInvstd
               })
             }}
           />
@@ -58,18 +60,28 @@ export default function ResourceArea(props: ResourceAreaProps) {
             size="small"
             color="primary"
             variant="text"
-            onClick={() =>
-              setData((draft) => {
-                draft.splice(params.node.rowIndex!, 1)
-              })
-            }
+            onClick={() => gridRef.current!.api.applyTransaction({ remove: [params.data] })}
           >
             删行
           </Button>
         )
       }
     ],
-    [setData]
+    []
+  )
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getRowData: () => {
+        const rowData: CraftRouteResourceVo[] = []
+        gridRef.current!.api.forEachNode((node) => {
+          rowData.push(node.data)
+        })
+        return rowData
+      }
+    }),
+    []
   )
 
   return (
@@ -84,18 +96,15 @@ export default function ResourceArea(props: ResourceAreaProps) {
               showMessage('select-data')
               return
             }
-            setData((draft) => draft.filter((_, index) => !selectedRows.includes(index)))
+            const { api } = gridRef.current!
+            api.applyTransaction({ remove: api.getSelectedRows() })
           }}
         >
           删除
         </Button>
         <Button
           type="primary"
-          onClick={() =>
-            setData((draft) => {
-              draft.push({})
-            })
-          }
+          onClick={() => gridRef.current!.api.applyTransaction({ add: [{}] })}
         >
           增行
         </Button>
