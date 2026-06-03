@@ -58,6 +58,7 @@ export interface ProductionOrderVo {
   cSourceAppType: string
   iStatus: number
   utfs: string
+  cDefindParm10Name: string
 }
 
 export interface ProductionOrderAddDto {

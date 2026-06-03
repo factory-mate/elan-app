@@ -7,4 +7,6 @@ export interface FilterForm {
   cCode?: string
   dBeginTime?: [Dayjs, Dayjs]
   cInvCode?: string
+  cInvName?: string
+  cDefindParm10?: number
 }

@@ -49,7 +49,9 @@ function RouteComponent() {
         { key: 'iStatus', type: 'eq', val: filterData.iStatus },
         { key: 'cCode', type: 'like', val: filterData.cCode },
         { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
-        { key: 'cInvCode', type: 'like', val: filterData.cInvCode }
+        { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
+        { key: 'cInvName', type: 'like', val: filterData.cInvName },
+        { key: 'cDefindParm10', type: 'eq', val: filterData.cDefindParm10 }
       ])
     })
   )
@@ -117,7 +119,19 @@ function RouteComponent() {
       },
       { name: 'cCode', label: '生产订单编号', type: 'input' },
       { name: 'dBeginTime', label: '订单日期', type: 'date-range-picker' },
-      { name: 'cInvCode', label: '料品编码', type: 'input' }
+      { name: 'cInvCode', label: '料品编码', type: 'input' },
+      { name: 'cInvName', label: '料品名称', type: 'input' },
+      {
+        name: 'cDefindParm10',
+        label: '是否已复核',
+        type: 'select',
+        selectProps: {
+          options: [
+            { label: '是', value: '1' },
+            { label: '否', value: '0' }
+          ]
+        }
+      }
     ],
     [standardTypeCandidates, vouchTypeCandidates]
   )
@@ -369,6 +383,7 @@ function RouteComponent() {
       { field: 'dCloseTime', headerName: '关闭时间' },
       { field: 'cModifyUserName', headerName: '审核人' },
       { field: 'cModifyUserName', headerName: '关闭人' },
+      { field: 'cDefindParm10Name', headerName: '是否已复核' },
       {
         headerName: '操作',
         sortable: false,
