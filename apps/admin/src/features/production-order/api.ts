@@ -60,7 +60,7 @@ export class ProductionOrderAPI {
   }
 
   static async delete(ids: string[]) {
-    return httpClient.delete(`${this.apiPrefix}/Del`, { data: ids })
+    return httpClient.delete(`${this.apiPrefix}/Del_Body`, { data: ids })
   }
 
   static async printDetail(val: string, signal?: AbortSignal) {

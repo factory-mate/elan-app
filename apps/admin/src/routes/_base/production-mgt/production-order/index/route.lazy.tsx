@@ -550,7 +550,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                deleteMutation.mutate(selectedRows.map((i) => i.MID))
+                deleteMutation.mutate(selectedRows.map((i) => i.UID))
               }}
             >
               删除
