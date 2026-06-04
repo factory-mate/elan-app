@@ -138,6 +138,7 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderVo>[]>(
     () => [
+      { field: 'cDefindParm10Name', headerName: '是否已复核' },
       { field: 'cCode', headerName: '生产订单号' },
       { field: 'iRow', headerName: '行号' },
       {
@@ -383,7 +384,6 @@ function RouteComponent() {
       { field: 'dCloseTime', headerName: '关闭时间' },
       { field: 'cModifyUserName', headerName: '审核人' },
       { field: 'cModifyUserName', headerName: '关闭人' },
-      { field: 'cDefindParm10Name', headerName: '是否已复核' },
       {
         headerName: '操作',
         sortable: false,
