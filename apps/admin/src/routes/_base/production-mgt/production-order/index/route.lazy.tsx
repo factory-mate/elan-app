@@ -70,7 +70,7 @@ function RouteComponent() {
   const editMutation = ProductionOrder.useEditMutation()
 
   const pages = useMemo(() => {
-    const itemsPerPage = 20
+    const itemsPerPage = 24
     const result = []
     if (printData.List_BOM?.length) {
       for (let i = 0; i < printData.List_BOM.length; i += itemsPerPage) {
@@ -467,6 +467,13 @@ function RouteComponent() {
     ]
   )
 
+  const computeNameText = (text?: string) => {
+    if (text && text.length > 7) {
+      return `${text.slice(0, 7)}...`
+    }
+    return text
+  }
+
   return (
     <PageContainer>
       <FilterArea
@@ -666,7 +673,7 @@ function RouteComponent() {
               >
                 <div className="grid grid-cols-5">
                   <div>{item?.cMaterialCode}</div>
-                  <div>{item?.cMaterialName}</div>
+                  <div>{computeNameText(item?.cMaterialName ?? '')}</div>
                   <div>{item?.nQuantity}</div>
                   <div />
                   <div />
@@ -720,7 +727,7 @@ function RouteComponent() {
                   >
                     <div className="grid grid-cols-5">
                       <div>{item?.cMaterialCode}</div>
-                      <div>{item?.cMaterialName}</div>
+                      <div>{computeNameText(item?.cMaterialName ?? '')}</div>
                       <div>{item?.nQuantity}</div>
                       <div />
                       <div />
