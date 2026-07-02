@@ -310,6 +310,7 @@ const treeData: TreeDataNode[] = [
         children: [
           { key: 'production-order:view', title: '查看 production-order:view' },
           { key: 'production-order:add', title: '新增 production-order:add' },
+          { key: 'production-order:export', title: '导出 production-order:export' },
           { key: 'production-order:edit', title: '编辑 production-order:edit' },
           { key: 'production-order:delete', title: '删除 production-order:delete' },
           { key: 'production-order:print', title: '打印 production-order:print' },

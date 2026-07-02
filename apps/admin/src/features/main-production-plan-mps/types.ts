@@ -27,6 +27,7 @@ export interface MainProductionPlanMpsComputeDto {
   dStartDate: string
   dEndDate: string
   cDepCode: string
+  cDepName: string
 }
 
 export interface MainProductionPlanMpsPushDto {

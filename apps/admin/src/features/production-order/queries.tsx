@@ -29,9 +29,9 @@ export const bomListQO = (id?: string) =>
     enabled: !!id
   })
 
-export const printDetailQO = (id?: string) =>
+export const printDetailQO = (ids?: string[]) =>
   queryOptions({
-    queryKey: printDetailQK(id!),
-    queryFn: ({ signal }) => ProductionOrderAPI.printDetail(id!, signal),
-    enabled: !!id
+    queryKey: printDetailQK(ids!),
+    queryFn: ({ signal }) => ProductionOrderAPI.printDetail(ids!, signal),
+    enabled: !!ids?.length
   })

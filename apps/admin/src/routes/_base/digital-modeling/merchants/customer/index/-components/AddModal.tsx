@@ -172,9 +172,6 @@ export default function AddModal(props: AddModalProps) {
                           label: 'cDepName',
                           value: 'cDepCode'
                         }}
-                        showSearch={{
-                          onSearch: (value) => form.setFieldValue('cDepName', value)
-                        }}
                         allowClear
                       />
                     </Form.Item>
@@ -189,9 +186,6 @@ export default function AddModal(props: AddModalProps) {
                         fieldNames={{
                           label: 'cEmployeeName',
                           value: 'cEmployeeCode'
-                        }}
-                        showSearch={{
-                          onSearch: (value) => form.setFieldValue('cEmployeeName', value)
                         }}
                         allowClear
                       />

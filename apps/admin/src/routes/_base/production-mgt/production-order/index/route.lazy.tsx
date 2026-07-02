@@ -34,7 +34,7 @@ function RouteComponent() {
   const [filterData, setFilterData] = useState<FilterForm>({
     ...filterCacheStore.getItem(location.pathname)
   })
-  const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo>({})
+  const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo[]>([])
   const currentOperateRow = useRef<ProductionOrder.ProductionOrderBody | null>(null)
   const [currentOperateUID, setCurrentOperateRowUID] = useState<string | null>(null)
 
@@ -68,17 +68,18 @@ function RouteComponent() {
   const closeMutation = ProductionOrder.useCloseMutation()
   const deleteMutation = ProductionOrder.useDeleteMutation()
   const editMutation = ProductionOrder.useEditMutation()
+  const exportMutation = ProductionOrder.useExportMutation()
 
-  const pages = useMemo(() => {
-    const itemsPerPage = 24
-    const result = []
-    if (printData.List_BOM?.length) {
-      for (let i = 0; i < printData.List_BOM.length; i += itemsPerPage) {
-        result.push(printData.List_BOM.slice(i, i + itemsPerPage))
-      }
-    }
-    return result
-  }, [printData.List_BOM])
+  // const pages = useMemo(() => {
+  //   const itemsPerPage = 24
+  //   const result = []
+  //   if (printData.List_BOM?.length) {
+  //     for (let i = 0; i < printData.List_BOM.length; i += itemsPerPage) {
+  //       result.push(printData.List_BOM.slice(i, i + itemsPerPage))
+  //     }
+  //   }
+  //   return result
+  // }, [printData.List_BOM])
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
@@ -282,7 +283,7 @@ function RouteComponent() {
       { field: 'dEndTime', headerName: '完工日期' },
       { field: 'cUnitName', headerName: '计量单位' },
       {
-        field: 'cDefindParm04',
+        field: 'cDepCode',
         headerName: '生产部门',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
@@ -290,7 +291,7 @@ function RouteComponent() {
             <Select
               className="size-full"
               variant="borderless"
-              value={params.data?.cDefindParm04}
+              value={params.data?.cDepCode}
               options={departmentCandidates}
               fieldNames={{
                 label: 'cDepName',
@@ -301,15 +302,15 @@ function RouteComponent() {
                   update: [
                     {
                       ...params.data,
-                      cDefindParm04: value,
-                      cDefindParm05: option.cDepName
+                      cDepCode: value,
+                      cDepName: option.cDepName
                     }
                   ]
                 })
               }
             />
           ) : (
-            params.data?.cDefindParm05
+            params.data?.cDepName
           )
       },
       { field: 'cCreateUserName', headerName: '制单人' },
@@ -503,17 +504,10 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                if (selectedRows.length > 1) {
-                  showMessage('select-only-one')
-                  return
-                }
-                setPrintData(
-                  (
-                    await queryClient.ensureQueryData(
-                      ProductionOrder.printDetailQO(selectedRows[0].UID)
-                    )
-                  ).at(0) ?? {}
+                const pd = await queryClient.ensureQueryData(
+                  ProductionOrder.printDetailQO(selectedRows.map((i) => i.UID))
                 )
+                setPrintData(pd ?? [])
                 setTimeout(() => reactToPrintFn(), 16)
               }}
             >
@@ -587,6 +581,22 @@ function RouteComponent() {
           </PermCodeProvider>
         </Space>
         <Space>
+          <PermCodeProvider code="production-order:export">
+            <Button
+              onClick={() => {
+                const formData = form.getFieldsValue()
+                exportMutation.mutate({
+                  ...defaultMaxPageDto,
+                  orderByFileds: '',
+                  conditions: queryBuilder<FilterForm>([])
+                })
+              }}
+              loading={exportMutation.isPending}
+              disabled={exportMutation.isPending}
+            >
+              导出
+            </Button>
+          </PermCodeProvider>
           <PermCodeProvider code="production-order:add">
             <Link to="/production-mgt/production-order/add">
               <Button type="primary">新增</Button>
@@ -648,66 +658,66 @@ function RouteComponent() {
         ref={contentRef}
         className={styles.printContent}
       >
-        <div>
-          <div className="relative h-screen p-8">
-            <div className="flex items-center justify-between">
-              <div />
-              <div className="text-2xl">Elan 配方投产单</div>
-              <div className="right-0">批号：{printData?.cDefindParm06}</div>
-            </div>
-            <div className="mt-4 border-b-2 border-black text-lg">
-              <div className="grid grid-cols-4">
-                <div>编号：{printData?.cInvCode}</div>
-                <div>名称：{printData?.cInvName}</div>
-                <div>确认状态：{}</div>
-                <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+        {printData.map((i, index) => (
+          <div key={index}>
+            <div className="relative h-screen p-8">
+              <div className="flex items-center justify-between">
+                <div />
+                <div className="text-2xl">Elan 配方投产单</div>
+                <div className="right-0">批号：{i?.cDefindParm06}</div>
               </div>
-            </div>
+              <div className="mt-4 border-b-2 border-black text-sm">
+                <div className="grid grid-cols-4">
+                  <div>编号：{i?.cInvCode}</div>
+                  <div>名称：{i.cInvName}</div>
+                  <div>确认状态：{}</div>
+                  <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+                </div>
+              </div>
 
-            <div className="mt-2 border-b border-black text-lg">
-              <div className="grid grid-cols-5">
-                <div>编号</div>
-                <div>名称</div>
-                <div>用量（公斤）</div>
-                <div>实际投料</div>
-                <div>验单号</div>
-              </div>
-            </div>
-            {pages[0]?.map((item, index) => (
-              <div
-                className="mt-2 border-b border-black text-lg"
-                key={index}
-              >
+              <div className="mt-2 border-b border-black text-sm">
                 <div className="grid grid-cols-5">
-                  <div>{item?.cMaterialCode}</div>
-                  <div>{computeNameText(item?.cMaterialName ?? '')}</div>
-                  <div>{item?.nQuantity}</div>
-                  <div />
-                  <div />
+                  <div>编号</div>
+                  <div>名称</div>
+                  <div>用量（公斤）</div>
+                  <div>实际投料</div>
+                  <div>验单号</div>
                 </div>
               </div>
-            ))}
-            {pages.length === 1 && (
-              <>
-                <div className="mt-2 flex justify-end space-x-12">
-                  <div>总配比（%）：{printData?.SumRate}</div>
-                  <div>总用量（公斤）：{printData?.SumQuantity}</div>
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
-                  <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
-                    <div className={styles.textUnderline}>签发：</div>
-                    <div className={styles.textUnderline}>生产：</div>
-                    <div className={styles.textUnderline}>核对：</div>
-                    <div className={styles.textUnderline}>库存管理：</div>
-                    <div className={styles.textUnderline}>生产日期：</div>
+              {i?.List_BOM?.map((item, idx) => (
+                <div
+                  className="mt-2 border-b border-black text-sm"
+                  key={idx}
+                >
+                  <div className="grid grid-cols-5">
+                    <div>{item?.cMaterialCode}</div>
+                    <div>{computeNameText(item?.cMaterialName ?? '')}</div>
+                    <div>{item?.nQuantity}</div>
+                    <div />
+                    <div />
                   </div>
                 </div>
-              </>
-            )}
-          </div>
+              ))}
 
-          {pages.map((pageItems, pageIndex) => {
+              <div className="mt-2 flex justify-end space-x-12">
+                <div>总配比（%）：{i?.SumRate}</div>
+                <div>总用量（公斤）：{i?.SumQuantity}</div>
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+                <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+                  <div className={styles.textUnderline}>签发：</div>
+                  <div className={styles.textUnderline}>生产：</div>
+                  <div className={styles.textUnderline}>核对：</div>
+                  <div className={styles.textUnderline}>库存管理：</div>
+                  <div className={styles.textUnderline}>生产日期：</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* {pages.map((pageItems, pageIndex) => {
             if (pageIndex === 0) {
               return null
             }
@@ -762,8 +772,7 @@ function RouteComponent() {
                 )}
               </div>
             )
-          })}
-        </div>
+          })} */}
       </div>
     </PageContainer>
   )

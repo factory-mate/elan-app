@@ -77,8 +77,7 @@ export default function BOMListModal(props: BOMListModalProps) {
         editable: true,
         cellDataType: 'number',
         cellEditorParams: {
-          precision: 0,
-          step: 1,
+          precision: 4,
           showStepperButtons: true
         }
       },

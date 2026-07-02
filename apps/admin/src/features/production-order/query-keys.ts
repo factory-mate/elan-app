@@ -16,4 +16,4 @@ export const detailBodysQK = (id: string) => [DETAIL_BODYS_QK, id] as const
 
 export const bomListQK = (id: string) => [BOM_LIST_QK, id] as const
 
-export const printDetailQK = (id: string) => [PRINT_DETAIL_QK, id] as const
+export const printDetailQK = (ids: string[]) => [PRINT_DETAIL_QK, ids] as const

@@ -33,14 +33,7 @@ function RouteComponent() {
       ])
     })
   )
-  const exportMutation = useExportMutation({
-    ...pageParams,
-    orderByFileds: 'cCode desc,iMaterialRow',
-    conditions: queryBuilder<FilterForm>([
-      { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
-      { key: 'cInvCode', type: 'like', val: filterData.cInvCode }
-    ])
-  })
+  const exportMutation = useExportMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
@@ -92,7 +85,16 @@ function RouteComponent() {
           <PermCodeProvider code="production-material:export">
             <Button
               type="primary"
-              onClick={() => exportMutation.mutate()}
+              onClick={() =>
+                exportMutation.mutate({
+                  ...pageParams,
+                  orderByFileds: 'cCode desc,iMaterialRow',
+                  conditions: queryBuilder<FilterForm>([
+                    { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
+                    { key: 'cInvCode', type: 'like', val: filterData.cInvCode }
+                  ])
+                })
+              }
               loading={exportMutation.isPending}
               disabled={exportMutation.isPending}
             >

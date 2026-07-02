@@ -70,9 +70,6 @@ export default function AddModal(props: AddModalProps) {
               label: 'cDictonaryName',
               value: 'cDictonaryCode'
             }}
-            showSearch={{
-              onSearch: (value) => form.setFieldValue('cStepType', value)
-            }}
             allowClear
           />
         </Form.Item>

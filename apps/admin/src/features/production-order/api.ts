@@ -1,3 +1,5 @@
+import type { AxiosResponse } from 'axios'
+
 import type {
   BOMItemVo,
   PrintDetailVo,
@@ -63,7 +65,13 @@ export class ProductionOrderAPI {
     return httpClient.delete(`${this.apiPrefix}/Del_Body`, { data: ids })
   }
 
-  static async printDetail(val: string, signal?: AbortSignal) {
-    return httpClient.get<PrintDetailVo[]>(`${this.apiPrefix}/GetPrintData`, { val }, { signal })
+  static async printDetail(ids: string[], signal?: AbortSignal) {
+    return httpClient.post<PrintDetailVo[]>(`${this.apiPrefix}/GetPrintData`, ids, { signal })
+  }
+
+  static async export(data: PageDto) {
+    return httpClient.post<AxiosResponse<BlobPart>>(`${this.apiPrefix}/ExportDetail`, data, {
+      responseType: 'blob'
+    })
   }
 }

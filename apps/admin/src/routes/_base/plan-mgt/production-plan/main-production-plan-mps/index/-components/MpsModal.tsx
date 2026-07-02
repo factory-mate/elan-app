@@ -68,10 +68,15 @@ export default function AddModal(props: AddModalProps) {
               label: 'cDepName',
               value: 'cDepCode'
             }}
-            allowClear
             placeholder="请选择部门"
+            onSelect={(_value, option) => form.setFieldValue('cDepName', option.cDepName)}
+            allowClear
           />
         </Form.Item>
+        <Form.Item<MainProductionPlanMpsComputeDto>
+          name="cDepName"
+          hidden
+        />
         <Form.Item<MainProductionPlanMpsComputeDto>
           name="dStartDate"
           label="开始日期"

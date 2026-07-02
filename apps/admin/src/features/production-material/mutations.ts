@@ -1,9 +1,9 @@
 import { ProductionMaterialAPI } from './api'
 
-export const useExportMutation = (data: PageDto) => {
+export const useExportMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: () => ProductionMaterialAPI.export(data),
+    mutationFn: (data: PageDto) => ProductionMaterialAPI.export(data),
     onSuccess: (res) => {
       downloadExcel(res)
       showMessage('export-success')

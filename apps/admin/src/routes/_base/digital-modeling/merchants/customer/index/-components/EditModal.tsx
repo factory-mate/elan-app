@@ -185,9 +185,7 @@ export default function EditModal(props: EditModalProps) {
                             label: 'cDepName',
                             value: 'cDepCode'
                           }}
-                          showSearch
                           allowClear
-                          onSearch={(value) => form.setFieldValue('cDepName', value)}
                         />
                       </Form.Item>
                     </Col>
@@ -202,9 +200,7 @@ export default function EditModal(props: EditModalProps) {
                             label: 'cEmployeeName',
                             value: 'cEmployeeCode'
                           }}
-                          showSearch
                           allowClear
-                          onSearch={(value) => form.setFieldValue('cEmployeeName', value)}
                         />
                       </Form.Item>
                     </Col>

@@ -61,6 +61,8 @@ export interface ProductionOrderVo {
   cDefindParm10Name: string
   dPlanStartDate: string
   dPlanEndDate: string
+  cDepCode: string
+  cDepName: string
 }
 
 export interface ProductionOrderAddDto {
@@ -127,6 +129,8 @@ export interface ProductionOrderBody {
   cStandardTypeName?: string
   cVouchType?: string
   cVouchTypeName?: string
+  cDepCode?: string
+  cDepName?: string
 }
 
 export interface BOMItemVo {

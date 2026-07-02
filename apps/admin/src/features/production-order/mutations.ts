@@ -70,3 +70,14 @@ export const useEditBOMListMutation = () => {
     onSuccess: () => showMessage('success')
   })
 }
+
+export const useExportMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: PageDto) => ProductionOrderAPI.export(data),
+    onSuccess: (res) => {
+      downloadExcel(res)
+      showMessage('success')
+    }
+  })
+}
