@@ -1,6 +1,7 @@
 import type {
   MainProductionPlanMpsComputeDto,
   MainProductionPlanMpsEditDto,
+  MainProductionPlanMpsPushDto,
   MainProductionPlanMpsVo
 } from './types'
 
@@ -45,8 +46,8 @@ export class MainProductionPlanMpsAPI {
     return httpClient.post(`${this.apiPrefix}/PLANPRODUCTVOUCH/CancelPushVouch`, ids)
   }
 
-  static async push(ids: string[]) {
-    return httpClient.post(`${this.apiPrefix}/PLANPRODUCTVOUCH/PushVouch`, ids)
+  static async push(data: MainProductionPlanMpsPushDto) {
+    return httpClient.post(`${this.apiPrefix}/PLANPRODUCTVOUCH/PushVouch`, data)
   }
 
   static async mps(data: MainProductionPlanMpsComputeDto) {

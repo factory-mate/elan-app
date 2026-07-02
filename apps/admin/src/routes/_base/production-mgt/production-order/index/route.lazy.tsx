@@ -123,7 +123,7 @@ function RouteComponent() {
       { name: 'cInvName', label: '料品名称', type: 'input' },
       {
         name: 'cDefindParm10',
-        label: '是否已复核',
+        label: '是否复核',
         type: 'select',
         selectProps: {
           options: [
@@ -138,39 +138,9 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderVo>[]>(
     () => [
-      { field: 'cDefindParm10Name', headerName: '是否已复核' },
+      { field: 'dCreateTime', headerName: '订单日期' },
       { field: 'cCode', headerName: '生产订单号' },
       { field: 'iRow', headerName: '行号' },
-      {
-        field: 'cStandardType',
-        headerName: '类型',
-        cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
-          currentOperateUID === params.data?.UID ? (
-            <Select
-              className="size-full"
-              variant="borderless"
-              value={params.data?.cStandardType}
-              options={standardTypeCandidates}
-              fieldNames={{
-                label: 'cDictonaryName',
-                value: 'cDictonaryCode'
-              }}
-              onSelect={(value) =>
-                params.api.applyTransaction({
-                  update: [
-                    {
-                      ...params.data,
-                      cStandardType: value
-                    }
-                  ]
-                })
-              }
-            />
-          ) : (
-            params.data?.cStandardTypeName
-          )
-      },
       {
         field: 'cVouchType',
         headerName: '类别',
@@ -201,39 +171,6 @@ function RouteComponent() {
             params.data?.cVouchTypeName
           )
       },
-      {
-        field: 'cDefindParm04',
-        headerName: '生产部门',
-        cellStyle: { padding: 0 },
-        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
-          currentOperateUID === params.data?.UID ? (
-            <Select
-              className="size-full"
-              variant="borderless"
-              value={params.data?.cDefindParm04}
-              options={departmentCandidates}
-              fieldNames={{
-                label: 'cDepName',
-                value: 'cDepCode'
-              }}
-              onSelect={(value, option) =>
-                params.api.applyTransaction({
-                  update: [
-                    {
-                      ...params.data,
-                      cDefindParm04: value,
-                      cDefindParm05: option.cDepName
-                    }
-                  ]
-                })
-              }
-            />
-          ) : (
-            params.data?.cDefindParm05
-          )
-      },
-      { field: 'cCreateUserName', headerName: '制单人' },
-      { field: 'dBeginTime', headerName: '订单时间' },
       {
         field: 'cInvCode',
         headerName: '料品编码',
@@ -292,7 +229,6 @@ function RouteComponent() {
       },
       { field: 'cInvName', headerName: '料品名称' },
       { field: 'cInvStd', headerName: '规格型号' },
-      { field: 'cUnitName', headerName: '计量单位' },
       {
         field: 'nQuantity',
         headerName: '生产数量',
@@ -303,14 +239,84 @@ function RouteComponent() {
         },
         editable: (params) => currentOperateUID === params.data?.UID
       },
+      { field: 'cDefindParm06', headerName: '生产批号' },
       {
-        field: 'dBeginTime',
-        headerName: '开工时间'
+        field: 'cDefindParm05',
+        headerName: '包装规格',
+        editable: (params) => currentOperateUID === params.data?.UID
       },
+      { field: 'cDefindParm10Name', headerName: '是否复核' },
       {
-        field: 'dEndTime',
-        headerName: '完工时间'
+        field: 'cStandardType',
+        headerName: '类型',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cStandardType}
+              options={standardTypeCandidates}
+              fieldNames={{
+                label: 'cDictonaryName',
+                value: 'cDictonaryCode'
+              }}
+              onSelect={(value) =>
+                params.api.applyTransaction({
+                  update: [
+                    {
+                      ...params.data,
+                      cStandardType: value
+                    }
+                  ]
+                })
+              }
+            />
+          ) : (
+            params.data?.cStandardTypeName
+          )
       },
+      { field: 'dPlanStartDate', headerName: '计划开工日期' },
+      { field: 'dPlanEndDate', headerName: '计划完工日期' },
+      { field: 'dBeginTime', headerName: '开工日期' },
+      { field: 'dEndTime', headerName: '完工日期' },
+      { field: 'cUnitName', headerName: '计量单位' },
+      {
+        field: 'cDefindParm04',
+        headerName: '生产部门',
+        cellStyle: { padding: 0 },
+        cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) =>
+          currentOperateUID === params.data?.UID ? (
+            <Select
+              className="size-full"
+              variant="borderless"
+              value={params.data?.cDefindParm04}
+              options={departmentCandidates}
+              fieldNames={{
+                label: 'cDepName',
+                value: 'cDepCode'
+              }}
+              onSelect={(value, option) =>
+                params.api.applyTransaction({
+                  update: [
+                    {
+                      ...params.data,
+                      cDefindParm04: value,
+                      cDefindParm05: option.cDepName
+                    }
+                  ]
+                })
+              }
+            />
+          ) : (
+            params.data?.cDefindParm05
+          )
+      },
+      { field: 'cCreateUserName', headerName: '制单人' },
+      { field: 'cVerifyer', headerName: '审核人' },
+      { field: 'dVerifyTime', headerName: '审核时间' },
+      { field: 'cCloser', headerName: '关闭人' },
+      { field: 'dCloseTime', headerName: '关闭时间' },
       { field: 'cAssQuantity', headerName: '已完工数量' },
       { field: 'RestQuantity', headerName: '未完工数量' },
       {
@@ -380,10 +386,11 @@ function RouteComponent() {
         headerName: 'BOM版本说明',
         editable: (params) => currentOperateUID === params.data?.UID
       },
-      { field: 'dVerifyTime', headerName: '审核时间' },
-      { field: 'dCloseTime', headerName: '关闭时间' },
-      { field: 'cModifyUserName', headerName: '审核人' },
-      { field: 'cModifyUserName', headerName: '关闭人' },
+      {
+        field: 'cMemo',
+        headerName: '备注',
+        editable: (params) => currentOperateUID === params.data?.UID
+      },
       {
         headerName: '操作',
         sortable: false,

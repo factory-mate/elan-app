@@ -12,7 +12,7 @@ import {
   usePushMutation
 } from '@/features/main-production-plan-mps'
 
-import { EditModal, MpsModal } from './-components'
+import { EditModal, MpsModal, PushModal } from './-components'
 import type { EditModalMeta, FilterForm } from './-types'
 
 export const Route = createLazyFileRoute(
@@ -39,6 +39,7 @@ function RouteComponent() {
 
   const editModal = useModal<EditModalMeta>()
   const mpsModal = useModal()
+  const pushModal = useModal()
 
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
@@ -178,7 +179,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                pushMutation.mutate(selectedRows.map((i) => i.UID))
+                pushModal.toggle()
               }}
               loading={pushMutation.isPending}
               disabled={pushMutation.isPending}
@@ -290,6 +291,11 @@ function RouteComponent() {
       <MpsModal
         open={mpsModal.open}
         setOpen={mpsModal.setOpen}
+      />
+      <PushModal
+        open={pushModal.open}
+        setOpen={pushModal.setOpen}
+        selectedRows={selectedRows}
       />
     </PageContainer>
   )

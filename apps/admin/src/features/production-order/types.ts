@@ -59,6 +59,8 @@ export interface ProductionOrderVo {
   iStatus: number
   utfs: string
   cDefindParm10Name: string
+  dPlanStartDate: string
+  dPlanEndDate: string
 }
 
 export interface ProductionOrderAddDto {

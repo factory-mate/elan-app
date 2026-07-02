@@ -1,5 +1,9 @@
 import { MainProductionPlanMpsAPI } from './api'
-import type { MainProductionPlanMpsComputeDto, MainProductionPlanMpsEditDto } from './types'
+import type {
+  MainProductionPlanMpsComputeDto,
+  MainProductionPlanMpsEditDto,
+  MainProductionPlanMpsPushDto
+} from './types'
 
 export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
@@ -28,7 +32,7 @@ export const useCancelMutation = () => {
 export const usePushMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
-    mutationFn: (ids: string[]) => MainProductionPlanMpsAPI.push(ids),
+    mutationFn: (data: MainProductionPlanMpsPushDto) => MainProductionPlanMpsAPI.push(data),
     onSuccess: () => showMessage('success')
   })
 }

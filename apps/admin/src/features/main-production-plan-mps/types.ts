@@ -26,4 +26,10 @@ export interface MainProductionPlanMpsEditDto extends MainProductionPlanMpsVo {}
 export interface MainProductionPlanMpsComputeDto {
   dStartDate: string
   dEndDate: string
+  cDepCode: string
+}
+
+export interface MainProductionPlanMpsPushDto {
+  KeyVal: string[]
+  cVouchType: string
 }

@@ -16,6 +16,6 @@ export class PermAPI {
   }
 
   static async setPerms(data: SetPermsDto) {
-    return httpClient.post(`${this.apiPrefix}/roleAuth/Add`, data)
+    return httpClient.post(`${this.apiPrefix}/RoleAuth/Add`, data)
   }
 }

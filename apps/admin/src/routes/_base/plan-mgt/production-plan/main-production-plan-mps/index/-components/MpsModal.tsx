@@ -1,6 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
+import * as Department from '@/features/department'
 import {
   type MainProductionPlanMpsComputeDto,
   useMpsMutation
@@ -15,6 +16,10 @@ export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
   const [form] = Form.useForm<MainProductionPlanMpsComputeDto>()
+
+  const { data: departmentCandidates } = useQuery(
+    Department.fullListQO({ conditions: 'bProduct = true' })
+  )
 
   const mpsMutation = useMpsMutation()
 
@@ -46,12 +51,27 @@ export default function AddModal(props: AddModalProps) {
     >
       <Form
         className="pt-3"
-        name="add-form"
+        name="mps-form"
         form={form}
         labelCol={{ span: 8 }}
         initialValues={{}}
         onFinish={onFinish}
       >
+        <Form.Item<MainProductionPlanMpsComputeDto>
+          name="cDepCode"
+          label="部门"
+          rules={[{ required: true, message: '请选择部门' }]}
+        >
+          <Select
+            options={departmentCandidates}
+            fieldNames={{
+              label: 'cDepName',
+              value: 'cDepCode'
+            }}
+            allowClear
+            placeholder="请选择部门"
+          />
+        </Form.Item>
         <Form.Item<MainProductionPlanMpsComputeDto>
           name="dStartDate"
           label="开始日期"
