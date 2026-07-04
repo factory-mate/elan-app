@@ -18,6 +18,7 @@ import { Route as BaseChangePasswordRouteRouteImport } from './../../routes/_bas
 import { Route as Base404RouteRouteImport } from './../../routes/_base/404/route'
 import { Route as Base403RouteRouteImport } from './../../routes/_base/403/route'
 import { Route as BaseIndexRouteRouteImport } from './../../routes/_base/index/route'
+import { Route as BasePermMgtUserPolicyRouteRouteImport } from './../../routes/_base/perm-mgt/user-policy/route'
 import { Route as BaseMenusIndexRouteRouteImport } from './../../routes/_base/menus/index/route'
 import { Route as BaseReportQcNormalMaterialRouteRouteImport } from './../../routes/_base/report/qc/normal-material/route'
 import { Route as BaseReportQcBomContentRouteRouteImport } from './../../routes/_base/report/qc/bom-content/route'
@@ -29,6 +30,7 @@ import { Route as BaseDigitalModelingMerchantsVendorRouteRouteImport } from './.
 import { Route as BaseProductionMgtProductionOrderIndexRouteRouteImport } from './../../routes/_base/production-mgt/production-order/index/route'
 import { Route as BasePlanMgtPurPlanIndexRouteRouteImport } from './../../routes/_base/plan-mgt/pur-plan/index/route'
 import { Route as BasePermMgtRolesIndexRouteRouteImport } from './../../routes/_base/perm-mgt/roles/index/route'
+import { Route as BasePermMgtPolicyIndexRouteRouteImport } from './../../routes/_base/perm-mgt/policy/index/route'
 import { Route as BaseDigitalModelingOrgsEmployeeAddRouteRouteImport } from './../../routes/_base/digital-modeling/orgs/employee/add/route'
 import { Route as BaseWorkshopMgtWorkshopConfigWeightIndexRouteRouteImport } from './../../routes/_base/workshop-mgt/workshop-config/weight/index/route'
 import { Route as BaseSupplyChainMgtSalesMgtSalesOrderIndexRouteRouteImport } from './../../routes/_base/supply-chain-mgt/sales-mgt/sales-order/index/route'
@@ -110,6 +112,16 @@ const BaseIndexRouteRoute = BaseIndexRouteRouteImport.update({
 } as any).lazy(() =>
   import('./../../routes/_base/index/route.lazy').then((d) => d.Route),
 )
+const BasePermMgtUserPolicyRouteRoute =
+  BasePermMgtUserPolicyRouteRouteImport.update({
+    id: '/perm-mgt/user-policy',
+    path: '/perm-mgt/user-policy',
+    getParentRoute: () => BaseRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/perm-mgt/user-policy/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 const BaseMenusIndexRouteRoute = BaseMenusIndexRouteRouteImport.update({
   id: '/menus/',
   path: '/menus',
@@ -214,6 +226,16 @@ const BasePermMgtRolesIndexRouteRoute =
     getParentRoute: () => BaseRoute,
   } as any).lazy(() =>
     import('./../../routes/_base/perm-mgt/roles/index/route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const BasePermMgtPolicyIndexRouteRoute =
+  BasePermMgtPolicyIndexRouteRouteImport.update({
+    id: '/perm-mgt/policy/',
+    path: '/perm-mgt/policy',
+    getParentRoute: () => BaseRoute,
+  } as any).lazy(() =>
+    import('./../../routes/_base/perm-mgt/policy/index/route.lazy').then(
       (d) => d.Route,
     ),
   )
@@ -457,6 +479,8 @@ export interface FileRoutesByFullPath {
   '/print': typeof BasePrintRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/menus/': typeof BaseMenusIndexRouteRoute
+  '/perm-mgt/user-policy': typeof BasePermMgtUserPolicyRouteRoute
+  '/perm-mgt/policy/': typeof BasePermMgtPolicyIndexRouteRoute
   '/perm-mgt/roles/': typeof BasePermMgtRolesIndexRouteRoute
   '/plan-mgt/pur-plan/': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
@@ -500,6 +524,8 @@ export interface FileRoutesByTo {
   '/print': typeof BasePrintRouteRoute
   '/login': typeof PublicLoginRouteRoute
   '/menus': typeof BaseMenusIndexRouteRoute
+  '/perm-mgt/user-policy': typeof BasePermMgtUserPolicyRouteRoute
+  '/perm-mgt/policy': typeof BasePermMgtPolicyIndexRouteRoute
   '/perm-mgt/roles': typeof BasePermMgtRolesIndexRouteRoute
   '/plan-mgt/pur-plan': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/production-mgt/production-order': typeof BaseProductionMgtProductionOrderIndexRouteRoute
@@ -546,6 +572,8 @@ export interface FileRoutesById {
   '/_base/print': typeof BasePrintRouteRoute
   '/_public/login': typeof PublicLoginRouteRoute
   '/_base/menus/': typeof BaseMenusIndexRouteRoute
+  '/_base/perm-mgt/user-policy': typeof BasePermMgtUserPolicyRouteRoute
+  '/_base/perm-mgt/policy/': typeof BasePermMgtPolicyIndexRouteRoute
   '/_base/perm-mgt/roles/': typeof BasePermMgtRolesIndexRouteRoute
   '/_base/plan-mgt/pur-plan/': typeof BasePlanMgtPurPlanIndexRouteRoute
   '/_base/production-mgt/production-order/': typeof BaseProductionMgtProductionOrderIndexRouteRoute
@@ -591,6 +619,8 @@ export interface FileRouteTypes {
     | '/print'
     | '/login'
     | '/menus/'
+    | '/perm-mgt/user-policy'
+    | '/perm-mgt/policy/'
     | '/perm-mgt/roles/'
     | '/plan-mgt/pur-plan/'
     | '/production-mgt/production-order/'
@@ -634,6 +664,8 @@ export interface FileRouteTypes {
     | '/print'
     | '/login'
     | '/menus'
+    | '/perm-mgt/user-policy'
+    | '/perm-mgt/policy'
     | '/perm-mgt/roles'
     | '/plan-mgt/pur-plan'
     | '/production-mgt/production-order'
@@ -679,6 +711,8 @@ export interface FileRouteTypes {
     | '/_base/print'
     | '/_public/login'
     | '/_base/menus/'
+    | '/_base/perm-mgt/user-policy'
+    | '/_base/perm-mgt/policy/'
     | '/_base/perm-mgt/roles/'
     | '/_base/plan-mgt/pur-plan/'
     | '/_base/production-mgt/production-order/'
@@ -785,6 +819,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BaseIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
+    '/_base/perm-mgt/user-policy': {
+      id: '/_base/perm-mgt/user-policy'
+      path: '/perm-mgt/user-policy'
+      fullPath: '/perm-mgt/user-policy'
+      preLoaderRoute: typeof BasePermMgtUserPolicyRouteRouteImport
+      parentRoute: typeof BaseRoute
+    }
     '/_base/menus/': {
       id: '/_base/menus/'
       path: '/menus'
@@ -860,6 +901,13 @@ declare module '@tanstack/react-router' {
       path: '/perm-mgt/roles'
       fullPath: '/perm-mgt/roles/'
       preLoaderRoute: typeof BasePermMgtRolesIndexRouteRouteImport
+      parentRoute: typeof BaseRoute
+    }
+    '/_base/perm-mgt/policy/': {
+      id: '/_base/perm-mgt/policy/'
+      path: '/perm-mgt/policy'
+      fullPath: '/perm-mgt/policy/'
+      preLoaderRoute: typeof BasePermMgtPolicyIndexRouteRouteImport
       parentRoute: typeof BaseRoute
     }
     '/_base/digital-modeling/orgs/employee/add': {
@@ -1033,6 +1081,8 @@ interface BaseRouteChildren {
   BaseChangePasswordRouteRoute: typeof BaseChangePasswordRouteRoute
   BasePrintRouteRoute: typeof BasePrintRouteRoute
   BaseMenusIndexRouteRoute: typeof BaseMenusIndexRouteRoute
+  BasePermMgtUserPolicyRouteRoute: typeof BasePermMgtUserPolicyRouteRoute
+  BasePermMgtPolicyIndexRouteRoute: typeof BasePermMgtPolicyIndexRouteRoute
   BasePermMgtRolesIndexRouteRoute: typeof BasePermMgtRolesIndexRouteRoute
   BasePlanMgtPurPlanIndexRouteRoute: typeof BasePlanMgtPurPlanIndexRouteRoute
   BaseProductionMgtProductionOrderIndexRouteRoute: typeof BaseProductionMgtProductionOrderIndexRouteRoute
@@ -1075,6 +1125,8 @@ const BaseRouteChildren: BaseRouteChildren = {
   BaseChangePasswordRouteRoute: BaseChangePasswordRouteRoute,
   BasePrintRouteRoute: BasePrintRouteRoute,
   BaseMenusIndexRouteRoute: BaseMenusIndexRouteRoute,
+  BasePermMgtUserPolicyRouteRoute: BasePermMgtUserPolicyRouteRoute,
+  BasePermMgtPolicyIndexRouteRoute: BasePermMgtPolicyIndexRouteRoute,
   BasePermMgtRolesIndexRouteRoute: BasePermMgtRolesIndexRouteRoute,
   BasePlanMgtPurPlanIndexRouteRoute: BasePlanMgtPurPlanIndexRouteRoute,
   BaseProductionMgtProductionOrderIndexRouteRoute:

@@ -75,7 +75,7 @@ export const usePermStore = create<State & Actions>()(
           codes.every((code) => get().codes.has(code) || get().whiteList.includes(code as PermCode))
       })),
       {
-        name: 'perm_store',
+        name: 'perm',
         storage: {
           getItem: (name) => {
             const str = localStorage.getItem(name)

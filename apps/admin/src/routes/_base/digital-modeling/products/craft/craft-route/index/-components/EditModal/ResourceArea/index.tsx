@@ -1,4 +1,4 @@
-import { type ColDef, type ICellRendererParams } from 'ag-grid-community'
+import { type ColDef, type ICellRendererParams } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 import type { Ref } from 'react'
 
@@ -75,9 +75,7 @@ export default function ResourceArea(props: ResourceAreaProps) {
     () => ({
       getRowData: () => {
         const rowData: CraftRouteResourceVo[] = []
-        gridRef.current!.api.forEachNode((node) => {
-          rowData.push(node.data)
-        })
+        gridRef.current!.api.forEachNode((node) => rowData.push(node.data))
         return rowData
       }
     }),

@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef } from 'ag-grid-community'
+import type { ColDef } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
@@ -21,10 +21,9 @@ function RouteComponent() {
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname),
-    isExpand: true
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? { isExpand: true }
+  )
 
   const reactToPrintFn = useReactToPrint({ contentRef })
 

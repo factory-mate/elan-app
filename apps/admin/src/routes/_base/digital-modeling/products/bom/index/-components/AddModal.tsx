@@ -1,4 +1,4 @@
-import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams, ValueFormatterParams } from 'ag-grid-enterprise'
 import { AgGridReact, type CustomCellRendererProps } from 'ag-grid-react'
 import { useAsyncEffect } from 'ahooks'
 import { type FormProps, Modal } from 'antd'

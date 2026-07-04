@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 import type { FormProps } from 'antd'
 
@@ -35,14 +35,14 @@ function RouteComponent() {
   const columnDefs = useMemo<ColDef<ProductionOrder.ProductionOrderBody>[]>(
     () => [
       {
-        field: 'cDefindParm04',
+        field: 'cDepCode',
         headerName: '生产部门',
         cellStyle: { padding: 0 },
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderBody>) => (
           <Select
             className="size-full"
             variant="borderless"
-            value={params.data?.cDefindParm04}
+            value={params.data?.cDepCode}
             options={departmentCandidates}
             fieldNames={{
               label: 'cDepName',
@@ -52,8 +52,8 @@ function RouteComponent() {
               setTableData((draft) => {
                 draft[params.node.rowIndex!] = {
                   ...params.data,
-                  cDefindParm04: value,
-                  cDefindParm05: option.cDepName
+                  cDepCode: value,
+                  cDepName: option.cDepName
                 }
               })
             }}
@@ -151,7 +151,6 @@ function RouteComponent() {
           />
         )
       },
-
       {
         field: 'cBomVersion',
         headerName: 'BOM版本',
@@ -179,6 +178,8 @@ function RouteComponent() {
           />
         )
       },
+      { field: 'cDefindParm05', headerName: '包装规格', editable: true },
+      { field: 'cMemo', headerName: '备注', editable: true },
       {
         headerName: '操作',
         sortable: false,

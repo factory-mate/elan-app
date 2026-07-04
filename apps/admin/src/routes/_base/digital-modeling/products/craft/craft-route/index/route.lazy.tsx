@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 
 import { type CraftRouteVo, LIST_QK, listQO, useDeleteMutation } from '@/features/craft-route'
@@ -22,9 +22,9 @@ function RouteComponent() {
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname)
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? {}
+  )
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
 
@@ -37,6 +37,7 @@ function RouteComponent() {
       ])
     })
   )
+
   const deleteMutation = useDeleteMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(

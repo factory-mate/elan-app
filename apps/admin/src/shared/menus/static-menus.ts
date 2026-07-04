@@ -167,7 +167,11 @@ export const staticMenus: ExtendedMenuItemType[] = [
     label: '权限管理',
     key: '/perm-mgt',
     permCode: 'perm-mgt',
-    children: [{ label: '角色管理', key: '/roles', permCode: 'roles' }]
+    children: [
+      { label: '角色管理', key: '/roles', permCode: 'roles' },
+      { label: '策略档案', key: '/policy', permCode: 'roles' },
+      { label: '用户策略管理', key: '/user-policy', permCode: 'roles' }
+    ]
   }
 ]
 

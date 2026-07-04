@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef } from 'ag-grid-community'
+import type { ColDef } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 
 import { LIST_QK, listQO, type ListVo, useExportMutation } from '@/features/production-material'

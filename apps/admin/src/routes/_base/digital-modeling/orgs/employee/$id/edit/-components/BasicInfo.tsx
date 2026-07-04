@@ -44,7 +44,7 @@ export default function BasicInfo() {
         name="cEmployeeCode"
         label="账号"
       >
-        <Input readOnly />
+        <Input disabled />
       </Form.Item>
 
       <Form.Item<EmployeeVo>

@@ -24,7 +24,21 @@ export const useFilterCacheStore = create<State & Actions>()(
       ...initialState,
       setItem: (key, value) =>
         set((state) => {
-          state.cache.set(key, value)
+          const notUndefinedKeys: string[] = []
+          if (value && typeof value === 'object') {
+            Object.keys(value).forEach((k) => {
+              if (value[k] !== undefined) {
+                notUndefinedKeys.push(k)
+              } else {
+                delete value[k]
+              }
+            })
+          }
+          if (!notUndefinedKeys.length) {
+            state.cache.delete(key)
+          } else {
+            state.cache.set(key, value)
+          }
         }),
       getItem: (key) => get().cache.get(key),
       hasItem: (key: string) => get().cache.has(key),

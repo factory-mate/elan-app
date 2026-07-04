@@ -171,6 +171,7 @@ export type PermCode =
   | 'production-order:open'
   | 'production-order:close'
   | 'production-order:export'
+  | 'production-order:children'
   // 车间管理
   | 'workshop-mgt'
   // 车间管理 - 车间配置
@@ -225,3 +226,15 @@ export type PermCode =
   | 'roles:edit'
   | 'roles:delete'
   | 'roles:assign-perms'
+  // 权限管理 - 策略档案
+  | 'policy'
+  | 'policy:view'
+  | 'policy:add'
+  | 'policy:edit'
+  | 'policy:delete'
+  // 权限管理 - 用户策略管理
+  | 'user-policy'
+  | 'user-policy:view'
+  | 'user-policy:add'
+  | 'user-policy:edit'
+  | 'user-policy:delete'

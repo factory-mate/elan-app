@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef } from 'ag-grid-community'
+import type { ColDef } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 
 import { type AllMaterialVo, LIST_QK, listQO, useExportMutation } from '@/features/all-material'
@@ -20,9 +20,9 @@ function RouteComponent() {
   const gridRef = useRef<AgGridReact>(null)
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname)
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? {}
+  )
 
   const {
     data: { data = [], dataCount } = {},

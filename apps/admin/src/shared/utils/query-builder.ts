@@ -4,12 +4,12 @@ export const queryBuilder = <T extends object>(queryData: QueryDataItem<T>[] = [
   queryData.forEach((i) => {
     switch (i.type) {
       case 'eq':
-        if (i.key && i.val) {
+        if (i.key && (i.val || i.val === 0)) {
           qsList.push(`${i.key} = ${i.val}`)
         }
         break
       case 'like':
-        if (i.key && i.val) {
+        if (i.key && (i.val || i.val === 0)) {
           qsList.push(`${i.key} like ${i.val}`)
         }
         break

@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 
 import {
@@ -29,9 +29,9 @@ function RouteComponent() {
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname)
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? {}
+  )
 
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()

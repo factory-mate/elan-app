@@ -1,4 +1,4 @@
-import type { ColDef } from 'ag-grid-community'
+import type { ColDef } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 import type { ButtonProps } from 'antd'
 

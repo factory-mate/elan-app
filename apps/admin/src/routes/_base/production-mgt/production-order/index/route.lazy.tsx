@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColDef, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ICellRendererParams } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 import { useReactToPrint } from 'react-to-print'
 
@@ -31,9 +31,9 @@ function RouteComponent() {
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname)
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? { iStatus: [0, 1] }
+  )
   const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo[]>([])
   const currentOperateRow = useRef<ProductionOrder.ProductionOrderBody | null>(null)
   const [currentOperateUID, setCurrentOperateRowUID] = useState<string | null>(null)
@@ -46,7 +46,7 @@ function RouteComponent() {
       conditions: queryBuilder<FilterForm>([
         { key: 'cStandardType', type: 'eq', val: filterData.cStandardType },
         { key: 'cVouchType', type: 'eq', val: filterData.cVouchType },
-        { key: 'iStatus', type: 'eq', val: filterData.iStatus },
+        { key: 'iStatus', type: 'in', val: filterData.iStatus },
         { key: 'cCode', type: 'like', val: filterData.cCode },
         { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
         { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
@@ -84,6 +84,19 @@ function RouteComponent() {
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
       {
+        name: 'iStatus',
+        label: '生产订单状态',
+        type: 'select',
+        selectProps: {
+          mode: 'multiple',
+          options: [
+            { label: '保存', value: ProductionOrder.TaskStatus.ABANDON },
+            { label: '审核', value: ProductionOrder.TaskStatus.AUDIT },
+            { label: '关闭', value: ProductionOrder.TaskStatus.CLOSE }
+          ]
+        }
+      },
+      {
         name: 'cStandardType',
         label: '生产订单类型',
         type: 'select',
@@ -105,17 +118,6 @@ function RouteComponent() {
             label: 'cDictonaryName',
             value: 'cDictonaryCode'
           }
-        }
-      },
-      {
-        name: 'iStatus',
-        label: '生产订单状态',
-        type: 'select',
-        selectProps: {
-          options: [
-            { label: '保存', value: ProductionOrder.TaskStatus.AUDIT },
-            { label: '弃审', value: ProductionOrder.TaskStatus.ABANDON }
-          ]
         }
       },
       { name: 'cCode', label: '生产订单编号', type: 'input' },
@@ -157,12 +159,13 @@ function RouteComponent() {
                 label: 'cDictonaryName',
                 value: 'cDictonaryCode'
               }}
-              onSelect={(value) =>
+              onSelect={(value, option) =>
                 params.api.applyTransaction({
                   update: [
                     {
                       ...params.data,
-                      cVouchType: value
+                      cVouchType: value,
+                      cVouchTypeName: option.cDictonaryName
                     }
                   ]
                 })
@@ -436,28 +439,31 @@ function RouteComponent() {
                   size="small"
                   color="primary"
                   variant="text"
-                  onClick={() => {
-                    refetch()
+                  disabled={editMutation.isPending && currentOperateUID === params.data?.UID}
+                  onClick={async () => {
                     currentOperateRow.current = null
                     setCurrentOperateRowUID(null)
+                    gridRef.current!.api.setGridOption('rowData', (await refetch()).data?.data)
                   }}
                 >
                   取消
                 </Button>
               )}
             </PermCodeProvider>
-            <Button
-              size="small"
-              color="primary"
-              variant="text"
-              onClick={() => {
-                currentOperateRow.current = params.data ?? null
-                bomListModal.toggle()
-              }}
-              disabled={currentOperateUID === params.data?.UID}
-            >
-              子件
-            </Button>
+            <PermCodeProvider code="production-order:children">
+              <Button
+                size="small"
+                color="primary"
+                variant="text"
+                onClick={() => {
+                  currentOperateRow.current = params.data ?? null
+                  bomListModal.toggle()
+                }}
+                disabled={currentOperateUID === params.data?.UID}
+              >
+                子件
+              </Button>
+            </PermCodeProvider>
           </Space>
         )
       }
@@ -584,11 +590,19 @@ function RouteComponent() {
           <PermCodeProvider code="production-order:export">
             <Button
               onClick={() => {
-                const formData = form.getFieldsValue()
                 exportMutation.mutate({
                   ...defaultMaxPageDto,
                   orderByFileds: '',
-                  conditions: queryBuilder<FilterForm>([])
+                  conditions: queryBuilder<FilterForm>([
+                    { key: 'cStandardType', type: 'eq', val: filterData.cStandardType },
+                    { key: 'cVouchType', type: 'eq', val: filterData.cVouchType },
+                    { key: 'iStatus', type: 'eq', val: filterData.iStatus },
+                    { key: 'cCode', type: 'like', val: filterData.cCode },
+                    { key: 'dBeginTime', type: 'date-range', val: filterData.dBeginTime },
+                    { key: 'cInvCode', type: 'like', val: filterData.cInvCode },
+                    { key: 'cInvName', type: 'like', val: filterData.cInvName },
+                    { key: 'cDefindParm10', type: 'eq', val: filterData.cDefindParm10 }
+                  ])
                 })
               }}
               loading={exportMutation.isPending}

@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import type { ColGroupDef } from 'ag-grid-community'
+import type { ColGroupDef } from 'ag-grid-enterprise'
 import { AgGridReact } from 'ag-grid-react'
 
 import * as Inventory from '@/features/inventory'
@@ -27,9 +27,9 @@ function RouteComponent() {
   const hasToyPermCode = usePermCode('normal-material:toy')
 
   const [pageParams] = useState(defaultMinPageDto)
-  const [filterData, setFilterData] = useState<FilterForm>({
-    ...filterCacheStore.getItem(location.pathname)
-  })
+  const [filterData, setFilterData] = useState<FilterForm>(
+    filterCacheStore.getItem(location.pathname) ?? {}
+  )
   const [shouldExport, setShouldExport] = useState(false)
 
   const {

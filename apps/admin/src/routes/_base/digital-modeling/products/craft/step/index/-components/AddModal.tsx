@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dicTypeQO } from '@/features/dicts'
+import * as Dicts from '@/features/dicts'
 import { type StepAddDto, useAddMutation } from '@/features/step'
 
 interface AddModalProps {
@@ -15,7 +15,7 @@ export default function AddModal(props: AddModalProps) {
   const [form] = Form.useForm<StepAddDto>()
 
   const { data: stepTypeCandidates } = useQuery(
-    dicTypeQO({
+    Dicts.dicTypeQO({
       cTableCode: 'FM_MES_STEP',
       cAttributeCode: 'cStepType'
     })

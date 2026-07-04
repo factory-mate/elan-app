@@ -1,7 +1,7 @@
 import { type FormProps, Modal } from 'antd'
 import type { Dispatch, SetStateAction } from 'react'
 
-import { dicTypeQO } from '@/features/dicts'
+import * as Dicts from '@/features/dicts'
 import { detailQO, type StepEditDto, useEditMutation } from '@/features/step'
 
 import type { EditModalMeta } from '../-types'
@@ -19,7 +19,7 @@ export default function EditModal(props: EditModalProps) {
 
   const { data: detailData, isPending } = useQuery(detailQO(meta?.UID))
   const { data: stepTypeCandidates } = useQuery(
-    dicTypeQO({
+    Dicts.dicTypeQO({
       cTableCode: 'FM_MES_STEP',
       cAttributeCode: 'cStepType'
     })

@@ -317,7 +317,8 @@ const treeData: TreeDataNode[] = [
           { key: 'production-order:audit', title: '审核 production-order:audit' },
           { key: 'production-order:quit-audit', title: '弃审 production-order:quit-audit' },
           { key: 'production-order:open', title: '打开 production-order:open' },
-          { key: 'production-order:close', title: '关闭 production-order:close' }
+          { key: 'production-order:close', title: '关闭 production-order:close' },
+          { key: 'production-order:children', title: '子件 production-order:children' }
         ]
       }
     ]
@@ -325,22 +326,19 @@ const treeData: TreeDataNode[] = [
   {
     key: 'workshop-mgt',
     title: '车间管理 workshop-mgt',
-    style: highlightStyle,
     children: [
       {
         key: 'workshop-config',
         title: '车间配置 workshop-config',
-        style: highlightStyle,
         children: [
           {
             key: 'weight',
             title: '电子秤误差配置 weight',
-            style: highlightStyle,
             children: [
-              { key: 'weight:add', title: '查看 weight:view', style: highlightStyle },
-              { key: 'weight:add', title: '新增 weight:add', style: highlightStyle },
-              { key: 'weight:edit', title: '编辑 weight:edit', style: highlightStyle },
-              { key: 'weight:delete', title: '删除 weight:delete', style: highlightStyle }
+              { key: 'weight:add', title: '查看 weight:view' },
+              { key: 'weight:add', title: '新增 weight:add' },
+              { key: 'weight:edit', title: '编辑 weight:edit' },
+              { key: 'weight:delete', title: '删除 weight:delete' }
             ]
           }
         ]
@@ -440,6 +438,28 @@ const treeData: TreeDataNode[] = [
           { key: 'roles:delete', title: '删除 roles:delete' },
           { key: 'roles:assign-perms', title: '分配权限 roles:assign-perms' }
         ]
+      },
+      {
+        key: 'policy',
+        title: '策略档案 policy',
+        style: highlightStyle,
+        children: [
+          { key: 'policy:view', title: '查看 policy:view', style: highlightStyle },
+          { key: 'policy:add', title: '新增 policy:add', style: highlightStyle },
+          { key: 'policy:edit', title: '编辑 policy:edit', style: highlightStyle },
+          { key: 'policy:delete', title: '删除 policy:delete', style: highlightStyle }
+        ]
+      },
+      {
+        key: 'user-policy',
+        title: '用户策略管理 user-policy',
+        style: highlightStyle,
+        children: [
+          { key: 'user-policy:view', title: '查看 user-policy:view', style: highlightStyle },
+          { key: 'user-policy:add', title: '新增 user-policy:add', style: highlightStyle },
+          { key: 'user-policy:edit', title: '编辑 user-policy:edit', style: highlightStyle },
+          { key: 'user-policy:delete', title: '删除 user-policy:delete', style: highlightStyle }
+        ]
       }
     ]
   }
@@ -455,7 +475,7 @@ function RouteComponent() {
         treeData={treeData}
         showLine
         checkStrictly
-        defaultExpandedKeys={['workshop-mgt', 'workshop-config', 'weight']}
+        defaultExpandedKeys={['perm-mgt', 'policy', 'user-policy']}
       />
     </PageContainer>
   )

@@ -18,6 +18,10 @@ export interface DictTypeDto {
   cAttributeCode: DictAttributeCodes
 }
 
-export type DictTableCodes = 'FM_MES_STEP' // 工步表
+export type DictTableCodes =
+  | 'FM_MES_STEP' // 工步表
+  | 'SYS_AUTHPOLICY' // 策略表
 
-export type DictAttributeCodes = 'cStepType' // 工步属性
+export type DictAttributeCodes =
+  | 'cStepType' // 工步属性
+  | 'cPolicyTypeCode' // 策略类型
