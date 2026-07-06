@@ -15,17 +15,18 @@ export const Route = createLazyFileRoute('/_base/report/cost/bom-cost/')({
 function RouteComponent() {
   const [form] = Form.useForm()
   const location = useLocation()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
   const gridRef = useRef<AgGridReact>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  const reactToPrintFn = useReactToPrint({ contentRef })
+
   const [filterData, setFilterData] = useState<FilterForm>(
     filterCacheStore.getItem(location.pathname) ?? { isExpand: true }
   )
-
-  const reactToPrintFn = useReactToPrint({ contentRef })
 
   const { data, isFetching } = useQuery(
     listQO({
@@ -33,6 +34,7 @@ function RouteComponent() {
       iQty: filterData.iQty ? filterData.iQty : 1
     })
   )
+
   const exportMutation = useExportMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
@@ -123,12 +125,12 @@ function RouteComponent() {
               suppressCount: true
             }
           }}
-          autoSizeStrategy={{
-            type: 'fitGridWidth'
-          }}
           treeDataChildrenField="Child"
           groupDefaultExpanded={filterData.isExpand ? -1 : 0}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

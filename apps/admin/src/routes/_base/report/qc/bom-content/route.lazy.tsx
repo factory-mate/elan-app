@@ -15,6 +15,7 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { message } = App.useApp()
   const location = useLocation()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -30,6 +31,7 @@ function RouteComponent() {
       cInvCode: filterData.cInvCode
     })
   )
+
   const exportMutation = useExportMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
@@ -110,11 +112,10 @@ function RouteComponent() {
           getRowId={(params) => params.data.cInvCode!}
           columnDefs={columnDefs}
           rowData={data}
-          autoSizeStrategy={{
-            type: 'fitGridWidth',
-            defaultMinWidth: 200
-          }}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
     </PageContainer>

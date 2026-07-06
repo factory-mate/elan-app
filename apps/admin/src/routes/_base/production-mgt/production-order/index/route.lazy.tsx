@@ -23,6 +23,7 @@ function RouteComponent() {
   const location = useLocation()
   const bomListModal = useModal()
   const queryClient = useQueryClient()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -34,7 +35,7 @@ function RouteComponent() {
   const [filterData, setFilterData] = useState<FilterForm>(
     filterCacheStore.getItem(location.pathname) ?? { iStatus: [0, 1] }
   )
-  const [printData, setPrintData] = useState<ProductionOrder.PrintDetailVo[]>([])
+  const [printData, setPrintData] = useState<ProductionOrder.PrintDetailGroupedVo[]>([])
   const currentOperateRow = useRef<ProductionOrder.ProductionOrderBody | null>(null)
   const [currentOperateUID, setCurrentOperateRowUID] = useState<string | null>(null)
 
@@ -69,17 +70,7 @@ function RouteComponent() {
   const deleteMutation = ProductionOrder.useDeleteMutation()
   const editMutation = ProductionOrder.useEditMutation()
   const exportMutation = ProductionOrder.useExportMutation()
-
-  // const pages = useMemo(() => {
-  //   const itemsPerPage = 24
-  //   const result = []
-  //   if (printData.List_BOM?.length) {
-  //     for (let i = 0; i < printData.List_BOM.length; i += itemsPerPage) {
-  //       result.push(printData.List_BOM.slice(i, i + itemsPerPage))
-  //     }
-  //   }
-  //   return result
-  // }, [printData.List_BOM])
+  const pushMutation = ProductionOrder.usePushMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
@@ -400,7 +391,7 @@ function RouteComponent() {
         sortable: false,
         pinned: 'right',
         lockPinned: true,
-        width: 240,
+        width: 260,
         cellRenderer: (params: ICellRendererParams<ProductionOrder.ProductionOrderVo>) => (
           <Space>
             <PermCodeProvider code="production-order:edit">
@@ -464,6 +455,27 @@ function RouteComponent() {
                 子件
               </Button>
             </PermCodeProvider>
+            {params.data?.cDefindParm04 !== '1' && (
+              <PermCodeProvider code="production-order:push">
+                <Popconfirm
+                  title="确认执行该操作？"
+                  okButtonProps={{
+                    disabled: pushMutation.isPending,
+                    loading: pushMutation.isPending
+                  }}
+                  onConfirm={() => pushMutation.mutate(params.data!.UID)}
+                >
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="text"
+                    disabled={deleteMutation.isPending || currentOperateUID === params.data?.UID}
+                  >
+                    推送申请
+                  </Button>
+                </Popconfirm>
+              </PermCodeProvider>
+            )}
           </Space>
         )
       }
@@ -472,8 +484,10 @@ function RouteComponent() {
       bomCandidates,
       bomListModal,
       currentOperateUID,
+      deleteMutation,
       departmentCandidates,
       editMutation,
+      pushMutation,
       queryClient,
       refetch,
       standardTypeCandidates,
@@ -510,9 +524,40 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                const pd = await queryClient.ensureQueryData(
+                const res = await queryClient.ensureQueryData(
                   ProductionOrder.printDetailQO(selectedRows.map((i) => i.UID))
                 )
+
+                const PAGE_SIZE = 30
+                const pd: ProductionOrder.PrintDetailGroupedVo[] = []
+
+                res.forEach((i) => {
+                  const bomList = i.List_BOM ?? []
+
+                  if (bomList.length === 0) {
+                    pd.push({
+                      ...i,
+                      List_BOM: [],
+                      currentPage: 1,
+                      totalPage: 1
+                    })
+                  } else {
+                    const totalPage = Math.ceil(bomList.length / PAGE_SIZE)
+
+                    for (let index = 0; index < bomList.length; index += PAGE_SIZE) {
+                      const slicedBOM = bomList.slice(index, index + PAGE_SIZE)
+                      const currentPage = Math.floor(index / PAGE_SIZE) + 1
+                      const ci = {
+                        ...i,
+                        List_BOM: slicedBOM,
+                        currentPage,
+                        totalPage
+                      }
+                      pd.push(ci)
+                    }
+                  }
+                })
+
                 setPrintData(pd ?? [])
                 setTimeout(() => reactToPrintFn(), 16)
               }}
@@ -644,6 +689,9 @@ function RouteComponent() {
             }
             return undefined
           }}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex
@@ -675,20 +723,23 @@ function RouteComponent() {
         {printData.map((i, index) => (
           <div key={index}>
             <div className="relative h-screen p-8">
-              <div className="flex items-center justify-between">
-                <div />
-                <div className="text-2xl">Elan 配方投产单</div>
-                <div className="right-0">批号：{i?.cDefindParm06}</div>
-              </div>
-              <div className="mt-4 border-b-2 border-black text-sm">
-                <div className="grid grid-cols-4">
-                  <div>编号：{i?.cInvCode}</div>
-                  <div>名称：{i.cInvName}</div>
-                  <div>确认状态：{}</div>
-                  <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
-                </div>
-              </div>
-
+              {i.currentPage === 1 && (
+                <>
+                  <div className="flex items-center justify-between">
+                    <div />
+                    <div className="text-2xl">Elan 配方投产单</div>
+                    <div className="right-0">批号：{i?.cDefindParm06}</div>
+                  </div>
+                  <div className="mt-4 border-b-2 border-black text-sm">
+                    <div className="grid grid-cols-4">
+                      <div>编号：{i?.cInvCode}</div>
+                      <div>名称：{i.cInvName}</div>
+                      <div>确认状态：{}</div>
+                      <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+                    </div>
+                  </div>
+                </>
+              )}
               <div className="mt-2 border-b border-black text-sm">
                 <div className="grid grid-cols-5">
                   <div>编号</div>
@@ -712,81 +763,26 @@ function RouteComponent() {
                   </div>
                 </div>
               ))}
-
-              <div className="mt-2 flex justify-end space-x-12">
-                <div>总配比（%）：{i?.SumRate}</div>
-                <div>总用量（公斤）：{i?.SumQuantity}</div>
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
-                <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
-                  <div className={styles.textUnderline}>签发：</div>
-                  <div className={styles.textUnderline}>生产：</div>
-                  <div className={styles.textUnderline}>核对：</div>
-                  <div className={styles.textUnderline}>库存管理：</div>
-                  <div className={styles.textUnderline}>生产日期：</div>
-                </div>
-              </div>
+              {i.currentPage === i.totalPage && (
+                <>
+                  <div className="mt-2 flex justify-end space-x-12">
+                    <div>总配比（%）：{i?.SumRate}</div>
+                    <div>总用量（公斤）：{i?.SumQuantity}</div>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+                    <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+                      <div className={styles.textUnderline}>签发：</div>
+                      <div className={styles.textUnderline}>生产：</div>
+                      <div className={styles.textUnderline}>核对：</div>
+                      <div className={styles.textUnderline}>库存管理：</div>
+                      <div className={styles.textUnderline}>生产日期：</div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         ))}
-
-        {/* {pages.map((pageItems, pageIndex) => {
-            if (pageIndex === 0) {
-              return null
-            }
-            const isLastPage = pageIndex === pages.length - 1
-            return (
-              <div
-                key={pageIndex}
-                className={`${styles.pageBreak} relative h-screen p-8`}
-              >
-                <div className="border-b border-black text-lg">
-                  <div className="grid grid-cols-5">
-                    <div>编号</div>
-                    <div>名称</div>
-                    <div>用量（公斤）</div>
-                    <div>实际投料</div>
-                    <div>验单号</div>
-                  </div>
-                </div>
-
-                {pageItems.map((item, index) => (
-                  <div
-                    className="mt-2 border-b border-black text-lg"
-                    key={index}
-                  >
-                    <div className="grid grid-cols-5">
-                      <div>{item?.cMaterialCode}</div>
-                      <div>{computeNameText(item?.cMaterialName ?? '')}</div>
-                      <div>{item?.nQuantity}</div>
-                      <div />
-                      <div />
-                    </div>
-                  </div>
-                ))}
-
-                {isLastPage && (
-                  <>
-                    <div className="mt-2 flex justify-end space-x-12">
-                      <div>总配比（%）：{printData?.SumRate}</div>
-                      <div>总用量（公斤）：{printData?.SumQuantity}</div>
-                    </div>
-
-                    <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
-                      <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
-                        <div className={styles.textUnderline}>签发：</div>
-                        <div className={styles.textUnderline}>生产：</div>
-                        <div className={styles.textUnderline}>核对：</div>
-                        <div className={styles.textUnderline}>库存管理：</div>
-                        <div className={styles.textUnderline}>生产日期：</div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            )
-          })} */}
       </div>
     </PageContainer>
   )

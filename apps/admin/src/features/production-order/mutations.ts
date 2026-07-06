@@ -81,3 +81,11 @@ export const useExportMutation = () => {
     }
   })
 }
+
+export const usePushMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (id: string) => ProductionOrderAPI.push(id),
+    onSuccess: () => showMessage('success')
+  })
+}

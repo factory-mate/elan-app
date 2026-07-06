@@ -24,8 +24,11 @@ export const Route = createLazyFileRoute(
 function RouteComponent() {
   const [form] = Form.useForm()
   const { message, showMessage } = useMessage()
-
   const location = useLocation()
+  const editModal = useModal<EditModalMeta>()
+  const mpsModal = useModal()
+  const pushModal = useModal()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -36,10 +39,6 @@ function RouteComponent() {
   const [filterData, setFilterData] = useState<FilterForm>(
     filterCacheStore.getItem(location.pathname) ?? {}
   )
-
-  const editModal = useModal<EditModalMeta>()
-  const mpsModal = useModal()
-  const pushModal = useModal()
 
   const { data: departmentCandidates } = useQuery(
     Department.fullListQO({ conditions: 'bProduct = true' })
@@ -96,19 +95,18 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<MainProductionPlanMpsVo>[]>(
     () => [
-      { field: 'cInvCode', headerName: '产品编码', width: 200 },
-      { field: 'cInvName', headerName: '产品名称', width: 300, tooltipField: 'cInvName' },
-      { field: 'cInvStd', headerName: '规格型号', width: 150 },
-      { field: 'cDepName', headerName: '生产部门', width: 150 },
+      { field: 'cInvCode', headerName: '产品编码' },
+      { field: 'cInvName', headerName: '产品名称', tooltipField: 'cInvName' },
+      { field: 'cInvStd', headerName: '规格型号', width: 140 },
+      { field: 'cDepName', headerName: '生产部门', width: 140 },
       { field: 'nQuantity', headerName: '计划数量', width: 120 },
       { field: 'nStockQuantity', headerName: '库存', width: 100 },
-      { field: 'dStartDate', headerName: '开始日期', width: 200 },
-      { field: 'dEndDate', headerName: '结束日期', width: 200 },
-      { field: 'iStatusName', headerName: '状态', width: 150 },
-      { field: 'cModifyUserName', headerName: '修改人', width: 150 },
+      { field: 'dStartDate', headerName: '开始日期' },
+      { field: 'dEndDate', headerName: '结束日期' },
+      { field: 'iStatusName', headerName: '状态', width: 120 },
+      { field: 'cModifyUserName', headerName: '修改人', width: 120 },
       {
         headerName: '操作',
-        width: 250,
         sortable: false,
         pinned: 'right',
         lockPinned: true,
@@ -214,7 +212,7 @@ function RouteComponent() {
                   showMessage('select-data')
                   return
                 }
-                if (selectedRows.some((i) => i.iStatus === 0)) {
+                if (selectedRows.some((i) => i.iStatus === 1)) {
                   message.warning('勾选了已生单数据，不允许删除')
                   return
                 }
@@ -252,11 +250,11 @@ function RouteComponent() {
             pinned: 'left',
             lockPinned: true
           }}
-          autoSizeStrategy={{
-            type: 'fitGridWidth'
-          }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

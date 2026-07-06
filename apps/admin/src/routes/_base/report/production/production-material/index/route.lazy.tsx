@@ -12,6 +12,7 @@ export const Route = createLazyFileRoute('/_base/report/production/production-ma
 
 function RouteComponent() {
   const [form] = Form.useForm()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const gridRef = useRef<AgGridReact>(null)
 
@@ -109,11 +110,10 @@ function RouteComponent() {
           getRowId={(params) => params.data.UID!}
           columnDefs={columnDefs}
           rowData={data}
-          autoSizeStrategy={{
-            type: 'fitGridWidth',
-            defaultMinWidth: 200
-          }}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex

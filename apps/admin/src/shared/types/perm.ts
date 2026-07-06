@@ -172,6 +172,7 @@ export type PermCode =
   | 'production-order:close'
   | 'production-order:export'
   | 'production-order:children'
+  | 'production-order:push'
   // 车间管理
   | 'workshop-mgt'
   // 车间管理 - 车间配置

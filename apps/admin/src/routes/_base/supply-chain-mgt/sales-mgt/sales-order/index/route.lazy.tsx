@@ -20,6 +20,7 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
   const location = useLocation()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -132,6 +133,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex

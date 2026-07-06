@@ -18,6 +18,9 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
   const location = useLocation()
+  const addModal = useModal()
+  const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -29,14 +32,11 @@ function RouteComponent() {
     filterCacheStore.getItem(location.pathname) ?? {}
   )
 
-  const addModal = useModal()
-  const editModal = useModal<EditModalMeta>()
-
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
       ...pageParams,
       conditions: queryBuilder<FilterForm>([
-        { key: 'cLoginName', type: 'like', val: filterData.cLoginName },
+        { key: 'cUserName', type: 'like', val: filterData.cUserName },
         { key: 'cMenuName', type: 'like', val: filterData.cMenuName },
         { key: 'cPolicyName', type: 'like', val: filterData.cPolicyName }
       ])
@@ -51,7 +51,7 @@ function RouteComponent() {
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
     () => [
       {
-        name: 'cLoginName',
+        name: 'cUserName',
         label: '用户名称',
         type: 'select',
         selectProps: {
@@ -107,7 +107,7 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<UserPolicyVo>[]>(
     () => [
-      { field: 'cLoginName', headerName: '用户名称', flex: 1 },
+      { field: 'cUserName', headerName: '用户名称', flex: 1 },
       { field: 'cMenuName', headerName: '资源名称', flex: 1 },
       { field: 'cPolicyName', headerName: '策略名称', flex: 1 },
       { field: 'cPolicyCode', headerName: '策略编码', flex: 1 },
@@ -223,6 +223,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

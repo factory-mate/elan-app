@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import * as Perms from '@/features/perms'
+import * as TableSettings from '@/features/table-settings'
 
 const getRouterStaticData = (path: string) => router.matchRoutes(path, {}).at(-1)!.staticData ?? {}
 
@@ -43,6 +44,8 @@ export const Route = createFileRoute('/_base')({
             .filter((i) => i)
         )
       )
+    const tableSettings = await queryClient.ensureQueryData(TableSettings.fullListQO())
+    useTableCacheStore.getState().batchSetItem(tableSettings)
   }
 })
 

@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import * as Employee from '@/features/employee'
 import * as Menus from '@/features/menus'
 import * as Policy from '@/features/policy'
-import { useAddMutation, type UserPolicyAddDto } from '@/features/user-policy'
+import { useBatchAddMutation, type UserPolicyBatchAddFormValues } from '@/features/user-policy'
 
 interface AddModalProps {
   open?: boolean
@@ -14,18 +14,22 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
-  const [form] = Form.useForm<UserPolicyAddDto>()
+  const [form] = Form.useForm<UserPolicyBatchAddFormValues>()
 
   const { data: menuCandidates } = useQuery(Menus.fullListQO())
   const { data: employeeCandidates } = useQuery(Employee.fullListQO())
   const { data: policyCandidates } = useQuery(Policy.fullListQO())
 
-  const addMutation = useAddMutation()
+  const batchAddMutation = useBatchAddMutation()
 
-  const onFinish: FormProps<UserPolicyAddDto>['onFinish'] = (values) => {
-    addMutation.mutate(
+  const onFinish: FormProps<UserPolicyBatchAddFormValues>['onFinish'] = (values) => {
+    const { cResourcesCode, ...otherValues } = values
+    batchAddMutation.mutate(
       {
-        ...values
+        Items: cResourcesCode.map((i) => ({
+          ...otherValues,
+          cResourcesCode: i
+        }))
       },
       {
         onSuccess: () => {
@@ -53,7 +57,7 @@ export default function AddModal(props: AddModalProps) {
         initialValues={{}}
         onFinish={onFinish}
       >
-        <Form.Item<UserPolicyAddDto>
+        <Form.Item<UserPolicyBatchAddFormValues>
           name="cLoginName"
           label="用户名称"
           rules={[{ required: true }]}
@@ -77,12 +81,13 @@ export default function AddModal(props: AddModalProps) {
             allowClear
           />
         </Form.Item>
-        <Form.Item<UserPolicyAddDto>
+        <Form.Item<UserPolicyBatchAddFormValues>
           name="cResourcesCode"
           label="资源名称"
           rules={[{ required: true }]}
         >
           <Select
+            mode="multiple"
             options={menuCandidates}
             fieldNames={{
               label: 'cMenuName',
@@ -101,7 +106,7 @@ export default function AddModal(props: AddModalProps) {
             allowClear
           />
         </Form.Item>
-        <Form.Item<UserPolicyAddDto>
+        <Form.Item<UserPolicyBatchAddFormValues>
           name="cPolicyCode"
           label="策略名称"
           rules={[{ required: true }]}

@@ -20,11 +20,12 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/departmen
 
 function RouteComponent() {
   const { showMessage } = useMessage()
-  const gridRef = useRef<AgGridReact>(null)
-
   const { pageParams, setPageParams } = usePagination()
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const gridRef = useRef<AgGridReact>(null)
 
   const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
   const [selectedTreeKeys, setSelectedTreeKeys] = useState<Key[]>([])
@@ -37,31 +38,29 @@ function RouteComponent() {
       ])
     })
   )
+
   const startMutation = useStartMutation()
   const stopMutation = useStopMutation()
   const deleteMutation = useDeleteMutation()
 
   const columnDefs = useMemo<ColDef<DepartmentVo>[]>(
     () => [
-      { field: 'cDepCode', headerName: '部门编码' },
-      { field: 'cDepName', headerName: '部门名称' },
-      { field: 'cCreateUserName', headerName: '负责人员' },
-      {
-        field: 'bProduct',
-        headerName: '是否生产部门',
-        cellDataType: 'boolean'
-      },
+      { field: 'cDepCode', headerName: '部门编码', flex: 1 },
+      { field: 'cDepName', headerName: '部门名称', flex: 1 },
+      { field: 'cCreateUserName', headerName: '负责人员', flex: 1 },
+      { field: 'bProduct', headerName: '是否生产部门', cellDataType: 'boolean', flex: 1 },
       {
         field: 'IsValid',
         headerName: '启用',
         editable: true,
         cellDataType: 'boolean',
+        flex: 1,
         onCellValueChanged: (event) =>
           event.newValue
             ? startMutation.mutate([event.data.UID])
             : stopMutation.mutate([event.data.UID])
       },
-      { field: 'dModifyTime', headerName: '更新时间' },
+      { field: 'dModifyTime', headerName: '更新时间', flex: 1 },
       {
         headerName: '操作',
         sortable: false,
@@ -180,6 +179,9 @@ function RouteComponent() {
                 }}
                 loading={isFetching}
                 onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+                gridId="list"
+                getContextMenuItems={getContextMenuItems}
+                onGridReady={(e) => initTableSettings(e)}
               />
             </div>
 

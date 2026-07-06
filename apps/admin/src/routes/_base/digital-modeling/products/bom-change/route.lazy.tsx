@@ -16,6 +16,10 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
   const location = useLocation()
+  const replaceModal = useModal<ReplaceModalMeta>({
+    meta: { UIDs: [] }
+  })
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -26,10 +30,6 @@ function RouteComponent() {
   const [filterData, setFilterData] = useState<FilterForm>(
     filterCacheStore.getItem(location.pathname) ?? {}
   )
-
-  const replaceModal = useModal<ReplaceModalMeta>({
-    meta: { UIDs: [] }
-  })
 
   const { data = [], isFetching } = useQuery(
     listQO({
@@ -60,25 +60,27 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<BOMChangeVo>[]>(
     () => [
-      { field: 'cParentCode', headerName: '产品编码' },
-      { field: 'cParentName', headerName: '产品名称' },
-      { field: 'cInvstd', headerName: '规格型号' },
-      { field: 'cParentVersion', headerName: 'BOM 版本' },
+      { field: 'cParentCode', headerName: '产品编码', flex: 1 },
+      { field: 'cParentName', headerName: '产品名称', flex: 1 },
+      { field: 'cInvstd', headerName: '规格型号', flex: 1 },
+      { field: 'cParentVersion', headerName: 'BOM 版本', flex: 1 },
       {
         field: 'cParentdEffectiveDate',
         headerName: '生效日期',
         cellDataType: 'dateString',
         valueFormatter: (params: ValueFormatterParams) =>
-          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD'),
+        flex: 1
       },
       {
         field: 'cParentdExpirationDate',
         headerName: '失效日期',
         cellDataType: 'dateString',
         valueFormatter: (params: ValueFormatterParams) =>
-          DateUtils.formatTime(params.value, 'YYYY-MM-DD')
+          DateUtils.formatTime(params.value, 'YYYY-MM-DD'),
+        flex: 1
       },
-      { field: 'cParentiStatusName', headerName: 'BOM 状态' }
+      { field: 'cParentiStatusName', headerName: 'BOM 状态', flex: 1 }
     ],
     []
   )
@@ -133,6 +135,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

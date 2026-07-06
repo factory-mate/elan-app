@@ -1,4 +1,9 @@
-import type { UserPolicyAddDto, UserPolicyEditDto, UserPolicyVo } from './types'
+import type {
+  UserPolicyAddDto,
+  UserPolicyBatchAddDto,
+  UserPolicyEditDto,
+  UserPolicyVo
+} from './types'
 
 export class UserPolicyAPI {
   private static apiPrefix = MANAGE_CENTER_API_PREFIX
@@ -19,6 +24,10 @@ export class UserPolicyAPI {
 
   static async add(data: UserPolicyAddDto) {
     return httpClient.post(`${this.apiPrefix}/USERPOLICY/Add`, data)
+  }
+
+  static async batchAdd(data: UserPolicyBatchAddDto) {
+    return httpClient.post(`${this.apiPrefix}/USERPOLICY/BatchAdd`, data)
   }
 
   static async edit(data: UserPolicyEditDto) {

@@ -74,4 +74,8 @@ export class ProductionOrderAPI {
       responseType: 'blob'
     })
   }
+
+  static async push(val: string) {
+    return httpClient.get<ProductionOrderVo>(`${this.apiPrefix}/MaterialAppVouch`, { val })
+  }
 }

@@ -20,6 +20,7 @@ export const Route = createLazyFileRoute('/_base/plan-mgt/pur-plan/')({
 function RouteComponent() {
   // const [form] = Form.useForm()
   const { showMessage } = useMessage()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const gridRef = useRef<AgGridReact>(null)
 
@@ -42,6 +43,7 @@ function RouteComponent() {
       ])
     })
   )
+
   const executeMutation = useExecuteMutation()
   const syncMutation = useSyncMutation()
   const checkMutation = useCheckMutation()
@@ -158,11 +160,11 @@ function RouteComponent() {
             pinned: 'left',
             lockPinned: true
           }}
-          autoSizeStrategy={{
-            type: 'fitCellContents'
-          }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex

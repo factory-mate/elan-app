@@ -13,12 +13,14 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/unit-
 
 function RouteComponent() {
   const { showMessage } = useMessage()
-  const gridRef = useRef<AgGridReact>(null)
-  const [pageParams, setPageParams] = useState(defaultPageDto)
-  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const gridRef = useRef<AgGridReact>(null)
+
+  const [pageParams, setPageParams] = useState(defaultPageDto)
+  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
 
   const { data, isFetching, isPlaceholderData } = useQuery(listQO({ ...pageParams }))
   const deleteMutation = useDeleteMutation()
@@ -28,12 +30,7 @@ function RouteComponent() {
       { field: 'cUnitClassCode', headerName: '计量单位组编码', flex: 1 },
       { field: 'cUnitClassName', headerName: '计量单位组名称', flex: 1 },
       { field: 'cUnitClassTypeName', headerName: '计量单位组类别', flex: 1 },
-      {
-        field: 'bDefault',
-        headerName: '是否默认',
-        cellDataType: 'boolean',
-        flex: 1
-      },
+      { field: 'bDefault', headerName: '是否默认', cellDataType: 'boolean', flex: 1 },
       {
         headerName: '操作',
         sortable: false,
@@ -123,6 +120,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

@@ -22,7 +22,8 @@ provideGlobalGridOptions({
   noRowsOverlayComponent: () => '暂无数据',
   singleClickEdit: true,
   stopEditingWhenCellsLoseFocus: true,
-  animateColumnResizing: true
+  animateColumnResizing: true,
+  maintainColumnOrder: true
 })
 
 export * from './utils'

@@ -22,10 +22,10 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/orgs/employee/
 
 function RouteComponent() {
   const { showMessage } = useMessage()
-
   const editDeptModal = useModal<EditDeptModalMeta>()
   const editPositionModal = useModal<EditPositionModalMeta>()
   const editRoleModal = useModal<EditRoleModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const gridRef = useRef<AgGridReact>(null)
 
@@ -37,6 +37,7 @@ function RouteComponent() {
       ...pageParams
     })
   )
+
   const startMutation = useStartMutation()
   const stopMutation = useStopMutation()
   const freezeMutation = useFreezeMutation()
@@ -46,17 +47,18 @@ function RouteComponent() {
 
   const columnDefs = useMemo<ColDef<EmployeeVo>[]>(
     () => [
-      { field: 'cPersonCode', headerName: '编码' },
-      { field: 'cPersonName', headerName: '姓名' },
-      // { field: 'cSexTypeCode', headerName: '性别' },
-      { field: 'cDepName', headerName: '部门' },
-      { field: 'cProfessionalTypeName', headerName: '职务' },
-      { field: 'cMobile', headerName: '手机' },
+      { field: 'cPersonCode', headerName: '编码', flex: 1 },
+      { field: 'cPersonName', headerName: '姓名', flex: 1 },
+      // { field: 'cSexTypeCode', headerName: '性别', flex: 1 },
+      { field: 'cDepName', headerName: '部门', flex: 1 },
+      { field: 'cProfessionalTypeName', headerName: '职务', flex: 1 },
+      { field: 'cMobile', headerName: '手机', flex: 1 },
       {
         field: 'IsValid',
         headerName: '是否启用',
         editable: true,
         cellDataType: 'boolean',
+        flex: 1,
         onCellValueChanged: (event) =>
           event.newValue
             ? startMutation.mutate([event.data.UID])
@@ -67,12 +69,13 @@ function RouteComponent() {
         headerName: '是否冻结',
         editable: true,
         cellDataType: 'boolean',
+        flex: 1,
         onCellValueChanged: (event) =>
           event.newValue
             ? freezeMutation.mutate([event.data.UID])
             : unfreezeMutation.mutate([event.data.UID])
       },
-      { field: 'dEndLoginTime', headerName: '最后登录' },
+      { field: 'dEndLoginTime', headerName: '最后登录', flex: 1 },
       {
         headerName: '操作',
         sortable: false,
@@ -273,6 +276,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

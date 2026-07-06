@@ -1,5 +1,5 @@
 import { UserPolicyAPI } from './api'
-import type { UserPolicyAddDto, UserPolicyEditDto } from './types'
+import type { UserPolicyAddDto, UserPolicyBatchAddDto, UserPolicyEditDto } from './types'
 
 export const useDeleteMutation = () => {
   const { showMessage } = useMessage()
@@ -13,6 +13,14 @@ export const useAddMutation = () => {
   const { showMessage } = useMessage()
   return useMutation({
     mutationFn: (data: UserPolicyAddDto) => UserPolicyAPI.add(data),
+    onSuccess: () => showMessage('success')
+  })
+}
+
+export const useBatchAddMutation = () => {
+  const { showMessage } = useMessage()
+  return useMutation({
+    mutationFn: (data: UserPolicyBatchAddDto) => UserPolicyAPI.batchAdd(data),
     onSuccess: () => showMessage('success')
   })
 }

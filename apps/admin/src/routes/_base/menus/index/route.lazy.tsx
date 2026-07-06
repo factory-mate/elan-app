@@ -318,7 +318,8 @@ const treeData: TreeDataNode[] = [
           { key: 'production-order:quit-audit', title: '弃审 production-order:quit-audit' },
           { key: 'production-order:open', title: '打开 production-order:open' },
           { key: 'production-order:close', title: '关闭 production-order:close' },
-          { key: 'production-order:children', title: '子件 production-order:children' }
+          { key: 'production-order:children', title: '子件 production-order:children' },
+          { key: 'production-order:push', title: '推送申请 production-order:push' }
         ]
       }
     ]

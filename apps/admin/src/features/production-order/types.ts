@@ -362,3 +362,9 @@ export interface PrintBodyItemVo {
   UID?: string
   utfs?: null | string
 }
+
+export interface PrintDetailGroupedVo extends Omit<PrintDetailVo, 'List_BOM'> {
+  List_BOM?: PrintBodyItemVo[] | null
+  currentPage?: number
+  totalPage?: number
+}

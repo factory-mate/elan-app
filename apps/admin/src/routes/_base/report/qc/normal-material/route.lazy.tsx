@@ -15,16 +15,15 @@ export const Route = createLazyFileRoute('/_base/report/qc/normal-material')({
 })
 
 function RouteComponent() {
+  const [form] = Form.useForm()
+  const { message } = App.useApp()
   const location = useLocation()
+  const hasToyPermCode = usePermCode('normal-material:toy')
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
   const gridRef = useRef<AgGridReact>(null)
-
-  const [form] = Form.useForm()
-  const { message } = App.useApp()
-
-  const hasToyPermCode = usePermCode('normal-material:toy')
 
   const [pageParams] = useState(defaultMinPageDto)
   const [filterData, setFilterData] = useState<FilterForm>(
@@ -167,11 +166,10 @@ function RouteComponent() {
           ref={gridRef}
           columnDefs={columnDefs}
           rowData={data}
-          autoSizeStrategy={{
-            type: 'fitGridWidth',
-            defaultMinWidth: 200
-          }}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
     </PageContainer>

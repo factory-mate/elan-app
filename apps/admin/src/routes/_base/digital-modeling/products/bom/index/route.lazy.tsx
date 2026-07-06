@@ -26,14 +26,15 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/products/bom/'
 })
 
 function RouteComponent() {
-  const { showMessage, message } = useMessage()
-  const gridRef = useRef<AgGridReact>(null)
-  const [selectedTreeData, setSelectedTreeData] = useState<BOMVo | null>(null)
-
   const [form] = Form.useForm<BOMVo>()
-
+  const { showMessage, message } = useMessage()
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const gridRef = useRef<AgGridReact>(null)
+
+  const [selectedTreeData, setSelectedTreeData] = useState<BOMVo | null>(null)
 
   const { data: detailData, isFetching: isDetailFetching } = useQuery(
     detailQO(selectedTreeData?.UID)
@@ -41,6 +42,7 @@ function RouteComponent() {
   const { data: childListData, isFetching: isChildListFetching } = useQuery(
     childListQO(selectedTreeData?.UID)
   )
+
   const deleteMutation = useDeleteMutation()
   const checkMutation = useCheckMutation()
   const auditMutation = useAuditMutation()
@@ -310,6 +312,9 @@ function RouteComponent() {
                   columnDefs={columnDefs}
                   rowData={childListData}
                   loading={isChildListFetching}
+                  gridId="list"
+                  getContextMenuItems={getContextMenuItems}
+                  onGridReady={(e) => initTableSettings(e)}
                 />
               </div>
             </Flex>

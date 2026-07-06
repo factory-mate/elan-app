@@ -185,6 +185,8 @@ declare global {
   const useSuspenseQuery: typeof import('@tanstack/react-query').useSuspenseQuery
   const useSyncExternalStore: typeof import('react').useSyncExternalStore
   const useTabbarStore: typeof import('../src/shared/store/tabbar').useTabbarStore
+  const useTableCacheStore: typeof import('../src/shared/store/table-cache').useTableCacheStore
+  const useTableSettings: typeof import('../src/shared/hooks/useTableSettings').useTableSettings
   const useThemeStore: typeof import('../src/shared/store/theme').useThemeStore
   const useTitle: typeof import('../src/shared/hooks/useTitle').useTitle
   const useTransition: typeof import('react').useTransition

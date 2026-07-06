@@ -16,6 +16,9 @@ function RouteComponent() {
   const [form] = Form.useForm()
   const { showMessage } = useMessage()
   const location = useLocation()
+  const addModal = useModal()
+  const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -26,9 +29,6 @@ function RouteComponent() {
   const [filterData, setFilterData] = useState<FilterForm>(
     filterCacheStore.getItem(location.pathname) ?? {}
   )
-
-  const addModal = useModal()
-  const editModal = useModal<EditModalMeta>()
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
@@ -186,6 +186,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

@@ -13,12 +13,14 @@ export const Route = createLazyFileRoute('/_base/digital-modeling/basic-settings
 
 function RouteComponent() {
   const { showMessage } = useMessage()
-  const gridRef = useRef<AgGridReact>(null)
-  const [pageParams, setPageParams] = useState(defaultPageDto)
-  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
-
   const addModal = useModal()
   const editModal = useModal<EditModalMeta>()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const gridRef = useRef<AgGridReact>(null)
+
+  const [pageParams, setPageParams] = useState(defaultPageDto)
+  const [selectedRows, setSelectedRows] = useState<Record<string, any>[]>([])
 
   const { data, isFetching, isPlaceholderData } = useQuery(
     listQO({
@@ -143,6 +145,9 @@ function RouteComponent() {
           }}
           loading={isFetching}
           onSelectionChanged={(event) => setSelectedRows(event.api.getSelectedRows())}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
 

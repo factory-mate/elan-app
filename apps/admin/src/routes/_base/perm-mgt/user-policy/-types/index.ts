@@ -4,6 +4,7 @@ export interface EditModalMeta {
 
 export interface FilterForm {
   cLoginName?: string
+  cUserName?: string
   cMenuName?: string
   cPolicyName?: string
 }

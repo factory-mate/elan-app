@@ -7,41 +7,34 @@ interface State {
 }
 
 interface Actions {
-  setItem: (key: string, value: any) => void
+  setItem: (key: string, value: string) => void
+  batchSetItem: (items: { key: string; value: string }[]) => void
   getItem: <T = any>(key: string) => T | undefined
   hasItem: (key: string) => boolean
   removeItem: (key: string) => void
   clearAll: () => void
-  size: () => number
+  getKey: (key: string, gridId?: string) => string
 }
 
 const initialState: State = {
   cache: new Map<string, any>()
 }
 
-export const useFilterCacheStore = create<State & Actions>()(
+export const useTableCacheStore = create<State & Actions>()(
   devtools(
     immer((set, get) => ({
       ...initialState,
       setItem: (key, value) =>
         set((state) => {
-          const notUndefinedKeys: string[] = []
-          if (value && typeof value === 'object') {
-            Object.keys(value).forEach((k) => {
-              if (value[k] !== undefined) {
-                notUndefinedKeys.push(k)
-              } else {
-                // eslint-disable-next-line no-param-reassign
-                delete value[k]
-              }
-            })
-          }
-          if (!notUndefinedKeys.length) {
-            state.cache.delete(key)
-          } else {
-            state.cache.set(key, value)
-          }
+          state.cache.set(key, value)
         }),
+      batchSetItem: (items) => {
+        if (items.length) {
+          items.forEach((i) => {
+            get().setItem(i.key, i.value)
+          })
+        }
+      },
       getItem: (key) => get().cache.get(key),
       hasItem: (key: string) => get().cache.has(key),
       removeItem: (key) =>
@@ -49,7 +42,7 @@ export const useFilterCacheStore = create<State & Actions>()(
           state.cache.delete(key)
         }),
       clearAll: () => set(() => ({ cache: new Map() })),
-      size: () => get().cache.size
+      getKey: (key, gridId) => (gridId ? `${key}:${gridId}` : key)
     }))
   )
 )

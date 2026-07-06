@@ -14,6 +14,7 @@ export const Route = createLazyFileRoute('/_base/report/qc/all-material')({
 function RouteComponent() {
   const [form] = Form.useForm()
   const location = useLocation()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const filterCacheStore = useFilterCacheStore()
 
@@ -37,6 +38,7 @@ function RouteComponent() {
       ])
     })
   )
+
   const exportMutation = useExportMutation()
 
   const filterDefs = useMemo<FilterDef<FilterForm>[]>(
@@ -108,11 +110,10 @@ function RouteComponent() {
           ref={gridRef}
           columnDefs={columnDefs}
           rowData={data}
-          autoSizeStrategy={{
-            type: 'fitGridWidth',
-            defaultMinWidth: 200
-          }}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex

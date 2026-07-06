@@ -9,6 +9,8 @@ export const Route = createLazyFileRoute('/_base/report/trace/production-date-di
 })
 
 function RouteComponent() {
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
   const gridRef = useRef<AgGridReact>(null)
 
   const [pageParams, setPageParams] = useState(defaultPageDto)
@@ -44,11 +46,10 @@ function RouteComponent() {
           getRowId={(params) => params.data.批号!}
           columnDefs={columnDefs}
           rowData={data}
-          autoSizeStrategy={{
-            type: 'fitGridWidth',
-            defaultMinWidth: 200
-          }}
           loading={isFetching}
+          gridId="list"
+          getContextMenuItems={getContextMenuItems}
+          onGridReady={(e) => initTableSettings(e)}
         />
       </div>
       <Flex
