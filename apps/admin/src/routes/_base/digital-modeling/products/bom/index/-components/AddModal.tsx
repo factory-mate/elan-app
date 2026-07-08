@@ -29,13 +29,15 @@ interface AddModalProps {
 export default function AddModal(props: AddModalProps) {
   const { open, setOpen } = props
 
+  const [form] = Form.useForm<BOMAddDto>()
   const { message } = useMessage()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const parentQuantity = Form.useWatch('nQuantity', form)
 
   const gridRef = useRef<AgGridReact<BOMChildItemVo>>(null)
-  const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
-  const [form] = Form.useForm<BOMAddDto>()
-  const parentQuantity = Form.useWatch('nQuantity', form)
+  const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
   const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
   const { data: departmentCandidates } = useQuery(
@@ -504,6 +506,9 @@ export default function AddModal(props: AddModalProps) {
             columnDefs={columnDefs}
             rowData={tableData}
             editType="fullRow"
+            gridId="add"
+            getContextMenuItems={getContextMenuItems}
+            onGridReady={(e) => initTableSettings(e)}
           />
         </div>
       </Space>

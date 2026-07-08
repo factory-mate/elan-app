@@ -17,6 +17,7 @@ export default function BOMListModal(props: BOMListModalProps) {
   const { open, setOpen, currentOperateRow } = props
 
   const { message } = useMessage()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
 
   const gridRef = useRef<AgGridReact>(null)
 
@@ -214,6 +215,9 @@ export default function BOMListModal(props: BOMListModalProps) {
             columnDefs={columnDefs}
             rowData={tableData}
             editType="fullRow"
+            gridId="child-list"
+            getContextMenuItems={getContextMenuItems}
+            onGridReady={(e) => initTableSettings(e)}
           />
         </div>
       </Space>

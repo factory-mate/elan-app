@@ -33,13 +33,15 @@ interface EditModalProps {
 export default function EditModal(props: EditModalProps) {
   const { meta, open, setOpen } = props
 
+  const [form] = Form.useForm<BOMEditDto>()
   const { message } = useMessage()
+  const { getContextMenuItems, initTableSettings } = useTableSettings()
+
+  const parentQuantity = Form.useWatch('nQuantity', form)
 
   const gridRef = useRef<AgGridReact>(null)
-  const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
-  const [form] = Form.useForm<BOMEditDto>()
-  const parentQuantity = Form.useWatch('nQuantity', form)
+  const [tableData, setTableData] = useImmer<BOMChildItemVo[]>([])
 
   const { data: bomCandidates } = useQuery(Dicts.fullListQO('BOMType'))
   const { data: detailData, isFetching: isDetailFetching } = useQuery(detailQO(meta?.UID))
@@ -513,6 +515,9 @@ export default function EditModal(props: EditModalProps) {
             rowData={tableData}
             editType="fullRow"
             loading={isDetailFetching}
+            gridId="edit"
+            getContextMenuItems={getContextMenuItems}
+            onGridReady={(e) => initTableSettings(e)}
           />
         </div>
       </Space>
