@@ -80,12 +80,20 @@ export default function AddModal(props: AddModalProps) {
         <Form.Item<MainProductionPlanMpsComputeDto>
           name="dStartDate"
           label="开始日期"
+          getValueProps={(value) => ({
+            value: value && DateUtils.convertToDayjs(value)
+          })}
+          normalize={(value) => value && DateUtils.formatTime(value, 'YYYY-MM-DD')}
         >
           <DatePicker />
         </Form.Item>
         <Form.Item<MainProductionPlanMpsComputeDto>
           name="dEndDate"
           label="结束日期"
+          getValueProps={(value) => ({
+            value: value && DateUtils.convertToDayjs(value)
+          })}
+          normalize={(value) => value && DateUtils.formatTime(value, 'YYYY-MM-DD')}
         >
           <DatePicker />
         </Form.Item>

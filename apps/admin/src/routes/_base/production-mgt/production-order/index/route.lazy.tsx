@@ -723,23 +723,19 @@ function RouteComponent() {
         {printData.map((i, index) => (
           <div key={index}>
             <div className="relative h-screen p-8">
-              {i.currentPage === 1 && (
-                <>
-                  <div className="flex items-center justify-between">
-                    <div />
-                    <div className="text-2xl">Elan 配方投产单</div>
-                    <div className="right-0">批号：{i?.cDefindParm06}</div>
-                  </div>
-                  <div className="mt-4 border-b-2 border-black text-sm">
-                    <div className="grid grid-cols-4">
-                      <div>编号：{i?.cInvCode}</div>
-                      <div>名称：{i.cInvName}</div>
-                      <div>确认状态：{}</div>
-                      <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
-                    </div>
-                  </div>
-                </>
-              )}
+              <div className="flex items-center justify-between">
+                <div />
+                <div className="text-2xl">Elan 配方投产单</div>
+                <div className="right-0">批号：{i?.cDefindParm06}</div>
+              </div>
+              <div className="mt-4 border-b-2 border-black text-sm">
+                <div className="grid grid-cols-4">
+                  <div>编号：{i?.cInvCode}</div>
+                  <div>名称：{i.cInvName}</div>
+                  <div>确认状态：{}</div>
+                  <div>{DateUtils.formatTime(new Date(), 'YYYY/MM/DD')}</div>
+                </div>
+              </div>
               <div className="mt-2 border-b border-black text-sm">
                 <div className="grid grid-cols-5">
                   <div>编号</div>
@@ -764,22 +760,20 @@ function RouteComponent() {
                 </div>
               ))}
               {i.currentPage === i.totalPage && (
-                <>
-                  <div className="mt-2 flex justify-end space-x-12">
-                    <div>总配比（%）：{i?.SumRate}</div>
-                    <div>总用量（公斤）：{i?.SumQuantity}</div>
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
-                    <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
-                      <div className={styles.textUnderline}>签发：</div>
-                      <div className={styles.textUnderline}>生产：</div>
-                      <div className={styles.textUnderline}>核对：</div>
-                      <div className={styles.textUnderline}>库存管理：</div>
-                      <div className={styles.textUnderline}>生产日期：</div>
-                    </div>
-                  </div>
-                </>
+                <div className="mt-2 flex justify-end space-x-12">
+                  <div>总配比（%）：{i?.SumRate}</div>
+                  <div>总用量（公斤）：{i?.SumQuantity}</div>
+                </div>
               )}
+              <div className="absolute inset-x-0 bottom-0 m-auto w-full px-8 pb-8">
+                <div className="flex w-full justify-between border-t border-black pt-2 text-sm">
+                  <div className={styles.textUnderline}>签发：</div>
+                  <div className={styles.textUnderline}>生产：</div>
+                  <div className={styles.textUnderline}>核对：</div>
+                  <div className={styles.textUnderline}>库存管理：</div>
+                  <div className={styles.textUnderline}>生产日期：</div>
+                </div>
+              </div>
             </div>
           </div>
         ))}

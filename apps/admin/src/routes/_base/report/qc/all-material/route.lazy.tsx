@@ -91,8 +91,8 @@ function RouteComponent() {
                 exportMutation.mutate({
                   ...pageParams,
                   conditions: queryBuilder<FilterForm>([
-                    { key: 'cInvCode', type: 'like', val: formData.cInvCode },
-                    { key: 'cInvName', type: 'like', val: formData.cInvName }
+                    { key: 'cInvCode', type: 'eq', val: formData.cInvCode },
+                    { key: 'cInvName', type: 'eq', val: formData.cInvName }
                   ])
                 })
               }}

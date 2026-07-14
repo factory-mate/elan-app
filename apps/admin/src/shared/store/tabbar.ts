@@ -12,6 +12,7 @@ interface Actions {
   addItem: (item: NonNullable<TabsProps['items']>[number]) => void
   removeItem: (key: string) => void
   hasItem: (key: string) => boolean
+  clear: () => void
 }
 
 const initialState: State = {
@@ -25,6 +26,7 @@ export const useTabbarStore = create<State & Actions>()(
     setActiveKey: (activeKey) => set({ activeKey }),
     addItem: (item) => set((state) => ({ items: [...state.items, item] })),
     removeItem: (key) => set((state) => ({ items: state.items.filter((i) => i.key !== key) })),
-    hasItem: (key) => get().items.some((i) => i.key === key)
+    hasItem: (key) => get().items.some((i) => i.key === key),
+    clear: () => set(() => ({ items: [{ label: '仪表盘', key: '/', closable: false }] }))
   }))
 )
