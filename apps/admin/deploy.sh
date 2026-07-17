@@ -7,7 +7,7 @@ TARGET_DIR="E:/WWW_MES_PC"
 set -e
 
 echo "🚀 [1/3] 开始构建..."
-npm run build
+pnpm build:prod
 
 echo "📦 [2/3] 正在打包..."
 cd dist/production

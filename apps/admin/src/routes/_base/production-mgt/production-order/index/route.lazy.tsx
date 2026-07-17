@@ -687,6 +687,11 @@ function RouteComponent() {
                 backgroundColor: '#fff7e6'
               }
             }
+            if (params.data?.nQuantity === 0) {
+              return {
+                backgroundColor: '#FFF9C4'
+              }
+            }
             return undefined
           }}
           gridId="list"
