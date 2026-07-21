@@ -234,6 +234,7 @@ function RouteComponent() {
         },
         editable: (params) => currentOperateUID === params.data?.UID
       },
+      { field: 'u8Quantity', headerName: '现存量' },
       { field: 'cDefindParm06', headerName: '生产批号' },
       {
         field: 'cDefindParm05',
@@ -687,7 +688,7 @@ function RouteComponent() {
                 backgroundColor: '#fff7e6'
               }
             }
-            if (params.data?.nQuantity === 0) {
+            if (params.data?.bSetColor) {
               return {
                 backgroundColor: '#FFF9C4'
               }

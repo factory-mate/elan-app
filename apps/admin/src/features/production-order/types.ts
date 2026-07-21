@@ -63,6 +63,8 @@ export interface ProductionOrderVo {
   dPlanEndDate: string
   cDepCode: string
   cDepName: string
+  bSetColor: boolean
+  u8Quantity: number
 }
 
 export interface ProductionOrderAddDto {
