@@ -44,7 +44,12 @@ export default function TreeArea(props: TreeAreaProps) {
         }}
         titleRender={(node) => (
           <Space>
-            {node.IsProduct && node.iStatusName && <Tag color="processing">{node.iStatusName}</Tag>}
+            {node.IsProduct && node.iStatusName === '已复核' && (
+              <Tag color="processing">{node.iStatusName}</Tag>
+            )}
+            {node.IsProduct && node.iStatusName === '已审核' && (
+              <Tag color="warning">{node.iStatusName}</Tag>
+            )}
             <span>{node.cInvCode}</span>
             <span>{node.cInvName}</span>
             <span>{node.cInvstd}</span>
